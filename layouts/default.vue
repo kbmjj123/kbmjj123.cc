@@ -16,7 +16,7 @@
       <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
 
         <!-- Header (sticky) -->
-        <header class="pixel-header" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:0;padding:12px 0 16px;border-bottom:1px solid var(--border-pixel);position:sticky;top:0;z-index:100;background:var(--bg-deep);gap:8px 0;">
+        <header class="pixel-header" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:0;padding:12px 0 16px;border-bottom:1px solid var(--border-pixel);position:sticky;top:0;z-index:100;background:var(--bg-deep);gap:8px 0;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
           <NuxtLink to="/" style="display:flex;align-items:center;text-decoration:none;">
             <div class="site-title" style="font-family:var(--font-pixel);font-size:20px;color:var(--accent-green);text-shadow:2px 2px 0 rgba(0,0,0,0.8);display:flex;align-items:center;gap:10px;white-space:nowrap;">
               <span style="display:inline-block;width:14px;height:14px;background:var(--accent-gold);border:2px solid var(--accent-gold);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 3s ease-in-out infinite;"></span>
