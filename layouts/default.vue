@@ -26,12 +26,36 @@
               <span style="font-family:var(--font-ui);font-size:13px;font-weight:400;color:var(--text-secondary);margin-left:6px;background:rgba(74,222,128,0.06);padding:0 10px;border:1px solid var(--border-pixel);">✦ Indie Log</span>
             </div>
           </NuxtLink>
-          <nav class="pixel-nav" style="display:flex;gap:4px 16px;font-family:var(--font-pixel);font-size:10px;white-space:nowrap;">
+
+          <!-- Desktop nav -->
+          <nav class="pixel-nav pixel-nav-desktop">
             <NuxtLink v-for="item in navItems" :key="item.path" :to="item.path" class="pixel-nav-link" :class="{ active: isActive(item.path) }">
               {{ item.label }}
             </NuxtLink>
           </nav>
+
+          <!-- Mobile hamburger -->
+          <button class="pixel-hamburger" @click="mobileMenuOpen = !mobileMenuOpen" aria-label="Menu">
+            <span></span><span></span><span></span>
+          </button>
         </header>
+
+        <!-- Mobile drawer overlay -->
+        <Transition name="drawer">
+          <div v-if="mobileMenuOpen" class="pixel-drawer-overlay" @click="mobileMenuOpen = false">
+            <aside class="pixel-drawer" @click.stop>
+              <div class="pixel-drawer-header">
+                <span style="font-family:var(--font-pixel);font-size:11px;color:var(--accent-green);">Navigation</span>
+                <button class="pixel-drawer-close" @click="mobileMenuOpen = false">&#10005;</button>
+              </div>
+              <nav class="pixel-drawer-nav">
+                <NuxtLink v-for="item in navItems" :key="item.path" :to="item.path" class="pixel-drawer-link" :class="{ active: isActive(item.path) }" @click="mobileMenuOpen = false">
+                  {{ item.label }}
+                </NuxtLink>
+              </nav>
+            </aside>
+          </div>
+        </Transition>
 
         <!-- Main content + sidebar grid -->
         <div class="pixel-main-grid" style="display:grid;grid-template-columns:2.2fr 1fr;gap:36px;margin-top:40px;">
@@ -95,6 +119,8 @@ const showLoader = ref(true)
 onMounted(() => {
   setTimeout(() => { showLoader.value = false }, 600)
 })
+
+const mobileMenuOpen = ref(false)
 
 const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'projects'].includes(route.params.slug as string))
 
@@ -238,12 +264,65 @@ function isActive(path: string) {
   background: rgba(74,222,128,0.04);
 }
 
+/* Hamburger button */
+.pixel-hamburger {
+  display: none; flex-direction: column; gap: 3px; cursor: pointer;
+  background: none; border: 1.5px solid var(--border-pixel); padding: 6px 5px;
+  width: 28px; height: 28px; justify-content: center; align-items: center;
+}
+.pixel-hamburger span {
+  display: block; width: 14px; height: 1.5px; background: var(--text-secondary);
+  border-radius: 1px;
+}
+
+/* Mobile drawer overlay */
+.pixel-drawer-overlay {
+  position: fixed; inset: 0; z-index: 200; background: rgba(0,0,0,0.6);
+}
+.pixel-drawer {
+  position: fixed; top: 0; left: 0; bottom: 0; width: 260px; max-width: 80vw;
+  background: var(--bg-card); border-right: 2px solid var(--border-pixel);
+  display: flex; flex-direction: column; padding: 20px 16px;
+  box-shadow: 4px 0 20px rgba(0,0,0,0.4);
+}
+.pixel-drawer-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding-bottom: 16px; border-bottom: 1px solid var(--border-pixel); margin-bottom: 20px;
+}
+.pixel-drawer-close {
+  background: none; border: 1px solid var(--border-pixel); color: var(--text-muted);
+  cursor: pointer; font-size: 12px; width: 24px; height: 24px;
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-pixel);
+}
+.pixel-drawer-nav {
+  display: flex; flex-direction: column; gap: 4px;
+}
+.pixel-drawer-link {
+  font-family: var(--font-pixel); font-size: 10px; color: var(--text-secondary);
+  text-decoration: none; padding: 10px 12px; border: 1.5px solid transparent;
+  transition: all 0.15s ease;
+}
+.pixel-drawer-link:hover, .pixel-drawer-link.active {
+  color: var(--accent-green); border-color: var(--accent-green);
+  background: rgba(74,222,128,0.04);
+}
+
+/* Drawer animation */
+.drawer-enter-active, .drawer-leave-active { transition: opacity 0.2s ease; }
+.drawer-enter-active .pixel-drawer, .drawer-leave-active .pixel-drawer { transition: transform 0.2s ease; }
+.drawer-enter-from, .drawer-leave-to { opacity: 0; }
+.drawer-enter-from .pixel-drawer { transform: translateX(-100%); }
+.drawer-leave-to .pixel-drawer { transform: translateX(-100%); }
+
+/* Mobile: show hamburger, hide nav */
 @media (max-width: 860px) {
+  .pixel-nav-desktop { display: none !important; }
+  .pixel-hamburger { display: flex !important; }
   .pixel-container { padding: 20px 18px 18px; }
   .pixel-main-grid { grid-template-columns: 1fr !important; gap: 28px; }
   .pixel-sidebar { display: none !important; }
   .site-title { font-size: 18px; }
-  .pixel-nav { font-size: 9px; }
 }
 @media (max-width: 480px) {
   .pixel-body-wrapper { padding: 8px !important; }
