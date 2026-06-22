@@ -13,7 +13,7 @@
         <span class="category">{{ postData.category }}</span>
         <span style="color:var(--text-muted);">⌨️ {{ postData.readTime }}</span>
       </div>
-      <div class="post-body" ref="postBodyRef">
+      <div class="post-body markdown-content" ref="postBodyRef">
         <ContentRenderer :value="postData" v-if="postData.body" />
         <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ postData.excerpt }}</p>
       </div>
