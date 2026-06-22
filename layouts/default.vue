@@ -12,10 +12,8 @@
     </div>
 
     <!-- Main container -->
-    <div style="padding:24px;display:flex;justify-content:center;min-height:100vh;">
-      <div class="pixel-container" style="max-width:1150px;width:100%;background:var(--bg-card);border:2px solid var(--border-pixel);padding:32px 36px 24px;position:relative;box-shadow:0 8px 32px rgba(0,0,0,0.6),inset 0 0 0 1px rgba(74,222,128,0.04);transition:border-color 0.2s ease;">
-        <!-- Top decorative bar -->
-        <div style="content:'';display:block;height:3px;width:100%;background:repeating-linear-gradient(90deg,var(--accent-green) 0px,var(--accent-green) 6px,transparent 6px,transparent 12px);margin-bottom:28px;opacity:0.7;background-size:24px 100%;animation:pixelFlowLine 4s linear infinite;"></div>
+    <div style="padding:20px;display:flex;justify-content:center;min-height:100vh;">
+      <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
 
         <!-- Header -->
         <header style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:32px;padding-bottom:20px;border-bottom:1px solid var(--border-pixel);">
@@ -137,6 +135,8 @@ function isActive(path: string) {
 </script>
 
 <style scoped>
+.pixel-container { padding: 0 24px 24px; }
+
 .pixel-nav-link {
   color: var(--text-secondary);
   text-decoration: none;
