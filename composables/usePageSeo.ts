@@ -47,14 +47,6 @@ function buildDescription(opts: PageSeoOptions): string {
   )
 }
 
-const OG_TYPE_LABEL: Record<string, string> = {
-  default: 'Home',
-  category: 'Category',
-  detail: 'Detail',
-  blog: 'Blog',
-  prefix: 'Page',
-}
-
 export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
   const resolved = computed(() => {
     const o = toValue(opts)
@@ -63,7 +55,6 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
       description: buildDescription(o),
       ogTitle: o.title || TAGLINE,
       ogDescription: o.description || TAGLINE,
-      ogType: OG_TYPE_LABEL[o.template || 'default'] || 'Page',
     }
   })
 
@@ -79,9 +70,11 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
     ]),
   })
 
-  defineOgImage('AppOgImage', () => ({
-    title: resolved.value.ogTitle,
-    description: resolved.value.ogDescription,
-    type: resolved.value.ogType,
-  }))
+  defineOgImage({
+    component: 'AppOgImage',
+    props: {
+      title: resolved.value.ogTitle,
+      description: resolved.value.ogDescription,
+    },
+  })
 }
