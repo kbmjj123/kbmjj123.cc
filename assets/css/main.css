@@ -998,13 +998,14 @@ h1.hero-title em {
 /* ═══════════════════════════════════════════════
    滚动条
 ═══════════════════════════════════════════════ */
-::-webkit-scrollbar { width: 6px; height: 6px; }
-::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar { width: 8px; height: 8px; background: var(--bg-deep); }
+::-webkit-scrollbar-track { background: var(--bg-deep); }
 ::-webkit-scrollbar-thumb {
-  background: var(--color-border);
-  border-radius: 3px;
+  background: var(--border-pixel);
+  border: 1px solid var(--accent-green);
+  border-radius: 0;
 }
-::-webkit-scrollbar-thumb:hover { background: var(--color-border-hover); }
+::-webkit-scrollbar-thumb:hover { background: var(--accent-green); }
 
 .scrollbar-none {
   -ms-overflow-style: none;
