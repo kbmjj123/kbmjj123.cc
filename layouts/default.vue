@@ -45,7 +45,11 @@
           <div v-if="mobileMenuOpen" class="pixel-drawer-overlay" @click="mobileMenuOpen = false">
             <aside class="pixel-drawer" @click.stop>
               <div class="pixel-drawer-header">
-                <span style="font-family:var(--font-pixel);font-size:11px;color:var(--accent-green);">Navigation</span>
+                <NuxtLink to="/" style="display:flex;align-items:center;gap:6px;text-decoration:none;" @click="mobileMenuOpen = false">
+                  <span style="display:inline-block;width:10px;height:10px;background:var(--accent-gold);border:2px solid var(--accent-gold);box-shadow:0 0 0 2px var(--bg-deep);flex-shrink:0;"></span>
+                  <span style="font-family:var(--font-pixel);font-size:12px;color:var(--accent-green);letter-spacing:0.5px;">KB<span style="color:var(--accent-gold);">MJJ123</span></span>
+                  <span style="font-family:var(--font-ui);font-size:10px;font-weight:400;color:var(--text-muted);">.cc</span>
+                </NuxtLink>
                 <button class="pixel-drawer-close" @click="mobileMenuOpen = false">&#10005;</button>
               </div>
               <nav class="pixel-drawer-nav">
