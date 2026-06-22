@@ -39,32 +39,35 @@
             <slot />
           </main>
           <aside class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">
-            <!-- Categories widget -->
-            <div class="pixel-widget">
-              <h2 class="pixel-widget-title">Categories</h2>
-              <ul class="pixel-category-list">
-                <li v-for="cat in categories" :key="cat.slug">
-                  <h3 class="pixel-category-name"><NuxtLink :to="`/?category=${cat.slug}`">{{ cat.name }}</NuxtLink></h3>
-                  <span class="pixel-category-count">{{ cat.count }}</span>
-                </li>
-              </ul>
-            </div>
-
-            <!-- Tags widget -->
-            <div class="pixel-widget">
-              <h2 class="pixel-widget-title">Tags</h2>
-              <div class="pixel-tag-cloud">
-                <NuxtLink v-for="tag in tags" :key="tag" :to="`/?tag=${tag.replace('#', '')}`" class="pixel-tag">{{ tag }}</NuxtLink>
+            <PostSidebar v-if="isPostPage" />
+            <template v-else>
+              <!-- Categories widget -->
+              <div class="pixel-widget">
+                <h2 class="pixel-widget-title">Categories</h2>
+                <ul class="pixel-category-list">
+                  <li v-for="cat in categories" :key="cat.slug">
+                    <h3 class="pixel-category-name"><NuxtLink :to="`/?category=${cat.slug}`">{{ cat.name }}</NuxtLink></h3>
+                    <span class="pixel-category-count">{{ cat.count }}</span>
+                  </li>
+                </ul>
               </div>
-            </div>
 
-            <!-- Pixel counter -->
-            <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
-              <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
-                <span style="color:var(--accent-green);">◼</span> Pixels since 2026
-                <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">0 0 0 0 0 1 4</span>
+              <!-- Tags widget -->
+              <div class="pixel-widget">
+                <h2 class="pixel-widget-title">Tags</h2>
+                <div class="pixel-tag-cloud">
+                  <NuxtLink v-for="tag in tags" :key="tag" :to="`/?tag=${tag.replace('#', '')}`" class="pixel-tag">{{ tag }}</NuxtLink>
+                </div>
               </div>
-            </div>
+
+              <!-- Pixel counter -->
+              <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
+                <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
+                  <span style="color:var(--accent-green);">◼</span> Pixels since 2026
+                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">0 0 0 0 0 1 4</span>
+                </div>
+              </div>
+            </template>
           </aside>
         </div>
 
@@ -92,6 +95,8 @@ const showLoader = ref(true)
 onMounted(() => {
   setTimeout(() => { showLoader.value = false }, 600)
 })
+
+const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'projects'].includes(route.params.slug as string))
 
 const navItems = [
   { path: '/', label: 'Home' },
