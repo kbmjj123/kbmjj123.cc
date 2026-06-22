@@ -5,7 +5,7 @@
 
     <div class="project-grid">
       <div v-for="project in projects" :key="project.name" class="project-card">
-        <h3>{{ project.name }}</h3>
+        <h2 class="project-name">{{ project.name }}</h2>
         <div class="project-desc">{{ project.desc }}</div>
         <div class="project-tags">
           <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
@@ -96,11 +96,12 @@ const projects = [
   transform: translateY(-3px);
   box-shadow: 0 6px 16px rgba(74,222,128,0.05);
 }
-.project-card h3 {
+.project-name {
   font-family: var(--font-pixel);
   font-size: 12px;
   color: var(--text-primary);
   margin-bottom: 6px;
+  font-weight: 400;
 }
 .project-desc {
   font-size: 14px;

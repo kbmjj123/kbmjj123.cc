@@ -38,21 +38,7 @@
           <main>
             <slot />
           </main>
-          <aside class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;">
-            <!-- About widget -->
-            <div class="pixel-widget">
-              <div class="pixel-widget-title">About</div>
-              <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
-                <div style="width:44px;height:44px;background:var(--bg-deep);border:2px solid var(--accent-green);display:flex;align-items:center;justify-content:center;font-size:20px;font-family:var(--font-pixel);color:var(--accent-green);flex-shrink:0;">👨‍💻</div>
-                <span style="font-family:var(--font-pixel);font-size:9px;color:var(--text-secondary);">@kbmjj123</span>
-              </div>
-              <p style="font-size:14px;color:var(--text-secondary);line-height:1.8;">
-                <strong style="color:var(--text-primary);">Indie Developer</strong> · Full-stack &amp; product design.<br />
-                Building with <span style="color:var(--accent-gold);">craft</span> &amp; <span style="color:var(--accent-green);">simplicity</span>.
-              </p>
-              <div style="margin-top:8px;font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);border-top:1px dashed var(--border-pixel);padding-top:10px;">⚡ Currently: PixelFlow</div>
-            </div>
-
+          <aside class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">
             <!-- Categories widget -->
             <div class="pixel-widget">
               <div class="pixel-widget-title">Categories</div>

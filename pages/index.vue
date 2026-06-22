@@ -1,5 +1,6 @@
 <template>
   <section class="post-list">
+    <h1 class="sr-only">kbmjj123.cc — Indie Developer Log</h1>
     <!-- Active filter indicator -->
     <div v-if="activeFilter" class="filter-bar">
       <span style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);">
@@ -111,6 +112,10 @@ const filteredPosts = computed(() => {
 </script>
 
 <style scoped>
+.sr-only {
+  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+  overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0;
+}
 .post-list {
   display: flex;
   flex-direction: column;

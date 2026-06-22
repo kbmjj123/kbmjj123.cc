@@ -15,14 +15,14 @@
     </div>
 
     <div class="skill-section">
-      <h3>Tech Stack</h3>
+      <h2 class="section-title">Tech Stack</h2>
       <div class="skill-tags">
         <span v-for="skill in skills" :key="skill" class="skill-tag">{{ skill }}</span>
       </div>
     </div>
 
     <div class="timeline">
-      <h3>Milestones</h3>
+      <h2 class="section-title">Milestones</h2>
       <div v-for="item in milestones" :key="item.year" class="timeline-item">
         <span class="timeline-year">{{ item.year }}</span>
         <span class="timeline-desc" v-html="item.desc"></span>
@@ -112,13 +112,14 @@ const links = [
 .about-intro strong { color: var(--text-primary); }
 
 .skill-section { margin-top: 28px; }
-.skill-section h3 {
+.section-title {
   font-family: var(--font-pixel);
   font-size: 12px;
   color: var(--accent-gold);
   margin-bottom: 12px;
+  font-weight: 400;
 }
-.skill-section h3::before { content: "▸ "; color: var(--accent-green); }
+.section-title::before { content: "▸ "; color: var(--accent-green); }
 .skill-tags {
   display: flex;
   flex-wrap: wrap;
@@ -139,13 +140,14 @@ const links = [
 }
 
 .timeline { margin-top: 28px; }
-.timeline h3 {
+.timeline .section-title {
   font-family: var(--font-pixel);
   font-size: 12px;
   color: var(--accent-gold);
   margin-bottom: 14px;
+  font-weight: 400;
 }
-.timeline h3::before { content: "▸ "; color: var(--accent-green); }
+.timeline .section-title::before { content: "▸ "; color: var(--accent-green); }
 .timeline-item {
   display: flex;
   gap: 16px;
