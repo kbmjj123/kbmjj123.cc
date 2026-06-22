@@ -42,6 +42,7 @@ export default defineNuxtConfig({
 
   sitemap: {
     autoLastmod: true,
+    exclude: ['/admin/**'],
   },
 
   postcss: {
