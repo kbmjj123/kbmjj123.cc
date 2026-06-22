@@ -111,8 +111,6 @@ onMounted(() => {
 const navItems = [
   { path: '/', label: 'Home' },
   { path: '/archive', label: 'Archive' },
-  { path: '/category', label: 'Categories' },
-  { path: '/tags', label: 'Tags' },
   { path: '/about', label: 'About' },
   { path: '/projects', label: 'Projects' },
 ]
