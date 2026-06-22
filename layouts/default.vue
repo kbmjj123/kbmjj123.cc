@@ -92,7 +92,7 @@
               <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
                 <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
                   <span style="color:var(--accent-green);">◼</span> Pixels since 2026
-                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">0 0 0 0 0 1 4</span>
+                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">0 0 0 0 0 0 0</span>
                 </div>
               </div>
             </template>
