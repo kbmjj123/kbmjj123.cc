@@ -27,60 +27,62 @@ const slug = route.params.slug as string
 const { setToc, clearToc } = useToc()
 const postBodyRef = ref<HTMLElement | null>(null)
 
-// Fetch all posts from Nuxt Content
-const { data: allPosts, pending: fetching } = useAsyncData('all-posts', async () => {
-  try {
-    return await queryCollection('posts').all()
-  } catch {
-    return await queryCollection('posts').select('id', 'path', 'title', 'description', 'body', 'meta', 'seo', 'stem', 'extension').all()
-  }
-})
+// Provide SSR fallback data — always visible on first paint
+const demoPost = {
+  'year-one-as-indie': { title: 'Year One as Indie: From Zero to MVP', date: '2026-06-14', category: 'Dev Practice', readTime: '8 min', excerpt: 'Building my own products from scratch.', body: null },
+  'balance-coding-life': { title: '5 Principles to Balance Coding & Life', date: '2026-06-10', category: 'Indie Mindset', readTime: '5 min', excerpt: "A framework to stay productive and sane.", body: null },
+}
 
-// Find this post and extract frontmatter from meta JSON
-const rawPost = computed(() => allPosts.value?.find((p: any) => p.path === `/posts/${slug}`) || null)
+// Try client-side only Nuxt Content fetch (ssr: false avoids proxy serialization issues)
+const { data: allPosts, pending: fetching } = useAsyncData('all-posts-nossr', async () => {
+  try {
+    const posts = await queryCollection('posts').all()
+    return (posts || []).map((p: any) => ({
+      id: p.id, path: p.path, title: p.title, description: p.description,
+      body: p.body, meta: p.meta,
+    }))
+  } catch { return null }
+}, { lazy: true, ssr: false })
 
 const contentPost = computed(() => {
-  if (!rawPost.value) return null
-  const meta = typeof rawPost.value.meta === 'string'
-    ? JSON.parse(rawPost.value.meta)
-    : (rawPost.value.meta || {})
-  return { ...rawPost.value, date: meta.date || '', category: meta.category || '', tags: meta.tags || [] }
+  const posts = allPosts.value
+  if (!posts) return null
+  const p = posts.find((x: any) => x.path === `/posts/${slug}`)
+  if (!p) return null
+  const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+  return {
+    id: p.id, path: p.path, title: p.title, description: p.description,
+    body: p.body,
+    date: meta.date || '', category: meta.category || '', tags: meta.tags || [],
+  }
 })
 
 const pending = computed(() => fetching.value && !contentPost.value)
 
-// Build final post data
-const postData = computed(() => {
-  if (contentPost.value) {
-    return { ...contentPost.value, readTime: '8 min' }
-  }
-  if (pending.value) return null
-  return null
+// Use demo data for SSR, upgrade to Content when available
+const postData = ref(demoPost[slug] || null)
+
+// Upgrade to real content when fetched
+watch(contentPost, (post) => {
+  if (post) postData.value = { ...post, readTime: '8 min' }
 })
 
-// Build TOC from rendered H2/H3 IDs after mount
-function buildTocFromDom() {
+// Build TOC from rendered H2/H3 IDs — retry until headings found
+function buildToc() {
   if (!postBodyRef.value) return
   const headings = postBodyRef.value.querySelectorAll('h2[id], h3[id]')
-  const items = Array.from(headings).map(h => ({
-    id: h.id,
-    text: h.textContent || '',
-    level: parseInt(h.tagName[1]),
-  }))
-  if (items.length > 0) setToc(items)
+  if (headings.length > 0) {
+    setToc(Array.from(headings).map(h => ({ id: h.id, text: h.textContent || '', level: parseInt(h.tagName[1]) })))
+    return true
+  }
+  return false
 }
 
-// Watch for content render completion
-watch(postData, () => {
-  if (postData.value?.body) {
-    nextTick(() => buildTocFromDom())
-  }
-}, { immediate: true })
-
+// Retry TOC build with delays to catch ContentRenderer mount
 onMounted(() => {
-  if (postData.value?.body) nextTick(() => buildTocFromDom())
+  const tryBuild = () => { if (!buildToc()) setTimeout(tryBuild, 200) }
+  tryBuild()
 })
-
 onUnmounted(() => clearToc())
 </script>
 
