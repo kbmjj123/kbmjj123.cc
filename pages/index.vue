@@ -18,9 +18,9 @@
 
     <!-- Post list -->
     <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }">
-      <h2 class="post-title">
+      <h3 class="post-title">
         <NuxtLink :to="`/${post.slug}`">{{ post.title }}</NuxtLink>
-      </h2>
+      </h3>
       <div class="post-meta">
         <span class="date">{{ post.date }}</span>
         <span class="category">{{ post.category }}</span>
