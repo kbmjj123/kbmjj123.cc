@@ -16,8 +16,8 @@
       <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
 
         <!-- Header (sticky) -->
-        <header class="pixel-header" style="display:flex;flex-wrap:nowrap;justify-content:space-between;align-items:center;margin-bottom:32px;padding:12px 0 16px;border-bottom:1px solid var(--border-pixel);position:sticky;top:0;z-index:100;background:var(--bg-deep);">
-          <NuxtLink to="/" style="display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0;">
+        <header class="pixel-header" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:0;padding:12px 0 16px;border-bottom:1px solid var(--border-pixel);position:sticky;top:0;z-index:100;background:var(--bg-deep);gap:8px 0;">
+          <NuxtLink to="/" style="display:flex;align-items:center;text-decoration:none;">
             <div class="site-title" style="font-family:var(--font-pixel);font-size:20px;color:var(--accent-green);text-shadow:2px 2px 0 rgba(0,0,0,0.8);display:flex;align-items:center;gap:10px;white-space:nowrap;">
               <span style="display:inline-block;width:14px;height:14px;background:var(--accent-gold);border:2px solid var(--accent-gold);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 3s ease-in-out infinite;"></span>
               <span style="color:var(--accent-green);">KB</span>
@@ -26,7 +26,7 @@
               <span style="font-family:var(--font-ui);font-size:13px;font-weight:400;color:var(--text-secondary);margin-left:6px;background:rgba(74,222,128,0.06);padding:0 10px;border:1px solid var(--border-pixel);">✦ Indie Log</span>
             </div>
           </NuxtLink>
-          <nav class="pixel-nav" style="display:flex;gap:4px 16px;font-family:var(--font-pixel);font-size:10px;flex-shrink:0;">
+          <nav class="pixel-nav" style="display:flex;gap:4px 16px;font-family:var(--font-pixel);font-size:10px;white-space:nowrap;">
             <NuxtLink v-for="item in navItems" :key="item.path" :to="item.path" class="pixel-nav-link" :class="{ active: isActive(item.path) }">
               {{ item.label }}
             </NuxtLink>
