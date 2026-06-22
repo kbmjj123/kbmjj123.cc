@@ -29,9 +29,12 @@
 
           <!-- Desktop nav -->
           <nav class="pixel-nav pixel-nav-desktop">
-            <NuxtLink v-for="item in navItems" :key="item.path" :to="item.path" class="pixel-nav-link" :class="{ active: isActive(item.path) }">
-              {{ item.label }}
-            </NuxtLink>
+            <template v-for="(item, i) in navItems" :key="item.path">
+              <span v-if="i > 0" class="nav-dot">&#x2022;</span>
+              <NuxtLink :to="item.path" class="pixel-nav-link" :class="{ active: isActive(item.path) }">
+                {{ item.label }}
+              </NuxtLink>
+            </template>
           </nav>
 
           <!-- Mobile hamburger -->
@@ -155,6 +158,12 @@ function isActive(path: string) {
 <style scoped>
 .pixel-container { padding: 0 24px 24px; }
 
+.nav-dot {
+  color: var(--text-muted);
+  font-size: 6px;
+  display: flex;
+  align-items: center;
+}
 .pixel-nav-link {
   color: var(--text-secondary);
   text-decoration: none;
