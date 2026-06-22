@@ -23,21 +23,9 @@ const postBodyRef = ref<HTMLElement | null>(null)
 const fallback: Record<string, {
   title: string; date: string; category: string; readTime: string; excerpt: string; body: null | object
 }> = {
-  'year-one-as-indie': {
-    title: 'Year One as Indie: From Zero to MVP', date: '2026-06-14',
-    category: 'Dev Practice', readTime: '8 min',
-    excerpt: 'Quitting the 9-to-5 to build my own products.',
-    body: null,
-  },
-  'balance-coding-life': {
-    title: '5 Principles to Balance Coding & Life', date: '2026-06-10',
-    category: 'Indie Mindset', readTime: '5 min',
-    excerpt: "I've developed a rhythm that boosts both productivity.",
-    body: null,
-  },
 }
 
-const fb = fallback[slug]
+const fb = null
 const title = ref(fb?.title || '')
 const date = ref(fb?.date || '')
 const category = ref(fb?.category || '')

@@ -46,59 +46,7 @@ useHead({
   ],
 })
 
-interface Post {
-  slug: string
-  title: string
-  date: string
-  category: string
-  categorySlug: string
-  readTime: string
-  excerpt: string
-  tags: string[]
-}
-
-const allPosts: Post[] = [
-  {
-    slug: 'year-one-as-indie',
-    title: 'Year One as Indie: From Zero to MVP',
-    date: '2026-06-14',
-    category: 'Dev Practice',
-    categorySlug: 'dev-practice',
-    readTime: '8 min',
-    tags: ['#javascript', '#typescript', '#startup', '#mvp'],
-    excerpt: 'Quitting the 9-to-5 to build my own products. The real struggles with product-market fit, tech choices, and mental health. Honest reflections for fellow builders.',
-  },
-  {
-    slug: 'balance-coding-life',
-    title: '5 Principles to Balance Coding & Life',
-    date: '2026-06-10',
-    category: 'Indie Mindset',
-    categorySlug: 'indie-mindset',
-    readTime: '5 min',
-    tags: ['#productivity', '#motivation', '#focus', '#burnout'],
-    excerpt: 'Indie devs are prone to burnout. I\'ve developed a rhythm that boosts both productivity and well-being. Here\'s my practical framework to stay sustainable.',
-  },
-  {
-    slug: 'launch-day-3-users',
-    title: 'What I Learned on Launch Day (with 3 users)',
-    date: '2026-06-05',
-    category: 'Product & Business',
-    categorySlug: 'product-business',
-    readTime: '6 min',
-    tags: ['#startup', '#launch', '#mvp', '#failure', '#saas'],
-    excerpt: 'The excitement of shipping, followed by the silence of a ghost town. But those first 3 users taught me more about true product value than any course ever did.',
-  },
-  {
-    slug: 'indie-dev-toolkit-2026',
-    title: 'Essential Indie Dev Toolkit (2026)',
-    date: '2026-05-28',
-    category: 'Tools & Workflow',
-    categorySlug: 'tools-workflow',
-    readTime: '4 min',
-    tags: ['#vscode', '#figma', '#cloudflare', '#github', '#cicd'],
-    excerpt: 'From editor to analytics, design to deployment. My carefully curated stack that maximizes velocity without sacrificing quality. Updated for 2026.',
-  },
-]
+const allPosts: { slug: string; title: string; date: string; category: string; categorySlug: string; readTime: string; excerpt: string; tags: string[] }[] = []
 
 // Read filter from query params
 const categoryFilter = computed(() => route.query.category as string | undefined)
