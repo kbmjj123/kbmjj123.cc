@@ -3,9 +3,6 @@
     <template v-if="pending">
       <LoadingState />
     </template>
-    <template v-else-if="error">
-      <ErrorState :error="error" />
-    </template>
     <template v-else-if="!postData">
       <EmptyState />
     </template>
@@ -16,108 +13,74 @@
         <span class="category">{{ postData.category }}</span>
         <span style="color:var(--text-muted);">⌨️ {{ postData.readTime }}</span>
       </div>
-      <div class="post-body" v-html="postData.html || `<p>${postData.excerpt}</p>`"></div>
+      <div class="post-body" ref="postBodyRef">
+        <ContentRenderer :value="postData" v-if="postData.body" />
+        <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ postData.excerpt }}</p>
+      </div>
     </template>
   </section>
 </template>
 
 <script setup lang="ts">
-import { useToc } from '~/composables/useToc'
-
 const route = useRoute()
 const slug = route.params.slug as string
 const { setToc, clearToc } = useToc()
+const postBodyRef = ref<HTMLElement | null>(null)
 
-const { data: apiPost, pending, error } = useLazyAsyncData(`post-${slug}`, () => {
-  return $fetch(`/api/posts/${slug}`).catch(() => null)
+// Fetch all posts from Nuxt Content
+const { data: allPosts, pending: fetching } = useAsyncData('all-posts', async () => {
+  try {
+    return await queryCollection('posts').all()
+  } catch {
+    return await queryCollection('posts').select('id', 'path', 'title', 'description', 'body', 'meta', 'seo', 'stem', 'extension').all()
+  }
 })
 
-interface PostData {
-  title: string
-  date: string
-  category: string
-  readTime: string
-  excerpt: string
-  html?: string
-  headings?: { id: string; text: string; level: number }[]
-}
+// Find this post and extract frontmatter from meta JSON
+const rawPost = computed(() => allPosts.value?.find((p: any) => p.path === `/posts/${slug}`) || null)
 
-const demoPosts: Record<string, PostData> = {
-  'year-one-as-indie': {
-    title: 'Year One as Indie: From Zero to MVP',
-    date: '2026-06-14',
-    category: 'Dev Practice',
-    readTime: '8 min',
-    excerpt: 'Quitting the 9-to-5 to build my own products. The real struggles with product-market fit, tech choices, and mental health. Honest reflections for fellow builders.',
-    headings: [
-      { id: 'the-decision', text: 'The Decision to Go Indie', level: 2 },
-      { id: 'first-3-months', text: 'First 3 Months: The Honeymoon', level: 2 },
-      { id: 'finding-pain-points', text: 'Finding Real Pain Points', level: 2 },
-      { id: 'building-mvp', text: 'Building the MVP', level: 3 },
-      { id: 'launch-and-silence', text: 'Launch and Silence', level: 2 },
-      { id: 'lessons-learned', text: 'Lessons Learned', level: 3 },
-      { id: 'whats-next', text: "What's Next", level: 2 },
-    ],
-  },
-  'balance-coding-life': {
-    title: '5 Principles to Balance Coding & Life',
-    date: '2026-06-10',
-    category: 'Indie Mindset',
-    readTime: '5 min',
-    excerpt: "Indie devs are prone to burnout. I've developed a rhythm that boosts both productivity and well-being.",
-    headings: [
-      { id: 'why-balance-matters', text: 'Why Balance Matters', level: 2 },
-      { id: 'principle-1', text: 'Principle 1: Time Boxing', level: 2 },
-      { id: 'principle-2', text: 'Principle 2: Physical First', level: 2 },
-      { id: 'principle-3', text: 'Principle 3: Deep Work Mornings', level: 2 },
-      { id: 'principle-4', text: 'Principle 4: No-Code Evenings', level: 2 },
-      { id: 'principle-5', text: 'Principle 5: Weekly Review', level: 2 },
-    ],
-  },
-  'launch-day-3-users': {
-    title: 'What I Learned on Launch Day (with 3 users)',
-    date: '2026-06-05',
-    category: 'Product & Business',
-    readTime: '6 min',
-    excerpt: 'The excitement of shipping, followed by the silence of a ghost town.',
-    headings: [
-      { id: 'the-build-up', text: 'The Build Up', level: 2 },
-      { id: 'pressing-launch', text: 'Pressing Launch', level: 2 },
-      { id: '3-users', text: 'Those 3 Users', level: 3 },
-      { id: 'the-crash', text: 'The Crash After', level: 2 },
-      { id: 'what-i-changed', text: 'What I Changed', level: 2 },
-    ],
-  },
-  'indie-dev-toolkit-2026': {
-    title: 'Essential Indie Dev Toolkit (2026)',
-    date: '2026-05-28',
-    category: 'Tools & Workflow',
-    readTime: '4 min',
-    excerpt: 'From editor to analytics, design to deployment. My curated stack for 2026.',
-    headings: [
-      { id: 'editor', text: 'Editor & IDE', level: 2 },
-      { id: 'frontend-stack', text: 'Frontend Stack', level: 2 },
-      { id: 'backend-infra', text: 'Backend & Infra', level: 2 },
-      { id: 'design-tools', text: 'Design Tools', level: 3 },
-      { id: 'analytics', text: 'Analytics & Monitoring', level: 2 },
-    ],
-  },
-}
+const contentPost = computed(() => {
+  if (!rawPost.value) return null
+  const meta = typeof rawPost.value.meta === 'string'
+    ? JSON.parse(rawPost.value.meta)
+    : (rawPost.value.meta || {})
+  return { ...rawPost.value, date: meta.date || '', category: meta.category || '', tags: meta.tags || [] }
+})
 
+const pending = computed(() => fetching.value && !contentPost.value)
+
+// Build final post data
 const postData = computed(() => {
+  if (contentPost.value) {
+    return { ...contentPost.value, readTime: '8 min' }
+  }
   if (pending.value) return null
-  if (apiPost.value) return apiPost.value
-  return demoPosts[slug] || null
+  return null
 })
 
-// Set TOC when post data is available
-watch(postData, (post) => {
-  if (post?.headings) {
-    setToc(post.headings)
+// Build TOC from rendered H2/H3 IDs after mount
+function buildTocFromDom() {
+  if (!postBodyRef.value) return
+  const headings = postBodyRef.value.querySelectorAll('h2[id], h3[id]')
+  const items = Array.from(headings).map(h => ({
+    id: h.id,
+    text: h.textContent || '',
+    level: parseInt(h.tagName[1]),
+  }))
+  if (items.length > 0) setToc(items)
+}
+
+// Watch for content render completion
+watch(postData, () => {
+  if (postData.value?.body) {
+    nextTick(() => buildTocFromDom())
   }
 }, { immediate: true })
 
-// Clear TOC when leaving
+onMounted(() => {
+  if (postData.value?.body) nextTick(() => buildTocFromDom())
+})
+
 onUnmounted(() => clearToc())
 </script>
 
@@ -129,7 +92,7 @@ onUnmounted(() => clearToc())
   position: relative;
 }
 .post-detail::before {
-  content: "◆";
+  content: "\25C6";
   color: var(--accent-green);
   font-size: 8px;
   position: absolute;
@@ -160,8 +123,8 @@ onUnmounted(() => clearToc())
 .post-meta .category { color: var(--accent-gold); }
 .post-meta .date::before,
 .post-meta .category::before { font-family: system-ui; font-size: 9px; margin-right: 4px; }
-.post-meta .date::before { content: "📅"; }
-.post-meta .category::before { content: "📂"; }
+.post-meta .date::before { content: "\1F4C5"; }
+.post-meta .category::before { content: "\1F4C2"; }
 .post-body {
   font-size: 15px;
   color: var(--text-secondary);
