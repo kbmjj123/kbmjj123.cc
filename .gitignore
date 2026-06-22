@@ -1,0 +1,53 @@
+# dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Nuxt dev/build
+.output/
+.data/
+.nuxt/
+dist/
+content/tools-raw/
+# testing
+coverage/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# local env files
+.env*.local
+.env
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# typescript
+*.tsbuildinfo
+
+# wrangler
+.wrangler/
+.dev.vars
+.dev.vars.local
+wrangler.local.toml
+
+# lockfile
+pnpm-lock.yaml
+
+# claude
+.claude/scripts/scrape-yo-directory.ts
+scripts/scraper/futurepedia.ts
+# Added by code-review-graph
+.code-review-graph/
