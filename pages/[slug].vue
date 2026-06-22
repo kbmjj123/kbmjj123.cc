@@ -1,23 +1,15 @@
 <template>
   <section class="post-detail">
-    <template v-if="pending">
-      <LoadingState />
-    </template>
-    <template v-else-if="!postData">
-      <EmptyState />
-    </template>
-    <template v-else>
-      <h1 class="post-title">{{ postData.title }}</h1>
-      <div class="post-meta">
-        <span class="date">{{ postData.date }}</span>
-        <span class="category">{{ postData.category }}</span>
-        <span style="color:var(--text-muted);">⌨️ {{ postData.readTime }}</span>
-      </div>
-      <div class="post-body markdown-content" ref="postBodyRef">
-        <ContentRenderer :value="postData" v-if="postData.body" />
-        <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ postData.excerpt }}</p>
-      </div>
-    </template>
+    <h1 class="post-title">{{ title }}</h1>
+    <div class="post-meta">
+      <span class="date">{{ date }}</span>
+      <span class="category">{{ category }}</span>
+      <span style="color:var(--text-muted);">⌨️ {{ readTime }}</span>
+    </div>
+    <div class="post-body markdown-content" ref="postBodyRef">
+      <ContentRenderer v-if="body && typeof body === 'object'" :value="{ body }" />
+      <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ excerpt }}</p>
+    </div>
   </section>
 </template>
 
@@ -27,61 +19,64 @@ const slug = route.params.slug as string
 const { setToc, clearToc } = useToc()
 const postBodyRef = ref<HTMLElement | null>(null)
 
-// Provide SSR fallback data — always visible on first paint
-const demoPost = {
-  'year-one-as-indie': { title: 'Year One as Indie: From Zero to MVP', date: '2026-06-14', category: 'Dev Practice', readTime: '8 min', excerpt: 'Building my own products from scratch.', body: null },
-  'balance-coding-life': { title: '5 Principles to Balance Coding & Life', date: '2026-06-10', category: 'Indie Mindset', readTime: '5 min', excerpt: "A framework to stay productive and sane.", body: null },
+// Static fallback — always works for SSR
+const fallback: Record<string, {
+  title: string; date: string; category: string; readTime: string; excerpt: string; body: null | object
+}> = {
+  'year-one-as-indie': {
+    title: 'Year One as Indie: From Zero to MVP', date: '2026-06-14',
+    category: 'Dev Practice', readTime: '8 min',
+    excerpt: 'Quitting the 9-to-5 to build my own products.',
+    body: null,
+  },
+  'balance-coding-life': {
+    title: '5 Principles to Balance Coding & Life', date: '2026-06-10',
+    category: 'Indie Mindset', readTime: '5 min',
+    excerpt: "I've developed a rhythm that boosts both productivity.",
+    body: null,
+  },
 }
 
-// Try client-side only Nuxt Content fetch (ssr: false avoids proxy serialization issues)
-const { data: allPosts, pending: fetching } = useAsyncData('all-posts-nossr', async () => {
+const fb = fallback[slug]
+const title = ref(fb?.title || '')
+const date = ref(fb?.date || '')
+const category = ref(fb?.category || '')
+const readTime = ref(fb?.readTime || '')
+const excerpt = ref(fb?.excerpt || '')
+const body = ref<any>(fb?.body || null)
+
+// Client-only: upgrade to real content from Nuxt Content
+onMounted(async () => {
   try {
-    const posts = await queryCollection('posts').all()
-    return (posts || []).map((p: any) => ({
-      id: p.id, path: p.path, title: p.title, description: p.description,
-      body: p.body, meta: p.meta,
-    }))
-  } catch { return null }
-}, { lazy: true, ssr: false })
-
-const contentPost = computed(() => {
-  const posts = allPosts.value
-  if (!posts) return null
-  const p = posts.find((x: any) => x.path === `/posts/${slug}`)
-  if (!p) return null
-  const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
-  return {
-    id: p.id, path: p.path, title: p.title, description: p.description,
-    body: p.body,
-    date: meta.date || '', category: meta.category || '', tags: meta.tags || [],
-  }
+    const raw = JSON.parse(JSON.stringify(
+      await queryCollection('posts').path(`/posts/${slug}`).first()
+    ))
+    if (!raw) return
+    const meta = typeof raw.meta === 'string' ? JSON.parse(raw.meta) : (raw.meta || {})
+    title.value = raw.title || title.value
+    date.value = meta.date || date.value
+    category.value = meta.category || category.value
+    excerpt.value = raw.description || excerpt.value
+    body.value = raw.body || null
+  } catch {}
 })
 
-const pending = computed(() => fetching.value && !contentPost.value)
-
-// Use demo data for SSR, upgrade to Content when available
-const postData = ref(demoPost[slug] || null)
-
-// Upgrade to real content when fetched
-watch(contentPost, (post) => {
-  if (post) postData.value = { ...post, readTime: '8 min' }
-})
-
-// Build TOC from rendered H2/H3 IDs — retry until headings found
+// Build TOC from rendered DOM
 function buildToc() {
   if (!postBodyRef.value) return
   const headings = postBodyRef.value.querySelectorAll('h2[id], h3[id]')
   if (headings.length > 0) {
-    setToc(Array.from(headings).map(h => ({ id: h.id, text: h.textContent || '', level: parseInt(h.tagName[1]) })))
+    setToc(Array.from(headings).map(h => ({
+      id: h.id, text: h.textContent || '', level: parseInt(h.tagName[1]),
+    })))
     return true
   }
   return false
 }
 
-// Retry TOC build with delays to catch ContentRenderer mount
 onMounted(() => {
-  const tryBuild = () => { if (!buildToc()) setTimeout(tryBuild, 200) }
-  tryBuild()
+  const tryBuild = () => { if (!buildToc()) setTimeout(tryBuild, 300) }
+  setTimeout(tryBuild, 600)
 })
 onUnmounted(() => clearToc())
 </script>
