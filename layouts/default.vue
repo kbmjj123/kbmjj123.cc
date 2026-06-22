@@ -12,7 +12,7 @@
     </div>
 
     <!-- Main container -->
-    <div style="padding:20px;display:flex;justify-content:center;min-height:100vh;">
+    <div class="pixel-body-wrapper" style="padding:20px;display:flex;justify-content:center;min-height:100vh;">
       <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
 
         <!-- Header (sticky) -->
@@ -246,7 +246,8 @@ function isActive(path: string) {
   .pixel-nav { font-size: 9px; }
 }
 @media (max-width: 480px) {
-  .pixel-container { padding: 14px 12px; }
+  .pixel-body-wrapper { padding: 8px !important; }
+  .pixel-container { padding: 10px 8px; }
   .site-title { font-size: 15px; }
 }
 </style>

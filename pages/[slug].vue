@@ -127,4 +127,8 @@ onUnmounted(() => clearToc())
   color: var(--text-secondary);
   line-height: 1.9;
 }
+
+@media (max-width: 480px) {
+  .post-detail { padding: 16px 14px 18px; }
+}
 </style>

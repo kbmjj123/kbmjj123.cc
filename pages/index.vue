@@ -205,4 +205,11 @@ const filteredPosts = computed(() => {
   color: var(--bg-deep);
   box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
 }
+
+@media (max-width: 480px) {
+  .post-item { padding: 16px 14px 18px; }
+  .post-title { font-size: 12px; }
+  .post-excerpt { font-size: 14px; }
+  .btn-read { font-size: 9px; padding: 4px 12px; }
+}
 </style>
