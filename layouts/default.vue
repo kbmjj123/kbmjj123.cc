@@ -58,7 +58,7 @@
               <div class="pixel-widget-title">Categories</div>
               <ul class="pixel-category-list">
                 <li v-for="cat in categories" :key="cat.slug">
-                  <NuxtLink :to="`/category/${cat.slug}`">{{ cat.name }}</NuxtLink>
+                  <NuxtLink :to="`/?category=${cat.slug}`">{{ cat.name }}</NuxtLink>
                   <span class="pixel-category-count">{{ cat.count }}</span>
                 </li>
               </ul>
@@ -68,9 +68,8 @@
             <div class="pixel-widget">
               <div class="pixel-widget-title">Tags</div>
               <div class="pixel-tag-cloud">
-                <NuxtLink v-for="tag in tags" :key="tag" :to="`/tag/${tag.replace('#', '')}`" class="pixel-tag">{{ tag }}</NuxtLink>
+                <NuxtLink v-for="tag in tags" :key="tag" :to="`/?tag=${tag.replace('#', '')}`" class="pixel-tag">{{ tag }}</NuxtLink>
               </div>
-              <NuxtLink to="/tags" style="display:block;margin-top:10px;font-family:var(--font-pixel);font-size:8px;color:var(--text-muted);text-decoration:none;border-top:1px dotted var(--border-pixel);padding-top:10px;text-align:center;transition:color 0.15s;" @mouseenter="$event.target.style.color='var(--accent-green)'" @mouseleave="$event.target.style.color='var(--text-muted)'">View all {{ allTags.length }} tags →</NuxtLink>
             </div>
 
             <!-- Pixel counter -->
@@ -98,7 +97,7 @@
 
 <script setup lang="ts">
 import cats from '~/data/categories.json'
-import allTags from '~/data/tags.json'
+import tagsData from '~/data/tags.json'
 
 const route = useRoute()
 
@@ -118,7 +117,7 @@ const navItems = [
 const categories = cats
 
 // Show first 12 tags in sidebar, link to full tags page
-const tags = allTags.slice(0, 12)
+const tags = tagsData.slice(0, 12)
 
 const socialLinks = [
   { label: 'GitHub', url: '#' },
