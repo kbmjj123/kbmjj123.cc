@@ -38,6 +38,8 @@ export default defineNuxtConfig({
 
   robots: {
     allow: ['/'],
+    disallow: ['/admin/', '/api/'],
+    sitemap: '/sitemap.xml',
   },
 
   sitemap: {
