@@ -153,7 +153,9 @@ function isActive(path: string) {
 </script>
 
 <style scoped>
-.pixel-container { padding: 0 24px 24px; }
+.pixel-body-wrapper { flex-direction: column; align-items: center; }
+.pixel-container { padding: 0 24px 24px; flex: 1; display: flex; flex-direction: column; }
+.pixel-main-grid { flex: 1; }
 
 .pixel-nav-desktop {
   display: flex;
