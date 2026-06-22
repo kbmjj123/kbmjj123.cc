@@ -1,9 +1,9 @@
 import type { MaybeRefOrGetter } from 'vue'
 
-const SITE_NAME = 'My App'
-const TAGLINE = 'Build something great'
+const SITE_NAME = 'kbmjj123.cc'
+const TAGLINE = 'Indie Developer Log'
 const DESC_SEPARATOR = ' — '
-const TITLE_SEPARATOR = ' | '
+const TITLE_SEPARATOR = ' · '
 
 function truncate(text: string, max: number): string {
   if (text.length <= max) return text

@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About · DevPixel</title>
+    <!-- 像素字体与系统字体 -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== 与之前完全相同的设计变量 ===== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg-deep: #0b0b12;
+            --bg-card: #13131e;
+            --border-pixel: #2a2a42;
+            --border-active: #4ade80;
+            --text-primary: #e8edf5;
+            --text-secondary: #9aa8c9;
+            --text-muted: #4d5a7a;
+            --accent-green: #4ade80;
+            --accent-gold: #fbbf24;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            --font-pixel: 'Press Start 2P', monospace;
+        }
+
+        body {
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 25px 25px, rgba(74, 222, 128, 0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.7;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .container {
+            max-width: 1150px;
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-pixel);
+            padding: 32px 36px 24px;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6), inset 0 0 0 1px rgba(74, 222, 128, 0.04);
+            transition: border-color 0.2s ease;
+        }
+
+        .container::before {
+            content: "";
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: repeating-linear-gradient(90deg,
+                    var(--accent-green) 0px, var(--accent-green) 6px,
+                    transparent 6px, transparent 12px);
+            margin-bottom: 28px;
+            opacity: 0.7;
+        }
+
+        /* ===== 头部 ===== */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-pixel);
+        }
+
+        .site-title {
+            font-family: var(--font-pixel);
+            font-size: 20px;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .site-title .pixel-block {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--bg-deep);
+        }
+        .site-title .sub {
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+            margin-left: 6px;
+            background: rgba(74, 222, 128, 0.06);
+            padding: 0 10px;
+            border: 1px solid var(--border-pixel);
+        }
+
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            font-family: var(--font-pixel);
+            font-size: 10px;
+        }
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 6px;
+            border: 1.5px solid transparent;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+        .nav a:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.04);
+        }
+        .nav a::before {
+            content: "[";
+            color: var(--text-muted);
+            margin-right: 2px;
+        }
+        .nav a::after {
+            content: "]";
+            color: var(--text-muted);
+            margin-left: 2px;
+        }
+        .nav a:hover::before,
+        .nav a:hover::after {
+            color: var(--accent-green);
+        }
+        /* 当前页高亮 */
+        .nav a.active {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+        .nav a.active::before,
+        .nav a.active::after {
+            color: var(--accent-green);
+        }
+
+        /* ===== 主体网格 ===== */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 36px;
+            margin-top: 4px;
+        }
+
+        /* ===== 关于内容 ===== */
+        .about-content {
+            background-color: rgba(255, 255, 255, 0.02);
+            border: 1.5px solid var(--border-pixel);
+            padding: 28px 30px 30px;
+            position: relative;
+        }
+        .about-content::before {
+            content: "◆";
+            color: var(--accent-green);
+            font-size: 8px;
+            position: absolute;
+            top: -5px;
+            left: 14px;
+            background: var(--bg-card);
+            padding: 0 4px;
+        }
+
+        .about-content h1 {
+            font-family: var(--font-pixel);
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .about-content .subhead {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            border-bottom: 1px dotted var(--border-pixel);
+            padding-bottom: 14px;
+        }
+
+        /* 头像区域 */
+        .about-avatar-large {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 24px;
+        }
+        .pixel-avatar-big {
+            width: 64px;
+            height: 64px;
+            background: var(--bg-deep);
+            border: 3px solid var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 32px;
+            font-family: var(--font-pixel);
+            color: var(--accent-green);
+            flex-shrink: 0;
+        }
+        .about-intro {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+        .about-intro strong {
+            color: var(--text-primary);
+        }
+
+        /* 技术栈 */
+        .skill-section {
+            margin-top: 28px;
+        }
+        .skill-section h3 {
+            font-family: var(--font-pixel);
+            font-size: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        .skill-section h3::before {
+            content: "▸ ";
+            color: var(--accent-green);
+        }
+        .skill-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .skill-tag {
+            font-family: var(--font-pixel);
+            font-size: 8px;
+            color: var(--text-secondary);
+            background: var(--bg-deep);
+            border: 1px solid var(--border-pixel);
+            padding: 4px 12px;
+            transition: all 0.15s ease;
+        }
+        .skill-tag:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        /* 时间线 */
+        .timeline {
+            margin-top: 28px;
+        }
+        .timeline h3 {
+            font-family: var(--font-pixel);
+            font-size: 12px;
+            color: var(--accent-gold);
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+        }
+        .timeline h3::before {
+            content: "▸ ";
+            color: var(--accent-green);
+        }
+        .timeline-item {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 16px;
+            border-left: 2px solid var(--border-pixel);
+            padding-left: 16px;
+            position: relative;
+        }
+        .timeline-item::before {
+            content: "◈";
+            color: var(--accent-green);
+            font-size: 10px;
+            position: absolute;
+            left: -7px;
+            top: 0;
+            background: var(--bg-card);
+            padding: 0 2px;
+        }
+        .timeline-year {
+            font-family: var(--font-pixel);
+            font-size: 10px;
+            color: var(--accent-gold);
+            min-width: 60px;
+            flex-shrink: 0;
+        }
+        .timeline-desc {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .timeline-desc strong {
+            color: var(--text-primary);
+        }
+
+        /* 联系链接 */
+        .contact-links {
+            margin-top: 28px;
+            padding-top: 18px;
+            border-top: 1px dashed var(--border-pixel);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 24px;
+        }
+        .contact-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-family: var(--font-pixel);
+            font-size: 10px;
+            transition: color 0.15s;
+            border: 1px solid transparent;
+            padding: 4px 8px;
+        }
+        .contact-links a:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        /* ===== 侧边栏 (与详情页一致) ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .widget {
+            background-color: rgba(255, 255, 255, 0.015);
+            border: 1.5px solid var(--border-pixel);
+            padding: 18px 20px 20px;
+        }
+        .widget-title {
+            font-family: var(--font-pixel);
+            font-size: 11px;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-pixel);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+        .widget-title::before {
+            content: "▸";
+            color: var(--accent-green);
+            font-size: 12px;
+        }
+
+        /* 复用分类和标签样式 */
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        .category-list li {
+            padding: 6px 0;
+            border-bottom: 1px dotted var(--border-pixel);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+            font-weight: 450;
+        }
+        .category-list li:last-child {
+            border-bottom: none;
+        }
+        .category-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .category-list a:hover {
+            color: var(--accent-green);
+        }
+        .category-list .count {
+            color: var(--text-muted);
+            font-family: var(--font-pixel);
+            font-size: 9px;
+            background: var(--bg-deep);
+            padding: 0 8px;
+            border: 1px solid var(--border-pixel);
+        }
+
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag-cloud .tag {
+            font-family: var(--font-pixel);
+            font-size: 8px;
+            color: var(--text-muted);
+            background: var(--bg-deep);
+            border: 1px solid var(--border-pixel);
+            padding: 3px 10px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+        .tag-cloud .tag:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            background: rgba(74, 222, 128, 0.04);
+        }
+
+        /* ===== 页脚 ===== */
+        .footer {
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-pixel);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: var(--font-pixel);
+        }
+        .footer .social a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 18px;
+            transition: color 0.15s;
+            font-size: 10px;
+        }
+        .footer .social a:hover {
+            color: var(--accent-green);
+        }
+        .footer .pixel-heart {
+            color: #f472b6;
+        }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 860px) {
+            .main-grid {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .container {
+                padding: 20px 18px 18px;
+            }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+            .site-title {
+                font-size: 18px;
+                flex-wrap: wrap;
+            }
+            .site-title .sub {
+                font-size: 11px;
+                margin-left: 0;
+            }
+            .nav {
+                font-size: 9px;
+            }
+            .about-content h1 {
+                font-size: 17px;
+            }
+            .footer {
+                flex-direction: column;
+                gap: 12px;
+                text-align: center;
+            }
+            .footer .social a {
+                margin: 0 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            body {
+                padding: 12px;
+            }
+            .container {
+                padding: 14px 12px 14px;
+            }
+            .container::before {
+                height: 2px;
+                margin-bottom: 16px;
+            }
+            .site-title {
+                font-size: 15px;
+            }
+            .site-title .pixel-block {
+                width: 10px;
+                height: 10px;
+            }
+            .about-content {
+                padding: 16px 14px 18px;
+            }
+            .about-content h1 {
+                font-size: 14px;
+            }
+            .about-avatar-large {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .timeline-item {
+                flex-direction: column;
+                gap: 4px;
+            }
+            .widget {
+                padding: 14px 12px 16px;
+            }
+        }
+
+        /* ===== 滚动条 ===== */
+        ::-webkit-scrollbar {
+            width: 10px;
+            background: var(--bg-deep);
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-deep);
+            border-left: 1px solid var(--border-pixel);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--border-pixel);
+            border: 1px solid var(--accent-green);
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--accent-green);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+
+        <!-- ===== HEADER ===== -->
+        <header class="header">
+            <div class="site-title">
+                <span class="pixel-block"></span>
+                DEV<span style="color:var(--accent-gold);">PIXEL</span>
+                <span class="sub">✦ Indie Log</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html">Home</a>
+                <a href="#">Archive</a>
+                <a href="#" class="active">About</a>
+                <a href="#">Projects</a>
+            </nav>
+        </header>
+
+        <!-- ===== MAIN ===== -->
+        <div class="main-grid">
+
+            <!-- 关于内容 -->
+            <section class="about-content">
+                <h1>👨‍💻 About Me</h1>
+                <div class="subhead">Independent developer · craft &amp; simplicity</div>
+
+                <div class="about-avatar-large">
+                    <div class="pixel-avatar-big">🧑‍🚀</div>
+                    <div class="about-intro">
+                        <strong>Hi, I'm PixelDev</strong> — a full-stack indie developer based in the cloud.<br />
+                        I build digital products with a focus on <span style="color:var(--accent-gold);">craft</span>,
+                        <span style="color:var(--accent-green);">performance</span>, and
+                        <span style="color:#f472b6;">minimalism</span>.
+                        This blog is my digital garden where I share lessons, tools, and thoughts along the indie journey.
+                    </div>
+                </div>
+
+                <!-- 技术栈 -->
+                <div class="skill-section">
+                    <h3>Tech Stack</h3>
+                    <div class="skill-tags">
+                        <span class="skill-tag">#Nuxt4</span>
+                        <span class="skill-tag">#Vue3</span>
+                        <span class="skill-tag">#TypeScript</span>
+                        <span class="skill-tag">#Tailwind</span>
+                        <span class="skill-tag">#Cloudflare</span>
+                        <span class="skill-tag">#D1</span>
+                        <span class="skill-tag">#Pages</span>
+                        <span class="skill-tag">#R2</span>
+                        <span class="skill-tag">#Workers</span>
+                        <span class="skill-tag">#Git</span>
+                    </div>
+                </div>
+
+                <!-- 时间线 -->
+                <div class="timeline">
+                    <h3>Milestones</h3>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2024</span>
+                        <span class="timeline-desc"><strong>Started indie journey</strong> — left 9-to-5 to build my own products.</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2025</span>
+                        <span class="timeline-desc"><strong>Launched first MVP</strong> — a productivity tool for indie devs (3 paying users).</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">2026</span>
+                        <span class="timeline-desc"><strong>Rebuilt stack</strong> — migrated to Nuxt 4 + Cloudflare D1, fully serverless.</span>
+                    </div>
+                    <div class="timeline-item">
+                        <span class="timeline-year">Now</span>
+                        <span class="timeline-desc"><strong>Building PixelFlow</strong> — a visual workflow builder for creators.</span>
+                    </div>
+                </div>
+
+                <!-- 联系 -->
+                <div class="contact-links">
+                    <a href="#">GitHub</a>
+                    <a href="#">Twitter / X</a>
+                    <a href="#">LinkedIn</a>
+                    <a href="mailto:hello@devpixel.dev">✉️ Email</a>
+                </div>
+            </section>
+
+            <!-- ===== 侧边栏 ===== -->
+            <aside class="sidebar">
+
+                <!-- 简单的关于小部件（可复用） -->
+                <div class="widget">
+                    <div class="widget-title">About</div>
+                    <div style="display:flex; align-items:center; gap:10px; margin-bottom:8px;">
+                        <div style="width:32px;height:32px;background:var(--bg-deep);border:2px solid var(--accent-green);display:flex;align-items:center;justify-content:center;font-size:16px;">🧑‍🚀</div>
+                        <span style="font-family:var(--font-pixel);font-size:9px;color:var(--text-secondary);">@pixeldev</span>
+                    </div>
+                    <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">
+                        Building in public. <span style="color:var(--accent-gold);">Craft</span> over hype.
+                    </p>
+                </div>
+
+                <!-- 分类 -->
+                <div class="widget">
+                    <div class="widget-title">Categories</div>
+                    <ul class="category-list">
+                        <li><a href="#">Dev Experience</a> <span class="count">12</span></li>
+                        <li><a href="#">Product Thinking</a> <span class="count">8</span></li>
+                        <li><a href="#">Mindset</a> <span class="count">6</span></li>
+                        <li><a href="#">Tools</a> <span class="count">5</span></li>
+                        <li><a href="#">Startup Diary</a> <span class="count">4</span></li>
+                    </ul>
+                </div>
+
+                <!-- 标签 -->
+                <div class="widget">
+                    <div class="widget-title">Tags</div>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">#react</a>
+                        <a href="#" class="tag">#nextjs</a>
+                        <a href="#" class="tag">#tailwind</a>
+                        <a href="#" class="tag">#indiehackers</a>
+                        <a href="#" class="tag">#product</a>
+                        <a href="#" class="tag">#startup</a>
+                        <a href="#" class="tag">#figma</a>
+                        <a href="#" class="tag">#vercel</a>
+                        <a href="#" class="tag">#ai</a>
+                    </div>
+                </div>
+
+                <!-- 像素计数器 -->
+                <div class="widget" style="border-color:var(--border-pixel); background:rgba(0,0,0,0.2);">
+                    <div style="font-family:var(--font-pixel); font-size:9px; color:var(--text-muted); text-align:center;">
+                        <span style="color:var(--accent-green);">◼</span> Pixels since 2026
+                        <span style="color:var(--accent-gold); display:block; font-size:13px; margin-top:6px; letter-spacing:2px;">
+                            0 0 0 0 0 1 4
+                        </span>
+                    </div>
+                </div>
+
+            </aside>
+
+        </div>
+
+        <!-- ===== FOOTER ===== -->
+        <footer class="footer">
+            <span>
+                <span class="pixel-heart">♥</span> 2026 <span style="color:var(--accent-green);">DevPixel</span>
+            </span>
+            <span style="font-size:9px; color:var(--text-muted); letter-spacing:0.5px;">
+                ✦ pixel · indie · craft ✦
+            </span>
+            <div class="social">
+                <a href="#">GitHub</a>
+                <a href="#">Twitter</a>
+                <a href="#">RSS</a>
+            </div>
+        </footer>
+
+    </div>
+
+</body>
+</html>

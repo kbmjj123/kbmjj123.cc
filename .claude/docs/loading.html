@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>kbmjj123.cc · Indie Dev Log</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        /* ========== 所有样式与之前完全一致，此处省略（实际使用时请复制完整样式） ========== */
+        /* 为了预览效果，这里提供完整样式，但为节省篇幅，在代码块中完整保留 */
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --bg-deep: #0b0b12;
+            --bg-card: #13131e;
+            --border-pixel: #2a2a42;
+            --text-primary: #e8edf5;
+            --text-secondary: #9aa8c9;
+            --text-muted: #4d5a7a;
+            --accent-green: #4ade80;
+            --accent-gold: #fbbf24;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-pixel: 'Press Start 2P', monospace;
+        }
+        body {
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 25px 25px, rgba(74,222,128,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.7;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 1150px;
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-pixel);
+            padding: 32px 36px 24px;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(74,222,128,0.04);
+        }
+        .container::before {
+            content: "";
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: repeating-linear-gradient(90deg, var(--accent-green) 0px, var(--accent-green) 6px, transparent 6px, transparent 12px);
+            margin-bottom: 28px;
+            opacity: 0.7;
+            background-size: 24px 100%;
+            animation: flowLine 4s linear infinite;
+        }
+        @keyframes flowLine { 0% { background-position: 0 0; } 100% { background-position: 24px 0; } }
+
+        /* ===== 头部 ===== */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-pixel);
+        }
+        .site-title {
+            font-family: var(--font-pixel);
+            font-size: 20px;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .site-title .pixel-block {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--bg-deep);
+            animation: pulseBlock 3s ease-in-out infinite;
+        }
+        @keyframes pulseBlock { 0%,100% { transform:scale(1); opacity:1; } 50% { transform:scale(1.15); opacity:0.8; box-shadow:0 0 8px var(--accent-gold); } }
+        .site-title .brand-kb { color: var(--accent-green); }
+        .site-title .brand-mjj { color: var(--accent-gold); letter-spacing: 0.1em; }
+        .site-title .brand-dotcc { color: var(--text-muted); font-size: 0.6em; margin-left: 2px; font-family: var(--font-ui); }
+        .site-title .sub {
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+            margin-left: 6px;
+            background: rgba(74,222,128,0.06);
+            padding: 0 10px;
+            border: 1px solid var(--border-pixel);
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            font-family: var(--font-pixel);
+            font-size: 10px;
+        }
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 6px;
+            border: 1.5px solid transparent;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+        .nav a:hover, .nav a.active {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            background: rgba(74,222,128,0.04);
+        }
+        .nav a::before { content: "["; color: var(--text-muted); margin-right: 2px; }
+        .nav a::after { content: "]"; color: var(--text-muted); margin-left: 2px; }
+        .nav a:hover::before, .nav a:hover::after, .nav a.active::before, .nav a.active::after { color: var(--accent-green); }
+
+        /* ===== 主体 ===== */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 36px;
+            margin-top: 4px;
+        }
+        /* ===== 文章列表 ===== */
+        .post-list {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .post-item {
+            background-color: rgba(255,255,255,0.02);
+            border: 1.5px solid var(--border-pixel);
+            padding: 24px 26px 22px;
+            transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s;
+            position: relative;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeUp 0.5s ease forwards;
+        }
+        .post-item:nth-child(1) { animation-delay: 0.1s; }
+        .post-item:nth-child(2) { animation-delay: 0.2s; }
+        .post-item:nth-child(3) { animation-delay: 0.3s; }
+        .post-item:nth-child(4) { animation-delay: 0.4s; }
+        @keyframes fadeUp { 0% { opacity:0; transform:translateY(20px); } 100% { opacity:1; transform:translateY(0); } }
+        .post-item:hover {
+            border-color: var(--accent-green);
+            box-shadow: 0 4px 16px rgba(74,222,128,0.04);
+            transform: translateY(-2px);
+        }
+        .post-item::before {
+            content: "◆";
+            color: var(--accent-green);
+            font-size: 8px;
+            position: absolute;
+            top: -5px;
+            left: 14px;
+            background: var(--bg-card);
+            padding: 0 4px;
+        }
+        .post-title {
+            font-family: var(--font-pixel);
+            font-size: 14px;
+            color: var(--text-primary);
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+        .post-title a { color: inherit; text-decoration: none; transition: color 0.15s; }
+        .post-title a:hover { color: var(--accent-green); }
+        .post-meta {
+            font-family: var(--font-pixel);
+            font-size: 10px;
+            color: var(--text-muted);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px 20px;
+            margin-bottom: 12px;
+            padding-bottom: 10px;
+            border-bottom: 1px dotted var(--border-pixel);
+            text-transform: uppercase;
+        }
+        .post-meta .category { color: var(--accent-gold); }
+        .post-meta .category::before { content: "📂 "; font-family: system-ui; font-size: 9px; }
+        .post-meta .date::before { content: "📅 "; font-family: system-ui; font-size: 9px; }
+        .post-excerpt {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 16px;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+        .btn-read {
+            display: inline-block;
+            font-family: var(--font-pixel);
+            font-size: 10px;
+            color: var(--accent-green);
+            background: transparent;
+            border: 1.5px solid var(--accent-green);
+            padding: 6px 18px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            letter-spacing: 0.5px;
+            box-shadow: 2px 2px 0 rgba(74,222,128,0.08);
+        }
+        .btn-read:hover {
+            background: var(--accent-green);
+            color: var(--bg-deep);
+            box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
+        }
+
+        /* ===== 侧边栏（分类 & 标签已全面更新） ===== */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .widget {
+            background-color: rgba(255,255,255,0.015);
+            border: 1.5px solid var(--border-pixel);
+            padding: 18px 20px 20px;
+        }
+        .widget-title {
+            font-family: var(--font-pixel);
+            font-size: 11px;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-pixel);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+        .widget-title::before { content: "▸"; color: var(--accent-green); font-size: 12px; }
+
+        .about-avatar {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 12px;
+        }
+        .pixel-avatar {
+            width: 44px;
+            height: 44px;
+            background: var(--bg-deep);
+            border: 2px solid var(--accent-green);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            font-family: var(--font-pixel);
+            color: var(--accent-green);
+            flex-shrink: 0;
+        }
+        .about-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+        .about-text strong { color: var(--text-primary); font-weight: 600; }
+        .about-tagline {
+            margin-top: 8px;
+            font-family: var(--font-pixel);
+            font-size: 9px;
+            color: var(--text-muted);
+            border-top: 1px dashed var(--border-pixel);
+            padding-top: 10px;
+        }
+
+        /* ===== 分类列表（新） ===== */
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        .category-list li {
+            padding: 6px 0;
+            border-bottom: 1px dotted var(--border-pixel);
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            font-weight: 450;
+        }
+        .category-list li:last-child { border-bottom: none; }
+        .category-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .category-list a:hover { color: var(--accent-green); }
+        .category-list .count {
+            color: var(--text-muted);
+            font-family: var(--font-pixel);
+            font-size: 8px;
+            background: var(--bg-deep);
+            padding: 0 8px;
+            border: 1px solid var(--border-pixel);
+        }
+
+        /* ===== 标签云（新） ===== */
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+        }
+        .tag {
+            font-family: var(--font-pixel);
+            font-size: 7px;
+            color: var(--text-muted);
+            background: var(--bg-deep);
+            border: 1px solid var(--border-pixel);
+            padding: 2px 8px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+        .tag:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            background: rgba(74,222,128,0.04);
+            box-shadow: 2px 2px 0 rgba(74,222,128,0.06);
+        }
+
+        .counter-digits {
+            display: inline-block;
+            font-family: var(--font-pixel);
+            color: var(--accent-gold);
+            font-size: 14px;
+            letter-spacing: 2px;
+            min-width: 80px;
+            text-align: center;
+        }
+
+        /* ===== 页脚 ===== */
+        .footer {
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-pixel);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: var(--font-pixel);
+        }
+        .footer .social a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 18px;
+            transition: color 0.15s;
+            font-size: 10px;
+        }
+        .footer .social a:hover { color: var(--accent-green); }
+        .footer .pixel-heart { color: #f472b6; }
+        .footer .brand-copyright { color: var(--accent-green); }
+
+        /* ===== 响应式 ===== */
+        @media (max-width: 860px) {
+            .main-grid { grid-template-columns: 1fr; gap: 28px; }
+            .container { padding: 20px 18px 18px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .site-title { font-size: 18px; flex-wrap: wrap; }
+            .site-title .sub { font-size: 11px; margin-left: 0; }
+            .nav { font-size: 9px; }
+            .post-title { font-size: 13px; }
+            .footer { flex-direction: column; gap: 12px; text-align: center; }
+            .footer .social a { margin: 0 10px; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .container { padding: 14px 12px 14px; }
+            .container::before { height: 2px; margin-bottom: 16px; }
+            .site-title { font-size: 15px; }
+            .site-title .pixel-block { width: 10px; height: 10px; }
+            .site-title .brand-dotcc { font-size: 0.5em; }
+            .post-item { padding: 16px 14px 18px; }
+            .post-title { font-size: 12px; }
+            .post-excerpt { font-size: 14px; }
+            .btn-read { font-size: 9px; padding: 4px 12px; }
+            .widget { padding: 14px 12px 16px; }
+            .category-list li { font-size: 10px; }
+            .tag { font-size: 6px; padding: 1px 6px; }
+        }
+        ::-webkit-scrollbar { width: 10px; background: var(--bg-deep); }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); border-left: 1px solid var(--border-pixel); }
+        ::-webkit-scrollbar-thumb { background: var(--border-pixel); border: 1px solid var(--accent-green); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-green); }
+    </style>
+</head>
+<body>
+
+    <!-- ===== 加载遮罩（保留） ===== -->
+    <div id="loader-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-deep);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.5s ease;opacity:1;pointer-events:none;">
+        <div style="display:grid;grid-template-columns:24px 24px;grid-template-rows:24px 24px;gap:6px;margin-bottom:28px;">
+            <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:blockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.0s;"></div>
+            <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:blockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.3s;"></div>
+            <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:blockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.6s;"></div>
+            <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:blockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.9s;"></div>
+        </div>
+        <div style="font-family:var(--font-pixel);font-size:14px;color:var(--accent-gold);letter-spacing:4px;animation:blinkText 1.6s step-end infinite;">LOADING</div>
+    </div>
+    <style>
+        @keyframes blockPulse { 0% { transform:scale(1); opacity:0.6; } 100% { transform:scale(1.4); opacity:1; box-shadow:0 0 12px var(--accent-green); } }
+        @keyframes blinkText { 0%,100% { opacity:1; } 50% { opacity:0.2; } }
+    </style>
+
+    <!-- ===== 主页面内容 ===== -->
+    <div class="container">
+        <header class="header">
+            <div class="site-title">
+                <span class="pixel-block"></span>
+                <span class="brand-kb">KB</span>
+                <span class="brand-mjj">MJJ123</span>
+                <span class="brand-dotcc">.cc</span>
+                <span class="sub">✦ Indie Log</span>
+            </div>
+            <nav class="nav">
+                <a href="index.html" class="active">Home</a>
+                <a href="archive.html">Archive</a>
+                <a href="about.html">About</a>
+                <a href="projects.html">Projects</a>
+            </nav>
+        </header>
+
+        <div class="main-grid">
+            <!-- 文章列表（示例内容保持不变） -->
+            <section class="post-list">
+                <article class="post-item">
+                    <h2 class="post-title"><a href="post.html">Year One as Indie: From Zero to MVP</a></h2>
+                    <div class="post-meta">
+                        <span class="date">2026-06-14</span>
+                        <span class="category">Dev Practice</span>
+                        <span style="color:var(--text-muted);">⌨️ 8 min</span>
+                    </div>
+                    <p class="post-excerpt">Quitting the 9-to-5 to build my own products. The real struggles with product-market fit, tech choices, and mental health. Honest reflections for fellow builders.</p>
+                    <a href="post.html" class="btn-read">Read More</a>
+                </article>
+                <article class="post-item">
+                    <h2 class="post-title"><a href="#">5 Principles to Balance Coding &amp; Life</a></h2>
+                    <div class="post-meta">
+                        <span class="date">2026-06-10</span>
+                        <span class="category">Indie Mindset</span>
+                        <span style="color:var(--text-muted);">🧘 5 min</span>
+                    </div>
+                    <p class="post-excerpt">Indie devs are prone to burnout. I've developed a rhythm that boosts both productivity and well-being. Here's my practical framework to stay sustainable.</p>
+                    <a href="#" class="btn-read">Read More</a>
+                </article>
+                <article class="post-item">
+                    <h2 class="post-title"><a href="#">What I Learned on Launch Day (with 3 users)</a></h2>
+                    <div class="post-meta">
+                        <span class="date">2026-06-05</span>
+                        <span class="category">Product & Business</span>
+                        <span style="color:var(--text-muted);">🚀 6 min</span>
+                    </div>
+                    <p class="post-excerpt">The excitement of shipping, followed by the silence of a ghost town. But those first 3 users taught me more about true product value than any course ever did.</p>
+                    <a href="#" class="btn-read">Read More</a>
+                </article>
+                <article class="post-item">
+                    <h2 class="post-title"><a href="#">Essential Indie Dev Toolkit (2026)</a></h2>
+                    <div class="post-meta">
+                        <span class="date">2026-05-28</span>
+                        <span class="category">Tools & Workflow</span>
+                        <span style="color:var(--text-muted);">🛠️ 4 min</span>
+                    </div>
+                    <p class="post-excerpt">From editor to analytics, design to deployment. My carefully curated stack that maximizes velocity without sacrificing quality. Updated for 2026.</p>
+                    <a href="#" class="btn-read">Read More</a>
+                </article>
+            </section>
+
+            <!-- ===== 侧边栏（分类 & 标签已全面更新） ===== -->
+            <aside class="sidebar">
+                <div class="widget">
+                    <div class="widget-title">About</div>
+                    <div class="about-avatar">
+                        <div class="pixel-avatar">👨‍💻</div>
+                        <div style="font-size:11px; color:var(--text-secondary); font-family:var(--font-pixel);">@kbmjj123</div>
+                    </div>
+                    <p class="about-text">
+                        <strong>Indie Developer</strong> · Full-stack &amp; product design.<br />
+                        Building digital products with a focus on <span style="color:var(--accent-gold);">craft</span> and <span style="color:var(--accent-green);">simplicity</span>.
+                    </p>
+                    <div class="about-tagline">⚡ Currently: PixelFlow</div>
+                </div>
+
+                <!-- ===== 新分类列表（覆盖独立开发者全领域） ===== -->
+                <div class="widget">
+                    <div class="widget-title">Categories</div>
+                    <ul class="category-list">
+                        <li><a href="#">Dev Practice</a> <span class="count">14</span></li>
+                        <li><a href="#">Product &amp; Business</a> <span class="count">9</span></li>
+                        <li><a href="#">Indie Mindset</a> <span class="count">7</span></li>
+                        <li><a href="#">Tools &amp; Workflow</a> <span class="count">6</span></li>
+                        <li><a href="#">Startup Diary</a> <span class="count">5</span></li>
+                        <li><a href="#">Tech Trends</a> <span class="count">4</span></li>
+                    </ul>
+                </div>
+
+                <!-- ===== 新标签云（覆盖独立开发者方方面面） ===== -->
+                <div class="widget">
+                    <div class="widget-title">Tags</div>
+                    <div class="tag-cloud">
+                        <a href="#" class="tag">#javascript</a>
+                        <a href="#" class="tag">#typescript</a>
+                        <a href="#" class="tag">#react</a>
+                        <a href="#" class="tag">#vue</a>
+                        <a href="#" class="tag">#nextjs</a>
+                        <a href="#" class="tag">#tailwind</a>
+                        <a href="#" class="tag">#api</a>
+                        <a href="#" class="tag">#database</a>
+                        <a href="#" class="tag">#testing</a>
+                        <a href="#" class="tag">#deployment</a>
+                        <a href="#" class="tag">#productdesign</a>
+                        <a href="#" class="tag">#ux</a>
+                        <a href="#" class="tag">#growth</a>
+                        <a href="#" class="tag">#pricing</a>
+                        <a href="#" class="tag">#marketing</a>
+                        <a href="#" class="tag">#saas</a>
+                        <a href="#" class="tag">#b2b</a>
+                        <a href="#" class="tag">#mvp</a>
+                        <a href="#" class="tag">#launch</a>
+                        <a href="#" class="tag">#motivation</a>
+                        <a href="#" class="tag">#burnout</a>
+                        <a href="#" class="tag">#productivity</a>
+                        <a href="#" class="tag">#remotework</a>
+                        <a href="#" class="tag">#focus</a>
+                        <a href="#" class="tag">#impostersyndrome</a>
+                        <a href="#" class="tag">#habits</a>
+                        <a href="#" class="tag">#vscode</a>
+                        <a href="#" class="tag">#figma</a>
+                        <a href="#" class="tag">#postman</a>
+                        <a href="#" class="tag">#docker</a>
+                        <a href="#" class="tag">#vercel</a>
+                        <a href="#" class="tag">#cloudflare</a>
+                        <a href="#" class="tag">#github</a>
+                        <a href="#" class="tag">#ci/cd</a>
+                        <a href="#" class="tag">#day1</a>
+                        <a href="#" class="tag">#pivot</a>
+                        <a href="#" class="tag">#failure</a>
+                        <a href="#" class="tag">#milestone</a>
+                        <a href="#" class="tag">#hiring</a>
+                        <a href="#" class="tag">#funding</a>
+                        <a href="#" class="tag">#bootstrapping</a>
+                        <a href="#" class="tag">#ai</a>
+                        <a href="#" class="tag">#machinelearning</a>
+                        <a href="#" class="tag">#web3</a>
+                        <a href="#" class="tag">#rust</a>
+                        <a href="#" class="tag">#wasm</a>
+                        <a href="#" class="tag">#openai</a>
+                        <a href="#" class="tag">#opensource</a>
+                        <a href="#" class="tag">#edge</a>
+                    </div>
+                </div>
+
+                <!-- 像素计数器 -->
+                <div class="widget" style="border-color:var(--border-pixel); background:rgba(0,0,0,0.2);">
+                    <div style="font-family:var(--font-pixel); font-size:9px; color:var(--text-muted); text-align:center;">
+                        <span style="color:var(--accent-green);">◼</span> Pixels since 2026
+                        <span class="counter-digits" id="pixelCounter">000014</span>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <footer class="footer">
+            <span><span class="pixel-heart">♥</span> 2026 <span class="brand-copyright">kbmjj123.cc</span></span>
+            <span style="font-size:9px; color:var(--text-muted); letter-spacing:0.5px;">✦ pixel · indie · craft ✦</span>
+            <div class="social">
+                <a href="#">GitHub</a>
+                <a href="#">Twitter</a>
+                <a href="#">RSS</a>
+            </div>
+        </footer>
+    </div>
+
+    <!-- ===== 加载控制 JS ===== -->
+    <script>
+        window.addEventListener('load', function() {
+            const overlay = document.getElementById('loader-overlay');
+            if (overlay) overlay.classList.add('hidden');
+        });
+        (function() {
+            const el = document.getElementById('pixelCounter');
+            if (!el) return;
+            let value = 14;
+            setInterval(() => {
+                const increment = Math.floor(Math.random() * 10);
+                value = (value + increment) % 1000000;
+                el.textContent = String(value).padStart(6, '0');
+            }, 1000);
+        })();
+    </script>
+
+</body>
+</html>

@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Error · kbmjj123.cc</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        * { margin:0; padding:0; box-sizing:border-box; }
+        :root {
+            --bg-deep: #0b0b12;
+            --bg-card: #13131e;
+            --border-pixel: #2a2a42;
+            --text-primary: #e8edf5;
+            --text-secondary: #9aa8c9;
+            --text-muted: #4d5a7a;
+            --accent-green: #4ade80;
+            --accent-gold: #fbbf24;
+            --error-red: #f87171;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-pixel: 'Press Start 2P', monospace;
+        }
+        body {
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 25px 25px, rgba(248,113,113,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.7;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ===== 容器入场动画（上浮淡入，与empty一致） ===== */
+        .error-container {
+            max-width: 600px;
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--error-red);
+            padding: 48px 40px 40px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(248,113,113,0.08);
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.6s ease forwards;
+        }
+        @keyframes fadeUp {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        .error-container::before {
+            content: "";
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: repeating-linear-gradient(90deg,
+                    var(--error-red) 0px, var(--error-red) 6px,
+                    transparent 6px, transparent 12px);
+            margin-bottom: 28px;
+            opacity: 0.7;
+            background-size: 24px 100%;
+            animation: flowLine 4s linear infinite;
+        }
+        @keyframes flowLine {
+            0% { background-position: 0 0; }
+            100% { background-position: 24px 0; }
+        }
+
+        /* ===== 警告图标（三角形 + 感叹号）带轻微晃动 ===== */
+        .error-icon {
+            display: inline-block;
+            width: 0;
+            height: 0;
+            border-left: 40px solid transparent;
+            border-right: 40px solid transparent;
+            border-bottom: 60px solid var(--error-red);
+            position: relative;
+            margin-bottom: 20px;
+            box-shadow: 4px 4px 0 rgba(0,0,0,0.5);
+            animation: wobble 2.8s ease-in-out infinite;
+        }
+        @keyframes wobble {
+            0%, 100% { transform: rotate(0deg); }
+            25% { transform: rotate(2deg); }
+            75% { transform: rotate(-2deg); }
+        }
+        .error-icon::after {
+            content: "!";
+            position: absolute;
+            top: 14px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: var(--font-pixel);
+            font-size: 32px;
+            color: var(--bg-deep);
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        /* ===== 文字渐入（延迟） ===== */
+        .error-title {
+            font-family: var(--font-pixel);
+            font-size: 18px;
+            color: var(--error-red);
+            margin-bottom: 10px;
+            opacity: 0;
+            animation: fadeText 0.5s ease 0.15s forwards;
+        }
+        .error-desc {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 28px;
+            line-height: 1.8;
+            opacity: 0;
+            animation: fadeText 0.5s ease 0.3s forwards;
+        }
+        @keyframes fadeText {
+            0% { opacity: 0; transform: translateY(8px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ===== 按钮 ===== */
+        .error-actions {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 16px;
+            opacity: 0;
+            animation: fadeText 0.5s ease 0.45s forwards;
+        }
+        .error-btn {
+            display: inline-block;
+            font-family: var(--font-pixel);
+            font-size: 10px;
+            padding: 10px 20px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+            border: 2px solid;
+            box-shadow: 2px 2px 0 rgba(0,0,0,0.2);
+        }
+        .error-btn.retry {
+            color: var(--error-red);
+            border-color: var(--error-red);
+            background: transparent;
+        }
+        .error-btn.retry:hover {
+            background: var(--error-red);
+            color: var(--bg-deep);
+            box-shadow: 4px 4px 0 rgba(248,113,113,0.2);
+        }
+        .error-btn.home {
+            color: var(--text-secondary);
+            border-color: var(--border-pixel);
+            background: transparent;
+        }
+        .error-btn.home:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+
+        .error-footer {
+            margin-top: 28px;
+            font-family: var(--font-pixel);
+            font-size: 8px;
+            color: var(--text-muted);
+            opacity: 0;
+            animation: fadeText 0.5s ease 0.6s forwards;
+        }
+
+        @media (max-width: 480px) {
+            .error-container { padding: 32px 20px 28px; }
+            .error-title { font-size: 15px; }
+            .error-icon { border-left-width: 30px; border-right-width: 30px; border-bottom-width: 45px; }
+            .error-icon::after { font-size: 24px; top: 10px; }
+        }
+    </style>
+</head>
+<body>
+    <div class="error-container">
+        <div class="error-icon"></div>
+        <h1 class="error-title">⚠️ Something went wrong</h1>
+        <p class="error-desc">
+            We couldn't load the data.<br />
+            Please check your connection and try again.
+        </p>
+        <div class="error-actions">
+            <a href="#" class="error-btn retry" onclick="location.reload();">↻ Retry</a>
+            <a href="index.html" class="error-btn home">⌂ Home</a>
+        </div>
+        <div class="error-footer">
+            <span>Error code: 500 · Please try later</span>
+        </div>
+    </div>
+</body>
+</html>

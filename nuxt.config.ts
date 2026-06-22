@@ -2,8 +2,9 @@ export default defineNuxtConfig({
   modules: ['@nuxt/content', '@nuxtjs/seo'],
 
   site: {
-    url: 'https://example.com',
-    name: 'Nuxt Starter',
+    url: 'https://kbmjj123.cc',
+    name: 'kbmjj123.cc',
+    trailingSlash: false,
   },
 
   css: ['~/assets/css/main.css', '~/assets/css/markdown.css'],

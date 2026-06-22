@@ -1,71 +1,146 @@
 <template>
-  <div>
-    <!-- Hero -->
-    <section class="pt-12 pb-10">
-      <div class="hero-tag">Starter Template</div>
-      <h1 class="hero-title">Nuxt Cloudflare <em>Starter</em></h1>
-      <p class="hero-sub">
-        Production-ready boilerplate with Nuxt 4, Tailwind CSS v4, dark/light theme,
-        UI components, SEO, OG images, and Cloudflare deployment.
-      </p>
-      <div class="flex gap-2 flex-wrap">
-        <a href="https://nuxt.com" target="_blank" rel="noopener noreferrer" class="btn-primary">Nuxt Docs</a>
-        <a href="https://tailwindcss.com" target="_blank" rel="noopener noreferrer" class="btn-secondary">Tailwind Docs</a>
-        <a href="https://developers.cloudflare.com" target="_blank" rel="noopener noreferrer" class="btn-secondary">Cloudflare Docs</a>
+  <section class="post-list">
+    <article v-for="(post, i) in posts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }">
+      <h2 class="post-title">
+        <NuxtLink :to="`/${post.slug}`">{{ post.title }}</NuxtLink>
+      </h2>
+      <div class="post-meta">
+        <span class="date">{{ post.date }}</span>
+        <span class="category">{{ post.category }}</span>
+        <span style="color:var(--text-muted);">⌨️ {{ post.readTime }}</span>
       </div>
-    </section>
-
-    <!-- Feature grid -->
-    <section class="pt-4 pb-8">
-      <h2 class="font-sans font-bold text-[15px] mb-5" style="color: var(--color-text-primary)">What's Included</h2>
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-        <div class="card">
-          <div class="text-lg mb-1">🎨</div>
-          <div class="font-sans font-semibold text-[13px] mb-1" style="color: var(--color-text-primary)">Design System</div>
-          <div class="font-body text-[11px]" style="color: var(--color-text-secondary)">CSS variables, dark/light mode, Inter + JetBrains Mono fonts, Indigo accent</div>
-        </div>
-        <div class="card">
-          <div class="text-lg mb-1">🧩</div>
-          <div class="font-sans font-semibold text-[13px] mb-1" style="color: var(--color-text-primary)">UI Components</div>
-          <div class="font-body text-[11px]" style="color: var(--color-text-secondary)">Button, Input, Select, Badge, Tag, Toast, Skeleton — all theme-aware</div>
-        </div>
-        <div class="card">
-          <div class="text-lg mb-1">📐</div>
-          <div class="font-sans font-semibold text-[13px] mb-1" style="color: var(--color-text-primary)">Layout System</div>
-          <div class="font-body text-[11px]" style="color: var(--color-text-secondary)">Responsive header, sidebar, footer, mobile tab bar, dark/light toggle</div>
-        </div>
-        <div class="card">
-          <div class="text-lg mb-1">🔍</div>
-          <div class="font-sans font-semibold text-[13px] mb-1" style="color: var(--color-text-primary)">SEO Ready</div>
-          <div class="font-body text-[11px]" style="color: var(--color-text-secondary)">usePageSeo composable, OG image generation, sitemap, robots.txt</div>
-        </div>
-        <div class="card">
-          <div class="text-lg mb-1">☁️</div>
-          <div class="font-sans font-semibold text-[13px] mb-1" style="color: var(--color-text-primary)">Cloudflare Native</div>
-          <div class="font-body text-[11px]" style="color: var(--color-text-secondary)">Pages deployment, Workers via Nitro, D1/KV/R2 bindings template</div>
-        </div>
-        <div class="card">
-          <div class="text-lg mb-1">📝</div>
-          <div class="font-sans font-semibold text-[13px] mb-1" style="color: var(--color-text-primary)">Nuxt Content v3</div>
-          <div class="font-body text-[11px]" style="color: var(--color-text-secondary)">Markdown-based content management, queryCollection API, ISR ready</div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Getting started -->
-    <section class="py-8">
-      <h2 class="font-sans font-bold text-[15px] mb-5" style="color: var(--color-text-primary)">Getting Started</h2>
-      <div class="card !cursor-default space-y-3 font-body text-[12px]" style="color: var(--color-text-secondary); font-family: var(--font-mono)">
-        <div><span style="color: var(--color-accent)">1.</span> Edit <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">pages/index.vue</code> to customize this page</div>
-        <div><span style="color: var(--color-accent)">2.</span> Update <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">assets/css/main.css</code> to change theme colors</div>
-        <div><span style="color: var(--color-accent)">3.</span> Add your routes in <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">pages/</code> and components in <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">components/</code></div>
-        <div><span style="color: var(--color-accent)">4.</span> Configure site info in <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">nuxt.config.ts</code> and <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">composables/usePageSeo.ts</code></div>
-        <div><span style="color: var(--color-accent)">5.</span> Deploy: <code style="background:var(--color-bg-elevated);border:1px solid var(--color-border);border-radius:3px;padding:1px 6px;font-size:11px">pnpm build && wrangler deploy</code></div>
-      </div>
-    </section>
-  </div>
+      <p class="post-excerpt">{{ post.excerpt }}</p>
+      <NuxtLink :to="`/${post.slug}`" class="btn-read">Read More</NuxtLink>
+    </article>
+  </section>
 </template>
 
 <script setup lang="ts">
-usePageSeo({})
+usePageSeo({ title: 'Home' })
+
+interface Post {
+  slug: string
+  title: string
+  date: string
+  category: string
+  readTime: string
+  excerpt: string
+}
+
+const posts: Post[] = [
+  {
+    slug: 'year-one-as-indie',
+    title: 'Year One as Indie: From Zero to MVP',
+    date: '2026-06-14',
+    category: 'Dev Practice',
+    readTime: '8 min',
+    excerpt: 'Quitting the 9-to-5 to build my own products. The real struggles with product-market fit, tech choices, and mental health. Honest reflections for fellow builders.',
+  },
+  {
+    slug: 'balance-coding-life',
+    title: '5 Principles to Balance Coding & Life',
+    date: '2026-06-10',
+    category: 'Indie Mindset',
+    readTime: '5 min',
+    excerpt: 'Indie devs are prone to burnout. I\'ve developed a rhythm that boosts both productivity and well-being. Here\'s my practical framework to stay sustainable.',
+  },
+  {
+    slug: 'launch-day-3-users',
+    title: 'What I Learned on Launch Day (with 3 users)',
+    date: '2026-06-05',
+    category: 'Product & Business',
+    readTime: '6 min',
+    excerpt: 'The excitement of shipping, followed by the silence of a ghost town. But those first 3 users taught me more about true product value than any course ever did.',
+  },
+  {
+    slug: 'indie-dev-toolkit-2026',
+    title: 'Essential Indie Dev Toolkit (2026)',
+    date: '2026-05-28',
+    category: 'Tools & Workflow',
+    readTime: '4 min',
+    excerpt: 'From editor to analytics, design to deployment. My carefully curated stack that maximizes velocity without sacrificing quality. Updated for 2026.',
+  },
+]
 </script>
+
+<style scoped>
+.post-list {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+.post-item {
+  background-color: rgba(255,255,255,0.02);
+  border: 1.5px solid var(--border-pixel);
+  padding: 24px 26px 22px;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s;
+  position: relative;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: pixelFadeUp 0.5s ease forwards;
+}
+.post-item:hover {
+  border-color: var(--accent-green);
+  box-shadow: 0 4px 16px rgba(74,222,128,0.04);
+  transform: translateY(-2px);
+}
+.post-item::before {
+  content: "◆";
+  color: var(--accent-green);
+  font-size: 8px;
+  position: absolute;
+  top: -5px;
+  left: 14px;
+  background: var(--bg-card);
+  padding: 0 4px;
+}
+.post-title {
+  font-family: var(--font-pixel);
+  font-size: 14px;
+  color: var(--text-primary);
+  margin-bottom: 10px;
+  line-height: 1.6;
+}
+.post-title a { color: inherit; text-decoration: none; transition: color 0.15s; }
+.post-title a:hover { color: var(--accent-green); }
+.post-meta {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--text-muted);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px 20px;
+  margin-bottom: 12px;
+  padding-bottom: 10px;
+  border-bottom: 1px dotted var(--border-pixel);
+  text-transform: uppercase;
+}
+.post-meta .category { color: var(--accent-gold); }
+.post-meta .category::before { content: "📂 "; font-family: system-ui; font-size: 9px; }
+.post-meta .date::before { content: "📅 "; font-family: system-ui; font-size: 9px; }
+.post-excerpt {
+  font-size: 15px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+  line-height: 1.8;
+  font-weight: 400;
+}
+.btn-read {
+  display: inline-block;
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--accent-green);
+  background: transparent;
+  border: 1.5px solid var(--accent-green);
+  padding: 6px 18px;
+  text-decoration: none;
+  transition: all 0.15s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 2px 2px 0 rgba(74,222,128,0.08);
+}
+.btn-read:hover {
+  background: var(--accent-green);
+  color: var(--bg-deep);
+  box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
+}
+</style>

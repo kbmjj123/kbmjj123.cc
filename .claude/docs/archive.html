@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Archive · DevPixel</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&display=swap" rel="stylesheet" />
+    <style>
+        /* ===== 与之前完全相同的设计变量（复用） ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg-deep: #0b0b12;
+            --bg-card: #13131e;
+            --border-pixel: #2a2a42;
+            --text-primary: #e8edf5;
+            --text-secondary: #9aa8c9;
+            --text-muted: #4d5a7a;
+            --accent-green: #4ade80;
+            --accent-gold: #fbbf24;
+            --font-ui: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            --font-pixel: 'Press Start 2P', monospace;
+        }
+        body {
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 25px 25px, rgba(74,222,128,0.02) 1px, transparent 1px);
+            background-size: 50px 50px;
+            color: var(--text-primary);
+            font-family: var(--font-ui);
+            line-height: 1.7;
+            padding: 24px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            -webkit-font-smoothing: antialiased;
+        }
+        .container {
+            max-width: 1150px;
+            width: 100%;
+            background-color: var(--bg-card);
+            border: 2px solid var(--border-pixel);
+            padding: 32px 36px 24px;
+            position: relative;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(74,222,128,0.04);
+        }
+        .container::before {
+            content: "";
+            display: block;
+            height: 3px;
+            width: 100%;
+            background: repeating-linear-gradient(90deg, var(--accent-green) 0px, var(--accent-green) 6px, transparent 6px, transparent 12px);
+            margin-bottom: 28px;
+            opacity: 0.7;
+        }
+        /* 头部 */
+        .header {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-pixel);
+        }
+        .site-title {
+            font-family: var(--font-pixel);
+            font-size: 20px;
+            color: var(--accent-green);
+            letter-spacing: 0.5px;
+            text-shadow: 2px 2px 0 rgba(0,0,0,0.8);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .site-title .pixel-block {
+            display: inline-block;
+            width: 14px;
+            height: 14px;
+            background: var(--accent-gold);
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 0 2px var(--bg-deep);
+        }
+        .site-title .sub {
+            font-family: var(--font-ui);
+            font-size: 13px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            letter-spacing: 0.3px;
+            margin-left: 6px;
+            background: rgba(74,222,128,0.06);
+            padding: 0 10px;
+            border: 1px solid var(--border-pixel);
+        }
+        .nav {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 16px;
+            font-family: var(--font-pixel);
+            font-size: 10px;
+        }
+        .nav a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            padding: 4px 6px;
+            border: 1.5px solid transparent;
+            transition: all 0.15s ease;
+            letter-spacing: 0.3px;
+        }
+        .nav a:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            background: rgba(74,222,128,0.04);
+        }
+        .nav a::before {
+            content: "[";
+            color: var(--text-muted);
+            margin-right: 2px;
+        }
+        .nav a::after {
+            content: "]";
+            color: var(--text-muted);
+            margin-left: 2px;
+        }
+        .nav a:hover::before,
+        .nav a:hover::after {
+            color: var(--accent-green);
+        }
+        .nav a.active {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+        }
+        .nav a.active::before,
+        .nav a.active::after {
+            color: var(--accent-green);
+        }
+
+        /* 主网格 */
+        .main-grid {
+            display: grid;
+            grid-template-columns: 2.2fr 1fr;
+            gap: 36px;
+            margin-top: 4px;
+        }
+
+        /* 归档内容 */
+        .archive-content {
+            background-color: rgba(255,255,255,0.02);
+            border: 1.5px solid var(--border-pixel);
+            padding: 28px 30px 30px;
+            position: relative;
+        }
+        .archive-content::before {
+            content: "◆";
+            color: var(--accent-green);
+            font-size: 8px;
+            position: absolute;
+            top: -5px;
+            left: 14px;
+            background: var(--bg-card);
+            padding: 0 4px;
+        }
+        .archive-content h1 {
+            font-family: var(--font-pixel);
+            font-size: 20px;
+            color: var(--text-primary);
+            margin-bottom: 6px;
+        }
+        .archive-content .subhead {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 22px;
+            border-bottom: 1px dotted var(--border-pixel);
+            padding-bottom: 12px;
+        }
+
+        /* 年份分组 */
+        .archive-year {
+            margin-bottom: 28px;
+        }
+        .archive-year h2 {
+            font-family: var(--font-pixel);
+            font-size: 14px;
+            color: var(--accent-gold);
+            margin-bottom: 12px;
+            border-left: 3px solid var(--accent-green);
+            padding-left: 12px;
+        }
+        .archive-item {
+            display: flex;
+            gap: 16px;
+            padding: 8px 0;
+            border-bottom: 1px dotted var(--border-pixel);
+            transition: background 0.1s;
+        }
+        .archive-item:hover {
+            background: rgba(74,222,128,0.03);
+        }
+        .archive-item .date {
+            font-family: var(--font-pixel);
+            font-size: 10px;
+            color: var(--text-muted);
+            min-width: 80px;
+            flex-shrink: 0;
+        }
+        .archive-item .title a {
+            font-size: 15px;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .archive-item .title a:hover {
+            color: var(--accent-green);
+        }
+
+        /* 侧边栏 —— 复用样式 */
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+        .widget {
+            background-color: rgba(255,255,255,0.015);
+            border: 1.5px solid var(--border-pixel);
+            padding: 18px 20px 20px;
+        }
+        .widget-title {
+            font-family: var(--font-pixel);
+            font-size: 11px;
+            color: var(--accent-gold);
+            border-bottom: 1px solid var(--border-pixel);
+            padding-bottom: 8px;
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            letter-spacing: 0.5px;
+        }
+        .widget-title::before {
+            content: "▸";
+            color: var(--accent-green);
+            font-size: 12px;
+        }
+        .category-list {
+            list-style: none;
+            padding: 0;
+        }
+        .category-list li {
+            padding: 6px 0;
+            border-bottom: 1px dotted var(--border-pixel);
+            display: flex;
+            justify-content: space-between;
+            font-size: 13px;
+        }
+        .category-list li:last-child { border-bottom: none; }
+        .category-list a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.15s;
+        }
+        .category-list a:hover { color: var(--accent-green); }
+        .category-list .count {
+            color: var(--text-muted);
+            font-family: var(--font-pixel);
+            font-size: 9px;
+            background: var(--bg-deep);
+            padding: 0 8px;
+            border: 1px solid var(--border-pixel);
+        }
+        .tag-cloud {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+        }
+        .tag-cloud .tag {
+            font-family: var(--font-pixel);
+            font-size: 8px;
+            color: var(--text-muted);
+            background: var(--bg-deep);
+            border: 1px solid var(--border-pixel);
+            padding: 3px 10px;
+            text-decoration: none;
+            transition: all 0.15s ease;
+        }
+        .tag-cloud .tag:hover {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            background: rgba(74,222,128,0.04);
+        }
+
+        /* 页脚 */
+        .footer {
+            margin-top: 36px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-pixel);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 11px;
+            color: var(--text-muted);
+            font-family: var(--font-pixel);
+        }
+        .footer .social a {
+            color: var(--text-muted);
+            text-decoration: none;
+            margin-left: 18px;
+            transition: color 0.15s;
+            font-size: 10px;
+        }
+        .footer .social a:hover { color: var(--accent-green); }
+        .footer .pixel-heart { color: #f472b6; }
+
+        /* 响应式 */
+        @media (max-width: 860px) {
+            .main-grid { grid-template-columns: 1fr; gap: 28px; }
+            .container { padding: 20px 18px 18px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 12px; }
+            .site-title { font-size: 18px; flex-wrap: wrap; }
+            .site-title .sub { font-size: 11px; margin-left: 0; }
+            .nav { font-size: 9px; }
+            .archive-content h1 { font-size: 17px; }
+            .footer { flex-direction: column; gap: 12px; text-align: center; }
+            .footer .social a { margin: 0 10px; }
+        }
+        @media (max-width: 480px) {
+            body { padding: 12px; }
+            .container { padding: 14px 12px 14px; }
+            .container::before { height: 2px; margin-bottom: 16px; }
+            .site-title { font-size: 15px; }
+            .site-title .pixel-block { width: 10px; height: 10px; }
+            .archive-content { padding: 16px 14px 18px; }
+            .archive-item { flex-direction: column; gap: 2px; }
+            .archive-item .date { min-width: auto; }
+            .widget { padding: 14px 12px 16px; }
+        }
+        ::-webkit-scrollbar { width: 10px; background: var(--bg-deep); }
+        ::-webkit-scrollbar-track { background: var(--bg-deep); border-left: 1px solid var(--border-pixel); }
+        ::-webkit-scrollbar-thumb { background: var(--border-pixel); border: 1px solid var(--accent-green); }
+        ::-webkit-scrollbar-thumb:hover { background: var(--accent-green); }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <header class="header">
+        <div class="site-title">
+            <span class="pixel-block"></span>
+            DEV<span style="color:var(--accent-gold);">PIXEL</span>
+            <span class="sub">✦ Indie Log</span>
+        </div>
+        <nav class="nav">
+            <a href="index.html">Home</a>
+            <a href="#" class="active">Archive</a>
+            <a href="about.html">About</a>
+            <a href="projects.html">Projects</a>
+        </nav>
+    </header>
+
+    <div class="main-grid">
+
+        <section class="archive-content">
+            <h1>📚 Archive</h1>
+            <div class="subhead">All posts, sorted by year</div>
+
+            <!-- 2026 -->
+            <div class="archive-year">
+                <h2>2026</h2>
+                <div class="archive-item">
+                    <span class="date">06-14</span>
+                    <span class="title"><a href="post.html">Year One as Indie: From Zero to MVP</a></span>
+                </div>
+                <div class="archive-item">
+                    <span class="date">06-10</span>
+                    <span class="title"><a href="#">5 Principles to Balance Coding &amp; Life</a></span>
+                </div>
+                <div class="archive-item">
+                    <span class="date">06-05</span>
+                    <span class="title"><a href="#">What I Learned on Launch Day (with 3 users)</a></span>
+                </div>
+                <div class="archive-item">
+                    <span class="date">05-28</span>
+                    <span class="title"><a href="#">Essential Indie Dev Toolkit (2026)</a></span>
+                </div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="archive-year">
+                <h2>2025</h2>
+                <div class="archive-item">
+                    <span class="date">12-12</span>
+                    <span class="title"><a href="#">My First Year as a Full‑Time Indie</a></span>
+                </div>
+                <div class="archive-item">
+                    <span class="date">09-03</span>
+                    <span class="title"><a href="#">Building a SaaS with Nuxt and Cloudflare</a></span>
+                </div>
+                <div class="archive-item">
+                    <span class="date">05-20</span>
+                    <span class="title"><a href="#">Why I Ditched Vercel for Cloudflare Pages</a></span>
+                </div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="archive-year">
+                <h2>2024</h2>
+                <div class="archive-item">
+                    <span class="date">11-01</span>
+                    <span class="title"><a href="#">The Beginning: Quitting the 9‑to‑5</a></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- 侧边栏 -->
+        <aside class="sidebar">
+            <div class="widget">
+                <div class="widget-title">About</div>
+                <div style="display:flex;align-items:center;gap:10px;margin-bottom:8px;">
+                    <div style="width:32px;height:32px;background:var(--bg-deep);border:2px solid var(--accent-green);display:flex;align-items:center;justify-content:center;font-size:16px;">🧑‍🚀</div>
+                    <span style="font-family:var(--font-pixel);font-size:9px;color:var(--text-secondary);">@pixeldev</span>
+                </div>
+                <p style="font-size:13px;color:var(--text-secondary);line-height:1.8;">Building in public. <span style="color:var(--accent-gold);">Craft</span> over hype.</p>
+            </div>
+            <div class="widget">
+                <div class="widget-title">Categories</div>
+                <ul class="category-list">
+                    <li><a href="#">Dev Experience</a> <span class="count">12</span></li>
+                    <li><a href="#">Product Thinking</a> <span class="count">8</span></li>
+                    <li><a href="#">Mindset</a> <span class="count">6</span></li>
+                    <li><a href="#">Tools</a> <span class="count">5</span></li>
+                    <li><a href="#">Startup Diary</a> <span class="count">4</span></li>
+                </ul>
+            </div>
+            <div class="widget">
+                <div class="widget-title">Tags</div>
+                <div class="tag-cloud">
+                    <a href="#" class="tag">#react</a>
+                    <a href="#" class="tag">#nextjs</a>
+                    <a href="#" class="tag">#tailwind</a>
+                    <a href="#" class="tag">#indiehackers</a>
+                    <a href="#" class="tag">#product</a>
+                    <a href="#" class="tag">#startup</a>
+                    <a href="#" class="tag">#figma</a>
+                    <a href="#" class="tag">#vercel</a>
+                    <a href="#" class="tag">#ai</a>
+                </div>
+            </div>
+            <div class="widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
+                <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
+                    <span style="color:var(--accent-green);">◼</span> Pixels since 2026
+                    <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">0 0 0 0 0 1 4</span>
+                </div>
+            </div>
+        </aside>
+
+    </div>
+
+    <footer class="footer">
+        <span><span class="pixel-heart">♥</span> 2026 <span style="color:var(--accent-green);">DevPixel</span></span>
+        <span style="font-size:9px;color:var(--text-muted);letter-spacing:0.5px;">✦ pixel · indie · craft ✦</span>
+        <div class="social">
+            <a href="#">GitHub</a>
+            <a href="#">Twitter</a>
+            <a href="#">RSS</a>
+        </div>
+    </footer>
+
+</div>
+
+</body>
+</html>
