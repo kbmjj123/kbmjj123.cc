@@ -34,7 +34,17 @@
 
 <script setup lang="ts">
 const route = useRoute()
-usePageSeo({ title: 'Home' })
+// Homepage — custom brand title
+const pageTitle = computed(() => `Indie Developer Log`) // → titleTemplate adds · kbmjj123.cc
+const pageDesc = computed(() => 'KB MJJ123 .cc — 独立开发者博客，分享编程、产品与独立创业的思考与实践。')
+useHead({
+  title: pageTitle,
+  meta: [
+    { name: 'description', content: pageDesc },
+    { property: 'og:title', content: pageTitle },
+    { property: 'og:description', content: pageDesc },
+  ],
+})
 
 interface Post {
   slug: string

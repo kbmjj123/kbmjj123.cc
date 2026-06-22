@@ -45,6 +45,16 @@ const readTime = ref(fb?.readTime || '')
 const excerpt = ref(fb?.excerpt || '')
 const body = ref<any>(fb?.body || null)
 
+// SEO — update when title/excerpt change
+useHead({
+  title: computed(() => title.value), // titleTemplate adds · kbmjj123.cc
+  meta: computed(() => [
+    { name: 'description', content: excerpt.value },
+    { property: 'og:title', content: title.value },
+    { property: 'og:description', content: excerpt.value },
+  ]),
+})
+
 // Client-only: upgrade to real content from Nuxt Content
 onMounted(async () => {
   try {

@@ -36,7 +36,7 @@ function buildTitle(opts: PageSeoOptions): string {
     case 'prefix':
       return `${t}${TITLE_SEPARATOR}${SITE_NAME}`
     default:
-      return `${SITE_NAME}${DESC_SEPARATOR}${TAGLINE}`
+      return t
   }
 }
 
