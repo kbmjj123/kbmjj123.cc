@@ -141,9 +141,9 @@ const categories = cats
 const tags = tagsData.slice(0, 12)
 
 const socialLinks = [
-  { label: 'GitHub', url: '#' },
-  { label: 'Twitter', url: '#' },
-  { label: 'RSS', url: '#' },
+  { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
+  { label: 'Twitter', url: 'https://twitter.com/solomaker282' },
+  { label: 'RSS', url: '/api/rss' },
 ]
 
 function isActive(path: string) {
