@@ -1,0 +1,8 @@
+[
+  { "slug": "dev-practice", "name": "Dev Practice", "count": 14 },
+  { "slug": "product-business", "name": "Product &amp; Business", "count": 9 },
+  { "slug": "indie-mindset", "name": "Indie Mindset", "count": 7 },
+  { "slug": "tools-workflow", "name": "Tools &amp; Workflow", "count": 6 },
+  { "slug": "startup-diary", "name": "Startup Diary", "count": 5 },
+  { "slug": "tech-trends", "name": "Tech Trends", "count": 4 }
+]
