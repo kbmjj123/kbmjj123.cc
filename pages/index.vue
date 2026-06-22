@@ -52,6 +52,7 @@ const allPosts: { slug: string; title: string; date: string; category: string; c
 const categoryFilter = computed(() => route.query.category as string | undefined)
 const tagFilter = computed(() => route.query.tag as string | undefined)
 
+const pending = ref(false)
 const activeFilter = computed(() => {
   if (categoryFilter.value) return { label: 'Category', value: categoryFilter.value }
   if (tagFilter.value) return { label: 'Tag', value: `#${tagFilter.value}` }
