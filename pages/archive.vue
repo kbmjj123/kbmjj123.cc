@@ -14,7 +14,7 @@
 </template>
 
 <script setup lang="ts">
-usePageSeo({ title: 'Archive', description: '文章归档 — 按年份浏览所有历史文章。' })
+usePageSeo({ title: 'Archive', description: 'Browse all posts by year — archive of published articles.' })
 
 const archive = [
   {

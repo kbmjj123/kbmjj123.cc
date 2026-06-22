@@ -36,7 +36,7 @@
 </template>
 
 <script setup lang="ts">
-usePageSeo({ title: 'About', description: '关于 KB MJJ123 — 独立开发者，全栈工程师，分享编程与产品思考。' })
+usePageSeo({ title: 'About', description: 'About KB MJJ123 — Indie developer, full-stack engineer sharing coding and product insights.' })
 
 const skills = ['#Nuxt4', '#Vue3', '#TypeScript', '#Tailwind', '#Cloudflare', '#D1', '#Pages', '#R2', '#Workers', '#Git']
 

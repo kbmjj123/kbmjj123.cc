@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-usePageSeo({ title: 'Projects', description: '独立项目展示 — 正在构建的产品与开源项目。' })
+usePageSeo({ title: 'Projects', description: 'Showcase of independent projects — products and open-source work in progress.' })
 
 const projects = [
   {
