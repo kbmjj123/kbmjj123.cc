@@ -1,6 +1,7 @@
 <template>
   <section class="post-list">
     <h1 class="sr-only">kbmjj123.cc — Indie Developer Log</h1>
+    <h2 class="sr-only">Latest Posts</h2>
     <!-- Active filter indicator -->
     <div v-if="activeFilter" class="filter-bar">
       <span style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);">

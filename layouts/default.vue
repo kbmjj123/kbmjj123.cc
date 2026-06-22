@@ -41,10 +41,10 @@
           <aside class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">
             <!-- Categories widget -->
             <div class="pixel-widget">
-              <div class="pixel-widget-title">Categories</div>
+              <h2 class="pixel-widget-title">Categories</h2>
               <ul class="pixel-category-list">
                 <li v-for="cat in categories" :key="cat.slug">
-                  <NuxtLink :to="`/?category=${cat.slug}`">{{ cat.name }}</NuxtLink>
+                  <h3 class="pixel-category-name"><NuxtLink :to="`/?category=${cat.slug}`">{{ cat.name }}</NuxtLink></h3>
                   <span class="pixel-category-count">{{ cat.count }}</span>
                 </li>
               </ul>
@@ -52,7 +52,7 @@
 
             <!-- Tags widget -->
             <div class="pixel-widget">
-              <div class="pixel-widget-title">Tags</div>
+              <h2 class="pixel-widget-title">Tags</h2>
               <div class="pixel-tag-cloud">
                 <NuxtLink v-for="tag in tags" :key="tag" :to="`/?tag=${tag.replace('#', '')}`" class="pixel-tag">{{ tag }}</NuxtLink>
               </div>
@@ -151,6 +151,21 @@ function isActive(path: string) {
   color: var(--accent-green);
 }
 
+.pixel-category-name {
+  font-size: inherit;
+  font-weight: inherit;
+  margin: 0;
+  display: inline;
+}
+.pixel-category-name a {
+  color: var(--text-secondary);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.pixel-category-name a:hover {
+  color: var(--accent-green);
+}
+
 .pixel-widget {
   background-color: rgba(255,255,255,0.015);
   border: 1.5px solid var(--border-pixel);
@@ -187,12 +202,6 @@ function isActive(path: string) {
   font-size: 13px;
 }
 .pixel-category-list li:last-child { border-bottom: none; }
-.pixel-category-list a {
-  color: var(--text-secondary);
-  text-decoration: none;
-  transition: color 0.15s;
-}
-.pixel-category-list a:hover { color: var(--accent-green); }
 .pixel-category-count {
   color: var(--text-muted);
   font-family: var(--font-pixel);
