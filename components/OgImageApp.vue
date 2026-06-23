@@ -21,12 +21,12 @@
       <div style="width: 60px; height: 2px; background: #4ade80; margin-bottom: 28px; opacity: 0.5;" />
 
       <!-- Title -->
-      <h1 style="font-family: 'Press Start 2P', monospace; font-size: 36px; color: #e8edf5; line-height: 1.3; letter-spacing: -0.5px; margin: 0 0 16px 0; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; max-width: 700px;">
+      <h1 style="font-family: 'Press Start 2P', monospace; font-size: 36px; color: #e8edf5; line-height: 1.3; letter-spacing: -0.5px; margin: 0 0 16px 0; overflow: hidden; max-width: 700px; max-height: 140px;">
         {{ title || 'kbmjj123.cc' }}
       </h1>
 
       <!-- Description -->
-      <p v-if="description" style="font-family: Inter, sans-serif; font-size: 18px; color: #9aa8c9; line-height: 1.6; margin: 0; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; max-width: 600px;">
+      <p v-if="description" style="font-family: Inter, sans-serif; font-size: 18px; color: #9aa8c9; line-height: 1.6; margin: 0; overflow: hidden; max-width: 600px; max-height: 58px;">
         {{ description }}
       </p>
 
