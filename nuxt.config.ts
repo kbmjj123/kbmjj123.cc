@@ -31,7 +31,10 @@ export default defineNuxtConfig({
 
   content: {
     highlight: {
-      theme: 'material-theme-palenight',
+      theme: {
+        dark: 'material-theme-palenight',
+        light: 'material-theme-palenight',
+      },
       preload: ['javascript', 'typescript', 'css', 'html', 'json', 'bash', 'yaml', 'markdown', 'shell'],
     },
   },

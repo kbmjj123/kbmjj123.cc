@@ -136,15 +136,6 @@
   line-height: 1.7;
 }
 
-/* Shiki dual-theme: override --shiki-default to use dark variant */
-.markdown-content pre .shiki {
-  --shiki-default: var(--shiki-dark);
-  --shiki-default-bg: var(--shiki-dark-bg);
-  --shiki-default-font-style: var(--shiki-dark-font-style);
-  --shiki-default-font-weight: var(--shiki-dark-font-weight);
-  --shiki-default-text-decoration: var(--shiki-dark-text-decoration);
-}
-
 .markdown-content blockquote {
   border-left: 3px solid var(--accent-green);
   padding-left: 16px;
