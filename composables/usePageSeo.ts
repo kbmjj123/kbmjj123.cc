@@ -70,11 +70,8 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
     ]),
   })
 
-  defineOgImage({
-    component: 'OgImageApp',
-    props: {
-      title: resolved.value.ogTitle,
-      description: resolved.value.ogDescription,
-    },
+  defineOgImage('OgImageApp.takumi',{
+    title: resolved.value.ogTitle,
+    description: resolved.value.ogDescription,
   })
 }
