@@ -11,13 +11,7 @@
     </div>
 
     <!-- Loading state -->
-    <div v-if="pending" class="loading-grid">
-      <div class="loading-block" style="animation-delay:0s"></div>
-      <div class="loading-block" style="animation-delay:0.2s"></div>
-      <div class="loading-block" style="animation-delay:0.4s"></div>
-      <div class="loading-block" style="animation-delay:0.6s"></div>
-      <p style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;grid-column:1/-1;margin:16px 0 0;animation:pulseText 1.5s ease-in-out infinite;">LOADING</p>
-    </div>
+    <LoadingState v-if="pending" />
 
     <!-- Empty state -->
     <div v-if="filteredPosts.length === 0 && !pending" class="empty-filter">
@@ -196,29 +190,6 @@ const filteredPosts = computed(() => {
   background: var(--accent-green);
   color: var(--bg-deep);
   box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
-}
-
-/* Loading grid */
-.loading-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 12px;
-  padding: 60px 20px;
-  justify-items: center;
-}
-.loading-block {
-  width: 40px;
-  height: 40px;
-  background: var(--border-pixel);
-  animation: blockPulse 1.2s ease-in-out infinite;
-}
-@keyframes blockPulse {
-  0%, 100% { opacity: 0.3; transform: scale(1); }
-  50% { opacity: 1; transform: scale(1.15); background: var(--accent-green); }
-}
-@keyframes pulseText {
-  0%, 100% { opacity: 0.4; }
-  50% { opacity: 1; }
 }
 
 @media (max-width: 480px) {

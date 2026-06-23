@@ -3,6 +3,8 @@
     <h1>📚 Archive</h1>
     <div class="subhead">All posts, sorted by year</div>
 
+    <LoadingState v-if="pending" />
+
     <div v-for="year in archive" :key="year.year" class="archive-year">
       <h2>{{ year.year }}</h2>
       <div v-for="post in year.posts" :key="post.title" class="archive-item">
@@ -16,31 +18,38 @@
 <script setup lang="ts">
 usePageSeo({ title: 'Archive', description: 'Browse all posts by year — archive of published articles.' })
 
-const archive = [
-  {
-    year: '2026',
-    posts: [
-      { date: '06-14', title: 'Year One as Indie: From Zero to MVP', slug: '/year-one-as-indie' },
-      { date: '06-10', title: '5 Principles to Balance Coding & Life', slug: '#' },
-      { date: '06-05', title: 'What I Learned on Launch Day (with 3 users)', slug: '#' },
-      { date: '05-28', title: 'Essential Indie Dev Toolkit (2026)', slug: '#' },
-    ],
-  },
-  {
-    year: '2025',
-    posts: [
-      { date: '12-12', title: 'My First Year as a Full-Time Indie', slug: '#' },
-      { date: '09-03', title: 'Building a SaaS with Nuxt and Cloudflare', slug: '#' },
-      { date: '05-20', title: 'Why I Ditched Vercel for Cloudflare Pages', slug: '#' },
-    ],
-  },
-  {
-    year: '2024',
-    posts: [
-      { date: '11-01', title: 'The Beginning: Quitting the 9-to-5', slug: '#' },
-    ],
-  },
-]
+interface ArchivePost { date: string; title: string; slug: string }
+interface ArchiveYear { year: string; posts: ArchivePost[] }
+
+const archive = ref<ArchiveYear[]>([])
+const pending = ref(true)
+
+onMounted(async () => {
+  try {
+    const posts = JSON.parse(JSON.stringify(
+      await queryCollection('posts').all()
+    ))
+    if (!posts) return
+    const grouped: Record<string, ArchivePost[]> = {}
+    for (const p of posts) {
+      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      const year = meta.date ? String(new Date(meta.date).getFullYear()) : 'Unknown'
+      if (!grouped[year]) grouped[year] = []
+      grouped[year].push({
+        date: meta.date ? meta.date.slice(5) : '',
+        title: p.title || '',
+        slug: `/${p.path?.replace('/posts/', '') || ''}`,
+      })
+    }
+    archive.value = Object.entries(grouped)
+      .sort(([a], [b]) => Number(b) - Number(a))
+      .map(([year, posts]) => ({ year, posts }))
+  } catch (e) {
+    console.error('Failed to load archive:', e)
+  } finally {
+    pending.value = false
+  }
+})
 </script>
 
 <style scoped>

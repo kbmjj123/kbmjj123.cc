@@ -5,6 +5,13 @@
 </template>
 
 <script setup lang="ts">
+const umamiScript = import.meta.dev ? [] : [{
+  src: 'https://umami.bulkpictools.com/script.js',
+  'data-website-id': 'd18cf384-91fc-4da8-8cfe-e89096337c72',
+  defer: true,
+  type: 'text/javascript',
+}]
+
 useHead({
   titleTemplate: '%s · kbmjj123.cc',
   link: [
@@ -16,13 +23,6 @@ useHead({
   meta: [
     { name: 'theme-color', content: '#0b0b12' },
   ],
-  script: [
-    {
-      src: 'https://umami.bulkpictools.com/script.js',
-      'data-website-id': 'd18cf384-91fc-4da8-8cfe-e89096337c72',
-      defer: true,
-      type: 'text/javascript',
-    },
-  ],
+  script: umamiScript,
 })
 </script>
