@@ -86,4 +86,4 @@ Local development stopped blocking on the OAuth callback entirely. Everything do
 - Gate dev-only endpoints behind an environment check so they can never accidentally ship to production.
 
 ---
-*Part of the "Going Serverless" series. Previous: [Why I Bet My Indie Project on Cloudflare Instead of a Server](#) · Next: [Two Days, One Broken Monitor, and a Forced macOS Upgrade Just to Run Wrangler](#)*
+*Part of the "Going Serverless" series. Previous: [Why I Bet My Indie Project on Cloudflare Instead of a Server](/going-serverless-part-1-why-cloudflare) · Next: [Two Days, One Broken Monitor, and a Forced macOS Upgrade Just to Run Wrangler](#)*

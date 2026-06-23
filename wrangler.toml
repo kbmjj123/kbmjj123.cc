@@ -26,6 +26,8 @@ routes = [
 
 [vars]
 API_BASE = "https://kbmjj123.cc"
+# md5(kbmjj123.cc) = 273be4be4de0339309f670bee6789807
+NUXT_OG_IMAGE_SECRET = "273be4be4de0339309f670bee6789807"
 
 # [triggers]
 # crons = ["0 9 * * *"]

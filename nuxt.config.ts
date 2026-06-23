@@ -30,13 +30,15 @@ export default defineNuxtConfig({
   },
 
   content: {
-    highlight: {
-      theme: {
-        dark: 'github-light',
-        light: 'github-light',
-      },
-      preload: ['javascript', 'typescript', 'css', 'html', 'json', 'bash', 'yaml', 'markdown', 'shell'],
-    },
+		build: {
+			markdown: {
+				highlight: {
+					theme: 'github-light',
+					preload: ['javascript', 'typescript', 'css', 'html', 'json', 'bash', 'yaml', 'markdown', 'shell'],
+				}
+			}
+			
+		}
   },
 
   ogImage: {
