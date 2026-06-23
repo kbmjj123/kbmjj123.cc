@@ -71,7 +71,7 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
   })
 
   defineOgImage({
-    component: 'AppOgImage',
+    component: 'OgImageApp',
     props: {
       title: resolved.value.ogTitle,
       description: resolved.value.ogDescription,
