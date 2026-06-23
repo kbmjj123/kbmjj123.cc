@@ -33,7 +33,10 @@ export default defineNuxtConfig({
     build: {
       markdown: {
         highlight: {
-          theme: 'github-light',
+          theme: {
+            default: 'material-theme-palenight',
+            dark: 'material-theme-palenight',
+          },
           preload: ['javascript', 'typescript', 'css', 'html', 'json', 'bash', 'yaml', 'markdown', 'shell'],
         },
       },
