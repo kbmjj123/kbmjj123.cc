@@ -117,7 +117,7 @@
 }
 
 .markdown-content pre {
-  background: #292d3e;
+  background: #f6f8fa;
   border: 1px solid var(--border-pixel);
   border-left: 3px solid var(--accent-green);
   border-radius: 0;
