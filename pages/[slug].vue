@@ -99,10 +99,10 @@ onUnmounted(() => clearToc())
 }
 .post-title {
   font-family: var(--font-pixel);
-  font-size: 20px;
+  font-size: 22px;
   color: var(--text-primary);
-  margin-bottom: 8px;
-  line-height: 1.5;
+  margin-bottom: 10px;
+  line-height: 1.6;
 }
 .post-meta {
   font-family: var(--font-pixel);

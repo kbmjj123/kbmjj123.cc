@@ -144,10 +144,10 @@ const filteredPosts = computed(() => {
 }
 .post-title {
   font-family: var(--font-pixel);
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-primary);
-  margin-bottom: 10px;
-  line-height: 1.6;
+  margin-bottom: 12px;
+  line-height: 1.7;
 }
 .post-title a { color: inherit; text-decoration: none; transition: color 0.15s; }
 .post-title a:hover { color: var(--accent-green); }
@@ -167,10 +167,10 @@ const filteredPosts = computed(() => {
 .post-meta .category::before { content: "📂 "; font-family: system-ui; font-size: 9px; }
 .post-meta .date::before { content: "📅 "; font-family: system-ui; font-size: 9px; }
 .post-excerpt {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--text-secondary);
   margin-bottom: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   font-weight: 400;
 }
 .btn-read {

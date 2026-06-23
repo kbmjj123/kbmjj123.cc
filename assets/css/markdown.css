@@ -63,10 +63,10 @@
 }
 
 .markdown-content p {
-  font-size: 13px;
-  line-height: 1.75;
+  font-size: 15px;
+  line-height: 1.85;
   color: var(--text-primary);
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .markdown-content strong {
@@ -81,13 +81,13 @@
 .markdown-content ul,
 .markdown-content ol {
   margin-left: 20px;
-  margin-bottom: 12px;
+  margin-bottom: 14px;
 }
 
 .markdown-content li {
-  font-size: 13px;
-  line-height: 1.65;
-  margin-bottom: 4px;
+  font-size: 15px;
+  line-height: 1.75;
+  margin-bottom: 6px;
   color: var(--text-primary);
 }
 
