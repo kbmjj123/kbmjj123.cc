@@ -97,4 +97,4 @@ This decision didn't come for free, even setting aside future billing. Getting t
 - Being honest about what you don't know yet (will this scale? will it stay free?) is more useful to future-you than confidence you haven't earned.
 
 ---
-*Part of the "Going Serverless" series. Next: [Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)](#)*
+*Part of the "Going Serverless" series. Next: [Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)](/going-serverless-part-2-github-oauth-local-callback)*
