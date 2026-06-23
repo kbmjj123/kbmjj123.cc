@@ -140,6 +140,8 @@ As an indie developer, I also build tools that help people work faster:
 
 **🖼️ [BulkPicTools](https://bulkpictools.com)** — Bulk image processing in your browser. Compress, convert, crop, resize — all locally, no upload required, no privacy concerns. Supports tool chaining so you can run multiple operations in one pass.
 
+**🔍 [aifindr.org](https://aifindr.org)** — Open-source AI tool directory. 500+ tools across 12 categories, curated for makers and developers. Submit your tool and get 3 free dofollow backlinks (GitHub DA 100 + aifindr.org + contributor page).
+
 ---
 
 ## 📄 License
@@ -160,6 +162,7 @@ This is a **personal project** built for my own use case. It may not suit everyo
 
 - **Blog:** [kbmjj123.cc](https://kbmjj123.cc)
 - **GitHub:** [@kbmjj123](https://github.com/kbmjj123)
-- **Tools:** [bulkpictools.com](https://bulkpictools.com)
+- **Image Tools:** [bulkpictools.com](https://bulkpictools.com)
+- **AI Directory:** [aifindr.org](https://aifindr.org)
 
 ⭐ If you find this project useful, a star is appreciated.
