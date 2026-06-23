@@ -29,7 +29,12 @@ export default defineNuxtConfig({
     apiBase: '',
   },
 
-  content: {},
+  content: {
+    highlight: {
+      theme: 'material-theme-palenight',
+      preload: ['javascript', 'typescript', 'css', 'html', 'json', 'bash', 'yaml', 'markdown', 'shell'],
+    },
+  },
 
   ogImage: {
     enabled: true,

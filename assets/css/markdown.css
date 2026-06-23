@@ -109,30 +109,60 @@
 .markdown-content code {
   font-family: var(--font-mono);
   font-size: 12px;
-  background: var(--bg-deep);
+  background: rgba(74,222,128,0.08);
   border: 1px solid var(--border-pixel);
-  border-radius: var(--radius-sm);
+  border-radius: 3px;
   padding: 2px 6px;
   color: var(--accent-green);
 }
 
 .markdown-content pre {
-  background: var(--bg-deep);
+  background: #11111e;
   border: 1px solid var(--border-pixel);
-  border-radius: var(--radius-md);
-  padding: 14px;
+  border-left: 3px solid var(--accent-green);
+  border-radius: 0;
+  padding: 16px 18px;
   overflow-x: auto;
-  margin-bottom: 16px;
+  margin-bottom: 20px;
+  position: relative;
 }
 
 .markdown-content pre code {
   background: none;
   border: none;
+  border-left: none;
   padding: 0;
-  font-size: 12px;
-  line-height: 1.6;
-  color: var(--text-primary);
+  font-size: 13px;
+  line-height: 1.7;
+  color: #e2e8f0;
 }
+
+/* Shiki theme override — ensure dark syntax highlighting */
+.markdown-content pre .shiki,
+.markdown-content pre .shiki * {
+  background: transparent !important;
+}
+.markdown-content pre .shiki {
+  color: #e2e8f0 !important;
+}
+.markdown-content pre .shiki .keyword,
+.markdown-content pre .shiki .storage { color: #c792ea !important; }
+.markdown-content pre .shiki .string,
+.markdown-content pre .shiki .string * { color: #c3e88d !important; }
+.markdown-content pre .shiki .number,
+.markdown-content pre .shiki .constant.numeric { color: #f78c6c !important; }
+.markdown-content pre .shiki .function,
+.markdown-content pre .shiki .entity.name.function { color: #82aaff !important; }
+.markdown-content pre .shiki .comment,
+.markdown-content pre .shiki .comment * { color: #546e7a !important; font-style: italic; }
+.markdown-content pre .shiki .type,
+.markdown-content pre .shiki .entity.name.type { color: #ffcb6b !important; }
+.markdown-content pre .shiki .parameter { color: #f07178 !important; }
+.markdown-content pre .shiki .property { color: #80cbc4 !important; }
+.markdown-content pre .shiki .punctuation,
+.markdown-content pre .shiki .delimiter { color: #89ddff !important; }
+.markdown-content pre .shiki .operator { color: #89ddff !important; }
+.markdown-content pre .shiki .variable { color: #e2e8f0 !important; }
 
 .markdown-content blockquote {
   border-left: 3px solid var(--accent-green);
