@@ -22,9 +22,6 @@ export default defineNuxtConfig({
     preset: 'cloudflare_module',
     cloudflare: {
       nodeCompat: true,
-    },
-		routeRules: {
-      '/**/' : { redirect: { to: '/**', statusCode: 301 } }
     }
   },
 
@@ -65,8 +62,7 @@ export default defineNuxtConfig({
   sitemap: {
     autoLastmod: true,
     exclude: ['/admin/**'],
-    zeroRuntime: true,
-		sources: ['/api/sitemap-blog']
+		sources: ['/api/sitemap-posts']
   },
 
   postcss: {
