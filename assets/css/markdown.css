@@ -117,13 +117,13 @@
 }
 
 .markdown-content pre {
-  background: #11111e;
+  background: #1a1a30;
   border: 1px solid var(--border-pixel);
   border-left: 3px solid var(--accent-green);
   border-radius: 0;
-  padding: 16px 18px;
+  padding: 18px 20px;
   overflow-x: auto;
-  margin-bottom: 20px;
+  margin-bottom: 22px;
   position: relative;
 }
 
@@ -137,32 +137,10 @@
   color: #e2e8f0;
 }
 
-/* Shiki theme override — ensure dark syntax highlighting */
-.markdown-content pre .shiki,
-.markdown-content pre .shiki * {
+/* Shiki: reset overrides, let theme colors show */
+.markdown-content pre .shiki {
   background: transparent !important;
 }
-.markdown-content pre .shiki {
-  color: #e2e8f0 !important;
-}
-.markdown-content pre .shiki .keyword,
-.markdown-content pre .shiki .storage { color: #c792ea !important; }
-.markdown-content pre .shiki .string,
-.markdown-content pre .shiki .string * { color: #c3e88d !important; }
-.markdown-content pre .shiki .number,
-.markdown-content pre .shiki .constant.numeric { color: #f78c6c !important; }
-.markdown-content pre .shiki .function,
-.markdown-content pre .shiki .entity.name.function { color: #82aaff !important; }
-.markdown-content pre .shiki .comment,
-.markdown-content pre .shiki .comment * { color: #546e7a !important; font-style: italic; }
-.markdown-content pre .shiki .type,
-.markdown-content pre .shiki .entity.name.type { color: #ffcb6b !important; }
-.markdown-content pre .shiki .parameter { color: #f07178 !important; }
-.markdown-content pre .shiki .property { color: #80cbc4 !important; }
-.markdown-content pre .shiki .punctuation,
-.markdown-content pre .shiki .delimiter { color: #89ddff !important; }
-.markdown-content pre .shiki .operator { color: #89ddff !important; }
-.markdown-content pre .shiki .variable { color: #e2e8f0 !important; }
 
 .markdown-content blockquote {
   border-left: 3px solid var(--accent-green);
