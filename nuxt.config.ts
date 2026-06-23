@@ -44,8 +44,7 @@ export default defineNuxtConfig({
   },
 
   ogImage: {
-    enabled: true,
-    runtimeCacheStorage: false,
+    enabled: false,
   },
 
   robots: {
