@@ -23,25 +23,18 @@ import type { TocItem } from '~/composables/useToc'
 const { toc } = useToc()
 const activeId = ref('')
 
-// Scroll to heading with sticky header offset
-function scrollTo(id: string) {
-  const el = document.getElementById(id)
-  if (!el) return
-  const headerH = 80 // sticky header height
-  const top = el.getBoundingClientRect().top + window.scrollY - headerH
-  window.scrollTo({ top, behavior: 'smooth' })
-  activeId.value = id
-}
-
 // Observe headings and highlight current one
 let observer: IntersectionObserver | null = null
+let scrollTimeout: ReturnType<typeof setTimeout> | null = null
+let isManualScroll = false
 
-onMounted(() => {
-  const ids = toc.value.map(t => t.id)
+function setupObserver(ids: string[]) {
+  observer?.disconnect()
   if (ids.length === 0) return
 
   observer = new IntersectionObserver(
     (entries) => {
+      if (isManualScroll) return
       for (const entry of entries) {
         if (entry.isIntersecting) {
           activeId.value = entry.target.id
@@ -56,9 +49,33 @@ onMounted(() => {
     const el = document.getElementById(id)
     if (el) observer?.observe(el)
   })
+}
+
+watch(() => toc.value.length, (len) => {
+  if (len > 0) {
+    // Delay slightly to ensure headings are rendered
+    setTimeout(() => setupObserver(toc.value.map(t => t.id)), 100)
+  }
 })
 
-onUnmounted(() => observer?.disconnect())
+// Track manual scroll (TOC click) to suppress observer
+function scrollTo(id: string) {
+  const el = document.getElementById(id)
+  if (!el) return
+  isManualScroll = true
+  if (scrollTimeout) clearTimeout(scrollTimeout)
+  scrollTimeout = setTimeout(() => { isManualScroll = false }, 1000)
+
+  const headerH = 80
+  const top = el.getBoundingClientRect().top + window.scrollY - headerH
+  window.scrollTo({ top, behavior: 'smooth' })
+  activeId.value = id
+}
+
+onUnmounted(() => {
+  observer?.disconnect()
+  if (scrollTimeout) clearTimeout(scrollTimeout)
+})
 </script>
 
 <style scoped>
