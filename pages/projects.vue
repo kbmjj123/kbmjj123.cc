@@ -28,6 +28,7 @@ const projects = [
     tags: ['#Vue', '#PWA', '#WebAssembly', '#Canvas'],
     links: [
       { label: 'Website', url: 'https://bulkpictools.com' },
+      { label: 'Website', url: 'https://github.com/kbmjj123/BulkPicTools' },
     ],
   },
   {
@@ -37,6 +38,7 @@ const projects = [
     links: [
       { label: 'Website', url: 'https://aifindr.org' },
       { label: 'GitHub', url: 'https://github.com/kbmjj123/aifindr.org' },
+      { label: 'Aswsome', url: 'https://github.com/kbmjj123/awesome-ai-tools' },
     ],
   },
   {
