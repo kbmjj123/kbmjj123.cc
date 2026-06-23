@@ -65,7 +65,7 @@ onMounted(async () => {
         date: meta.date || '',
         category: meta.category || '',
         categorySlug: (meta.category || '').toLowerCase().replace(/\s+/g, '-'),
-        readTime: typeof p.readTime === 'object' ? (p.readTime.text || '') : (p.readTime || ''),
+        readTime: typeof p.readTime === 'object' ? (p.readTime.text || '') : (p.readTime || meta.readTime || ''),
         excerpt: p.description || '',
         tags: meta.tags || [],
       }

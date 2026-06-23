@@ -54,6 +54,7 @@ onMounted(async () => {
     title.value = raw.title || title.value
     date.value = meta.date || date.value
     category.value = meta.category || category.value
+    readTime.value = meta.readTime || (typeof raw.readTime === 'object' ? raw.readTime.text : raw.readTime) || readTime.value
     excerpt.value = raw.description || excerpt.value
     body.value = raw.body || null
   } catch {}
