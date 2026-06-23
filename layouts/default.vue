@@ -92,8 +92,9 @@
               <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
                 <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
                   <span style="color:var(--accent-green);">◼</span> Running since 2026-06-22
-                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">{{ `${daysSince}`.padStart(7, '0') }}</span>
-                  <span style="color:var(--text-muted);display:block;font-size:8px;margin-top:4px;">days · {{ postCount }} posts · {{ catCount }} categories · {{ tags.length }} tags</span>
+                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">{{ `${postCount}`.padStart(7, '0') }}</span>
+                  <span style="color:var(--accent-green);display:block;font-size:10px;margin-top:4px;">{{ daysSince }} days</span>
+                  <span style="color:var(--text-muted);display:block;font-size:8px;margin-top:2px;">{{ catCount }} categories · {{ tags.length }} tags</span>
                 </div>
               </div>
             </template>
@@ -175,8 +176,9 @@ onMounted(async () => {
       'tech-trends': 'Tech Trends',
     }
 
-    categories.value = [...catMap.entries()]
-      .map(([slug, count]) => ({ slug, name: catNames[slug] || slug, count }))
+    // Show all predefined categories, merge with actual counts
+    categories.value = Object.entries(catNames)
+      .map(([slug, name]) => ({ slug, name, count: catMap.get(slug) || 0 }))
       .sort((a, b) => b.count - a.count)
 
     tags.value = [...tagMap.entries()]
