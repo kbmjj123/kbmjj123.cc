@@ -117,7 +117,7 @@
 }
 
 .markdown-content pre {
-  background: #1a1a30;
+  background: #292d3e;
   border: 1px solid var(--border-pixel);
   border-left: 3px solid var(--accent-green);
   border-radius: 0;
@@ -134,12 +134,6 @@
   padding: 0;
   font-size: 13px;
   line-height: 1.7;
-  color: #e2e8f0;
-}
-
-/* Shiki: reset overrides, let theme colors show */
-.markdown-content pre .shiki {
-  background: transparent !important;
 }
 
 .markdown-content blockquote {
