@@ -23,28 +23,29 @@ usePageSeo({ title: 'Projects', description: 'Showcase of independent projects �
 
 const projects = [
   {
-    name: 'PixelFlow',
-    desc: 'Visual workflow builder for creators — automate repetitive tasks with a drag-and-drop interface.',
-    tags: ['#Nuxt', '#Vue', '#Tailwind', '#D1'],
-    links: [{ label: 'Demo', url: '#' }, { label: 'GitHub', url: '#' }],
+    name: '🖼️ BulkPicTools',
+    desc: 'Bulk image processing in your browser. Compress, convert, crop, resize — all locally, no upload required, no privacy concerns. Supports tool chaining so you can run multiple operations in one pass.',
+    tags: ['#Vue', '#PWA', '#WebAssembly', '#Canvas'],
+    links: [
+      { label: 'Website', url: 'https://bulkpictools.com' },
+    ],
   },
   {
-    name: 'DevLog',
-    desc: 'Minimalist blog platform for indie developers — exactly what this site is running on.',
-    tags: ['#Nuxt', '#Cloudflare', '#D1', '#Markdown'],
-    links: [{ label: 'Demo', url: '#' }, { label: 'GitHub', url: '#' }],
+    name: '🔍 aifindr.org',
+    desc: 'Open-source AI tool directory. 500+ tools across 12 categories, curated for makers and developers. Submit your tool and get 3 free dofollow backlinks (GitHub DA 100 + aifindr.org + contributor page).',
+    tags: ['#Nuxt', '#Cloudflare', '#D1', '#OpenSource'],
+    links: [
+      { label: 'Website', url: 'https://aifindr.org' },
+      { label: 'GitHub', url: 'https://github.com/kbmjj123/aifindr.org' },
+    ],
   },
   {
-    name: 'Pulse',
-    desc: 'Simple uptime monitoring for small projects — checks your endpoints and sends alerts via Telegram.',
-    tags: ['#Node', '#Workers', '#Telegram'],
-    links: [{ label: 'Demo', url: '#' }, { label: 'GitHub', url: '#' }],
-  },
-  {
-    name: 'PixelUI',
-    desc: 'Component library with a pixel-inspired aesthetic — built for Vue 3 and Tailwind.',
-    tags: ['#Vue', '#Tailwind', '#Design'],
-    links: [{ label: 'Demo', url: '#' }, { label: 'GitHub', url: '#' }],
+    name: '💻 kbmjj123.cc',
+    desc: 'This very site — an indie developer blog with pixel aesthetic. Built with Nuxt 4, Cloudflare D1/R2/Pages, Nuxt Content v3, and Tailwind v4. Features full-text search, RSS, newsletter, and dynamic OG images.',
+    tags: ['#Nuxt', '#Cloudflare', '#Tailwind', '#D1', '#R2'],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
+    ],
   },
 ]
 </script>
