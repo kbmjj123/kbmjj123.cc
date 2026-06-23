@@ -84,7 +84,7 @@
               <div class="pixel-widget">
                 <h2 class="pixel-widget-title">Tags</h2>
                 <div class="pixel-tag-cloud">
-                  <NuxtLink v-for="tag in tags" :key="tag" :to="`/?tag=${tag.replace('#', '')}`" class="pixel-tag">{{ tag }}</NuxtLink>
+                  <NuxtLink v-for="t in tags.slice(0, 12)" :key="t.tag" :to="`/?tag=${t.tag.replace('#', '')}`" class="pixel-tag">{{ t.tag }}<sup style="color:var(--text-muted);margin-left:2px;">{{ t.count }}</sup></NuxtLink>
                 </div>
               </div>
 
@@ -92,7 +92,8 @@
               <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
                 <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
                   <span style="color:var(--accent-green);">◼</span> Pixels since 2026
-                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">0 0 0 0 0 0 0</span>
+                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">{{ `${postCount}`.padStart(7, '0') }}</span>
+                  <span style="color:var(--text-muted);display:block;font-size:8px;margin-top:4px;">{{ catCount }} categories · {{ tags.length }} tags</span>
                 </div>
               </div>
             </template>
@@ -113,9 +114,6 @@
 </template>
 
 <script setup lang="ts">
-import cats from '~/data/categories.json'
-import tagsData from '~/data/tags.json'
-
 const route = useRoute()
 
 const showLoader = ref(true)
@@ -135,10 +133,57 @@ const navItems = [
   { path: '/projects', label: 'Projects' },
 ]
 
-const categories = cats
+// Dynamic categories, tags, and stats from real posts
+type Category = { slug: string; name: string; count: number }
+type TagCount = { tag: string; count: number }
 
-// Show first 12 tags in sidebar, link to full tags page
-const tags = tagsData.slice(0, 12)
+const categories = ref<Category[]>([])
+const tags = ref<TagCount[]>([])
+const postCount = ref(0)
+const catCount = ref(0)
+
+onMounted(async () => {
+  try {
+    const posts = JSON.parse(JSON.stringify(
+      await queryCollection('posts').all()
+    ))
+    if (!posts) return
+
+    const catMap = new Map<string, number>()
+    const tagMap = new Map<string, number>()
+
+    for (const p of posts) {
+      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      const cat = meta.category
+      if (cat) catMap.set(cat, (catMap.get(cat) || 0) + 1)
+      const tgs: string[] = meta.tags || []
+      for (const t of tgs) tagMap.set(t, (tagMap.get(t) || 0) + 1)
+    }
+
+    // Map category slugs to display names
+    const catNames: Record<string, string> = {
+      'dev-practice': 'Dev Practice',
+      'product-business': 'Product & Business',
+      'indie-mindset': 'Indie Mindset',
+      'tools-workflow': 'Tools & Workflow',
+      'startup-diary': 'Startup Diary',
+      'tech-trends': 'Tech Trends',
+    }
+
+    categories.value = [...catMap.entries()]
+      .map(([slug, count]) => ({ slug, name: catNames[slug] || slug, count }))
+      .sort((a, b) => b.count - a.count)
+
+    tags.value = [...tagMap.entries()]
+      .map(([tag, count]) => ({ tag, count }))
+      .sort((a, b) => b.count - a.count)
+
+    postCount.value = posts.length
+    catCount.value = categories.value.length
+  } catch (e) {
+    console.error('Failed to load sidebar data:', e)
+  }
+})
 
 const socialLinks = [
   { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
