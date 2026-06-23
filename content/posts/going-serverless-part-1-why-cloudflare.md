@@ -3,6 +3,7 @@ title: "Why I Bet My Indie Project on Cloudflare Instead of a Server"
 description: "An indie developer's honest case for choosing Cloudflare's D1, Workers, KV, and R2 over a traditional server — and what it's actually costing me so far."
 date: 2026-06-23
 category: "tools-workflow"
+readTime: "6mins"
 tags:
   - "#cloudflare"
   - "#bootstrapping"
