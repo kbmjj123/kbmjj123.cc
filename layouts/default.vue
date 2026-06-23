@@ -91,9 +91,9 @@
               <!-- Pixel counter -->
               <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
                 <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">
-                  <span style="color:var(--accent-green);">◼</span> Pixels since 2026
-                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">{{ `${postCount}`.padStart(7, '0') }}</span>
-                  <span style="color:var(--text-muted);display:block;font-size:8px;margin-top:4px;">{{ catCount }} categories · {{ tags.length }} tags</span>
+                  <span style="color:var(--accent-green);">◼</span> Running since 2026-06-22
+                  <span style="color:var(--accent-gold);display:block;font-size:13px;margin-top:6px;letter-spacing:2px;">{{ `${daysSince}`.padStart(7, '0') }}</span>
+                  <span style="color:var(--text-muted);display:block;font-size:8px;margin-top:4px;">days · {{ postCount }} posts · {{ catCount }} categories · {{ tags.length }} tags</span>
                 </div>
               </div>
             </template>
@@ -141,6 +141,11 @@ const categories = ref<Category[]>([])
 const tags = ref<TagCount[]>([])
 const postCount = ref(0)
 const catCount = ref(0)
+const daysSince = computed(() => {
+  const start = new Date('2026-06-22T00:00:00')
+  const now = new Date()
+  return Math.floor((now.getTime() - start.getTime()) / 86400000)
+})
 
 onMounted(async () => {
   try {

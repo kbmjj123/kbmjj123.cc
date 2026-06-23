@@ -5,12 +5,20 @@
 </template>
 
 <script setup lang="ts">
-const umamiScript = import.meta.dev ? [] : [{
-  src: 'https://umami.bulkpictools.com/script.js',
-  'data-website-id': 'd18cf384-91fc-4da8-8cfe-e89096337c72',
-  defer: true,
-  type: 'text/javascript',
-}]
+const extraScripts = import.meta.dev ? [] : [
+  {
+    src: 'https://umami.bulkpictools.com/script.js',
+    'data-website-id': 'd18cf384-91fc-4da8-8cfe-e89096337c72',
+    defer: true,
+    type: 'text/javascript',
+  },
+  {
+    src: '//gc.zgo.at/count.js',
+    'data-goatcounter': 'https://kbmjj123.goatcounter.com/count',
+    async: true,
+    type: 'text/javascript',
+  },
+]
 
 useHead({
   titleTemplate: '%s · kbmjj123.cc',
@@ -23,6 +31,6 @@ useHead({
   meta: [
     { name: 'theme-color', content: '#0b0b12' },
   ],
-  script: umamiScript,
+  script: extraScripts,
 })
 </script>
