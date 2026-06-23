@@ -1,21 +1,31 @@
-name = "my-project"
+name = "kbmjj123.cc"
+keep_vars = true
 main = ".output/server/index.mjs"
 compatibility_date = "2026-05-07"
 compatibility_flags = ["nodejs_compat", "global_fetch_strictly_public"]
 
 assets = { directory = ".output/public" }
 
+routes = [
+  { pattern = "kbmjj123.cc", zone_name = "kbmjj123.cc", custom_domain = true },
+  { pattern = "www.kbmjj123.cc", zone_name = "kbmjj123.cc", custom_domain = true }
+]
+
 # [[d1_databases]]
 # binding = "DB"
-# database_name = "my-db"
+# database_name = "kbmjj123-db"
 # database_id = ""
 
 # [[kv_namespaces]]
 # binding = "CACHE"
 # id = ""
 
+# [[r2_buckets]]
+# binding = "CDN"
+# bucket_name = "aifindr-cdn"
+
 [vars]
-API_BASE = "https://example.com"
+API_BASE = "https://kbmjj123.cc"
 
 # [triggers]
 # crons = ["0 9 * * *"]

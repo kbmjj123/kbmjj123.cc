@@ -10,6 +10,15 @@
       <NuxtLink to="/" style="font-family:var(--font-pixel);font-size:8px;color:var(--accent-gold);text-decoration:none;border:1px solid var(--accent-gold);padding:2px 10px;transition:all 0.15s;" @mouseenter="$event.target.style.background='var(--accent-gold)';$event.target.style.color='var(--bg-deep)'" @mouseleave="$event.target.style.background='transparent';$event.target.style.color='var(--accent-gold)'">✕ Clear</NuxtLink>
     </div>
 
+    <!-- Loading state -->
+    <div v-if="pending" class="loading-grid">
+      <div class="loading-block" style="animation-delay:0s"></div>
+      <div class="loading-block" style="animation-delay:0.2s"></div>
+      <div class="loading-block" style="animation-delay:0.4s"></div>
+      <div class="loading-block" style="animation-delay:0.6s"></div>
+      <p style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;grid-column:1/-1;margin:16px 0 0;animation:pulseText 1.5s ease-in-out infinite;">LOADING</p>
+    </div>
+
     <!-- Empty state -->
     <div v-if="filteredPosts.length === 0 && !pending" class="empty-filter">
       <p style="font-family:var(--font-pixel);font-size:10px;color:var(--text-muted);text-align:center;padding:40px 20px;">No posts match this filter.</p>
@@ -46,13 +55,37 @@ useHead({
   ],
 })
 
-const allPosts: { slug: string; title: string; date: string; category: string; categorySlug: string; readTime: string; excerpt: string; tags: string[] }[] = []
+const allPosts = ref<{ slug: string; title: string; date: string; category: string; categorySlug: string; readTime: string; excerpt: string; tags: string[] }[]>([])
+const pending = ref(true)
+
+onMounted(async () => {
+  try {
+    const posts = JSON.parse(JSON.stringify(
+      await queryCollection('posts').all()
+    ))
+    allPosts.value = (posts || []).map((p: any) => {
+      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      return {
+        slug: p.path?.replace('/posts/', '') || '',
+        title: p.title || '',
+        date: meta.date || '',
+        category: meta.category || '',
+        categorySlug: (meta.category || '').toLowerCase().replace(/\s+/g, '-'),
+        readTime: typeof p.readTime === 'object' ? (p.readTime.text || '') : (p.readTime || ''),
+        excerpt: p.description || '',
+        tags: meta.tags || [],
+      }
+    })
+  } catch (e) {
+    console.error('Failed to load posts:', e)
+  } finally {
+    pending.value = false
+  }
+})
 
 // Read filter from query params
 const categoryFilter = computed(() => route.query.category as string | undefined)
 const tagFilter = computed(() => route.query.tag as string | undefined)
-
-const pending = ref(false)
 const activeFilter = computed(() => {
   if (categoryFilter.value) return { label: 'Category', value: categoryFilter.value }
   if (tagFilter.value) return { label: 'Tag', value: `#${tagFilter.value}` }
@@ -60,7 +93,7 @@ const activeFilter = computed(() => {
 })
 
 const filteredPosts = computed(() => {
-  let result = allPosts
+  let result = allPosts.value
   if (categoryFilter.value) {
     result = result.filter(p => p.categorySlug === categoryFilter.value)
   }
@@ -163,6 +196,29 @@ const filteredPosts = computed(() => {
   background: var(--accent-green);
   color: var(--bg-deep);
   box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
+}
+
+/* Loading grid */
+.loading-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 60px 20px;
+  justify-items: center;
+}
+.loading-block {
+  width: 40px;
+  height: 40px;
+  background: var(--border-pixel);
+  animation: blockPulse 1.2s ease-in-out infinite;
+}
+@keyframes blockPulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 1; transform: scale(1.15); background: var(--accent-green); }
+}
+@keyframes pulseText {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
 }
 
 @media (max-width: 480px) {
