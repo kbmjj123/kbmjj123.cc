@@ -13,7 +13,7 @@ routes = [
 
 [[d1_databases]]
 binding = "DB"
-database_name = "kbmjj123-db"
+database_name = "kbmjj123-cc"
 database_id = "9e69c8b1-f86b-47ff-aa5d-07f53b1dfea7"
 
 # [[kv_namespaces]]
