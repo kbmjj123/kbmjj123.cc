@@ -63,6 +63,7 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
     meta: computed(() => [
       { name: 'description', content: resolved.value.description },
       { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: '@kbmjj123' },
       { name: 'twitter:title', content: resolved.value.title },
       { name: 'twitter:description', content: resolved.value.description },
       { property: 'og:title', content: resolved.value.title },

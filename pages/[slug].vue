@@ -19,46 +19,38 @@ const slug = route.params.slug as string
 const { setToc, clearToc } = useToc()
 const postBodyRef = ref<HTMLElement | null>(null)
 
-// Static fallback — always works for SSR
-const fallback: Record<string, {
-  title: string; date: string; category: string; readTime: string; excerpt: string; body: null | object
-}> = {
-}
+// Load content at setup time — works for SSG/SSR
+const { data: post } = await useAsyncData(`post-${slug}`, () =>
+  queryCollection('posts').path(`/posts/${slug}`).first()
+)
 
-const fb = null
-const title = ref(fb?.title || '')
-const date = ref(fb?.date || '')
-const category = ref(fb?.category || '')
-const readTime = ref(fb?.readTime || '')
-const excerpt = ref(fb?.excerpt || '')
-const body = ref<any>(fb?.body || null)
-
-// SEO — update when title/excerpt change
-useHead({
-  title: computed(() => title.value), // titleTemplate adds · kbmjj123.cc
-  meta: computed(() => [
-    { name: 'description', content: excerpt.value },
-    { property: 'og:title', content: title.value },
-    { property: 'og:description', content: excerpt.value },
-  ]),
+const postMeta = computed(() => {
+  const raw = post.value
+  if (!raw) return null
+  const meta = typeof raw.meta === 'string' ? JSON.parse(raw.meta) : (raw.meta || {})
+  return {
+    title: raw.title || '',
+    date: meta.date || '',
+    category: meta.category || '',
+    readTime: meta.readTime || (typeof raw.readTime === 'object' ? raw.readTime.text : raw.readTime) || '',
+    excerpt: raw.description || '',
+    body: raw.body || null,
+  }
 })
 
-// Client-only: upgrade to real content from Nuxt Content
-onMounted(async () => {
-  try {
-    const raw = JSON.parse(JSON.stringify(
-      await queryCollection('posts').path(`/posts/${slug}`).first()
-    ))
-    if (!raw) return
-    const meta = typeof raw.meta === 'string' ? JSON.parse(raw.meta) : (raw.meta || {})
-    title.value = raw.title || title.value
-    date.value = meta.date || date.value
-    category.value = meta.category || category.value
-    readTime.value = meta.readTime || (typeof raw.readTime === 'object' ? raw.readTime.text : raw.readTime) || readTime.value
-    excerpt.value = raw.description || excerpt.value
-    body.value = raw.body || null
-  } catch {}
-})
+const title = computed(() => postMeta.value?.title || '')
+const date = computed(() => postMeta.value?.date || '')
+const category = computed(() => postMeta.value?.category || '')
+const readTime = computed(() => postMeta.value?.readTime || '')
+const excerpt = computed(() => postMeta.value?.excerpt || '')
+const body = computed<any>(() => postMeta.value?.body || null)
+
+// SEO + OG image — reactive via computed
+usePageSeo(() => ({
+  title: title.value,
+  description: excerpt.value,
+  template: 'blog',
+}))
 
 // Build TOC from rendered DOM
 function buildToc() {

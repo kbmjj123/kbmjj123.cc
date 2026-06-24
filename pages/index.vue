@@ -20,9 +20,9 @@
     </div>
 
     <!-- Post list -->
-    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }">
+    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" role="link" tabindex="0" @click="navigateTo(`/${post.slug}`)" @keydown.enter.prevent="navigateTo(`/${post.slug}`)">
       <h3 class="post-title">
-        <NuxtLink :to="`/${post.slug}`">{{ post.title }}</NuxtLink>
+        <NuxtLink :to="`/${post.slug}`" tabindex="-1" @click.stop>{{ post.title }}</NuxtLink>
       </h3>
       <div class="post-meta">
         <span class="date">{{ post.date }}</span>
@@ -30,23 +30,18 @@
         <span style="color:var(--text-muted);">⌨️ {{ post.readTime }}</span>
       </div>
       <p class="post-excerpt">{{ post.excerpt }}</p>
-      <NuxtLink :to="`/${post.slug}`" class="btn-read">Read More</NuxtLink>
+      <NuxtLink :to="`/${post.slug}`" tabindex="-1" @click.stop class="btn-read">Read More</NuxtLink>
     </article>
   </section>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
-// Homepage — custom brand title
-const pageTitle = computed(() => `Indie Developer Log`) // → titleTemplate adds · kbmjj123.cc
-const pageDesc = computed(() => 'KB MJJ123 .cc — Indie developer blog sharing coding, product, and startup insights.')
-useHead({
-  title: pageTitle,
-  meta: [
-    { name: 'description', content: pageDesc },
-    { property: 'og:title', content: pageTitle },
-    { property: 'og:description', content: pageDesc },
-  ],
+
+usePageSeo({
+  title: 'Indie Developer Log',
+  description: 'KB MJJ123 .cc — Indie developer blog sharing coding, product, and startup insights.',
+  template: 'prefix',
 })
 
 const allPosts = ref<{ slug: string; title: string; date: string; category: string; categorySlug: string; readTime: string; excerpt: string; tags: string[] }[]>([])
@@ -126,11 +121,18 @@ const filteredPosts = computed(() => {
   opacity: 0;
   transform: translateY(20px);
   animation: pixelFadeUp 0.5s ease forwards;
+  cursor: pointer;
 }
 .post-item:hover {
   border-color: var(--accent-green);
   box-shadow: 0 4px 16px rgba(74,222,128,0.04);
   transform: translateY(-2px);
+}
+.post-item:hover .post-title a { color: var(--accent-green); }
+.post-item:hover .btn-read {
+  background: var(--accent-green);
+  color: var(--bg-deep);
+  box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
 }
 .post-item::before {
   content: "◆";

@@ -9,7 +9,7 @@ tags:
   - "#bootstrapping"
   - "#mvp"
   - "#deployment"
-image: "https://assets.kbmjj123.cc/blog/tools-workflow/going-serverless-part-1/cover.png"
+image: "https://assets.kbmjj123.cc/blog/tools-workflow/going-serverless-part-1/going-serverless-part-1-stack-diagram.svg"
 draft: false
 series: "going-serverless"
 seriesOrder: 1
@@ -69,6 +69,8 @@ For where I am right now — pre-revenue, validating ideas, shipping fast — "d
 
 I'm not going to go deep into implementation here — that's what the rest of this series is for. At a glance, this is how the pieces map to what I actually need:
 
+![Cloudflare stack overview: a client request hits Workers, which routes to D1 for relational data, KV for fast key-value lookups, and R2 for object storage](/images/going-serverless/part-1-why-cloudflare/going-serverless-part-1-stack-diagram.svg)
+
 - **Workers** — the compute layer, where my application logic runs
 - **D1** — relational data, for anything that needs real queries and structure
 - **KV** — fast key-value lookups for things that don't need SQL
@@ -91,7 +93,7 @@ This decision didn't come for free, even setting aside future billing. Getting t
 ## Lessons Learned
 
 - Choosing the "simple" path isn't free — it just moves the cost somewhere else, and it's worth knowing where before you commit.
-- Having run the more complex option (servers) makes the simpler choice (Cloudflare) a decision, not a default.
+- Having actually run servers before gave me a real number to compare against — not "servers are annoying" in the abstract, but specific recurring tasks (patching, backups, restarts) I could weigh against Cloudflare's free tier before switching.
 - A generous free tier is still a tier — track your usage early, even before you have real traffic, so the eventual transition to paid isn't a surprise.
 - Picking a stack where the pieces are designed together (Workers + D1 + KV + R2) removes a category of integration problems before they happen.
 - Being honest about what you don't know yet (will this scale? will it stay free?) is more useful to future-you than confidence you haven't earned.

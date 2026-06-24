@@ -25,11 +25,17 @@
       <NavItem v-for="item in mainNav" :key="item.label" :to="item.to" :icon="item.icon" :label="item.label" />
     </div>
 
-    <!-- Categories (customize with your own) -->
-    <div class="mb-1">
-      <div class="nav-section-title">Categories</div>
-      <NavItem v-for="cat in categories" :key="cat.slug" :to="cat.to"
-        :icon="cat.emoji" :label="cat.name" />
+    <!-- Categories -->
+    <div class="widget">
+      <div class="widget-title">Categories</div>
+      <ul class="category-list">
+        <li v-for="cat in categories" :key="cat.slug" class="category-item">
+          <NuxtLink :to="`/?category=${cat.slug}`" class="category-link">
+            <span class="category-name">{{ cat.name }}</span>
+            <span class="count">{{ cat.count }}</span>
+          </NuxtLink>
+        </li>
+      </ul>
     </div>
 
     <!-- Bottom links -->
@@ -64,8 +70,8 @@
           <div class="nav-section-title">Browse</div>
           <NavItem v-for="item in mainNav" :key="item.label" :to="item.to" :icon="item.icon" :label="item.label" @click="isMobileMenuOpen = false" />
           <div class="nav-section-title">Categories</div>
-          <NavItem v-for="cat in categories" :key="cat.slug" :to="cat.to"
-            :icon="cat.emoji" :label="cat.name" @click="isMobileMenuOpen = false" />
+          <NavItem v-for="cat in categories" :key="cat.slug" :to="`/?category=${cat.slug}`"
+            :label="cat.name" @click="isMobileMenuOpen = false" />
           <div class="mt-6 pt-4" :style="{ borderTop: '1px solid var(--color-border)' }">
             <NavItem to="#" label="Custom Link 1" @click="isMobileMenuOpen = false" />
             <button v-if="auth?.isLoggedIn?.value && auth?.user?.value" class="nav-item w-full" @click="auth.logout(); isMobileMenuOpen = false">Sign Out</button>
@@ -87,12 +93,11 @@ const mainNav = [
   { label: 'Bookmarks', to: '/', icon: '⭐' },
 ]
 
-// Customize with your own categories
-const categories: { slug: string; name: string; emoji: string; to: string }[] = [
-  { slug: 'cat-1', name: 'Category 1', emoji: '📁', to: '#' },
-  { slug: 'cat-2', name: 'Category 2', emoji: '📂', to: '#' },
-  { slug: 'cat-3', name: 'Category 3', emoji: '📋', to: '#' },
-]
+const categories = computed(() => [
+  { slug: 'tools-workflow', name: 'Tools & Workflow', count: 1 },
+  { slug: 'startup-diary', name: 'Startup Diary', count: 1 },
+  { slug: 'dev-practice', name: 'Dev Practice', count: 1 },
+])
 
 // Lock body scroll when mobile menu is open
 watch(isMobileMenuOpen, (open) => {
@@ -107,3 +112,63 @@ const stats = reactive({
   contributors: 5,
 })
 </script>
+
+<style scoped>
+.widget {
+  margin-bottom: 12px;
+}
+.widget-title {
+  font-family: var(--font-pixel);
+  font-size: 11px;
+  color: var(--accent-gold);
+  border-bottom: 1px solid var(--border-pixel);
+  padding-bottom: 8px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  letter-spacing: 0.5px;
+}
+.widget-title::before { content: "▸"; color: var(--accent-green); font-size: 12px; }
+
+.category-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.category-item {
+  border-bottom: 1px dotted var(--border-pixel);
+  transition: background 0.15s ease;
+}
+.category-item:last-child { border-bottom: none; }
+.category-item:hover {
+  background: rgba(74, 222, 128, 0.04);
+}
+.category-link {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 7px 6px;
+  text-decoration: none;
+  font-size: 13px;
+  color: var(--text-secondary);
+  transition: color 0.15s;
+  cursor: pointer;
+}
+.category-item:hover .category-link { color: var(--accent-green); }
+
+.category-name { font-weight: 450; }
+.count {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  color: var(--text-muted);
+  background: var(--bg-deep);
+  padding: 0 8px;
+  border: 1px solid var(--border-pixel);
+  transition: border-color 0.15s, color 0.15s;
+}
+.category-item:hover .count {
+  border-color: var(--accent-green);
+  color: var(--accent-green);
+}
+</style>

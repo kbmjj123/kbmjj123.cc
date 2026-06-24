@@ -8,7 +8,7 @@ tags:
   - "#api"
   - "#typescript"
   - "#deployment"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/going-serverless-part-2/cover.png"
+image: "https://assets.kbmjj123.cc/blog/dev-practice/going-serverless-part-2/going-serverless-part-2-oauth-flow-diagram.svg"
 draft: false
 series: "going-serverless"
 seriesOrder: 2
@@ -43,6 +43,10 @@ At that point I looked at the two realistic options:
 2. **A mock login endpoint** — skip the real OAuth round trip entirely during local development, and short-circuit straight to "user is logged in" with fake data.
 
 I didn't spend long evaluating the tunnel option in depth, and that was a deliberate call, not an oversight: setting one up means installing or configuring an extra tool, keeping it running alongside my dev server, and trusting that traffic flows reliably enough not to introduce a second source of flakiness on top of the original problem. For a feature where I just need "is the user considered logged in or not" to build the rest of the app, that's a lot of moving parts for the actual question I'm trying to answer.
+
+Here's the difference between the three states laid out side by side — what works in production, where it breaks locally, and where the mock endpoint steps in:
+
+![OAuth callback flow comparison: production succeeds, local development fails to reach the callback, and a dev-only mock endpoint bypasses the real exchange to return a fake session](/images/going-serverless/part-2-github-oauth-local-callback/going-serverless-part-2-oauth-flow-diagram.svg)
 
 ## Solution
 
