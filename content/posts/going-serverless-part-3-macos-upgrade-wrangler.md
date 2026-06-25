@@ -31,8 +31,7 @@ I set up the Cloudflare stack described in Part 1 of this series, went to instal
 
 The point of this post isn't the story. It's the checklist I should have run *before* committing to a tool, and the actual trade-off behind the option I picked once I hit the wall.
 
-![External monitor showing display issue after forced macOS upgrade](/images/going-serverless/part-3-macos-upgrade-wrangler/going-serverless-part-3-apple-supported-devices.webp)
-<!-- 待补充：真实截图，显示外接显示器故障的现场画面。文件名建议：going-serverless-part-3-monitor-broken.png -->
+![External monitor showing display issue after forced macOS upgrade](/images/going-serverless/part-3-macos-upgrade-wrangler/going-serverless-part-3-monitor-broken.webp)
 
 ## The Pre-Flight Checklist: Confirm This Before You Adopt a CLI Tool
 
