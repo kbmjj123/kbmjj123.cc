@@ -117,6 +117,18 @@ onUnmounted(() => clearToc())
   font-size: 15px;
   color: var(--text-secondary);
   line-height: 1.9;
+  overflow-wrap: break-word;
+}
+.post-body :deep(img),
+.post-body :deep(video),
+.post-body :deep(iframe),
+.post-body :deep(pre) {
+  max-width: 100%;
+  height: auto;
+}
+.post-body :deep(img) {
+  display: block;
+  border-radius: 4px;
 }
 
 @media (max-width: 480px) {
