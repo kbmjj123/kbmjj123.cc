@@ -27,6 +27,7 @@
     "@cloudflare/workers-types": "^4.0.0",
     "@oxc-parser/binding-darwin-x64": "^0.129.0",
     "@resvg/resvg-wasm": "^2.6.2",
+    "@takumi-rs/wasm": "^1.8.7",
     "satori": "^0.26.0",
     "typescript": "^5.7.0",
     "unhead": "^2.0.7",
