@@ -10,9 +10,6 @@
     </nav>
     <!-- /Breadcrumb -->
 
-    <!-- Structured data (BreadcrumbList) -->
-    <script v-if="category" :id="`ld-breadcrumb-${slug}`" type="application/ld+json">{{ ldBreadcrumb }}</script>
-
     <h1 class="post-title">{{ title }}</h1>
     <div class="post-meta">
       <span class="date">{{ date }}</span>
@@ -59,7 +56,8 @@ const readTime = computed(() => postMeta.value?.readTime || '')
 const excerpt = computed(() => postMeta.value?.excerpt || '')
 const body = computed<any>(() => postMeta.value?.body || null)
 
-const ldBreadcrumb = computed(() => JSON.stringify({
+// JSON-LD structured data — injected in <head> where it belongs
+const ldBreadcrumb = computed(() => category.value ? ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
@@ -67,7 +65,17 @@ const ldBreadcrumb = computed(() => JSON.stringify({
     { '@type': 'ListItem', position: 2, name: category.value, item: `https://kbmjj123.cc/category/${categorySlug.value}` },
     { '@type': 'ListItem', position: 3, name: title.value, item: `https://kbmjj123.cc/${slug}` },
   ],
-}))
+}) : null)
+
+useHead(() => ldBreadcrumb.value ? {
+  script: [
+    {
+      id: `ld-breadcrumb-${slug}`,
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(ldBreadcrumb.value),
+    },
+  ],
+} : {})
 
 // SEO + OG image — reactive via computed
 usePageSeo(() => ({
