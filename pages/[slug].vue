@@ -78,6 +78,7 @@ onUnmounted(() => clearToc())
   border: 1.5px solid var(--border-pixel);
   padding: 28px 30px 30px;
   position: relative;
+  min-width: 0;
 }
 .post-detail::before {
   content: "\25C6";
