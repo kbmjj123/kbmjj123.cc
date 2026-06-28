@@ -44,13 +44,9 @@ On mobile, the ad rendered as a square block instead of the horizontal banner sh
 
 ![AdSense responsive ad rendering as a square block on mobile instead of a horizontal banner](/images/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-mobile-broken.webp)
 
-<!-- PLACEHOLDER: 替换为你真实的移动端方形效果截图 -->
-
 What surprised me more was that the *desktop* version wasn't stable either — the ad's height grew well past the 90px I'd designed the layout for, pushing surrounding content down:
 
 ![AdSense ad height exceeding the expected 90px on desktop, pushing page content down](/images/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-desktop-height-broken.webp)
-
-<!-- PLACEHOLDER: 替换为你真实的 PC 端高度异常截图 -->
 
 ## Investigation
 
