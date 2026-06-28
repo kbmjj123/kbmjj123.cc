@@ -78,6 +78,7 @@ onUnmounted(() => clearToc())
   border: 1.5px solid var(--border-pixel);
   padding: 28px 30px 30px;
   position: relative;
+  min-width: 0;
 }
 .post-detail::before {
   content: "\25C6";
@@ -118,6 +119,7 @@ onUnmounted(() => clearToc())
   color: var(--text-secondary);
   line-height: 1.9;
   overflow-wrap: break-word;
+  overflow: hidden;
 }
 .post-body :deep(img),
 .post-body :deep(video),

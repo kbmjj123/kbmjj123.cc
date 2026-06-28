@@ -63,7 +63,7 @@
 
         <!-- Main content + sidebar grid -->
         <div class="pixel-main-grid" style="display:grid;grid-template-columns:2.2fr 1fr;gap:36px;margin-top:40px;">
-          <main>
+          <main style="min-width:0;overflow:hidden;">
             <slot />
           </main>
           <aside class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">

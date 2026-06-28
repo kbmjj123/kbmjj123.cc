@@ -150,9 +150,16 @@
 
 .markdown-content img {
   max-width: 100%;
+  height: auto;
+  display: block;
   border-radius: var(--radius-md);
   border: 1px solid var(--border-pixel);
   margin: 16px 0;
+}
+
+.markdown-content img[style*="float"],
+.markdown-content img[align] {
+  display: inline; /* preserve inline for floated images */
 }
 
 .markdown-content hr {
