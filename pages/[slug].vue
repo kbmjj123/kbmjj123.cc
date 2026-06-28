@@ -1,5 +1,18 @@
 <template>
   <section class="post-detail">
+    <!-- Breadcrumb -->
+    <nav class="breadcrumb" aria-label="Breadcrumb">
+      <NuxtLink to="/" class="breadcrumb-link">Home</NuxtLink>
+      <span class="breadcrumb-sep">▸</span>
+      <NuxtLink v-if="category" :to="`/category/${categorySlug}`" class="breadcrumb-link breadcrumb-category">{{ category }}</NuxtLink>
+      <span class="breadcrumb-sep" v-if="category">/</span>
+      <span class="breadcrumb-current">{{ title }}</span>
+    </nav>
+    <!-- /Breadcrumb -->
+
+    <!-- Structured data (BreadcrumbList) -->
+    <script v-if="category" :id="`ld-breadcrumb-${slug}`" type="application/ld+json">{{ ldBreadcrumb }}</script>
+
     <h1 class="post-title">{{ title }}</h1>
     <div class="post-meta">
       <span class="date">{{ date }}</span>
@@ -41,9 +54,20 @@ const postMeta = computed(() => {
 const title = computed(() => postMeta.value?.title || '')
 const date = computed(() => postMeta.value?.date || '')
 const category = computed(() => postMeta.value?.category || '')
+const categorySlug = computed(() => category.value.toLowerCase().replace(/\s+/g, '-'))
 const readTime = computed(() => postMeta.value?.readTime || '')
 const excerpt = computed(() => postMeta.value?.excerpt || '')
 const body = computed<any>(() => postMeta.value?.body || null)
+
+const ldBreadcrumb = computed(() => JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `https://kbmjj123.cc/` },
+    { '@type': 'ListItem', position: 2, name: category.value, item: `https://kbmjj123.cc/category/${categorySlug.value}` },
+    { '@type': 'ListItem', position: 3, name: title.value, item: `https://kbmjj123.cc/${slug}` },
+  ],
+}))
 
 // SEO + OG image — reactive via computed
 usePageSeo(() => ({
@@ -79,6 +103,39 @@ onUnmounted(() => clearToc())
   padding: 28px 30px 30px;
   position: relative;
   min-width: 0;
+}
+.breadcrumb {
+  font-family: var(--font-pixel);
+  font-size: 9px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 6px;
+}
+.breadcrumb-link {
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.breadcrumb-link:hover {
+  color: var(--accent-green);
+}
+.breadcrumb-link::before { content: "["; }
+.breadcrumb-link::after { content: "]"; }
+.breadcrumb-category {
+  color: var(--accent-gold);
+}
+.breadcrumb-sep {
+  color: var(--text-muted);
+  font-size: 7px;
+}
+.breadcrumb-current {
+  color: var(--text-secondary);
+  max-width: 240px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .post-detail::before {
   content: "\25C6";
