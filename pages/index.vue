@@ -89,7 +89,7 @@ const filteredPosts = computed(() => {
   if (tagFilter.value) {
     result = result.filter(p => p.tags.includes(`#${tagFilter.value}`))
   }
-  return result
+  return [...result].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 })
 </script>
 
