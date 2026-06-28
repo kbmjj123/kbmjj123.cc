@@ -118,6 +118,7 @@ onUnmounted(() => clearToc())
   color: var(--text-secondary);
   line-height: 1.9;
   overflow-wrap: break-word;
+  overflow: hidden;
 }
 .post-body :deep(img),
 .post-body :deep(video),
