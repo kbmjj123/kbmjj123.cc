@@ -49,9 +49,9 @@ export default defineNuxtConfig({
   },
 
   robots: {
-    disallow: ['/admin/'],
-    sitemap: '/api/sitemap.xml',
-    groups: [
+    disallow: ['/admin/', '/api/'],
+    sitemap: '/sitemap.xml',
+		groups: [
       {
         userAgent: '*',
         allow: '*',
@@ -59,7 +59,11 @@ export default defineNuxtConfig({
     ]
   },
 
-  sitemap: false,
+  sitemap: {
+    autoLastmod: true,
+    exclude: ['/admin/**'],
+		sources: ['/api/sitemap-posts']
+  },
 
   postcss: {
     plugins: {
