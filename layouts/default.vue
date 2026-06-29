@@ -117,6 +117,13 @@
 <script setup lang="ts">
 const route = useRoute()
 
+// RSS auto-discovery link
+useHead({
+  link: [
+    { rel: 'alternate', type: 'application/rss+xml', title: 'kbmjj123.cc RSS Feed', href: '/api/rss' },
+  ],
+})
+
 const showLoader = ref(true)
 
 onMounted(() => {
