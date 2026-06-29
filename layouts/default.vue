@@ -120,7 +120,7 @@ const route = useRoute()
 // RSS auto-discovery link
 useHead({
   link: [
-    { rel: 'alternate', type: 'application/rss+xml', title: 'kbmjj123.cc RSS Feed', href: '/api/rss' },
+    { rel: 'alternate', type: 'application/rss+xml', title: 'kbmjj123.cc RSS Feed', href: '/feed.xml' },
   ],
 })
 
@@ -202,7 +202,7 @@ onMounted(async () => {
 const socialLinks = [
   { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
   { label: 'Twitter', url: 'https://twitter.com/solomaker282' },
-  { label: 'RSS', url: '/api/rss' },
+  { label: 'RSS', url: '/feed.xml' },
 ]
 
 function isActive(path: string) {
