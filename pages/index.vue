@@ -54,6 +54,7 @@ onMounted(async () => {
     ))
     allPosts.value = (posts || []).map((p: any) => {
       const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      if (meta.draft) return null
       return {
         slug: p.path?.replace('/posts/', '') || '',
         title: p.title || '',
@@ -64,7 +65,7 @@ onMounted(async () => {
         excerpt: p.description || '',
         tags: meta.tags || [],
       }
-    })
+    }).filter(Boolean)
   } catch (e) {
     console.error('Failed to load posts:', e)
   } finally {

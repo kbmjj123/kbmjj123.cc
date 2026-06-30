@@ -33,6 +33,7 @@ onMounted(async () => {
     const grouped: Record<string, ArchivePost[]> = {}
     for (const p of posts) {
       const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      if (meta.draft) continue
       const year = meta.date ? String(new Date(meta.date).getFullYear()) : 'Unknown'
       if (!grouped[year]) grouped[year] = []
       grouped[year].push({

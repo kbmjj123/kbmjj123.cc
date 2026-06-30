@@ -4,7 +4,11 @@ export default defineEventHandler(async (event) => {
 		//@ts-ignore
     const posts = await queryCollection(event, 'posts')
       .all()
-    return posts.map((p: any) => ({
+    const published = (posts || []).filter((p: any) => {
+      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      return !meta.draft
+    })
+    return published.map((p: any) => ({
       loc: p.path.replace('/posts', ''),
       lastmod: p.updatedAt || p.date || undefined,
       changefreq: 'weekly',

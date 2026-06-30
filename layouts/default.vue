@@ -167,6 +167,7 @@ onMounted(async () => {
 
     for (const p of posts) {
       const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+      if (meta.draft) continue
       const cat = meta.category
       if (cat) catMap.set(cat, (catMap.get(cat) || 0) + 1)
       const tgs: string[] = meta.tags || []

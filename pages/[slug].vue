@@ -34,6 +34,18 @@ const { data: post } = await useAsyncData(`post-${slug}`, () =>
   queryCollection('posts').path(`/posts/${slug}`).first()
 )
 
+// Draft check — hide draft posts from production
+const draftPost = computed(() => {
+  const raw = post.value
+  if (!raw) return true
+  const meta = typeof raw.meta === 'string' ? JSON.parse(raw.meta) : (raw.meta || {})
+  return !!meta.draft
+})
+
+if (draftPost.value) {
+  throw createError({ statusCode: 404, statusMessage: 'Post not found' })
+}
+
 const postMeta = computed(() => {
   const raw = post.value
   if (!raw) return null
