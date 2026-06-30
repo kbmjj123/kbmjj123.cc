@@ -119,7 +119,7 @@ const stats = reactive({
 }
 .widget-title {
   font-family: var(--font-pixel);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--accent-gold);
   border-bottom: 1px solid var(--border-pixel);
   padding-bottom: 8px;
@@ -150,7 +150,7 @@ const stats = reactive({
   align-items: center;
   padding: 7px 6px;
   text-decoration: none;
-  font-size: 13px;
+  font-size: 14px;
   color: var(--text-secondary);
   transition: color 0.15s;
   cursor: pointer;
@@ -160,7 +160,7 @@ const stats = reactive({
 .category-name { font-weight: 450; }
 .count {
   font-family: var(--font-pixel);
-  font-size: 9px;
+  font-size: 10px;
   color: var(--text-muted);
   background: var(--bg-deep);
   padding: 0 8px;
