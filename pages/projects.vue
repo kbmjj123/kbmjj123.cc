@@ -42,6 +42,14 @@ const projects = [
     ],
   },
   {
+    name: '📊 umami-serve',
+    desc: 'Self-hosted Umami analytics fork — deploy your own analytics server for free. Customized from official Umami source for personal deployment, no tracking limits, full data ownership.',
+    tags: ['#Umami', '#Analytics', '#Docker', '#SelfHosted', '#Fork'],
+    links: [
+      { label: 'GitHub', url: 'https://github.com/kbmjj123/umami-serve' },
+    ],
+  },
+  {
     name: '💻 kbmjj123.cc',
     desc: 'This very site — an indie developer blog with pixel aesthetic. Built with Nuxt 4, Cloudflare D1/R2/Pages, Nuxt Content v3, and Tailwind v4. Features full-text search, RSS, newsletter, and dynamic OG images.',
     tags: ['#Nuxt', '#Cloudflare', '#Tailwind', '#D1', '#R2'],
