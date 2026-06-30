@@ -45,15 +45,6 @@ Then I checked the Usage page at `cloud.umami.is/settings/usage`.
 
 The Hobby free plan caps out at **100,000 events per month**. I had blown past it.
 
-<!-- 📸 IMAGE NEEDED (真实截图)
-  Position: 正文此处
-  Type: 真实截图
-  Shows: Umami Cloud Usage 页面，显示当月事件用量已超过免费计划上限
-  Alt text: "Umami Cloud usage dashboard showing monthly event limit exceeded on the free Hobby plan"
-  Caption: "The moment I realized the silence wasn't a bug — it was a ceiling."
-  文件命名: self-hosting-umami-part-1-usage-exceeded.png
-  R2路径: https://assets.kbmjj123.cc/blog/startup-diary/self-hosting-umami-part-1/self-hosting-umami-part-1-usage-exceeded.png
--->
 ![Umami Cloud usage dashboard showing monthly event limit exceeded on the free Hobby plan](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-1-usage-exceeded.webp)
 
 What I hadn't realized was that Umami Cloud doesn't warn you when you're approaching the limit. There's no email, no dashboard alert, no degraded-mode banner. Data collection just quietly stops. If I hadn't noticed the zero-visitor streak, I could have gone weeks thinking my traffic had collapsed.
