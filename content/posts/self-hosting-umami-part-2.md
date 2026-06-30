@@ -74,15 +74,8 @@ The critical constraint: **Prisma's migration engine requires a direct connectio
 
 So the problem was structural: the build was trying to run database migrations through the connection pool, which is architecturally wrong regardless of credentials or network conditions.
 
-<!-- 📸 IMAGE NEEDED (解释性图表)
-  Position: 正文此处，在"So the problem was structural"段落之后
-  Type: 解释性架构图（我来生成 SVG）
-  Shows: 两条路径对比 — Vercel Runtime → PgBouncer(6543) → PostgreSQL vs Vercel Build(migration) → PostgreSQL Direct(5432)，标注哪条路径适用于运行时查询，哪条适用于 Prisma 迁移
-  Alt text: "Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432"
-  Caption: "Same database, two endpoints — only one of them works for schema migrations."
-  文件命名: self-hosting-umami-part-2-connection-paths-diagram.svg
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-2/self-hosting-umami-part-2-connection-paths-diagram.svg
--->
+
+![Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432](/images/startup-umami/self-hosting-umami/supabase_connection_paths_diagram.svg)
 
 ### The Two-URL Fix
 
