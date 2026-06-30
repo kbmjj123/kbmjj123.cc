@@ -3,6 +3,7 @@ title: "When Your Free Analytics Hit the Ceiling: Why I Left Umami Cloud"
 description: "My Umami Cloud free plan hit 100k events and data collection stopped. Here's what I tried — Cloudflare Web Analytics, why it wasn't enough, and why I ended up self-hosting."
 date: 2026-06-30
 category: "startup-diary"
+readTime: "8mins"
 tags:
   - "#saas"
   - "#cloudflare"
