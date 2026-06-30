@@ -12,7 +12,7 @@
           @click.prevent="scrollTo(item.id)"
         >{{ item.text }}</a>
       </nav>
-      <p v-else style="font-family:var(--font-pixel);font-size:8px;color:var(--text-muted);padding:8px 0;">No headings found</p>
+      <p v-else style="font-family:var(--font-pixel);font-size:10px;color:var(--text-muted);padding:8px 0;">No headings found</p>
     </div>
   </div>
 </template>
@@ -86,7 +86,7 @@ onUnmounted(() => {
 }
 .pixel-widget-title {
   font-family: var(--font-pixel);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--accent-gold);
   border-bottom: 1px solid var(--border-pixel);
   padding-bottom: 8px;
@@ -109,7 +109,7 @@ onUnmounted(() => {
 .pixel-toc-link {
   display: block;
   font-family: var(--font-pixel);
-  font-size: 8px;
+  font-size: 10px;
   color: var(--text-secondary);
   text-decoration: none;
   padding: 5px 0 5px 12px;
@@ -123,7 +123,7 @@ onUnmounted(() => {
 }
 .pixel-toc-link.toc-h3 {
   padding-left: 22px;
-  font-size: 7px;
+  font-size: 9px;
   color: var(--text-muted);
 }
 .pixel-toc-link.toc-active {
