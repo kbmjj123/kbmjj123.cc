@@ -19,6 +19,7 @@ interface PostEntry {
   updatedAt: string
   excerpt: string
   contentHtml: string
+  image: string
   category: string
   tags: string[]
 }
@@ -79,13 +80,14 @@ function loadPosts(): PostEntry[] {
       const excerpt = getFm('description')
       const category = getFm('category')
       const tags = getFmArray('tags')
+      const image = getFm('image')
 
       if (!title || !date) return null
 
       // Render markdown to HTML
       const contentHtml = md.render(body)
 
-      return { slug, title, date, updatedAt, excerpt, contentHtml, category, tags }
+      return { slug, title, date, updatedAt, excerpt, contentHtml, image, category, tags }
     })
     .filter(Boolean) as PostEntry[]
 }
@@ -101,11 +103,6 @@ export default defineEventHandler(async (event) => {
 
     const items = posts
       .map((p) => {
-        const excerpt = p.excerpt
-          .replace(/&/g, '&amp;')
-          .replace(/</g, '&lt;')
-          .replace(/>/g, '&gt;')
-          .replace(/"/g, '&quot;')
         const title = p.title
           .replace(/&/g, '&amp;')
           .replace(/</g, '&lt;')
@@ -116,12 +113,21 @@ export default defineEventHandler(async (event) => {
           .replace(/>/g, '&gt;')
         const date = new Date(p.date).toUTCString()
 
+        // Check if image is a real URL (not a placeholder/note)
+        const hasImage = p.image && /^https?:\/\//.test(p.image)
+        const imgHtml = hasImage
+          ? `<img src="${p.image.replace(/&/g, '&amp;')}" alt="" style="max-width:100%;margin-bottom:1em">`
+          : ''
+        const description = imgHtml
+          ? `<![CDATA[${imgHtml}${xmlEscape(p.excerpt)}]]>`
+          : xmlEscape(p.excerpt)
+
         return `    <item>
       <title>${title}</title>
       <link>${siteUrl}/${p.slug}</link>
       <guid isPermaLink="true">${siteUrl}/${p.slug}</guid>
       <pubDate>${date}</pubDate>
-      <description>${excerpt}</description>
+      <description>${description}</description>
       <content:encoded><![CDATA[${p.contentHtml}]]></content:encoded>
       <category>${category}</category>
     </item>`
