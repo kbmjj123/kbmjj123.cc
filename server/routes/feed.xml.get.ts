@@ -1,87 +1,76 @@
 // server/routes/feed.xml.get.ts — RSS 2.0 feed with full content
-import { readFileSync, readdirSync } from 'node:fs'
-import { join } from 'node:path'
+import type { MinimalNode } from 'minimark'
 
-// @ts-ignore
-import MarkdownIt from 'markdown-it'
-
-const md = new MarkdownIt({
-  html: true,
-  breaks: true,
-  linkify: true,
-})
-
-interface PostEntry {
-  slug: string
-  title: string
-  date: string
-  updatedAt: string
-  excerpt: string
-  contentHtml: string
-  category: string
-  tags: string[]
+function xmlEscape(s: string): string {
+  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
 }
 
-function loadPosts(): PostEntry[] {
-  const dir = join(process.cwd(), 'content/posts')
-  let files: string[]
-  try {
-    files = readdirSync(dir).filter((f: string) => f.endsWith('.md'))
-  } catch {
-    return []
+/** Render a minimark/MDC AST node to HTML string */
+function renderNode(node: MinimalNode): string {
+  if (node.type === 'text') return xmlEscape(node.value ?? '')
+  if (node.type !== 'element' || !node.tag) return ''
+  const { tag, props, children } = node
+
+  // Self-closing elements
+  if (tag === 'br') return '<br>'
+  if (tag === 'hr') return '<hr>'
+  if (tag === 'img') {
+    const src = props?.src ? xmlEscape(String(props.src)) : ''
+    const alt = props?.alt ? xmlEscape(String(props.alt)) : ''
+    return `<img src="${src}" alt="${alt}">`
   }
 
-  return files.map((f: string): PostEntry | null => {
-    const content = readFileSync(join(dir, f), 'utf-8')
-    const slug = f.replace(/\.md$/, '')
+  const inner = children?.map(c => renderNode(c)).join('') ?? ''
 
-    // Split frontmatter and body
-    const match = content.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/)
-    if (!match) return null
+  // Code blocks — raw code in props.code
+  if (tag === 'code' && props?.code) {
+    const lang = props.language ? ` class="language-${xmlEscape(String(props.language))}"` : ''
+    return `<pre><code${lang}>${xmlEscape(String(props.code))}</code></pre>`
+  }
+  if (tag === 'pre' && props?.code) {
+    const lang = props.language ? ` class="language-${xmlEscape(String(props.language))}"` : ''
+    return `<pre><code${lang}>${xmlEscape(String(props.code))}</code></pre>`
+  }
+  if (tag === 'code-inline') {
+    return `<code>${inner}</code>`
+  }
 
-    const frontmatter = match[1]
-    const body = match[2]
+  // Anchor
+  if (tag === 'a') {
+    const href = props?.href ? xmlEscape(String(props.href)) : ''
+    return `<a href="${href}">${inner}</a>`
+  }
 
-    const getFm = (key: string): string => {
-      const re = new RegExp(`^${key}:\\s*(.+)$`, 'm')
-      const m = frontmatter.match(re)
-      return m ? m[1].trim().replace(/^["']|["']$/g, '') : ''
-    }
+  // Heading with id
+  if (tag?.[0] === 'h' && tag.length === 2 && /^h[1-6]$/.test(tag)) {
+    const id = props?.id ? ` id="${xmlEscape(String(props.id))}"` : ''
+    return `<${tag}${id}>${inner}</${tag}>`
+  }
 
-    const getFmArray = (key: string): string[] => {
-      // Handles both inline: tags: ["#a", "#b"]
-      // and multi-line: tags:\n  - "#a"\n  - "#b"
-      const inline = frontmatter.match(new RegExp(`^${key}:\\s*\\[(.*?)\\]`, 'm'))
-      if (inline) {
-        return inline[1].split(',').map((t: string) => t.trim().replace(/^["']|["']$/g, '')).filter(Boolean)
-      }
-      // Multi-line list
-      const lines = frontmatter.split('\n')
-      const idx = lines.findIndex((l: string) => l.match(new RegExp(`^${key}:`)))
-      if (idx === -1) return []
-      const items: string[] = []
-      for (let i = idx + 1; i < lines.length; i++) {
-        const m = lines[i].match(/^\s+-\s+(.+)$/)
-        if (m) items.push(m[1].trim().replace(/^["']|["']$/g, ''))
-        else break
-      }
-      return items
-    }
+  // Block elements
+  if (tag === 'blockquote') return `<blockquote>${inner}</blockquote>`
+  if (tag === 'ul') return `<ul>${inner}</ul>`
+  if (tag === 'ol') return `<ol>${inner}</ol>`
+  if (tag === 'li') return `<li>${inner}</li>`
+  if (tag === 'p') return `<p>${inner}</p>`
 
-    const title = getFm('title')
-    const date = getFm('date')
-    const updatedAt = getFm('updatedAt') || date
-    const excerpt = getFm('description')
-    const category = getFm('category')
-    const tags = getFmArray('tags')
+  // Inline elements
+  if (tag === 'strong') return `<strong>${inner}</strong>`
+  if (tag === 'em') return `<em>${inner}</em>`
+  if (tag === 's') return `<s>${inner}</s>`
 
-    if (!title || !date) return null
+  // Table
+  if (['table', 'thead', 'tbody', 'tr', 'th', 'td'].includes(tag)) {
+    return `<${tag}>${inner}</${tag}>`
+  }
 
-    // Render markdown to HTML
-    const contentHtml = md.render(body)
+  // Fallback: wrap unknown inline tags
+  return `<${tag}>${inner}</${tag}>`
+}
 
-    return { slug, title, date, updatedAt, excerpt, contentHtml, category, tags }
-  }).filter(Boolean) as PostEntry[]
+/** Render a minimark tree to HTML */
+function renderTree(tree: { children?: MinimalNode[] }): string {
+  return tree.children?.map(c => renderNode(c)).join('\n') ?? ''
 }
 
 export default defineEventHandler(async (event) => {
@@ -89,23 +78,33 @@ export default defineEventHandler(async (event) => {
     const siteUrl = 'https://kbmjj123.cc'
     const now = new Date().toUTCString()
 
-    const posts = loadPosts()
-      .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    // @ts-ignore — queryCollection injected by @nuxt/content
+    const posts = await queryCollection(event, 'posts')
+      .all()
+
+    const sorted = posts
+      .filter((p: any) => p.draft !== true && p.status !== 'draft')
+      .sort((a: any, b: any) => new Date(b.date || b.createdAt || 0).getTime() - new Date(a.date || a.createdAt || 0).getTime())
       .slice(0, 20)
 
-    const items = posts.map((p) => {
-      const excerpt = p.excerpt.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-      const title = p.title.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      const category = p.category.replace(/&/g, '&amp;')
-      const date = new Date(p.date).toUTCString()
+    const items = sorted.map((p: any) => {
+      const slug = (p.path || p._path || '').replace('/posts/', '').replace(/^\//, '')
+      const title = xmlEscape(p.title || '')
+      const description = xmlEscape(p.description || p.excerpt || '')
+      const category = xmlEscape(p.category || '')
+      const date = new Date(p.date || p.createdAt || 0).toUTCString()
+      let contentHtml = description
+      try {
+        if (p.body) contentHtml = renderTree(p.body)
+      } catch { /* fallback to description */ }
 
       return `    <item>
       <title>${title}</title>
-      <link>${siteUrl}/${p.slug}</link>
-      <guid isPermaLink="true">${siteUrl}/${p.slug}</guid>
+      <link>${siteUrl}/${slug}</link>
+      <guid isPermaLink="true">${siteUrl}/${slug}</guid>
       <pubDate>${date}</pubDate>
-      <description>${excerpt}</description>
-      <content:encoded><![CDATA[${p.contentHtml}]]></content:encoded>
+      <description>${description}</description>
+      <content:encoded><![CDATA[${contentHtml}]]></content:encoded>
       <category>${category}</category>
     </item>`
     }).join('\n')

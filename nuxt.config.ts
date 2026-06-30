@@ -22,7 +22,10 @@ export default defineNuxtConfig({
     preset: 'cloudflare_module',
     cloudflare: {
       nodeCompat: true,
-    }
+    },
+    prerender: {
+      routes: ['/feed.xml'],
+    },
   },
 
   runtimeConfig: {
