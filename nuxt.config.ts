@@ -2,16 +2,16 @@ export default defineNuxtConfig({
 	modules: ['@nuxt/content', '@nuxtjs/seo'],
 
 	routeRules: {
-		'/': { prerender: true },            // 首页分页列表,构建时预渲染
-		'/archive': { prerender: true },
-		'/about': { prerender: true },
-		'/projects': { prerender: true },
+		'/': { prerender: true, trailingSlash: false },            // 首页分页列表,构建时预渲染
+		'/archive': { prerender: true, trailingSlash: false },
+		'/about': { prerender: true, trailingSlash: false },
+		'/projects': { prerender: true, trailingSlash: false },
 
 		'/api/comments/**': { ssr: true },   // 评论接口,读写都要现场处理
 		'/auth/**': { ssr: true },           // GitHub OAuth 回调,必须现场处理 session/cookie
 		'/dashboard/**': { ssr: true },      // 登录后台管理
 
-		'/**': { prerender: true },          // 兜底:其余全部当文章详情页,预渲染
+		'/**': { prerender: true, trailingSlash: false },          // 兜底:其余全部当文章详情页,预渲染
 	},
 
 	site: {
@@ -39,7 +39,7 @@ export default defineNuxtConfig({
 		prerender: {
 			routes: ['/feed.xml'],
 			crawlLinks: true,
-      failOnError: false,
+			failOnError: false,
 		},
 	},
 
