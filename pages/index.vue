@@ -19,61 +19,94 @@
       <div style="text-align:center;"><NuxtLink to="/" style="font-family:var(--font-pixel);font-size:9px;color:var(--accent-green);border:1px solid var(--accent-green);padding:6px 18px;text-decoration:none;">← All posts</NuxtLink></div>
     </div>
 
-    <!-- Post list -->
-    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" role="link" tabindex="0" @click="navigateTo(`/${post.slug}`)" @keydown.enter.prevent="navigateTo(`/${post.slug}`)">
-      <h3 class="post-title">
-        <NuxtLink :to="`/${post.slug}`" tabindex="-1" @click.stop>{{ post.title }}</NuxtLink>
+    <!-- Post list — semantic markup with schema.org microdata -->
+    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" itemscope itemtype="https://schema.org/BlogPosting" role="link" tabindex="0" @click="navigateTo(`/${post.slug}`)" @keydown.enter.prevent="navigateTo(`/${post.slug}`)">
+      <h3 class="post-title" itemprop="headline">
+        <NuxtLink :to="`/${post.slug}`" itemprop="url" tabindex="-1" @click.stop>{{ post.title }}</NuxtLink>
       </h3>
       <div class="post-meta">
-        <span class="date">{{ post.date }}</span>
-        <span class="category">{{ post.category }}</span>
+        <time :datetime="post.isoDate" class="date">{{ post.date }}</time>
+        <span class="category" itemprop="about">{{ post.category }}</span>
         <span style="color:var(--text-muted);">⌨️ {{ post.readTime }}</span>
       </div>
-      <p class="post-excerpt">{{ post.excerpt }}</p>
+      <p class="post-excerpt" itemprop="description">{{ post.excerpt }}</p>
       <NuxtLink :to="`/${post.slug}`" tabindex="-1" @click.stop class="btn-read">Read More</NuxtLink>
+      <!-- Schema.org hidden meta -->
+      <meta itemprop="author" content="kbmjj123" />
+      <meta v-if="post.isoDate" :content="post.isoDate" itemprop="datePublished" />
     </article>
   </section>
 </template>
 
 <script setup lang="ts">
 const route = useRoute()
+const siteUrl = 'https://kbmjj123.cc'
 
+// --- SEO base — via @nuxtjs/seo (defineSeoMeta + defineOgImage) ---
 usePageSeo({
   title: 'Indie Developer Log',
   description: 'KB MJJ123 .cc — Indie developer blog sharing coding, product, and startup insights.',
   template: 'prefix',
 })
 
-const allPosts = ref<{ slug: string; title: string; date: string; category: string; categorySlug: string; readTime: string; excerpt: string; tags: string[] }[]>([])
-const pending = ref(true)
+// @nuxtjs/seo auto-handles canonical URL, og:url, og:type, og:locale, og:site_name
+// from site config in nuxt.config.ts — no manual tags needed.
 
-onMounted(async () => {
+// --- SSR-safe post loading (useAsyncData for SSG/SSR, not client-only onMounted) ---
+const { data: rawPosts, pending } = useAsyncData('posts-index', async () => {
   try {
-    const posts = JSON.parse(JSON.stringify(
-      await queryCollection('posts').all()
-    ))
-    allPosts.value = (posts || []).map((p: any) => {
-      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
-      if (meta.draft) return null
-      return {
-        slug: p.path?.replace('/posts/', '') || '',
-        title: p.title || '',
-        date: meta.date || '',
-        category: meta.category || '',
-        categorySlug: (meta.category || '').toLowerCase().replace(/\s+/g, '-'),
-        readTime: typeof p.readTime === 'object' ? (p.readTime.text || '') : (p.readTime || meta.readTime || ''),
-        excerpt: p.description || '',
-        tags: meta.tags || [],
-      }
-    }).filter(Boolean)
+    const posts = await queryCollection('posts').all()
+    // Deep-clone to strip Content v3 proxy objects before serialization
+    return JSON.parse(JSON.stringify(posts || []))
   } catch (e) {
     console.error('Failed to load posts:', e)
-  } finally {
-    pending.value = false
+    return []
   }
 })
 
-// Read filter from query params
+function toIsoDate(raw: string): string {
+  if (!raw) return ''
+  try {
+    const d = new Date(raw)
+    return Number.isNaN(d.getTime()) ? '' : d.toISOString()
+  } catch {
+    return ''
+  }
+}
+
+interface PostItem {
+  slug: string
+  title: string
+  date: string
+  isoDate: string
+  category: string
+  categorySlug: string
+  readTime: string
+  excerpt: string
+  tags: string[]
+}
+
+const allPosts = computed<PostItem[]>(() => {
+  if (!rawPosts.value) return []
+  return (rawPosts.value || []).map((p: Record<string, any>) => {
+    const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+    if (meta.draft) return null
+    const rawDate = meta.date || ''
+    return {
+      slug: p.path?.replace('/posts/', '') || '',
+      title: p.title || '',
+      date: rawDate,
+      isoDate: toIsoDate(rawDate),
+      category: meta.category || '',
+      categorySlug: (meta.category || '').toLowerCase().replace(/\s+/g, '-'),
+      readTime: typeof p.readTime === 'object' ? (p.readTime.text || '') : (p.readTime || meta.readTime || ''),
+      excerpt: p.description || '',
+      tags: meta.tags || [],
+    }
+  }).filter(Boolean) as PostItem[]
+})
+
+// --- Filter from query params ---
 const categoryFilter = computed(() => route.query.category as string | undefined)
 const tagFilter = computed(() => route.query.tag as string | undefined)
 const activeFilter = computed(() => {
@@ -92,6 +125,57 @@ const filteredPosts = computed(() => {
   }
   return [...result].sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
 })
+
+// --- Keywords meta (not auto-generated by @nuxtjs/seo) ---
+const keywords = computed(() => {
+  const cats = [...new Set(allPosts.value.map(p => p.category).filter(Boolean))]
+  return cats.length > 0 ? cats.join(', ') : undefined
+})
+
+useHead(() => ({
+  meta: keywords.value ? [{ name: 'keywords', content: keywords.value }] : [],
+}))
+
+// --- JSON-LD structured data: CollectionPage + ItemList of BlogPosting ---
+const hasFilter = computed(() => !!activeFilter.value)
+
+const ldJson = computed(() => {
+  if (hasFilter.value) return null // only emit for unfiltered collection page
+  const posts = filteredPosts.value
+  if (posts.length === 0) return null
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'kbmjj123.cc — Indie Developer Log',
+    description: 'Indie developer blog sharing coding, product, and startup insights.',
+    url: siteUrl + '/',
+    mainEntity: {
+      '@type': 'ItemList',
+      itemListElement: posts.map((post, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        item: {
+          '@type': 'BlogPosting',
+          headline: post.title,
+          url: `${siteUrl}/${post.slug}`,
+          ...(post.isoDate ? { datePublished: post.isoDate } : {}),
+          author: { '@type': 'Person', name: 'kbmjj123' },
+          description: post.excerpt,
+        },
+      })),
+    },
+  }
+})
+
+useHead(() => ldJson.value ? {
+  script: [
+    {
+      id: 'ld-collectionpage',
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(ldJson.value),
+    },
+  ],
+} : {})
 </script>
 
 <style scoped>

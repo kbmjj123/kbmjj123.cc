@@ -1,5 +1,5 @@
 <template>
-  <section class="post-detail">
+  <article class="post-detail" itemscope itemtype="https://schema.org/BlogPosting">
     <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <NuxtLink to="/" class="breadcrumb-link">Home</NuxtLink>
@@ -10,17 +10,23 @@
     </nav>
     <!-- /Breadcrumb -->
 
-    <h1 class="post-title">{{ title }}</h1>
+    <h1 class="post-title" itemprop="headline">{{ title }}</h1>
     <div class="post-meta">
-      <span class="date">{{ date }}</span>
-      <span class="category">{{ category }}</span>
+      <time :datetime="isoDate" class="date">{{ date }}</time>
+      <span class="category" itemprop="about">{{ category }}</span>
       <span style="color:var(--text-muted);">⌨️ {{ readTime }}</span>
     </div>
-    <div class="post-body markdown-content" ref="postBodyRef">
+
+    <!-- Schema.org hidden meta -->
+    <meta itemprop="author" content="kbmjj123" />
+    <meta v-if="isoDate" :content="isoDate" itemprop="datePublished" />
+    <link itemprop="url" :href="`https://kbmjj123.cc/${slug}`" />
+
+    <div class="post-body markdown-content" ref="postBodyRef" itemprop="articleBody">
       <ContentRenderer v-if="body && typeof body === 'object'" :value="{ body }" />
       <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ excerpt }}</p>
     </div>
-  </section>
+  </article>
 </template>
 
 <script setup lang="ts">
@@ -53,41 +59,81 @@ const postMeta = computed(() => {
   return {
     title: raw.title || '',
     date: meta.date || '',
+    isoDate: toIsoDate(meta.date || ''),
     category: meta.category || '',
+    tags: meta.tags || [] as string[],
     readTime: meta.readTime || (typeof raw.readTime === 'object' ? raw.readTime.text : raw.readTime) || '',
     excerpt: raw.description || '',
     body: raw.body || null,
   }
 })
 
+function toIsoDate(raw: string): string {
+  if (!raw) return ''
+  try { const d = new Date(raw); return Number.isNaN(d.getTime()) ? '' : d.toISOString() }
+  catch { return '' }
+}
+
 const title = computed(() => postMeta.value?.title || '')
 const date = computed(() => postMeta.value?.date || '')
+const isoDate = computed(() => postMeta.value?.isoDate || '')
 const category = computed(() => postMeta.value?.category || '')
 const categorySlug = computed(() => category.value.toLowerCase().replace(/\s+/g, '-'))
+const tags = computed(() => postMeta.value?.tags || [])
 const readTime = computed(() => postMeta.value?.readTime || '')
 const excerpt = computed(() => postMeta.value?.excerpt || '')
 const body = computed<any>(() => postMeta.value?.body || null)
 
-// JSON-LD structured data — injected in <head> where it belongs
+// JSON-LD — BreadcrumbList
 const ldBreadcrumb = computed(() => category.value ? ({
   '@context': 'https://schema.org',
   '@type': 'BreadcrumbList',
   itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: `https://kbmjj123.cc/` },
+    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kbmjj123.cc/' },
     { '@type': 'ListItem', position: 2, name: category.value, item: `https://kbmjj123.cc/category/${categorySlug.value}` },
     { '@type': 'ListItem', position: 3, name: title.value, item: `https://kbmjj123.cc/${slug}` },
   ],
 }) : null)
 
-useHead(() => ldBreadcrumb.value ? {
-  script: [
-    {
+// JSON-LD — BlogPosting
+const ldPost = computed(() => ({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  headline: title.value,
+  url: `https://kbmjj123.cc/${slug}`,
+  ...(isoDate.value ? { datePublished: isoDate.value } : {}),
+  author: { '@type': 'Person', name: 'kbmjj123' },
+  description: excerpt.value,
+  ...(category.value ? { about: category.value } : {}),
+  ...(tags.value.length > 0 ? { keywords: tags.value.map(t => t.replace(/^#/, '')).join(', ') } : {}),
+}))
+
+useHead(() => {
+  const head: Record<string, any> = { script: [] }
+  if (ldBreadcrumb.value) {
+    head.script.push({
       id: `ld-breadcrumb-${slug}`,
       type: 'application/ld+json',
       innerHTML: JSON.stringify(ldBreadcrumb.value),
-    },
-  ],
-} : {})
+    })
+  }
+  head.script.push({
+    id: `ld-post-${slug}`,
+    type: 'application/ld+json',
+    innerHTML: JSON.stringify(ldPost.value),
+  })
+  // Article OG meta
+  const meta: Record<string, string>[] = [
+    { property: 'article:published_time', content: isoDate.value },
+    { property: 'article:author', content: 'kbmjj123' },
+    { property: 'article:section', content: category.value },
+  ]
+  for (const tag of tags.value) {
+    meta.push({ property: 'article:tag', content: tag.replace(/^#/, '') })
+  }
+  head.meta = meta.filter(m => m.content)
+  return head
+})
 
 // SEO + OG image — reactive via computed
 usePageSeo(() => ({
