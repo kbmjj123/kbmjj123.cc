@@ -3,9 +3,9 @@ export default defineNuxtConfig({
 
 	routeRules: {
 		'/': { prerender: true },            // 首页分页列表,构建时预渲染
-		'/archive': { prerender: false, ssr: true },
-		'/about': { prerender: false, ssr: true },
-		'/projects': { prerender: false, ssr: true },
+		'/archive': { prerender: true },
+		'/about': { prerender: true },
+		'/projects': { prerender: true },
 
 		'/api/comments/**': { ssr: true },   // 评论接口,读写都要现场处理
 		'/auth/**': { ssr: true },           // GitHub OAuth 回调,必须现场处理 session/cookie
