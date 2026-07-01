@@ -60,10 +60,7 @@ const archive = computed<ArchiveYear[]>(() => {
     .map(([year, posts]) => ({ year, posts }))
 })
 
-// Schema.org — CollectionPage via @nuxtjs/seo schema-org module
-useSchemaOrg([
-  defineWebPage({ '@type': 'CollectionPage' }),
-])
+// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
 </script>
 
 <style scoped>

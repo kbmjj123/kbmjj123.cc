@@ -135,14 +135,8 @@ useHead(() => ({
   meta: keywords.value ? [{ name: 'keywords', content: keywords.value }] : [],
 }))
 
-// Schema.org — CollectionPage via @nuxtjs/seo schema-org module
+// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
 const hasFilter = computed(() => !!activeFilter.value)
-
-useSchemaOrg(computed(() =>
-  !hasFilter.value && filteredPosts.value.length > 0
-    ? [defineWebPage({ '@type': 'CollectionPage' })]
-    : []
-))
 </script>
 
 <style scoped>

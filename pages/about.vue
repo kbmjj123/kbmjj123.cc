@@ -54,11 +54,8 @@ const links = [
   { label: '✉️ Email', url: 'mailto:hello@devpixel.dev' },
 ]
 
-// Schema.org — AboutPage via @nuxtjs/seo schema-org module
+// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
 // Person identity is set globally in app.vue
-useSchemaOrg([
-  defineWebPage({ '@type': 'AboutPage' }),
-])
 </script>
 
 <style scoped>

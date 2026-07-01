@@ -60,11 +60,8 @@ const projects = [
   },
 ]
 
-// Schema.org — CollectionPage via @nuxtjs/seo schema-org module
+// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
 // Individual project microdata uses itemscope SoftwareApplication in template
-useSchemaOrg([
-  defineWebPage({ '@type': 'CollectionPage' }),
-])
 </script>
 
 <style scoped>
