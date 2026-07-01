@@ -62,8 +62,8 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
     title: computed(() => resolved.value.title),
   })
 
-  // @nuxtjs/seo — auto-cross-fills og:title, og:description, twitter:title, twitter:description
-  defineSeoMeta({
+  // useSeoMeta — auto-cross-fills og:title, og:description, twitter:title, twitter:description
+  useSeoMeta({
     description: computed(() => resolved.value.description),
     ogTitle: computed(() => resolved.value.ogTitle),
     ogDescription: computed(() => resolved.value.ogDescription),
