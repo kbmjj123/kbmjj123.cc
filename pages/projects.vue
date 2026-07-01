@@ -4,15 +4,14 @@
     <div class="subhead">Things I've built (and am building)</div>
 
     <div class="project-grid">
-      <div v-for="project in projects" :key="project.name" class="project-card" itemscope itemtype="https://schema.org/SoftwareApplication">
-        <meta itemprop="applicationCategory" content="DeveloperApplication" />
-        <h2 class="project-name" itemprop="name">{{ project.name }}</h2>
-        <div class="project-desc" itemprop="description">{{ project.desc }}</div>
+      <div v-for="project in projects" :key="project.name" class="project-card">
+        <h2 class="project-name">{{ project.name }}</h2>
+        <div class="project-desc">{{ project.desc }}</div>
         <div class="project-tags">
-          <span v-for="tag in project.tags" :key="tag" itemprop="keywords">{{ tag }}</span>
+          <span v-for="tag in project.tags" :key="tag">{{ tag }}</span>
         </div>
         <div class="project-links">
-          <a v-for="link in project.links" :key="link.label" :href="link.url" itemprop="url">{{ link.label }}</a>
+          <a v-for="link in project.links" :key="link.label" :href="link.url">{{ link.label }}</a>
         </div>
       </div>
     </div>
@@ -59,9 +58,6 @@ const projects = [
     ],
   },
 ]
-
-// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
-// Individual project microdata uses itemscope SoftwareApplication in template
 </script>
 
 <style scoped>

@@ -1,5 +1,5 @@
 <template>
-  <article class="post-detail" itemscope itemtype="https://schema.org/BlogPosting">
+  <section class="post-detail">
     <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <NuxtLink to="/" class="breadcrumb-link">Home</NuxtLink>
@@ -10,23 +10,17 @@
     </nav>
     <!-- /Breadcrumb -->
 
-    <h1 class="post-title" itemprop="headline">{{ title }}</h1>
+    <h1 class="post-title">{{ title }}</h1>
     <div class="post-meta">
-      <time :datetime="isoDate" class="date">{{ date }}</time>
-      <span class="category" itemprop="about">{{ category }}</span>
+      <span class="date">{{ date }}</span>
+      <span class="category">{{ category }}</span>
       <span style="color:var(--text-muted);">⌨️ {{ readTime }}</span>
     </div>
-
-    <!-- Schema.org hidden meta -->
-    <meta itemprop="author" content="kbmjj123" />
-    <meta v-if="isoDate" :content="isoDate" itemprop="datePublished" />
-    <link itemprop="url" :href="`https://kbmjj123.cc/${slug}`" />
-
-    <div class="post-body markdown-content" ref="postBodyRef" itemprop="articleBody">
+    <div class="post-body markdown-content" ref="postBodyRef">
       <ContentRenderer v-if="body && typeof body === 'object'" :value="{ body }" />
       <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ excerpt }}</p>
     </div>
-  </article>
+  </section>
 </template>
 
 <script setup lang="ts">
@@ -59,61 +53,41 @@ const postMeta = computed(() => {
   return {
     title: raw.title || '',
     date: meta.date || '',
-    isoDate: toIsoDate(meta.date || ''),
     category: meta.category || '',
-    tags: meta.tags || [] as string[],
     readTime: meta.readTime || (typeof raw.readTime === 'object' ? raw.readTime.text : raw.readTime) || '',
     excerpt: raw.description || '',
     body: raw.body || null,
   }
 })
 
-function toIsoDate(raw: string): string {
-  if (!raw) return ''
-  try { const d = new Date(raw); return Number.isNaN(d.getTime()) ? '' : d.toISOString() }
-  catch { return '' }
-}
-
 const title = computed(() => postMeta.value?.title || '')
 const date = computed(() => postMeta.value?.date || '')
-const isoDate = computed(() => postMeta.value?.isoDate || '')
 const category = computed(() => postMeta.value?.category || '')
 const categorySlug = computed(() => category.value.toLowerCase().replace(/\s+/g, '-'))
-const tags = computed(() => postMeta.value?.tags || [])
 const readTime = computed(() => postMeta.value?.readTime || '')
 const excerpt = computed(() => postMeta.value?.excerpt || '')
 const body = computed<any>(() => postMeta.value?.body || null)
 
-// Schema.org — BreadcrumbList + BlogPosting via @nuxtjs/seo schema-org module
-// Author auto-linked from global Person identity set in app.vue
-useSchemaOrg([
-  defineBreadcrumb({
-    itemListElement: [
-      { name: 'Home', item: '/' },
-      ...(category.value ? [{ name: category.value, item: `/category/${categorySlug.value}` }] : []),
-      { name: title.value },
-    ],
-  }),
-  defineArticle({
-    '@type': 'BlogPosting',
-    ...(isoDate.value ? { datePublished: isoDate.value } : {}),
-    ...(isoDate.value ? { dateModified: isoDate.value } : {}),
-    ...(tags.value.length > 0 ? { keywords: tags.value.map(t => t.replace(/^#/, '')).join(', ') } : {}),
-  }),
-])
+// JSON-LD structured data — injected in <head> where it belongs
+const ldBreadcrumb = computed(() => category.value ? ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: [
+    { '@type': 'ListItem', position: 1, name: 'Home', item: `https://kbmjj123.cc/` },
+    { '@type': 'ListItem', position: 2, name: category.value, item: `https://kbmjj123.cc/category/${categorySlug.value}` },
+    { '@type': 'ListItem', position: 3, name: title.value, item: `https://kbmjj123.cc/${slug}` },
+  ],
+}) : null)
 
-// Article OG meta for social sharing (not handled by schema-org)
-useHead(() => {
-  const meta: Record<string, string>[] = [
-    { property: 'article:published_time', content: isoDate.value },
-    { property: 'article:author', content: 'kbmjj123' },
-    { property: 'article:section', content: category.value },
-  ]
-  for (const tag of tags.value) {
-    meta.push({ property: 'article:tag', content: tag.replace(/^#/, '') })
-  }
-  return { meta: meta.filter(m => m.content) }
-})
+useHead(() => ldBreadcrumb.value ? {
+  script: [
+    {
+      id: `ld-breadcrumb-${slug}`,
+      type: 'application/ld+json',
+      innerHTML: JSON.stringify(ldBreadcrumb.value),
+    },
+  ],
+} : {})
 
 // SEO + OG image — reactive via computed
 usePageSeo(() => ({

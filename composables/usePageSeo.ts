@@ -60,15 +60,15 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
 
   useHead({
     title: computed(() => resolved.value.title),
-  })
-
-  // useSeoMeta — auto-cross-fills og:title, og:description, twitter:title, twitter:description
-  useSeoMeta({
-    description: computed(() => resolved.value.description),
-    ogTitle: computed(() => resolved.value.ogTitle),
-    ogDescription: computed(() => resolved.value.ogDescription),
-    twitterSite: '@kbmjj123',
-    twitterCard: 'summary_large_image',
+    meta: computed(() => [
+      { name: 'description', content: resolved.value.description },
+      { name: 'twitter:card', content: 'summary_large_image' },
+      { name: 'twitter:site', content: '@kbmjj123' },
+      { name: 'twitter:title', content: resolved.value.title },
+      { name: 'twitter:description', content: resolved.value.description },
+      { property: 'og:title', content: resolved.value.title },
+      { property: 'og:description', content: resolved.value.description },
+    ]),
   })
 
   defineOgImage('OgImageApp.takumi',{

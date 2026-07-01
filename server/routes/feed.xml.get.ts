@@ -24,10 +24,6 @@ interface PostEntry {
   tags: string[]
 }
 
-function xmlEscape(s: string): string {
-  return s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;')
-}
-
 function loadPosts(): PostEntry[] {
   const dir = join(process.cwd(), 'content/posts')
   let files: string[]
