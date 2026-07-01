@@ -1,16 +1,17 @@
 <template>
   <div class="pixel-body pixel-scrollbar">
-    <!-- Loading overlay (hides after load) -->
-    <div v-if="showLoader" id="loader-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-deep);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.5s ease;">
-      <div style="display:grid;grid-template-columns:24px 24px;grid-template-rows:24px 24px;gap:6px;margin-bottom:28px;">
-        <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0s;"></div>
-        <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.3s;"></div>
-        <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.6s;"></div>
-        <div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.9s;"></div>
-      </div>
-      <div style="font-family:var(--font-pixel);font-size:14px;color:var(--accent-gold);letter-spacing:4px;animation:pixelBlink 1.6s step-end infinite;">LOADING</div>
-    </div>
-
+		<ClientOnly>
+			<!-- Loading overlay (hides after load) -->
+			<div v-if="showLoader" id="loader-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-deep);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.5s ease;">
+				<div style="display:grid;grid-template-columns:24px 24px;grid-template-rows:24px 24px;gap:6px;margin-bottom:28px;">
+					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0s;"></div>
+					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.3s;"></div>
+					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.6s;"></div>
+					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.9s;"></div>
+				</div>
+				<div style="font-family:var(--font-pixel);font-size:14px;color:var(--accent-gold);letter-spacing:4px;animation:pixelBlink 1.6s step-end infinite;">LOADING</div>
+			</div>
+		</ClientOnly>
     <!-- Main container -->
     <div class="pixel-body-wrapper" style="padding:20px;display:flex;justify-content:center;min-height:100vh;">
       <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
@@ -145,59 +146,55 @@ const navItems = [
 type Category = { slug: string; name: string; count: number }
 type TagCount = { tag: string; count: number }
 
-const categories = ref<Category[]>([])
-const tags = ref<TagCount[]>([])
-const postCount = ref(0)
-const catCount = ref(0)
+const { data: sidebarPosts } = await useAsyncData('sidebar-posts', async () => {
+  try {
+    return JSON.parse(JSON.stringify(await queryCollection('posts').all()))
+  } catch (e) {
+    console.error('Failed to load sidebar data:', e)
+    return []
+  }
+})
+
+const categories = computed<Category[]>(() => {
+  const catMap = new Map<string, number>()
+  for (const p of sidebarPosts.value || []) {
+    const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+    if (meta.draft) continue
+    if (meta.category) catMap.set(meta.category, (catMap.get(meta.category) || 0) + 1)
+  }
+  const catNames: Record<string, string> = {
+    'dev-practice': 'Dev Practice',
+    'product-business': 'Product & Business',
+    'indie-mindset': 'Indie Mindset',
+    'tools-workflow': 'Tools & Workflow',
+    'startup-diary': 'Startup Diary',
+    'tech-trends': 'Tech Trends',
+  }
+  return Object.entries(catNames)
+    .map(([slug, name]) => ({ slug, name, count: catMap.get(slug) || 0 }))
+    .sort((a, b) => b.count - a.count)
+})
+
+const tags = computed<TagCount[]>(() => {
+  const tagMap = new Map<string, number>()
+  for (const p of sidebarPosts.value || []) {
+    const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+    if (meta.draft) continue
+    for (const t of (meta.tags || [])) tagMap.set(t, (tagMap.get(t) || 0) + 1)
+  }
+  return [...tagMap.entries()].map(([tag, count]) => ({ tag, count })).sort((a, b) => b.count - a.count)
+})
+
+const postCount = computed(() => (sidebarPosts.value || []).filter(p => {
+  const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+  return !meta.draft
+}).length)
+const catCount = computed(() => categories.value.length)
+
 const daysSince = computed(() => {
   const start = new Date('2026-06-22T00:00:00')
   const now = new Date()
   return Math.floor((now.getTime() - start.getTime()) / 86400000)
-})
-
-onMounted(async () => {
-  try {
-    const posts = JSON.parse(JSON.stringify(
-      await queryCollection('posts').all()
-    ))
-    if (!posts) return
-
-    const catMap = new Map<string, number>()
-    const tagMap = new Map<string, number>()
-
-    for (const p of posts) {
-      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
-      if (meta.draft) continue
-      const cat = meta.category
-      if (cat) catMap.set(cat, (catMap.get(cat) || 0) + 1)
-      const tgs: string[] = meta.tags || []
-      for (const t of tgs) tagMap.set(t, (tagMap.get(t) || 0) + 1)
-    }
-
-    // Map category slugs to display names
-    const catNames: Record<string, string> = {
-      'dev-practice': 'Dev Practice',
-      'product-business': 'Product & Business',
-      'indie-mindset': 'Indie Mindset',
-      'tools-workflow': 'Tools & Workflow',
-      'startup-diary': 'Startup Diary',
-      'tech-trends': 'Tech Trends',
-    }
-
-    // Show all predefined categories, merge with actual counts
-    categories.value = Object.entries(catNames)
-      .map(([slug, name]) => ({ slug, name, count: catMap.get(slug) || 0 }))
-      .sort((a, b) => b.count - a.count)
-
-    tags.value = [...tagMap.entries()]
-      .map(([tag, count]) => ({ tag, count }))
-      .sort((a, b) => b.count - a.count)
-
-    postCount.value = posts.length
-    catCount.value = categories.value.length
-  } catch (e) {
-    console.error('Failed to load sidebar data:', e)
-  }
 })
 
 const socialLinks = [
