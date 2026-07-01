@@ -1,11 +1,11 @@
 <template>
-  <section class="about-content">
+  <section class="about-content" itemscope itemtype="https://schema.org/AboutPage">
     <h1>👨‍💻 About Me</h1>
     <div class="subhead">Independent developer · craft &amp; simplicity</div>
 
-    <div class="about-avatar-large">
+    <div class="about-avatar-large" itemprop="mainContentOfPage">
       <div class="pixel-avatar-big">🧑‍🚀</div>
-      <div class="about-intro">
+      <div class="about-intro" itemprop="description">
         <strong>Hi, I'm PixelDev</strong> — a full-stack indie developer based in the cloud.<br />
         I build digital products with a focus on <span style="color:var(--accent-gold);">craft</span>,
         <span style="color:var(--accent-green);">performance</span>, and
@@ -14,10 +14,10 @@
       </div>
     </div>
 
-    <div class="skill-section">
+    <div class="skill-section" itemscope itemtype="https://schema.org/Person">
       <h2 class="section-title">Tech Stack</h2>
       <div class="skill-tags">
-        <span v-for="skill in skills" :key="skill" class="skill-tag">{{ skill }}</span>
+        <span v-for="skill in skills" :key="skill" class="skill-tag" itemprop="knowsAbout">{{ skill }}</span>
       </div>
     </div>
 
@@ -29,8 +29,8 @@
       </div>
     </div>
 
-    <div class="contact-links">
-      <a v-for="link in links" :key="link.label" :href="link.url">{{ link.label }}</a>
+    <div class="contact-links" itemscope itemtype="https://schema.org/Person">
+      <a v-for="link in links" :key="link.label" :href="link.url" itemprop="sameAs">{{ link.label }}</a>
     </div>
   </section>
 </template>
@@ -53,6 +53,9 @@ const links = [
   { label: 'LinkedIn', url: '#' },
   { label: '✉️ Email', url: 'mailto:hello@devpixel.dev' },
 ]
+
+// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
+// Person identity is set globally in app.vue
 </script>
 
 <style scoped>

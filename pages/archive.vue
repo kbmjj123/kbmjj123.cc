@@ -5,11 +5,12 @@
 
     <LoadingState v-if="pending" />
 
-    <div v-for="year in archive" :key="year.year" class="archive-year">
-      <h2>{{ year.year }}</h2>
-      <div v-for="post in year.posts" :key="post.title" class="archive-item">
-        <span class="date">{{ post.date }}</span>
-        <span class="title"><NuxtLink :to="post.slug">{{ post.title }}</NuxtLink></span>
+    <div v-for="year in archive" :key="year.year" class="archive-year" itemscope itemtype="https://schema.org/ItemList">
+      <h2 itemprop="name">{{ year.year }}</h2>
+      <div v-for="(post, i) in year.posts" :key="post.title" class="archive-item" itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <meta itemprop="position" :content="String(i + 1)" />
+        <time :datetime="post.isoDate" class="date">{{ post.date }}</time>
+        <span class="title"><NuxtLink :to="post.slug" itemprop="url"><span itemprop="name">{{ post.title }}</span></NuxtLink></span>
       </div>
     </div>
   </section>
@@ -18,39 +19,48 @@
 <script setup lang="ts">
 usePageSeo({ title: 'Archive', description: 'Browse all posts by year — archive of published articles.' })
 
-interface ArchivePost { date: string; title: string; slug: string }
+interface ArchivePost { date: string; isoDate: string; title: string; slug: string }
 interface ArchiveYear { year: string; posts: ArchivePost[] }
 
-const archive = ref<ArchiveYear[]>([])
-const pending = ref(true)
+function toIsoDate(raw: string): string {
+  if (!raw) return ''
+  try { const d = new Date(raw); return Number.isNaN(d.getTime()) ? '' : d.toISOString() }
+  catch { return '' }
+}
 
-onMounted(async () => {
+const { data: rawPosts, pending } = useAsyncData('posts-archive', async () => {
   try {
-    const posts = JSON.parse(JSON.stringify(
-      await queryCollection('posts').all()
-    ))
-    if (!posts) return
-    const grouped: Record<string, ArchivePost[]> = {}
-    for (const p of posts) {
-      const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
-      if (meta.draft) continue
-      const year = meta.date ? String(new Date(meta.date).getFullYear()) : 'Unknown'
-      if (!grouped[year]) grouped[year] = []
-      grouped[year].push({
-        date: meta.date ? meta.date.slice(5) : '',
-        title: p.title || '',
-        slug: `/${p.path?.replace('/posts/', '') || ''}`,
-      })
-    }
-    archive.value = Object.entries(grouped)
-      .sort(([a], [b]) => Number(b) - Number(a))
-      .map(([year, posts]) => ({ year, posts }))
+    const posts = JSON.parse(JSON.stringify(await queryCollection('posts').all()))
+    return (posts || []) as Record<string, any>[]
   } catch (e) {
     console.error('Failed to load archive:', e)
-  } finally {
-    pending.value = false
+    return []
   }
 })
+
+const archive = computed<ArchiveYear[]>(() => {
+  if (!rawPosts.value) return []
+  const posts = rawPosts.value
+  const grouped: Record<string, ArchivePost[]> = {}
+  for (const p of posts) {
+    const meta = typeof p.meta === 'string' ? JSON.parse(p.meta) : (p.meta || {})
+    if (meta.draft) continue
+    const rawDate = meta.date || ''
+    const year = rawDate ? String(new Date(rawDate).getFullYear()) : 'Unknown'
+    if (!grouped[year]) grouped[year] = []
+    grouped[year].push({
+      date: rawDate ? rawDate.slice(5) : '',
+      isoDate: toIsoDate(rawDate),
+      title: p.title || '',
+      slug: `/${p.path?.replace('/posts/', '') || ''}`,
+    })
+  }
+  return Object.entries(grouped)
+    .sort(([a], [b]) => Number(b) - Number(a))
+    .map(([year, posts]) => ({ year, posts }))
+})
+
+// @nuxtjs/seo auto-generates WebPage schema from route meta — no manual call needed
 </script>
 
 <style scoped>
