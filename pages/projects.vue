@@ -60,34 +60,11 @@ const projects = [
   },
 ]
 
-// JSON-LD — ItemList of SoftwareApplication
-const ldJson = {
-  '@context': 'https://schema.org',
-  '@type': 'ItemList',
-  name: 'Projects — kbmjj123.cc',
-  description: 'Independent projects and open-source work.',
-  url: 'https://kbmjj123.cc/projects',
-  itemListElement: projects.map((p, i) => ({
-    '@type': 'ListItem',
-    position: i + 1,
-    item: {
-      '@type': 'SoftwareApplication',
-      name: p.name.replace(/^[^\w\s]+\s/, ''), // strip leading emoji
-      description: p.desc,
-      applicationCategory: 'DeveloperApplication',
-      offers: { '@type': 'Offer', price: '0', priceCurrency: 'USD' },
-      url: p.links[0]?.url || '',
-    },
-  })),
-}
-
-useHead({
-  script: [{
-    id: 'ld-projects',
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify(ldJson),
-  }],
-})
+// Schema.org — CollectionPage via @nuxtjs/seo schema-org module
+// Individual project microdata uses itemscope SoftwareApplication in template
+useSchemaOrg([
+  defineWebPage({ '@type': 'CollectionPage' }),
+])
 </script>
 
 <style scoped>

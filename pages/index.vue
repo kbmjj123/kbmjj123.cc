@@ -40,7 +40,6 @@
 
 <script setup lang="ts">
 const route = useRoute()
-const siteUrl = 'https://kbmjj123.cc'
 
 // --- SEO base — via @nuxtjs/seo (defineSeoMeta + defineOgImage) ---
 usePageSeo({
@@ -136,46 +135,14 @@ useHead(() => ({
   meta: keywords.value ? [{ name: 'keywords', content: keywords.value }] : [],
 }))
 
-// --- JSON-LD structured data: CollectionPage + ItemList of BlogPosting ---
+// Schema.org — CollectionPage via @nuxtjs/seo schema-org module
 const hasFilter = computed(() => !!activeFilter.value)
 
-const ldJson = computed(() => {
-  if (hasFilter.value) return null // only emit for unfiltered collection page
-  const posts = filteredPosts.value
-  if (posts.length === 0) return null
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'kbmjj123.cc — Indie Developer Log',
-    description: 'Indie developer blog sharing coding, product, and startup insights.',
-    url: siteUrl + '/',
-    mainEntity: {
-      '@type': 'ItemList',
-      itemListElement: posts.map((post, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        item: {
-          '@type': 'BlogPosting',
-          headline: post.title,
-          url: `${siteUrl}/${post.slug}`,
-          ...(post.isoDate ? { datePublished: post.isoDate } : {}),
-          author: { '@type': 'Person', name: 'kbmjj123' },
-          description: post.excerpt,
-        },
-      })),
-    },
-  }
-})
-
-useHead(() => ldJson.value ? {
-  script: [
-    {
-      id: 'ld-collectionpage',
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify(ldJson.value),
-    },
-  ],
-} : {})
+useSchemaOrg(computed(() =>
+  !hasFilter.value && filteredPosts.value.length > 0
+    ? [defineWebPage({ '@type': 'CollectionPage' })]
+    : []
+))
 </script>
 
 <style scoped>

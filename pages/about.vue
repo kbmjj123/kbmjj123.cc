@@ -54,33 +54,11 @@ const links = [
   { label: '✉️ Email', url: 'mailto:hello@devpixel.dev' },
 ]
 
-// JSON-LD — AboutPage + Person
-const ldJson = {
-  '@context': 'https://schema.org',
-  '@graph': [
-    {
-      '@type': 'AboutPage',
-      name: 'About — kbmjj123.cc',
-      description: 'About KB MJJ123 — Indie developer, full-stack engineer.',
-      url: 'https://kbmjj123.cc/about',
-    },
-    {
-      '@type': 'Person',
-      name: 'kbmjj123',
-      description: 'Indie developer, full-stack engineer.',
-      knowsAbout: skills.map(s => s.replace(/^#/, '')),
-      sameAs: links.filter(l => !l.url.startsWith('mailto:')).map(l => l.url),
-    },
-  ],
-}
-
-useHead({
-  script: [{
-    id: 'ld-about',
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify(ldJson),
-  }],
-})
+// Schema.org — AboutPage via @nuxtjs/seo schema-org module
+// Person identity is set globally in app.vue
+useSchemaOrg([
+  defineWebPage({ '@type': 'AboutPage' }),
+])
 </script>
 
 <style scoped>

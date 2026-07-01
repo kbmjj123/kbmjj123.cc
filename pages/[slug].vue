@@ -84,45 +84,26 @@ const readTime = computed(() => postMeta.value?.readTime || '')
 const excerpt = computed(() => postMeta.value?.excerpt || '')
 const body = computed<any>(() => postMeta.value?.body || null)
 
-// JSON-LD — BreadcrumbList
-const ldBreadcrumb = computed(() => category.value ? ({
-  '@context': 'https://schema.org',
-  '@type': 'BreadcrumbList',
-  itemListElement: [
-    { '@type': 'ListItem', position: 1, name: 'Home', item: 'https://kbmjj123.cc/' },
-    { '@type': 'ListItem', position: 2, name: category.value, item: `https://kbmjj123.cc/category/${categorySlug.value}` },
-    { '@type': 'ListItem', position: 3, name: title.value, item: `https://kbmjj123.cc/${slug}` },
-  ],
-}) : null)
+// Schema.org — BreadcrumbList + BlogPosting via @nuxtjs/seo schema-org module
+// Author auto-linked from global Person identity set in app.vue
+useSchemaOrg([
+  defineBreadcrumb({
+    itemListElement: [
+      { name: 'Home', item: '/' },
+      ...(category.value ? [{ name: category.value, item: `/category/${categorySlug.value}` }] : []),
+      { name: title.value },
+    ],
+  }),
+  defineArticle({
+    '@type': 'BlogPosting',
+    ...(isoDate.value ? { datePublished: isoDate.value } : {}),
+    ...(isoDate.value ? { dateModified: isoDate.value } : {}),
+    ...(tags.value.length > 0 ? { keywords: tags.value.map(t => t.replace(/^#/, '')).join(', ') } : {}),
+  }),
+])
 
-// JSON-LD — BlogPosting
-const ldPost = computed(() => ({
-  '@context': 'https://schema.org',
-  '@type': 'BlogPosting',
-  headline: title.value,
-  url: `https://kbmjj123.cc/${slug}`,
-  ...(isoDate.value ? { datePublished: isoDate.value } : {}),
-  author: { '@type': 'Person', name: 'kbmjj123' },
-  description: excerpt.value,
-  ...(category.value ? { about: category.value } : {}),
-  ...(tags.value.length > 0 ? { keywords: tags.value.map(t => t.replace(/^#/, '')).join(', ') } : {}),
-}))
-
+// Article OG meta for social sharing (not handled by schema-org)
 useHead(() => {
-  const head: Record<string, any> = { script: [] }
-  if (ldBreadcrumb.value) {
-    head.script.push({
-      id: `ld-breadcrumb-${slug}`,
-      type: 'application/ld+json',
-      innerHTML: JSON.stringify(ldBreadcrumb.value),
-    })
-  }
-  head.script.push({
-    id: `ld-post-${slug}`,
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify(ldPost.value),
-  })
-  // Article OG meta
   const meta: Record<string, string>[] = [
     { property: 'article:published_time', content: isoDate.value },
     { property: 'article:author', content: 'kbmjj123' },
@@ -131,8 +112,7 @@ useHead(() => {
   for (const tag of tags.value) {
     meta.push({ property: 'article:tag', content: tag.replace(/^#/, '') })
   }
-  head.meta = meta.filter(m => m.content)
-  return head
+  return { meta: meta.filter(m => m.content) }
 })
 
 // SEO + OG image — reactive via computed

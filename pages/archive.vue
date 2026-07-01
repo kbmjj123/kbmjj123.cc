@@ -60,39 +60,10 @@ const archive = computed<ArchiveYear[]>(() => {
     .map(([year, posts]) => ({ year, posts }))
 })
 
-// JSON-LD — ItemList per year
-const ldJson = computed(() => {
-  const years = archive.value.filter(y => y.posts.length > 0)
-  if (years.length === 0) return null
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'Archive — kbmjj123.cc',
-    description: 'All blog posts grouped by year.',
-    url: 'https://kbmjj123.cc/archive',
-    mainEntity: years.map(y => ({
-      '@type': 'ItemList',
-      name: y.year,
-      itemListElement: y.posts.map((p, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        item: {
-          '@type': 'BlogPosting',
-          headline: p.title,
-          url: `https://kbmjj123.cc${p.slug}`,
-        },
-      })),
-    })),
-  }
-})
-
-useHead(() => ldJson.value ? {
-  script: [{
-    id: 'ld-archive',
-    type: 'application/ld+json',
-    innerHTML: JSON.stringify(ldJson.value),
-  }],
-} : {})
+// Schema.org — CollectionPage via @nuxtjs/seo schema-org module
+useSchemaOrg([
+  defineWebPage({ '@type': 'CollectionPage' }),
+])
 </script>
 
 <style scoped>

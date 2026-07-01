@@ -33,4 +33,17 @@ useHead({
   ],
   script: extraScripts,
 })
+
+// Global schema.org identity — Person for indie blog author
+// Auto-linked to defineArticle() on post pages as author
+useSchemaOrg([
+  definePerson({
+    name: 'kbmjj123',
+    url: 'https://kbmjj123.cc',
+    sameAs: [
+      'https://github.com/kbmjj123',
+      'https://twitter.com/solomaker282',
+    ],
+  }),
+])
 </script>
