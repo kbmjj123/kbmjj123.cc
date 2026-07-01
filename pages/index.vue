@@ -20,22 +20,22 @@
     </div>
 
     <!-- Post list — semantic markup with schema.org microdata -->
-    <!-- Each card's title link uses CSS ::before overlay for full-card clickability (SEO-friendly) -->
-    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" itemscope itemtype="https://schema.org/BlogPosting">
-      <h3 class="post-title" itemprop="headline">
-        <NuxtLink :to="`/${post.slug}`" itemprop="url" class="card-link">{{ post.title }}</NuxtLink>
-      </h3>
-      <div class="post-meta">
-        <time :datetime="post.isoDate" class="date">{{ post.date }}</time>
-        <span class="category" itemprop="about">{{ post.category }}</span>
-        <span style="color:var(--text-muted);">⌨️ {{ post.readTime }}</span>
-      </div>
-      <p class="post-excerpt" itemprop="description">{{ post.excerpt }}</p>
-      <NuxtLink :to="`/${post.slug}`" class="btn-read">Read More</NuxtLink>
-      <!-- Schema.org hidden meta -->
-      <meta itemprop="author" content="kbmjj123" />
-      <meta v-if="post.isoDate" :content="post.isoDate" itemprop="datePublished" />
-    </article>
+    <!-- Each card is a single NuxtLink (real <a>) for SEO; <article> is inner semantic wrapper -->
+    <NuxtLink v-for="(post, i) in filteredPosts" :key="post.slug" :to="`/${post.slug}`" class="post-card-link" itemprop="url">
+      <article class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" itemscope itemtype="https://schema.org/BlogPosting">
+        <h3 class="post-title" itemprop="headline">{{ post.title }}</h3>
+        <div class="post-meta">
+          <time :datetime="post.isoDate" class="date">{{ post.date }}</time>
+          <span class="category" itemprop="about">{{ post.category }}</span>
+          <span style="color:var(--text-muted);">⌨️ {{ post.readTime }}</span>
+        </div>
+        <p class="post-excerpt" itemprop="description">{{ post.excerpt }}</p>
+        <span class="btn-read">Read More</span>
+        <!-- Schema.org hidden meta -->
+        <meta itemprop="author" content="kbmjj123" />
+        <meta v-if="post.isoDate" :content="post.isoDate" itemprop="datePublished" />
+      </article>
+    </NuxtLink>
   </section>
 </template>
 
@@ -159,24 +159,28 @@ const hasFilter = computed(() => !!activeFilter.value)
   border: 1.5px solid var(--border-pixel);
   border-left: 3px solid var(--accent-green);
 }
+.post-card-link {
+  display: block;
+  text-decoration: none;
+  color: inherit;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: pixelFadeUp 0.5s ease forwards;
+}
 .post-item {
   background-color: rgba(255,255,255,0.02);
   border: 1.5px solid var(--border-pixel);
   padding: 24px 26px 22px;
   transition: border-color 0.2s ease, box-shadow 0.2s ease, transform 0.15s;
   position: relative;
-  opacity: 0;
-  transform: translateY(20px);
-  animation: pixelFadeUp 0.5s ease forwards;
-  cursor: pointer;
 }
-.post-item:hover {
+.post-card-link:hover .post-item {
   border-color: var(--accent-green);
   box-shadow: 0 4px 16px rgba(74,222,128,0.04);
   transform: translateY(-2px);
 }
-.post-item:hover .post-title a { color: var(--accent-green); }
-.post-item:hover .btn-read {
+.post-card-link:hover .post-item .post-title { color: var(--accent-green); }
+.post-card-link:hover .post-item .btn-read {
   background: var(--accent-green);
   color: var(--bg-deep);
   box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
@@ -197,9 +201,8 @@ const hasFilter = computed(() => !!activeFilter.value)
   color: var(--text-primary);
   margin-bottom: 12px;
   line-height: 1.7;
+  transition: color 0.15s;
 }
-.post-title a { color: inherit; text-decoration: none; transition: color 0.15s; }
-.post-title a:hover { color: var(--accent-green); }
 .post-meta {
   font-family: var(--font-pixel);
   font-size: 10px;
@@ -230,31 +233,10 @@ const hasFilter = computed(() => !!activeFilter.value)
   background: transparent;
   border: 1.5px solid var(--accent-green);
   padding: 6px 18px;
-  text-decoration: none;
   transition: all 0.15s ease;
   letter-spacing: 0.5px;
   box-shadow: 2px 2px 0 rgba(74,222,128,0.08);
 }
-.btn-read:hover {
-  background: var(--accent-green);
-  color: var(--bg-deep);
-  box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
-}
-
-/* Full-card clickable via title link ::before overlay (SEO-friendly, one real <a> per card) */
-.post-item .card-link::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-}
-/* Keep all direct children above overlay so text/buttons remain interactive */
-.post-item > * {
-  position: relative;
-  z-index: 1;
-}
-/* Keep ◆ indicator visible above everything */
-.post-item::before { z-index: 2; }
 
 @media (max-width: 480px) {
   .post-item { padding: 16px 14px 18px; }
