@@ -37,6 +37,7 @@ export default defineNuxtConfig({
 			nodeCompat: true,
 		},
 		prerender: {
+			autoSubfolderIndex: false,
 			routes: ['/feed.xml'],
 			crawlLinks: true,
 			failOnError: false,
