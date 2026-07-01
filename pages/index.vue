@@ -20,9 +20,10 @@
     </div>
 
     <!-- Post list — semantic markup with schema.org microdata -->
-    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" itemscope itemtype="https://schema.org/BlogPosting" role="link" tabindex="0" @click="navigateTo(`/${post.slug}`)" @keydown.enter.prevent="navigateTo(`/${post.slug}`)">
+    <!-- Each card's title link uses CSS ::before overlay for full-card clickability (SEO-friendly) -->
+    <article v-for="(post, i) in filteredPosts" :key="post.slug" class="post-item" :style="{ animationDelay: `${0.1 + i * 0.1}s` }" itemscope itemtype="https://schema.org/BlogPosting">
       <h3 class="post-title" itemprop="headline">
-        <NuxtLink :to="`/${post.slug}`" itemprop="url" tabindex="-1" @click.stop>{{ post.title }}</NuxtLink>
+        <NuxtLink :to="`/${post.slug}`" itemprop="url" class="card-link">{{ post.title }}</NuxtLink>
       </h3>
       <div class="post-meta">
         <time :datetime="post.isoDate" class="date">{{ post.date }}</time>
@@ -30,7 +31,7 @@
         <span style="color:var(--text-muted);">⌨️ {{ post.readTime }}</span>
       </div>
       <p class="post-excerpt" itemprop="description">{{ post.excerpt }}</p>
-      <NuxtLink :to="`/${post.slug}`" tabindex="-1" @click.stop class="btn-read">Read More</NuxtLink>
+      <NuxtLink :to="`/${post.slug}`" class="btn-read">Read More</NuxtLink>
       <!-- Schema.org hidden meta -->
       <meta itemprop="author" content="kbmjj123" />
       <meta v-if="post.isoDate" :content="post.isoDate" itemprop="datePublished" />
@@ -239,6 +240,21 @@ const hasFilter = computed(() => !!activeFilter.value)
   color: var(--bg-deep);
   box-shadow: 4px 4px 0 rgba(74,222,128,0.15);
 }
+
+/* Full-card clickable via title link ::before overlay (SEO-friendly, one real <a> per card) */
+.post-item .card-link::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+/* Keep all direct children above overlay so text/buttons remain interactive */
+.post-item > * {
+  position: relative;
+  z-index: 1;
+}
+/* Keep ◆ indicator visible above everything */
+.post-item::before { z-index: 2; }
 
 @media (max-width: 480px) {
   .post-item { padding: 16px 14px 18px; }

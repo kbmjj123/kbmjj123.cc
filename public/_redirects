@@ -1,0 +1,5 @@
+# Cloudflare Pages 200 rewrites: serve static file directly, bypass Worker
+# This breaks the Nitro-307 → Cloudflare-301 → Nitro-307 redirect loop
+/about/  /about  200
+/archive/  /archive  200
+/projects/  /projects  200
