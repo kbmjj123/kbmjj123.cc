@@ -1,17 +1,5 @@
 <template>
   <div class="pixel-body pixel-scrollbar">
-		<ClientOnly>
-			<!-- Loading overlay (hides after load) -->
-			<div v-if="showLoader" id="loader-overlay" style="position:fixed;top:0;left:0;width:100%;height:100%;background:var(--bg-deep);display:flex;flex-direction:column;justify-content:center;align-items:center;z-index:9999;transition:opacity 0.5s ease;">
-				<div style="display:grid;grid-template-columns:24px 24px;grid-template-rows:24px 24px;gap:6px;margin-bottom:28px;">
-					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0s;"></div>
-					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.3s;"></div>
-					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.6s;"></div>
-					<div style="background:var(--accent-green);border:2px solid var(--accent-green);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 1.2s ease-in-out infinite alternate;animation-delay:0.9s;"></div>
-				</div>
-				<div style="font-family:var(--font-pixel);font-size:14px;color:var(--accent-gold);letter-spacing:4px;animation:pixelBlink 1.6s step-end infinite;">LOADING</div>
-			</div>
-		</ClientOnly>
     <!-- Main container -->
     <div class="pixel-body-wrapper" style="padding:20px;display:flex;justify-content:center;min-height:100vh;">
       <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
@@ -123,12 +111,6 @@ useHead({
   link: [
     { rel: 'alternate', type: 'application/rss+xml', title: 'kbmjj123.cc RSS Feed', href: '/feed.xml' },
   ],
-})
-
-const showLoader = ref(true)
-
-onMounted(() => {
-  setTimeout(() => { showLoader.value = false }, 600)
 })
 
 const mobileMenuOpen = ref(false)
