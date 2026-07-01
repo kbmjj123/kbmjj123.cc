@@ -208,15 +208,7 @@ Open `/tmp/umami_all.sql` in a text editor, select all, copy. Then:
 - Paste the SQL
 - Click Run
 
-<!-- 📸 IMAGE NEEDED (解释性图表)
-  Position: 正文此处，在 "Click Run" 之后
-  Type: 解释性架构图（我来生成 SVG）
-  Shows: 整个绕过方案的流程对比 — 左侧"原始失败路径"（Vercel build → prisma migrate → 卡住），右侧"最终方案"（SKIP_DB_MIGRATION + 本地合并SQL → Supabase SQL Editor → 手动建表，然后 Vercel build → 成功部署）
-  Alt text: "Flow diagram comparing the original failing build path versus the final working solution: skip migration in Vercel build, run SQL manually in Supabase"
-  Caption: "Two paths: what kept hanging, and what finally worked."
-  文件命名: self-hosting-umami-part-3-migration-bypass-diagram.svg
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-3/self-hosting-umami-part-3-migration-bypass-diagram.svg
--->
+![Flow diagram comparing the original failing build path versus the final working solution: skip migration in Vercel build, run SQL manually in Supabase](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-3-migration-bypass-diagram.svg)
 
 If the SQL runs without errors, you'll see a success message and the table count in Supabase's Table Editor should jump from 0 to around 15 tables.
 
@@ -260,15 +252,7 @@ Skipping database migration.
 ✓ Build completed successfully.
 ```
 
-<!-- 📸 IMAGE NEEDED (真实截图)
-  Position: 正文此处
-  Type: 真实截图
-  Shows: Vercel 部署成功的页面，显示绿色 "Ready" 状态
-  Alt text: "Vercel deployment dashboard showing successful build with Ready status"
-  Caption: "Finally green. Three days of debugging condensed into one screenshot."
-  文件命名: self-hosting-umami-part-3-vercel-deploy-success.png
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-3/self-hosting-umami-part-3-vercel-deploy-success.png
--->
+![Vercel deployment dashboard showing successful build with Ready status](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-3-vercel-deploy-success.webp)
 
 Replace the tracking script in your website's `<head>` with the new one from your self-hosted Umami instance. Within a few minutes, data starts flowing in — identical dashboard, no event limits, no monthly ceiling.
 
@@ -316,4 +300,4 @@ If you're setting this up yourself and hit a step that isn't covered here, the r
 
 ---
 
-*Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1: Why I Left Umami Cloud](#) · [← Part 2: The Connection String Traps](#)*
+*Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1: Why I Left Umami Cloud](/self-hosting-umami-part-1) · [← Part 2: The Connection String Traps](/self-hosting-umami-part-2)*

@@ -91,15 +91,7 @@ The critical detail in this setup: `umami.bulkpictools.com` is configured in Clo
 
 The fix works not because Cloudflare is doing anything special, but because the domain name itself isn't blocked.
 
-<!-- 📸 IMAGE NEEDED (解释性图表)
-  Position: 正文此处
-  Type: 解释性架构图（我来生成 SVG）
-  Shows: 两条路径对比 — 左侧：中国用户 → *.vercel.app → 被 GFW 拦截（×）；右侧：中国用户 → umami.bulkpictools.com (DNS-only) → Vercel → Umami（✓）
-  Alt text: "Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration"
-  Caption: "Same Vercel server, different domain name — that's the only difference."
-  文件命名: self-hosting-umami-part-4-gfw-domain-paths.svg
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-4/self-hosting-umami-part-4-gfw-domain-paths.svg
--->
+![Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-4-gfw-domain-paths.svg)
 
 ---
 

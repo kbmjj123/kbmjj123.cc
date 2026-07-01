@@ -93,15 +93,7 @@ Both environment variables need to be set in Vercel under Settings → Environme
 
 Where to find these strings in Supabase: navigate to your project, click the **Connect** button (green, near the top), then look for the "Transaction pooler" and "Direct connection" sections. Each one has a copy button that gives you the complete string with your project reference already filled in — you only need to substitute your database password.
 
-<!-- 📸 IMAGE NEEDED (真实截图)
-  Position: 正文此处，在"Where to find these strings"段落之后
-  Type: 真实截图
-  Shows: Supabase Connect 页面，显示 Transaction pooler 和 Direct connection 两个连接字符串区块
-  Alt text: "Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432"
-  Caption: "Supabase Connect page — the two strings you need are both here."
-  文件命名: self-hosting-umami-part-2-supabase-connect-page.png
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-2/self-hosting-umami-part-2-supabase-connect-page.png
--->
+![Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-2-supabase-connect-page.webp)
 
 ### The Hidden Override: `prisma.config.ts`
 
@@ -163,7 +155,7 @@ One more trap: if your Supabase database password contains special characters li
 ```bash
 TypeError: Invalid URL
     at new URL (node:internal/url:819:25)
-input: 'postgres://postgres:yourP@ss!word#123@...'
+input: 'postgres://postgres:yourPass!word#123@...'
 ```
 
 The characters `!` `@` `#` have reserved meaning in URIs. The safest fix is to reset your Supabase database password to one using only alphanumeric characters. The alternative — percent-encoding each character (`!` → `%21`, `@` → `%40`, `#` → `%23`) — works but makes the string brittle to edit later.
@@ -245,4 +237,4 @@ Vercel deployment, however, still had one more blocker — not related to the da
 
 ---
 
-*Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1: Why I Left Umami Cloud](#) · [Part 3: GeoIP, Migration Bypass, and Git LFS →](#)*
+*Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1: Why I Left Umami Cloud](/self-hosting-umami-part-1) · [Part 3: GeoIP, Migration Bypass, and Git LFS →](#)*
