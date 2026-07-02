@@ -10,7 +10,7 @@ tags:
   - "#cloudflare"
   - "#saas"
 image: "https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-4/part-4-china-data-restored.png"
-draft: true
+draft: false
 series: "self-hosting-umami-on-vercel-supabase"
 seriesOrder: 4
 seo:
@@ -157,15 +157,7 @@ The DNS-only configuration also means there's no Cloudflare CDN caching in front
 
 After deploying the custom domain change, mainland China data started appearing in the Umami dashboard within minutes.
 
-<!-- 📸 IMAGE NEEDED (真实截图)
-  Position: 正文此处
-  Type: 真实截图
-  Shows: Umami dashboard 地理位置视图，显示中国出现在访客来源列表中，有具体数字
-  Alt text: "Umami analytics dashboard showing China appearing in the countries list after custom domain fix"
-  Caption: "China is back. Same traffic that was always there — now visible."
-  文件命名: self-hosting-umami-part-4-china-data-restored.png
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-4/self-hosting-umami-part-4-china-data-restored.png
--->
+![Umami analytics dashboard showing China appearing in the countries list after custom domain fix](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-4-china-data-restored.webp)
 
 ---
 
@@ -183,4 +175,4 @@ After deploying the custom domain change, mainland China data started appearing 
 
 ---
 
-*Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1](#) · [← Part 2](#) · [← Part 3](#)*
+*Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1](/self-hosting-umami-part-1) · [← Part 2](/self-hosting-umami-part-2) · [← Part 3](/self-hosting-umami-part-3)*

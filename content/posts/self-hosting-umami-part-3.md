@@ -11,7 +11,7 @@ tags:
   - "#vercel"
   - "#cloudflare"
 image: "https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-3/part-3-vercel-deploy-success.png"
-draft: true
+draft: false
 series: "self-hosting-umami-on-vercel-supabase"
 seriesOrder: 3
 seo:
@@ -208,7 +208,7 @@ Open `/tmp/umami_all.sql` in a text editor, select all, copy. Then:
 - Paste the SQL
 - Click Run
 
-![Flow diagram comparing the original failing build path versus the final working solution: skip migration in Vercel build, run SQL manually in Supabase](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-3-migration-bypass-diagram.svg)
+![Flow diagram comparing the original failing build path versus the final working solution: skip migration in Vercel build, run SQL manually in Supabase](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-3-migration-bypass-diagram.svg)
 
 If the SQL runs without errors, you'll see a success message and the table count in Supabase's Table Editor should jump from 0 to around 15 tables.
 
@@ -226,11 +226,12 @@ Navigate to `localhost:3000`, log in with the default credentials (`admin` / `um
   Position: 正文此处
   Type: 真实截图
   Shows: Umami 登录成功后的主 dashboard 页面，显示已添加网站的界面
-  Alt text: "Umami dashboard after successful login, showing the analytics interface with a website added"
+  Alt text: ""
   Caption: "Logged in. The manual migration worked — all tables present."
   文件命名: self-hosting-umami-part-3-umami-dashboard.png
   R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-3/self-hosting-umami-part-3-umami-dashboard.png
 -->
+![Umami dashboard after successful login, showing the analytics interface with a website added](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-3-umami-dashboard.webp)
 
 ---
 

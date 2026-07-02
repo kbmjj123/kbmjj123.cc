@@ -112,4 +112,4 @@ Part 2 covers the connection string issues and why `prisma migrate deploy` kept 
 
 ---
 
-*Part of the "Self-Hosting Umami on Vercel + Supabase" series. · [Part 2: The Connection String Traps](#) · [Part 3: GeoIP, Migration Bypass, and Git LFS](#)*
+*Part of the "Self-Hosting Umami on Vercel + Supabase" series. · [Part 2: The Connection String Traps](/self-hosting-umami-part-2) · [Part 3: GeoIP, Migration Bypass, and Git LFS](/self-hosting-umami-part-3)*
