@@ -31,7 +31,9 @@ After the self-hosted Umami setup was running cleanly, I noticed that mainland C
 
 ## Background
 
-A few weeks after the Umami self-hosting setup from Parts 1–3, the analytics dashboard was working well — accurate visitor counts, correct geographic breakdowns for most countries, no event ceiling. Then I noticed something off: mainland China, which should account for a meaningful share of bulkpictools.com's traffic, was showing almost nothing. Other Asian countries like Japan, South Korea, and Singapore appeared normally. China had maybe one or two data points per day.
+China had one or two data points a day. That's the number that made me stop and look — for a site like bulkpictools.com, mainland China should be a meaningful slice of traffic, not a rounding error.
+
+A few weeks into running the self-hosted Umami setup from Parts 1–3, the dashboard otherwise looked healthy: accurate visitor counts, correct geographic breakdowns everywhere else, no event ceiling. Japan, South Korea, and Singapore all showed up normally. China didn't.
 
 The first assumption was that something was wrong with the GeoIP database or the IP parsing logic from Part 2. That turned out to be the wrong direction entirely.
 
@@ -67,7 +69,7 @@ The output from a test request:
 
 That theory was plausible but wrong. The key signal I was ignoring: **every other country was reporting correctly**.
 
-### The Turning Point
+### Every Other Country Was Fine — Only China Wasn't
 
 If this were a geolocation parsing bug, it would affect all visitors, not just Chinese ones. Japan showed correctly. South Korea showed correctly. Singapore showed correctly. The problem was specific to mainland China — which means the requests weren't being misclassified. They weren't arriving at all.
 
@@ -81,7 +83,7 @@ This is a common confusion point: when you see strange IPs in `x-forwarded-for`,
 
 ## Why `*.vercel.app` Is Blocked but a Custom Domain Isn't
 
-This is the part worth understanding properly, because the fix only makes sense once you understand why the problem exists.
+The fix only makes sense once you understand why `*.vercel.app` is blocked in the first place, so here's the mechanism.
 
 Vercel's default `*.vercel.app` domain resolves to Vercel's shared infrastructure. This shared IP space has been blocked by China's Great Firewall — not because of anything specific to your project, but because the IP ranges are associated with a large volume of content that's collectively blocked. It's the same reason `*.github.io` has historically had connectivity issues from China: shared infrastructure gets painted with a broad brush.
 
@@ -89,7 +91,7 @@ A custom domain like `umami.bulkpictools.com` is different. It points to the sam
 
 The critical detail in this setup: `umami.bulkpictools.com` is configured in Cloudflare with **DNS-only mode (gray cloud)**, not proxied. This means Cloudflare is acting purely as a DNS resolver — the CNAME points directly to Vercel's servers, and user requests go straight from their browser to Vercel with no intermediate proxy. There's no Cloudflare CDN hop, no Worker, no page rule involved.
 
-The fix works not because Cloudflare is doing anything special, but because the domain name itself isn't blocked.
+Cloudflare isn't doing anything special here — DNS-only mode just resolves the name. The fix works because that name itself isn't blocked.
 
 ![Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-4-gfw-domain-paths.svg)
 
@@ -165,11 +167,11 @@ After deploying the custom domain change, mainland China data started appearing 
 
 **Missing data and wrong data have different root causes.** When an entire geography shows zero rather than incorrect values, debug connectivity before parsing. The question is "are requests arriving?" not "are requests being misread?"
 
-**`*.vercel.app` is blocked in mainland China.** So is `*.netlify.app` and periodically `*.github.io`. If China traffic matters to your project, binding a custom domain is baseline infrastructure — treat it the same way you treat setting up HTTPS.
+**`*.vercel.app` is blocked in mainland China.** So is `*.netlify.app`, and periodically `*.github.io`. If China traffic matters to your project, a bound custom domain belongs in the initial setup checklist, not the backlog.
 
 **DNS-only is the right Cloudflare setting for an analytics endpoint.** Proxied mode adds Cloudflare's CDN layer, which is useful for cacheable assets but wrong for a write endpoint like `/api/send`. Gray cloud keeps the path simple: DNS resolution, then a direct connection to Vercel.
 
-**Custom domain fixes the access problem, not the blocking risk.** The domain works today because it isn't listed. That's a different thing from being guaranteed to work. For most indie projects this distinction doesn't matter — but it's worth knowing the mechanism so you're not surprised if the situation changes.
+**Custom domain fixes the access problem, not the blocking risk.** The domain works today because it isn't listed. That's a different thing from being guaranteed to work. That distinction rarely matters for indie projects — but knowing the mechanism means you won't be blindsided if the situation changes.
 
 **Debug logs should target the right layer.** Adding `x-forwarded-for` and `x-vercel-ip-country` logs was useful for ruling out the IP parsing hypothesis, but it couldn't reveal the actual problem because the actual problem was happening before any request reached the server. When logs show nothing unusual, sometimes the issue is that the right requests aren't in the logs at all.
 

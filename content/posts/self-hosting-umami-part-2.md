@@ -34,9 +34,9 @@ Deploying Umami to Vercel with a Supabase database requires two separate connect
 
 After deciding to self-host Umami (covered in [Part 1](#)), the deployment path looked straightforward: fork the official repo, import to Vercel, set `DATABASE_URL`, deploy. The official documentation at `docs.umami.is/docs/install` lists the environment variables and the expected connection string format. I had a Supabase project ready. Should have been 20 minutes.
 
-It took considerably longer than that.
+It ate most of an evening instead.
 
-The problems weren't random — they were all symptoms of the same underlying tension between how Prisma handles database migrations and how Supabase exposes its PostgreSQL connection. Once I understood that tension, everything clicked into place. But getting there required working through several failure modes that each looked like a different problem.
+The problems weren't random — they were all symptoms of the same underlying tension between how Prisma handles database migrations and how Supabase exposes its PostgreSQL connection. Once I understood that tension, the actual fix was two lines of config. Getting to that understanding meant working through three failures first that each looked like a completely separate problem.
 
 ---
 
@@ -50,9 +50,9 @@ The Vercel build log would reach a point and stop:
 ✓ Database version check successful.
 ```
 
-Three green checkmarks, then nothing. No error. No timeout message. Just silence, until Vercel eventually killed the build job.
+Three green checkmarks, then nothing. No error, no stack trace, just a build that stopped responding until Vercel killed the job.
 
-This is the worst kind of failure — not a crash with a traceable error, but a hang that tells you nothing about where it got stuck. I added `DEBUG="prisma:*"` to get verbose Prisma output and confirmed the process was entering `applyMigration()` inside `check-db.js` and not coming back.
+I added `DEBUG="prisma:*"` to get verbose Prisma output and confirmed the process was entering `applyMigration()` inside `check-db.js` and not coming back.
 
 The script was calling `prisma migrate deploy` internally. That command was the one hanging.
 
@@ -77,7 +77,7 @@ So the problem was structural: the build was trying to run database migrations t
 
 ![Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432](/images/startup-umami/self-hosting-umami/supabase_connection_paths_diagram.svg)
 
-### The Two-URL Fix
+### Splitting DATABASE_URL From DIRECT_DATABASE_URL Stopped the Hang — Almost
 
 The correct setup requires both:
 
@@ -95,7 +95,9 @@ Where to find these strings in Supabase: navigate to your project, click the **C
 
 ![Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-2-supabase-connect-page.webp)
 
-### The Hidden Override: `prisma.config.ts`
+I set both variables, redeployed, and watched the build hang at the exact same spot.
+
+### `prisma.config.ts` Was Silently Overriding My DIRECT_DATABASE_URL
 
 Setting both environment variables wasn't enough. The build still hung.
 
@@ -130,7 +132,7 @@ export default defineConfig({
 
 With this in place, Prisma uses `DATABASE_URL` for runtime queries and automatically switches to `DIRECT_DATABASE_URL` when running migrations. The config file takes precedence over the schema's `datasource` block, so this is the right place to set it.
 
-### The IPv6 Detour
+### IPv6 Preference Caused EHOSTUNREACH on My Local Network
 
 Even after fixing `prisma.config.ts`, running `prisma migrate deploy` locally hit another wall:
 
@@ -148,7 +150,7 @@ DIRECT_DATABASE_URL=postgresql://postgres.[project-ref]:[password]@aws-0-[region
 
 This is a local development fix only. On Vercel's build infrastructure, IPv6 routing works correctly, so this parameter isn't needed there — but it's harmless to include if you want a single `.env` file that works in both environments.
 
-### Special Characters in Passwords
+### A Password With `!` and `#` Broke the URL Parser
 
 One more trap: if your Supabase database password contains special characters like `!`, `@`, or `#`, the URL parser will break on them. The error looks like this:
 
@@ -199,9 +201,9 @@ Substitute `[project-ref]`, `[region]`, and `[password]` with values from your S
 
 The official Umami documentation does mention both `DATABASE_URL` and `DIRECT_DATABASE_URL`. What it doesn't explain is the *reason* — that PgBouncer in transaction mode blocks the advisory locks Prisma's migration engine depends on. Without understanding why, the two-URL requirement looks like an arbitrary configuration detail you might skip. That's exactly what I did on the first attempt.
 
-The `prisma.config.ts` override is the nastier trap because it's a file in the repository that silently wins over your environment variables. If you set `DIRECT_DATABASE_URL` correctly in Vercel but the config file doesn't map it to `directUrl`, Prisma ignores your variable entirely. The fix is two lines, but you have to know to look for the file.
+The `prisma.config.ts` override is the nastier trap because it's a file in the repository that silently wins over your environment variables. If you set `DIRECT_DATABASE_URL` correctly in Vercel but the config file doesn't map it to `directUrl`, Prisma ignores your variable entirely. The fix is two lines, but you have to know to look for the file — and nothing in the build output points you there.
 
-Worth noting: this architecture — pooler for runtime, direct for migrations — is not Umami-specific. Any application using Prisma with Supabase will hit the same constraint. The pattern of needing two database URLs is becoming standard for serverless Prisma deployments, but the tooling doesn't yet make it obvious at setup time.
+This architecture — pooler for runtime, direct for migrations — isn't Umami-specific. Any application using Prisma with Supabase will hit the same constraint. Needing two database URLs is becoming standard for serverless Prisma deployments, but the tooling doesn't make that obvious at setup time.
 
 ---
 

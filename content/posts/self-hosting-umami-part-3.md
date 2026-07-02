@@ -53,7 +53,7 @@ Umami uses MaxMind's GeoLite2-City database to resolve visitor IP addresses to g
 
 On a local machine with a fast connection, this download completes in a few seconds and you never notice it. On Vercel's build environment, the download either times out silently or gets blocked by network policy — the build just hangs waiting for a file that never arrives, with no timeout error surfaced to the log.
 
-This is one of those problems that's invisible until you go looking for it specifically. The build log shows nothing after the database checks because the hang happens inside a network request with no surrounding log output.
+The build log shows nothing after the database checks because the hang happens inside a network request with no surrounding log output. You only find this by going looking for it specifically — nothing points you here on its own.
 
 **How to confirm this is the issue:**
 
@@ -65,7 +65,7 @@ grep -r "GeoLite2\|mmdb\|geo/" --include="*.ts" --include="*.js" -l
 
 If you see files referencing `GeoLite2-City.mmdb` and a download URL, this is your blocker.
 
-### Solution: Pre-bundle the file with Git LFS
+### Pre-bundling GeoLite2-City.mmdb via Git LFS Eliminated the Download
 
 The fix is to download the file once locally and commit it to the repository. Vercel clones your repo at build time, so the file is already present — no download needed.
 
@@ -140,7 +140,7 @@ This is a different network context from Vercel's runtime. The serverless functi
 
 The result: `prisma migrate deploy` hung inside `check-db.js`, and the build timed out.
 
-### Solution Part A: Skip the build-time migration
+### SKIP_DB_MIGRATION=1 Got the Build Past the Hang
 
 Add this environment variable to Vercel:
 
@@ -161,9 +161,9 @@ async function applyMigration() {
 
 With `SKIP_DB_MIGRATION=1` set, this function exits immediately. The build completes. Vercel deploys successfully.
 
-The trade-off: you've now separated schema migrations from deployments. That's not a bad thing — it's actually the more deliberate approach — but it means you need to run migrations manually whenever the schema changes.
+The trade-off: schema migrations and deployments are now separate steps. That's a deliberate pattern, not a compromise — but it does mean running migrations manually every time the schema changes.
 
-### Solution Part B: Run migrations manually in Supabase SQL Editor
+### Running the Concatenated Migration SQL Manually in Supabase Created the Missing Tables
 
 With the build-time migration bypassed, the database tables don't exist yet. Umami will fail on login because the `user` table (and everything else) hasn't been created.
 
@@ -222,15 +222,6 @@ pnpm dev
 
 Navigate to `localhost:3000`, log in with the default credentials (`admin` / `umami`), and change the password immediately. If login succeeds, the schema is complete and the app is functional.
 
-<!-- 📸 IMAGE NEEDED (真实截图)
-  Position: 正文此处
-  Type: 真实截图
-  Shows: Umami 登录成功后的主 dashboard 页面，显示已添加网站的界面
-  Alt text: ""
-  Caption: "Logged in. The manual migration worked — all tables present."
-  文件命名: self-hosting-umami-part-3-umami-dashboard.png
-  R2路径: https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-3/self-hosting-umami-part-3-umami-dashboard.png
--->
 ![Umami dashboard after successful login, showing the analytics interface with a website added](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-3-umami-dashboard.webp)
 
 ---
@@ -265,7 +256,7 @@ Looking back at the full three-part journey, what stands out is that none of the
 
 That's the real difficulty. When a build fails with an error, you fix the error. When a build hangs silently, you're debugging a ghost. The mental model I developed by the end: any time a Vercel build hangs after the database checks pass, the next question isn't "what's wrong with my code" — it's "what network request is this build environment failing to complete."
 
-On the `SKIP_DB_MIGRATION` approach specifically: I considered this a workaround at first, but it's actually a reasonable production pattern. Decoupling schema migrations from deployments is standard practice in teams where a bad migration could take down a running service. Running migrations manually (or through a separate CI step) means you can verify the SQL before it touches the live database. The Vercel build being blocked just forced me into a pattern I should have been using anyway.
+On the `SKIP_DB_MIGRATION` approach specifically: I treated this as a hack at first. It isn't — decoupling schema migrations from deployments is standard practice on teams where a bad migration could take down a live service. Running migrations manually (or through a separate CI step) means you can verify the SQL before it touches the live database. The Vercel build being blocked just forced me into a pattern I should have been using anyway.
 
 One honest limitation of this setup: **Supabase's free tier pauses inactive projects after one week of inactivity.** With 1,000+ daily visitors on bulkpictools.com, the database has constant activity and this won't trigger. But if you're setting this up for a low-traffic site, be aware that the first request after a pause will cold-start the database and fail — subsequent requests will be fine. The workaround is a cron job that pings the database every few days, or upgrading to Supabase's Pro plan ($25/month).
 
