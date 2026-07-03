@@ -38,6 +38,9 @@
       </ul>
     </div>
 
+    <!-- Subscribe -->
+    <SubscribeWidget />
+
     <!-- Bottom links -->
     <div class="mt-6 pt-4" :style="{ borderTop: '1px solid var(--color-border)' }">
       <NavItem to="#" label="Custom Link 1" />
@@ -72,6 +75,7 @@
           <div class="nav-section-title">Categories</div>
           <NavItem v-for="cat in categories" :key="cat.slug" :to="`/?category=${cat.slug}`"
             :label="cat.name" @click="isMobileMenuOpen = false" />
+          <SubscribeWidget />
           <div class="mt-6 pt-4" :style="{ borderTop: '1px solid var(--color-border)' }">
             <NavItem to="#" label="Custom Link 1" @click="isMobileMenuOpen = false" />
             <button v-if="auth?.isLoggedIn?.value && auth?.user?.value" class="nav-item w-full" @click="auth.logout(); isMobileMenuOpen = false">Sign Out</button>
