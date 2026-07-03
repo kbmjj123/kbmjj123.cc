@@ -1,4 +1,5 @@
 // GET /api/subscribe/verify?token=xxx — Verify subscription
+// Redirects to homepage on success/failure
 
 export default defineEventHandler(async (event) => {
   try {
@@ -6,14 +7,14 @@ export default defineEventHandler(async (event) => {
     const token = query.token as string
 
     if (!token) {
-      throw createError({ statusCode: 400, statusMessage: 'Missing verification token' })
+      return sendRedirect(event, getSiteUrl(event) + '?verify=failed', 302)
     }
 
     // Get D1 binding
     const { cloudflare } = event.context as { cloudflare?: { env?: Record<string, any> } }
     const db = cloudflare?.env?.DB
     if (!db) {
-      throw createError({ statusCode: 500, statusMessage: 'Database unavailable' })
+      return sendRedirect(event, getSiteUrl(event) + '?verify=failed', 302)
     }
 
     // Find subscriber by token
@@ -22,15 +23,15 @@ export default defineEventHandler(async (event) => {
     ).bind(token).first() as { id: number; email: string; status: string } | null
 
     if (!subscriber) {
-      return sendResponse(event, 400, 'Invalid or expired verification link')
+      return sendRedirect(event, getSiteUrl(event) + '?verify=invalid', 302)
     }
 
     if (subscriber.status === 'active') {
-      return sendResponse(event, 200, 'Already verified')
+      return sendRedirect(event, getSiteUrl(event) + '?verify=already', 302)
     }
 
     if (subscriber.status === 'unsubscribed') {
-      return sendResponse(event, 400, 'This email has unsubscribed')
+      return sendRedirect(event, getSiteUrl(event) + '?verify=unsubscribed', 302)
     }
 
     // Update to active
@@ -38,18 +39,14 @@ export default defineEventHandler(async (event) => {
       'UPDATE subscribers SET status = ?, verified_at = datetime(\'now\') WHERE id = ?'
     ).bind('active', subscriber.id).run()
 
-    return sendResponse(event, 200, 'Subscribed! Thanks for joining 🎉')
+    return sendRedirect(event, getSiteUrl(event) + '?verify=success', 302)
   } catch (e: any) {
-    if (e.statusCode) throw e
     console.error('Verify error:', e)
-    throw createError({ statusCode: 500, statusMessage: 'Verification failed, try again later' })
+    return sendRedirect(event, getSiteUrl(event) + '?verify=error', 302)
   }
 })
 
-function sendResponse(event: any, status: number, message: string) {
-  setResponseStatus(event, status)
-  return {
-    success: status < 400,
-    message,
-  }
+function getSiteUrl(event: any): string {
+  const { cloudflare } = event.context as { cloudflare?: { env?: Record<string, any> } }
+  return cloudflare?.env?.API_BASE || process.env.API_BASE || 'https://kbmjj123.cc'
 }
