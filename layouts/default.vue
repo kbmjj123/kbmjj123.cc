@@ -77,6 +77,9 @@
                 </div>
               </div>
 
+              <!-- Subscribe -->
+              <SubscribeWidget />
+
               <!-- Pixel counter -->
               <div class="pixel-widget" style="border-color:var(--border-pixel);background:rgba(0,0,0,0.2);">
                 <div style="font-family:var(--font-pixel);font-size:9px;color:var(--text-muted);text-align:center;">

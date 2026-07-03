@@ -1,6 +1,6 @@
 <template>
-  <div class="widget">
-    <div class="widget-title">订阅更新</div>
+  <div class="pixel-widget">
+    <h2 class="pixel-widget-title">订阅更新</h2>
     <p class="widget-desc">获取最新文章与独立开发动态</p>
 
     <!-- Success state -->
@@ -83,22 +83,24 @@ async function handleSubmit() {
 </script>
 
 <style scoped>
-.widget {
-  margin-bottom: 12px;
+.pixel-widget {
+  background-color: rgba(255,255,255,0.015);
+  border: 1.5px solid var(--border-pixel);
+  padding: 18px 20px 20px;
 }
-.widget-title {
+.pixel-widget-title {
   font-family: var(--font-pixel);
   font-size: 13px;
   color: var(--accent-gold);
   border-bottom: 1px solid var(--border-pixel);
   padding-bottom: 8px;
-  margin-bottom: 10px;
+  margin-bottom: 14px;
   display: flex;
   align-items: center;
   gap: 8px;
   letter-spacing: 0.5px;
 }
-.widget-title::before { content: "▸"; color: var(--accent-green); font-size: 12px; }
+.pixel-widget-title::before { content: "▸"; color: var(--accent-green); font-size: 12px; }
 
 .widget-desc {
   font-family: var(--font-ui);

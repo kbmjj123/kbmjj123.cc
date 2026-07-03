@@ -14,6 +14,9 @@
       </nav>
       <p v-else style="font-family:var(--font-pixel);font-size:10px;color:var(--text-muted);padding:8px 0;">No headings found</p>
     </div>
+
+    <!-- Subscribe -->
+    <SubscribeWidget />
   </div>
 </template>
 
