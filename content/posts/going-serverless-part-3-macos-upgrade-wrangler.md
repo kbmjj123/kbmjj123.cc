@@ -41,7 +41,6 @@ If you're an indie developer on hardware that's more than a few years old, run t
 2. **Check whether your specific Mac model can reach that OS version at all.** Apple publishes the list of Macs supported by each macOS release. Look up your exact model year and number, not just "is my Mac old."
 
 ![Apple's official list of Mac models supported by the target macOS version](/images/going-serverless/part-3-macos-upgrade-wrangler/going-serverless-part-3-apple-supported-devices.webp)
-<!-- 待补充：真实截图，Apple官方该macOS版本支持设备列表页面（建议框出你的Mac型号是否在列）。文件名建议：going-serverless-part-3-apple-supported-devices.png -->
 
 3. **If your model isn't listed, that's a different problem than "a few versions behind."** It means there's no official upgrade path, and any upgrade requires a third-party method — which carries its own risk (see below).
 4. **Check this before you've already built things assuming the tool will be available.** I checked it after I'd already decided Cloudflare was my stack, which removed "pick a different tool" from my options. Checking earlier keeps that option open.
