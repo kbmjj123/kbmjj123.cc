@@ -33,11 +33,11 @@ export function renderVerifyEmail(props: VerifyEmailProps): string {
     .join('')
 
   return `<!DOCTYPE html>
-<html lang="zh-CN">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>确认订阅 KB MJJ123 .cc</title>
+  <title>Confirm your subscription to KB MJJ123 .cc</title>
 </head>
 <body style="margin:0;padding:0;background-color:#0b0b12;">
   <table role="presentation" width="100%" cellpadding="0" cellspacing="0" style="background-color:#0b0b12;">
@@ -71,15 +71,15 @@ export function renderVerifyEmail(props: VerifyEmailProps): string {
 
               <!-- Title -->
               <h1 style="font-family:'Press Start 2P',monospace;font-size:16px;color:#e8edf5;margin:0 0 16px;line-height:1.6;">
-                [ 确认订阅 ]
+                [ Confirm Subscription ]
               </h1>
 
               <!-- Intro text -->
               <p style="font-family:Inter,-apple-system,sans-serif;font-size:13px;color:#9aa8c9;line-height:1.8;margin:0 0 8px;">
-                感谢你的订阅！确认后，你将收到不定期 Newsletter，汇总近期文章与独立开发动态。
+                Thanks for subscribing! Once confirmed, you'll receive occasional newsletters with recent posts and dev updates.
               </p>
               <p style="font-family:Inter,-apple-system,sans-serif;font-size:13px;color:#9aa8c9;line-height:1.8;margin:0 0 24px;">
-                点击下方按钮完成验证：
+                Click the button below to verify your email:
               </p>
 
               <!-- CTA Button -->
@@ -88,7 +88,7 @@ export function renderVerifyEmail(props: VerifyEmailProps): string {
                   <td align="center" style="border:1px solid #4ade80;border-radius:2px;">
                     <a href="${escHtml(verifyUrl)}"
                        style="display:inline-block;padding:12px 32px;font-family:'Press Start 2P',monospace;font-size:10px;color:#0b0b12;text-decoration:none;background:#4ade80;">
-                      ✓ 确认订阅
+                      ✓ Confirm Subscription
                     </a>
                   </td>
                 </tr>
@@ -97,7 +97,7 @@ export function renderVerifyEmail(props: VerifyEmailProps): string {
               <!-- Recent posts -->
               <div style="border-top:1px solid #2a2a42;padding-top:24px;">
                 <h2 style="font-family:'Press Start 2P',monospace;font-size:10px;color:#fbbf24;margin:0 0 16px;">
-                  ▸ 近期文章
+                  ▸ Recent Posts
                 </h2>
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0">
                   ${postsHtml}
@@ -111,10 +111,10 @@ export function renderVerifyEmail(props: VerifyEmailProps): string {
           <tr>
             <td style="padding:24px 0 0;text-align:center;">
               <p style="font-family:Inter,-apple-system,sans-serif;font-size:11px;color:#4d5a7a;margin:0 0 8px;">
-                你收到这封邮件是因为有人使用此邮箱订阅了 KB MJJ123 .cc。
+                You received this because someone subscribed to KB MJJ123 .cc with this email.
               </p>
               <p style="font-family:Inter,-apple-system,sans-serif;font-size:11px;color:#4d5a7a;margin:0;">
-                如果你没有发起此操作，请忽略此邮件。
+                If you didn't request this, you can ignore this email.
               </p>
             </td>
           </tr>

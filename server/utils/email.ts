@@ -64,7 +64,7 @@ export async function sendVerificationEmail(params: SendVerifyEmailParams): Prom
 
   const result = await sendEmail({
     to,
-    subject: '确认订阅 KB MJJ123 .cc',
+    subject: 'Confirm your subscription — KB MJJ123 .cc',
     html,
     apiKey,
   })

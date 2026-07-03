@@ -11,7 +11,7 @@ export default defineEventHandler(async (event) => {
 
     // Validate email
     if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      throw createError({ statusCode: 400, statusMessage: '邮箱格式不正确' })
+      throw createError({ statusCode: 400, statusMessage: 'Invalid email format' })
     }
 
     // Get D1 binding & env vars
@@ -21,7 +21,7 @@ export default defineEventHandler(async (event) => {
     const blogUrl = cloudflare?.env?.API_BASE || process.env.API_BASE || 'https://kbmjj123.cc'
 
     if (!db) {
-      throw createError({ statusCode: 500, statusMessage: '数据库不可用' })
+      throw createError({ statusCode: 500, statusMessage: 'Database unavailable' })
     }
     if (!apiKey) {
       console.warn('RESEND_API_KEY not set — verification email will not be sent')
@@ -34,7 +34,7 @@ export default defineEventHandler(async (event) => {
 
     if (existing) {
       if (existing.status === 'active') {
-        throw createError({ statusCode: 409, statusMessage: '该邮箱已订阅' })
+        throw createError({ statusCode: 409, statusMessage: 'Already subscribed' })
       }
       if (existing.status === 'unsubscribed') {
         // Re-subscribe: re-send verification
@@ -43,7 +43,7 @@ export default defineEventHandler(async (event) => {
           'UPDATE subscribers SET status = ?, verification_token = ?, subscribed_at = datetime(\'now\'), source = ? WHERE id = ?'
         ).bind('pending', token, source || 'sidebar', existing.id).run()
         await sendVerifyAndLog(event, db, email, name, token, apiKey, blogUrl)
-        return { success: true, message: '验证邮件已发送' }
+        return { success: true, message: 'Verification email sent' }
       }
       // pending: re-send
       const record = await db.prepare(
@@ -56,7 +56,7 @@ export default defineEventHandler(async (event) => {
         ).bind(token, existing.id).run()
       }
       await sendVerifyAndLog(event, db, email, name, token, apiKey, blogUrl)
-      return { success: true, message: '验证邮件已重新发送' }
+      return { success: true, message: 'Verification email re-sent' }
     }
 
     // New subscriber
@@ -68,11 +68,11 @@ export default defineEventHandler(async (event) => {
 
     await sendVerifyAndLog(event, db, email, name, token, apiKey, blogUrl)
 
-    return { success: true, message: '验证邮件已发送' }
+    return { success: true, message: 'Verification email sent' }
   } catch (e: any) {
     if (e.statusCode) throw e
     console.error('Subscribe error:', e)
-    throw createError({ statusCode: 500, statusMessage: '订阅失败，请稍后重试' })
+    throw createError({ statusCode: 500, statusMessage: 'Subscription failed, try again later' })
   }
 })
 
@@ -113,7 +113,7 @@ async function sendVerifyAndLog(
     ).bind(
       subscriber.id,
       email,
-      '确认订阅 KB MJJ123 .cc',
+      'Confirm your subscription — KB MJJ123 .cc',
       result.success ? 'sent' : 'failed',
       result.resendId || null,
       result.error || null,

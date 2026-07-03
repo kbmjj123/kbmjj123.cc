@@ -1,12 +1,12 @@
 <template>
   <div class="pixel-widget">
-    <h2 class="pixel-widget-title">订阅更新</h2>
-    <p class="widget-desc">获取最新文章与独立开发动态</p>
+    <h2 class="pixel-widget-title">Subscribe</h2>
+    <p class="widget-desc">Get latest posts & dev updates</p>
 
     <!-- Success state -->
     <div v-if="status === 'success'" class="subscribe-success">
       <span class="success-icon">✓</span>
-      <span>验证邮件已发送，请查收并确认</span>
+      <span>Verification email sent — check your inbox</span>
     </div>
 
     <!-- Error state -->
@@ -31,11 +31,11 @@
         :disabled="status === 'loading'"
       >
         <span v-if="status === 'loading'" class="btn-loading">··</span>
-        <span v-else>订阅</span>
+        <span v-else>Subscribe</span>
       </button>
     </form>
 
-    <p class="widget-footnote">不频繁 · 随时退订</p>
+    <p class="widget-footnote">Low frequency · Unsubscribe anytime</p>
   </div>
 </template>
 
@@ -48,7 +48,7 @@ const errorMsg = ref('')
 
 async function handleSubmit() {
   if (!email.value || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
-    errorMsg.value = '请输入有效的邮箱地址'
+    errorMsg.value = 'Enter a valid email address'
     status.value = 'error'
     return
   }
@@ -68,14 +68,14 @@ async function handleSubmit() {
     if (res.success) {
       status.value = 'success'
     } else {
-      errorMsg.value = (res as any).message || '订阅失败'
+      errorMsg.value = (res as any).message || 'Subscription failed'
       status.value = 'error'
     }
   } catch (e: any) {
     if (e.statusCode === 409) {
-      errorMsg.value = '该邮箱已订阅'
+      errorMsg.value = 'Already subscribed'
     } else {
-      errorMsg.value = e.statusMessage || '网络错误，请稍后重试'
+      errorMsg.value = e.statusMessage || 'Network error, try again later'
     }
     status.value = 'error'
   }

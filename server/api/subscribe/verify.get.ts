@@ -6,14 +6,14 @@ export default defineEventHandler(async (event) => {
     const token = query.token as string
 
     if (!token) {
-      throw createError({ statusCode: 400, statusMessage: '缺少验证参数' })
+      throw createError({ statusCode: 400, statusMessage: 'Missing verification token' })
     }
 
     // Get D1 binding
     const { cloudflare } = event.context as { cloudflare?: { env?: Record<string, any> } }
     const db = cloudflare?.env?.DB
     if (!db) {
-      throw createError({ statusCode: 500, statusMessage: '数据库不可用' })
+      throw createError({ statusCode: 500, statusMessage: 'Database unavailable' })
     }
 
     // Find subscriber by token
@@ -22,15 +22,15 @@ export default defineEventHandler(async (event) => {
     ).bind(token).first() as { id: number; email: string; status: string } | null
 
     if (!subscriber) {
-      return sendResponse(event, 400, '无效或已过期的验证链接')
+      return sendResponse(event, 400, 'Invalid or expired verification link')
     }
 
     if (subscriber.status === 'active') {
-      return sendResponse(event, 200, '订阅已确认，无需重复验证')
+      return sendResponse(event, 200, 'Already verified')
     }
 
     if (subscriber.status === 'unsubscribed') {
-      return sendResponse(event, 400, '该邮箱已退订')
+      return sendResponse(event, 400, 'This email has unsubscribed')
     }
 
     // Update to active
@@ -38,11 +38,11 @@ export default defineEventHandler(async (event) => {
       'UPDATE subscribers SET status = ?, verified_at = datetime(\'now\') WHERE id = ?'
     ).bind('active', subscriber.id).run()
 
-    return sendResponse(event, 200, '订阅成功！感谢你的关注 🎉')
+    return sendResponse(event, 200, 'Subscribed! Thanks for joining 🎉')
   } catch (e: any) {
     if (e.statusCode) throw e
     console.error('Verify error:', e)
-    throw createError({ statusCode: 500, statusMessage: '验证失败，请稍后重试' })
+    throw createError({ statusCode: 500, statusMessage: 'Verification failed, try again later' })
   }
 })
 
