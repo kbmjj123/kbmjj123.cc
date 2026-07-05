@@ -1,7 +1,7 @@
 ---
 title: "Building a Pixel Email Subscription System for kbmjj123.cc with Resend and D1"
 description: "A zero-cost, self-contained email subscription system built with Nuxt Nitro server routes, Cloudflare D1, and Resend API — with a pixel aesthetic to match the blog."
-date: 2026-07-03
+date: 2026-07-04
 category: "dev-practice"
 readTime: "9mins"
 tags:
