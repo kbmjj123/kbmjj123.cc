@@ -108,7 +108,7 @@ CREATE TABLE email_logs (
 
 The `email_logs` table is optional but useful for debugging delivery issues. When the first email landed in spam, I could check the log and confirm Resend accepted it — the problem was on the receiving end, not the sending end.
 
-![D1 migration execution output showing both tables created successfully](https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/d1-migration-output.png)
+![D1 migration execution output showing both tables created successfully](/images/dev-practice/building-pixel-email-subscription/d1-migration-output.webp)
 
 ### API Routes
 
@@ -139,7 +139,7 @@ I used a monospace font stack (`'Courier New', monospace`) and inline CSS to ens
 - A confirmation button (styled as a link with button-like appearance)
 - Recent posts — showing new subscribers what they'll actually get
 
-![Verification email as it appears in Gmail: pixel-themed layout with green dashed border and confirmation button](https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/email-verification-screenshot.png)
+![Verification email as it appears in Gmail: pixel-themed layout with green dashed border and confirmation button](/images/dev-practice/building-pixel-email-subscription/email-verification-screenshot.webp)
 
 ### Sidebar Widget
 
@@ -151,7 +151,7 @@ A Vue component with three states: idle, submitting, success/error. The design m
 
 The widget sits in the sidebar on article pages and on the homepage — anywhere a reader might want to stay updated.
 
-![Sidebar subscription widget showing three states: idle form, success confirmation, and error message](https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/sidebar-widget-states.png)
+![Sidebar subscription widget showing three states: idle form, success confirmation, and error message](/images/dev-practice/building-pixel-email-subscription/sidebar-widget-states.webp)
 
 ## Deployment & Config
 
@@ -169,7 +169,7 @@ Go to Cloudflare Dashboard → Pages → your project → Settings → Environme
 RESEND_API_KEY = re_xxxxxxxxxxxx
 ```
 
-![Cloudflare Dashboard environment variables configuration showing RESEND_API_KEY variable and the binding section for D1 database](https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/dashboard-env-vars.png)
+![Cloudflare Dashboard environment variables configuration showing RESEND_API_KEY variable and the binding section for D1 database](/images/dev-practice/building-pixel-email-subscription/dashboard-env-vars.webp)
 
 **Step 3: Create D1 database**
 
@@ -199,13 +199,13 @@ Cloudflare auto-builds and deploys the Nuxt project. The `RESEND_API_KEY` enviro
 
 The whole system worked locally on the first try — `pnpm dev`, filled in the form, got the email. Except the email didn't arrive in my inbox. It went to Gmail's spam folder.
 
-![First verification email showing in Gmail spam folder, marked as spam](https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/email-in-spam.png)
+![First verification email showing in Gmail spam folder, marked as spam](/images/dev-practice/building-pixel-email-subscription/email-in-spam.webp)
 
 I checked the Resend dashboard. The API call succeeded, the email was sent. The problem wasn't Resend. It was my domain's email authentication.
 
 Gmail shows a "Needs attention" warning for emails that lack proper authentication. The specific warning: `No DMARC record found`.
 
-![Gmail "Needs attention" warning showing the DMARC record missing alert](https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/gmail-dmarc-warning.png)
+![Gmail "Needs attention" warning showing the DMARC record missing alert](/images/dev-practice/building-pixel-email-subscription/gmail-dmarc-warning.webp)
 
 I knew about SPF and DKIM — Resend's domain setup required those. But DMARC was a blind spot. I never configured it because I didn't know I needed to.
 
