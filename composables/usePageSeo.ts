@@ -21,6 +21,7 @@ interface PageSeoOptions {
   template?: 'default' | 'category' | 'detail' | 'blog' | 'prefix'
   category?: string
   subtitle?: string
+  image?: string
 }
 
 function buildTitle(opts: PageSeoOptions): string {
@@ -55,6 +56,7 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
       description: buildDescription(o),
       ogTitle: o.title || TAGLINE,
       ogDescription: o.description || TAGLINE,
+      ogImage: o.image,
     }
   })
 
@@ -67,14 +69,16 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
     description: computed(() => resolved.value.description),
     ogTitle: computed(() => resolved.value.ogTitle),
     ogDescription: computed(() => resolved.value.ogDescription),
+		ogImage: computed(() => resolved.value.ogImage),
 		twitterTitle: computed(() => resolved.value.ogTitle),
     twitterSite: '@kbmjj123',
     twitterCard: 'summary_large_image',
 		twitterDescription: computed(() => resolved.value.ogDescription)
   })
-
-  defineOgImage('OgImageApp.takumi',{
-    title: resolved.value.ogTitle,
-    description: resolved.value.ogDescription,
-  })
+	if(!resolved.value.ogImage){
+		defineOgImage('OgImageApp.takumi',{
+      title: resolved.value.ogTitle,
+      description: resolved.value.ogDescription,
+    })
+	}
 }

@@ -65,6 +65,7 @@ const postMeta = computed(() => {
     readTime: meta.readTime || (typeof raw.readTime === 'object' ? raw.readTime.text : raw.readTime) || '',
     excerpt: raw.description || '',
     body: raw.body || null,
+		image: meta.image || '',
   }
 })
 
@@ -78,6 +79,7 @@ const title = computed(() => postMeta.value?.title || '')
 const date = computed(() => postMeta.value?.date || '')
 const isoDate = computed(() => postMeta.value?.isoDate || '')
 const category = computed(() => postMeta.value?.category || '')
+const image = computed(() => postMeta.value?.image || '')
 const categorySlug = computed(() => category.value.toLowerCase().replace(/\s+/g, '-'))
 const tags = computed(() => postMeta.value?.tags || [])
 const readTime = computed(() => postMeta.value?.readTime || '')
@@ -120,6 +122,7 @@ usePageSeo(() => ({
   title: title.value,
   description: excerpt.value,
   template: 'blog',
+	image: image.value
 }))
 
 // Build TOC from rendered DOM
