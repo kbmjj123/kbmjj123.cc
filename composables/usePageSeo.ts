@@ -56,7 +56,7 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
       description: buildDescription(o),
       ogTitle: o.title || TAGLINE,
       ogDescription: o.description || TAGLINE,
-      ogImage: o.image,
+      ogImage: o.image?.startsWith('http') ? o.image : o.image ? `https://kbmjj123.cc${o.image}` : undefined,
     }
   })
 
