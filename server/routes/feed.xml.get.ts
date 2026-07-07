@@ -12,6 +12,18 @@ const md = new MarkdownIt({
   linkify: true,
 })
 
+// 重写 image 规则
+md.renderer.rules.image = function (tokens, idx, options, env, self) {
+  const token = tokens[idx]!;
+  let src = token.attrGet('src');
+  if (src && !src.startsWith('http')) {
+    // 给相对路径加上前缀
+    token.attrSet('src', 'https://kbmjj123.cc' + src);
+  }
+  // 用默认渲染器继续处理其他属性
+  return self.renderToken(tokens, idx, options);
+};
+
 interface PostEntry {
   slug: string
   title: string
