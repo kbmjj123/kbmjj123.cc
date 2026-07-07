@@ -9,7 +9,7 @@ tags:
   - "#bootstrapping"
   - "#mvp"
   - "#deployment"
-image: "https://assets.kbmjj123.cc/images/going-serverless/part-1-why-cloudflare/going-serverless-part-1-stack-diagram.svg"
+image: "/images/tools-workflow/part-1-why-cloudflare/going-serverless-part-1-cover.webp"
 draft: false
 series: "going-serverless"
 seriesOrder: 1

@@ -2,14 +2,14 @@
 title: "Deploying Umami on Vercel + Supabase: The Connection String Traps"
 description: "The official docs say set DATABASE_URL and deploy. What they don't tell you: two different connection strings, a silent port mismatch, and a prisma.config.ts that overrides everything."
 date: 2026-07-01
-category: "dev-practice"
+category: "startup-diary"
 readTime: "9mins"
 tags:
   - "#deployment"
   - "#database"
   - "#vercel"
   - "#opensource"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-2/part-2-prisma-config.png"
+image: "/images/startup-diary/self-hosting-umami/part-2-prisma-config-cover.webp"
 draft: false
 series: "self-hosting-umami-on-vercel-supabase"
 seriesOrder: 2

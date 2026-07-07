@@ -10,7 +10,7 @@ tags:
   - "#vercel"
   - "#bootstrapping"
   - "#growth"
-image: "https://assets.kbmjj123.cc/blog/startup-diary/self-hosting-umami-part-1/part-1-usage-exceeded.png"
+image: "/images/startup-diary/self-hosting-umami/part-1-usage-exceeded-cover.webp"
 draft: false
 series: "self-hosting-umami-on-vercel-supabase"
 seriesOrder: 1

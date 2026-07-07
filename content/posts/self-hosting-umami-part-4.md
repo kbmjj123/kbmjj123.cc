@@ -9,7 +9,7 @@ tags:
   - "#vercel"
   - "#cloudflare"
   - "#saas"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-4/part-4-china-data-restored.png"
+image: ""
 draft: false
 series: "self-hosting-umami-on-vercel-supabase"
 seriesOrder: 4

@@ -9,7 +9,7 @@ tags:
   - "#adsense"
   - "#frontend"
   - "#debugging"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-desktop-fixed.png"
+image: "/images/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-cover.webp"
 draft: false
 series: null
 seriesOrder: null

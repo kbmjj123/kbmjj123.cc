@@ -2,13 +2,13 @@
 title: "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)"
 description: "How a GitHub OAuth callback silently failed during local development behind China's network environment, and why I chose a dev-only mock endpoint over a tunneling tool to fix it."
 date: 2026-06-23
-category: "dev-practice"
+category: "tools-workflow"
 readTime: "5mins"
 tags:
   - "#api"
   - "#typescript"
   - "#deployment"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/going-serverless-part-2/going-serverless-part-2-oauth-flow-diagram.svg"
+image: "/images/tools-workflow/part-2-going-serverless/going-serverless-part-2-cover.webp"
 draft: false
 series: "going-serverless"
 seriesOrder: 2

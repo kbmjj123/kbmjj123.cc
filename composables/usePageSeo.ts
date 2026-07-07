@@ -67,8 +67,10 @@ export function usePageSeo(opts: MaybeRefOrGetter<PageSeoOptions>) {
     description: computed(() => resolved.value.description),
     ogTitle: computed(() => resolved.value.ogTitle),
     ogDescription: computed(() => resolved.value.ogDescription),
+		twitterTitle: computed(() => resolved.value.ogTitle),
     twitterSite: '@kbmjj123',
     twitterCard: 'summary_large_image',
+		twitterDescription: computed(() => resolved.value.ogDescription)
   })
 
   defineOgImage('OgImageApp.takumi',{

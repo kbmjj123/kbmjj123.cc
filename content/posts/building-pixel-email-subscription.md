@@ -13,7 +13,7 @@ tags:
 draft: false
 series: null
 seriesOrder: null
-image: "https://assets.kbmjj123.cc/blog/dev-practice/building-pixel-email-subscription/email-verification-screenshot.png"
+image: "/images/dev-practice/building-pixel-email-subscription/email-verification-screenshot-cover.webp"
 seo:
   title: "Build a Zero-Cost Email Subscription System with Nuxt + Cloudflare D1 + Resend"
   description: "Step-by-step guide to building a lightweight email subscription system with Resend API, Cloudflare D1, and Nuxt Nitro server routes — including DMARC troubleshooting."

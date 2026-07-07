@@ -2,13 +2,13 @@
 title: "Two Days, One Broken Monitor, and a Forced macOS Upgrade Just to Run Wrangler"
 description: "Wrangler required macOS 14+ and my 2015 Mac had been abandoned by Apple. Here's the pre-flight checklist I wish I'd run first, and the real options for developers stuck on old hardware."
 date: 2026-06-23
-category: "startup-diary"
+category: "tools-workflow"
 readTime: "4mins"
 tags:
   - "#cloudflare"
   - "#bootstrapping"
   - "#productivity"
-image: "https://assets.kbmjj123.cc/blog/startup-diary/going-serverless-part-3/cover.png"
+image: "/images/tools-workflow/part-3-going-serverless/going-serverless-part-3-cover.webp"
 draft: false
 series: "going-serverless"
 seriesOrder: 3

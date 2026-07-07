@@ -8,7 +8,7 @@ tags:
   - "#seo"
   - "#growth"
   - "#cloudflare"
-image: "[待补充：文章内最能代表核心内容的那张截图，建议使用 GSC 图片搜索数据截图]"
+image: "/images/tools-workflow/68k-impressions-8-clicks-image-sitemap-blind-spot/image-sitemap-blind-spot-cover.webp"
 draft: false
 series: null
 seriesOrder: null

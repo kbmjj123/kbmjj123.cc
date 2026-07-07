@@ -10,7 +10,7 @@ tags:
   - "#sideproject"
   - "#nuxt"
   - "#cloudflare"
-image: "https://assets.kbmjj123.cc/blog/indie-mindset/from-zero-to-2-dollar-6-months-tool-site/cover.webp"
+image: "/images/indie-mindset/from-zero-to-2-dollar-6-months-tool-site/from-zero-to-2-dollar-6-months-tool-site-cover.webp"
 draft: false
 series: null
 seriesOrder: null

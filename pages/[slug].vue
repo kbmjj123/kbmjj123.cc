@@ -128,7 +128,7 @@ function buildToc() {
   const headings = postBodyRef.value.querySelectorAll('h2[id], h3[id]')
   if (headings.length > 0) {
     setToc(Array.from(headings).map(h => ({
-      id: h.id, text: h.textContent || '', level: parseInt(h.tagName[1]),
+      id: h.id, text: h.textContent || '', level: parseInt(h.tagName[1]!),
     })))
     return true
   }

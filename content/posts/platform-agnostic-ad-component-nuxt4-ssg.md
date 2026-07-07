@@ -9,7 +9,7 @@ tags:
   - "#vue"
   - "#typescript"
   - "#deployment"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/platform-agnostic-ad-component-nuxt4-ssg/ad-platform-both-filled.png"
+image: "/images/dev-practice/platform-agnostic-ad-component-nuxt4-ssg/ad-platform-both-filled.webp"
 draft: false
 series: null
 seriesOrder: null

@@ -2,7 +2,7 @@
 title: "The Last Two Blockers: GeoIP Download and Manual Migration on Vercel"
 description: "Vercel build silently hangs downloading a 66MB GeoIP database. Here's how to pre-bundle GeoLite2, bypass the migration step, run SQL manually in Supabase, and push a large binary with Git LFS."
 date: 2026-07-01
-category: "dev-practice"
+category: "startup-diary"
 readTime: "8mins"
 tags:
   - "#deployment"
@@ -10,7 +10,7 @@ tags:
   - "#github"
   - "#vercel"
   - "#cloudflare"
-image: "https://assets.kbmjj123.cc/blog/dev-practice/self-hosting-umami-part-3/part-3-vercel-deploy-success.png"
+image: "/images/startup-diary/self-hosting-umami/part-3-vercel-deploy-success-cover.webp"
 draft: false
 series: "self-hosting-umami-on-vercel-supabase"
 seriesOrder: 3
