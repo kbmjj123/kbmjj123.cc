@@ -84,14 +84,15 @@ function loadPosts(): PostEntry[] {
       const excerpt = getFm('description')
       const category = getFm('category')
       const tags = getFmArray('tags')
-      const image = getFm('image')
+      const image = getFm('image')	// 获取到封面
+			const cover = image ? `https://kbmjj123.cc${image}` : ''
 
       if (!title || !date) return null
 
       // Render markdown to HTML
       const contentHtml = md.render(body)
 
-      return { slug, title, date, updatedAt, excerpt, contentHtml, image, category, tags }
+      return { slug, title, date, updatedAt, excerpt, contentHtml, image: cover, category, tags }
     })
     .filter(Boolean) as PostEntry[]
 }
