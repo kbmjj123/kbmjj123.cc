@@ -1,6 +1,6 @@
 ---
-title: "From $2.15 RPM to a Pivot: What I Learned About Tool Site Ads"
-description: "A batch image tool site's US RPM landed at $2.15. Here's what I found when I dug into the data—and why I'm adding paid features alongside ad optimization."
+title: "From $2.45 RPM to a Pivot: What I Learned About Tool Site Ads"
+description: "A batch image tool site's US RPM landed at $2.45. Here's what I found when I dug into the data—and why I'm adding paid features alongside ad optimization."
 date: 2026-07-08
 category: "product-business"
 tags:
@@ -13,7 +13,7 @@ draft: false
 series: null
 seriesOrder: null
 seo:
-  title: "Tool Site AdSense RPM Analysis: $2.15 and What It Taught Me"
+  title: "Tool Site AdSense RPM Analysis: $2.45 and What It Taught Me"
   description: "I analyzed a batch image tool chain's AdSense RPM data across countries. Here's what I learned about ad optimization, keyword strategy, and when to build paid features."
   keywords:
     - "AdSense RPM for tools"
@@ -24,7 +24,7 @@ seo:
 
 ## TL;DR
 
-I run [BulkPicTools](https://bulkpictools.com), a free batch image processing tool chain. Its US AdSense RPM landed at $2.15.
+I run [BulkPicTools](https://bulkpictools.com), a free batch image processing tool chain. Its US AdSense RPM landed at $2.45.
 
 Not terrible. But lower than I expected.
 
@@ -52,7 +52,7 @@ Here's what the dashboard looked like (country-level RPM):
 
 | Country | RPM |
 |---------|-----|
-| United States | $2.15 |
+| United States | $2.45 |
 | United Kingdom | $2.04 |
 | Canada | $1.75 |
 | Germany | $1.92 |
@@ -63,7 +63,7 @@ Here's what the dashboard looked like (country-level RPM):
 
 *Replace the table and screenshot with your actual data.*
 
-$2.15 isn't bad. A lot of publishers would take that. But for a tool site with US traffic, I'd hoped for $4–$6 based on what I'd read from other indie devs.
+$2.45 isn't bad. A lot of publishers would take that. But for a tool site with US traffic, I'd hoped for $4–$6 based on what I'd read from other indie devs.
 
 I needed to understand why.
 
@@ -147,7 +147,7 @@ A few things I'd tell myself if I were starting over:
 
 ### 1. Tool sites can work with AdSense—but the ROI ceiling is real
 
-$2.15 US RPM isn't failure. But to get to $5–$6, I'd need to:
+$2.45 US RPM isn't failure. But to get to $5–$6, I'd need to:
 
 - Write a lot of use-case content (time)
 - Build backlinks to those pages (more time)
@@ -184,7 +184,7 @@ Here are a few categories that consistently match higher-bid advertisers:
 
 These categories have stronger commercial intent built in. Users are looking for something that helps them make money or save money—so the ads that show up are more expensive.
 
-But "not the best" doesn't mean "bad." $2.15 RPM is real revenue. It covers hosting and buys time to build the next thing.
+But "not the best" doesn't mean "bad." $2.45 RPM is real revenue. It covers hosting and buys time to build the next thing.
 
 The key is knowing which lever to pull when. For BulkPicTools, I'm pulling both: optimize ads in parallel with building a paid tier. One funds the other, and neither is a distraction—they're two sides of the same product.
 
@@ -192,7 +192,7 @@ The key is knowing which lever to pull when. For BulkPicTools, I'm pulling both:
 
 ## Lessons Learned
 
-1. **Country-level RPM tells you more than the global average.** US $2.15 vs. rest-of-world $0.50–$1.00 means your traffic mix matters as much as your content.
+1. **Country-level RPM tells you more than the global average.** US $2.45 vs. rest-of-world $0.50–$1.00 means your traffic mix matters as much as your content.
 
 2. **Keywords are the throttle on ad revenue.** If your pages say "free" and "tool," you'll match low-bid advertisers. Use-case pages with commercial platforms do better.
 
@@ -200,6 +200,6 @@ The key is knowing which lever to pull when. For BulkPicTools, I'm pulling both:
 
 4. **Paid features and ad optimization are not mutually exclusive.** Do both. One funds the other.
 
-5. **$2.15 isn't a signal to stop.** It's a signal to think about the full picture—traffic, keywords, user behavior, and what you're building next.
+5. **$2.45 isn't a signal to stop.** It's a signal to think about the full picture—traffic, keywords, user behavior, and what you're building next.
 
 6. **Not every category has the same ad ROI.** That doesn't mean you shouldn't build in it. It means you should know what you're optimizing for—and build your revenue model accordingly.
