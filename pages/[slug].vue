@@ -4,7 +4,7 @@
     <nav class="breadcrumb" aria-label="Breadcrumb">
       <NuxtLink to="/" class="breadcrumb-link">Home</NuxtLink>
       <span class="breadcrumb-sep">▸</span>
-      <NuxtLink v-if="category" :to="`/category/${categorySlug}`" class="breadcrumb-link breadcrumb-category">{{ category }}</NuxtLink>
+      <NuxtLink v-if="category" :to="{ path: '/', query: { category: categorySlug } }" class="breadcrumb-link breadcrumb-category">{{ category }}</NuxtLink>
       <span class="breadcrumb-sep" v-if="category">/</span>
       <span class="breadcrumb-current">{{ title }}</span>
     </nav>
@@ -92,7 +92,7 @@ useSchemaOrg([
   defineBreadcrumb({
     itemListElement: [
       { name: 'Home', item: '/' },
-      ...(category.value ? [{ name: category.value, item: `/category/${categorySlug.value}` }] : []),
+      ...(category.value ? [{ name: category.value, item: `/?category=${categorySlug.value}` }] : []),
       { name: title.value },
     ],
   }),
