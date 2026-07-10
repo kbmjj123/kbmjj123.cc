@@ -1,14 +1,14 @@
 ---
 title: "How I Built a Cheap AI Coding Workflow with Claude and DeepSeek"
 description: "A real-world breakdown of how I split AI coding into planning, execution, and fallback layers to reduce cost, avoid bottlenecks, and keep shipping as an indie developer."
-date: 2026-07-09
+date: 2026-07-10
 category: "tools-workflow"
 tags:
   - "#ai"
   - "#coding"
   - "#productivity"
   - "#vscode"
-image: "https://assets.kbmjj123.cc/blog/tools-workflow/claude-deepseek-workflow/claude-deepseek-workflow-cover.png"
+image: "/images/tools-workflow/claude-deepseek-workflow/claude-deepseek-workflow-cover.png"
 draft: false
 series: null
 seriesOrder: null
@@ -88,11 +88,13 @@ That setup is not glamorous, but it works. It also gives me room to keep shippin
 
 I’m also still looking for better fallback options. The point is not to worship one model or one vendor. The point is to keep building with the least amount of friction I can reasonably get away with.
 
-[image:1]
+![An indie developer AI coding workflow diagram showing Claude for planning, DeepSeek for execution, and the developer for final review.](/images/tools-workflow/claude-deepseek-workflow/claude-deepseek-workflow-planning-execution-review.webp "Claude handles planning, DeepSeek handles execution, and I stay responsible for the final review and decision-making.")
 
 ## What I learned from the SEO case
 
 The category-page SEO work taught me one more thing: AI becomes much more useful when the task is grounded in real data. Once I fed in GSC queries and asked sharper questions, the model stopped giving me generic advice and started surfacing the actual gap between my page and user intent.
+
+![A dark-themed SEO audit summary for an AI Image category page, highlighting broad keywords, only three tools, missing hero content, and weak article support.](/images/tools-workflow/claude-deepseek-workflow/ai-image-category-seo-audit-summary.webp)
 
 That is the real pattern I use now. First I define the problem, then I constrain the task, then I let the model do the narrow work. That order matters more than model choice in a lot of cases.
 
@@ -104,7 +106,7 @@ For that AI Image category page, the result was a clearer direction:
 
 That outcome is a good example of why I split AI work into layers. The model helped, but it only became truly useful after I turned the problem into something specific enough to solve.
 
-[image:2]
+![A redesigned AI Image category page structure showing a hero section, filters, tool count, subcategory links, featured tools, a choice guide, and supporting articles.](/images/tools-workflow/claude-deepseek-workflow/ai-image-category-page-redesign-plan_edited.webp)
 
 ## Lessons Learned
 
@@ -113,5 +115,3 @@ That outcome is a good example of why I split AI work into layers. The model hel
 - Small, well-scoped tasks produce better AI output than vague “big” requests.
 - Real search data makes AI-assisted SEO much more actionable.
 - Cost, access, and reliability are part of the workflow design, not side issues.
-
-[image:3]
