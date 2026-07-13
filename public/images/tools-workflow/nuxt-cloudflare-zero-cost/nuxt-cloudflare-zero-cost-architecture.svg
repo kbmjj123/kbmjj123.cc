@@ -1,0 +1,96 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 500" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif">
+  <defs>
+    <linearGradient id="gradPages" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#F6821F;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#F6821F;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="gradR2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0051C3;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#0051C3;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="gradEdge" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#27AE60;stop-opacity:0.15"/>
+      <stop offset="100%" style="stop-color:#27AE60;stop-opacity:0.05"/>
+    </linearGradient>
+    <linearGradient id="gradUser" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6C5CE7;stop-opacity:0.12"/>
+      <stop offset="100%" style="stop-color:#6C5CE7;stop-opacity:0.05"/>
+    </linearGradient>
+    <filter id="shadow" x="-5%" y="-5%" width="110%" height="110%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-opacity="0.08"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="500" fill="#FAFBFC" rx="12"/>
+
+  <!-- ===== LEFT: GitHub → Nuxt SSG Build ===== -->
+  <rect x="40" y="50" width="200" height="100" rx="10" fill="white" stroke="#24292E" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="140" y="80" text-anchor="middle" font-size="13" font-weight="600" fill="#24292E">GitHub</text>
+  <text x="140" y="100" text-anchor="middle" font-size="11" fill="#586069">Source (main branch)</text>
+  <text x="140" y="120" text-anchor="middle" font-size="11" fill="#586069">700+ pages · Markdown</text>
+  <!-- GitHub icon -->
+  <circle cx="80" cy="78" r="10" fill="#24292E" opacity="0.1"/>
+  <text x="80" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="#24292E" opacity="0.6">GH</text>
+
+  <!-- Arrow GitHub → Build -->
+  <line x1="240" y1="100" x2="290" y2="100" stroke="#586069" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+  <defs><marker id="arrowGray" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#586069"/></marker></defs>
+
+  <!-- Nuxt SSG Build -->
+  <rect x="300" y="50" width="220" height="100" rx="10" fill="url(#gradPages)" stroke="#00DC82" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="410" y="78" text-anchor="middle" font-size="13" font-weight="600" fill="#15803D">Nuxt SSG Build</text>
+  <text x="410" y="98" text-anchor="middle" font-size="11" fill="#374151">nuxi generate</text>
+  <text x="410" y="116" text-anchor="middle" font-size="11" fill="#374151">OG image pre-rendered</text>
+  <text x="410" y="134" text-anchor="middle" font-size="10" fill="#6B7280">~10 min · 700+ pages</text>
+  <!-- Nuxt icon -->
+  <circle cx="340" cy="78" r="10" fill="#00DC82" opacity="0.2"/>
+  <text x="340" y="83" text-anchor="middle" font-size="12" font-weight="700" fill="#00DC82">N</text>
+
+  <!-- Arrow Build → Deploy -->
+  <line x1="520" y1="100" x2="570" y2="100" stroke="#586069" stroke-width="1.5" marker-end="url(#arrowGray)"/>
+
+  <!-- Cloudflare Pages Deploy -->
+  <rect x="580" y="50" width="180" height="100" rx="10" fill="url(#gradEdge)" stroke="#F6821F" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="670" y="78" text-anchor="middle" font-size="13" font-weight="600" fill="#B45309">Cloudflare Pages</text>
+  <text x="670" y="98" text-anchor="middle" font-size="11" fill="#374151">Git-based auto deploy</text>
+  <text x="670" y="116" text-anchor="middle" font-size="11" fill="#374151">Custom domain mapping</text>
+  <text x="670" y="134" text-anchor="middle" font-size="10" fill="#6B7280">Push → build → live</text>
+
+  <!-- Arrow Down: Pages → Edge -->
+  <line x1="670" y1="150" x2="670" y2="200" stroke="#F6821F" stroke-width="1.5" marker-end="url(#arrowOrange)"/>
+  <defs><marker id="arrowOrange" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#F6821F"/></marker></defs>
+
+  <!-- ===== BOTTOM LEFT: R2 ===== -->
+  <rect x="40" y="330" width="200" height="120" rx="10" fill="url(#gradR2)" stroke="#0051C3" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="140" y="360" text-anchor="middle" font-size="13" font-weight="600" fill="#1E3A5F">Cloudflare R2</text>
+  <text x="140" y="382" text-anchor="middle" font-size="11" fill="#374151">ONNX models (1–20 MB)</text>
+  <text x="140" y="400" text-anchor="middle" font-size="11" fill="#374151">Blog images</text>
+  <text x="140" y="420" text-anchor="middle" font-size="10" fill="#6B7280">First load: ~10s (client-side)</text>
+  <text x="140" y="438" text-anchor="middle" font-size="10" fill="#6B7280">No Workers needed</text>
+
+  <!-- Arrow: R2 → Browser (diagonal) -->
+  <line x1="240" y1="370" x2="420" y2="330" stroke="#0051C3" stroke-width="1.2" stroke-dasharray="6,3" marker-end="url(#arrowBlue)"/>
+  <defs><marker id="arrowBlue" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#0051C3"/></marker></defs>
+
+  <!-- ===== BOTTOM RIGHT: Edge Network → Users ===== -->
+  <rect x="420" y="200" width="340" height="90" rx="10" fill="url(#gradEdge)" stroke="#27AE60" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="590" y="230" text-anchor="middle" font-size="13" font-weight="600" fill="#166534">Cloudflare Edge Network</text>
+  <text x="590" y="250" text-anchor="middle" font-size="11" fill="#374151">Static assets distributed globally</text>
+  <text x="590" y="268" text-anchor="middle" font-size="10" fill="#6B7280">No Workers · No KV · No D1</text>
+
+  <!-- Arrow: Edge → Users -->
+  <line x1="590" y1="290" x2="590" y2="340" stroke="#27AE60" stroke-width="1.5" marker-end="url(#arrowGreen)"/>
+  <defs><marker id="arrowGreen" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto"><path d="M0,0 L8,3 L0,6 Z" fill="#27AE60"/></marker></defs>
+
+  <!-- Users -->
+  <rect x="440" y="350" width="300" height="100" rx="10" fill="url(#gradUser)" stroke="#6C5CE7" stroke-width="1.5" filter="url(#shadow)"/>
+  <text x="590" y="380" text-anchor="middle" font-size="13" font-weight="600" fill="#4C1D95">End Users</text>
+  <text x="590" y="402" text-anchor="middle" font-size="12" fill="#374151">5k+ daily UV</text>
+  <text x="590" y="420" text-anchor="middle" font-size="11" fill="#374151">80% traffic: GIF + AI processing</text>
+  <text x="590" y="438" text-anchor="middle" font-size="10" fill="#6B7280">Pure browser client · ONNX inference</text>
+
+  <!-- ===== Legend ===== -->
+  <rect x="40" y="470" width="720" height="0" rx="0" fill="none"/>
+  <text x="400" y="490" text-anchor="middle" font-size="10" fill="#9CA3AF">Architecture: Nuxt SSG → Cloudflare Pages + R2 — zero runtime compute, zero monthly bill</text>
+</svg>

@@ -1,117 +1,181 @@
 ---
-title: "How I Built a Cheap AI Coding Workflow with Claude and DeepSeek"
-description: "A real-world breakdown of how I split AI coding into planning, execution, and fallback layers to reduce cost, avoid bottlenecks, and keep shipping as an indie developer."
-date: 2026-07-10
+title: "How I Built a Multi-Model AI Coding Workflow for $0"
+description: "Claude for planning, DeepSeek for execution, me for judgment. A split-model workflow using only free tiers—no API bills, no subscriptions."
+date: 2026-07-09
 category: "tools-workflow"
 tags:
   - "#ai"
-  - "#coding"
   - "#productivity"
   - "#vscode"
-image: "/images/tools-workflow/claude-deepseek-workflow/claude-deepseek-workflow-cover.png"
+series: "ai-powered-indie-dev"
+seriesOrder: 1
+image: "https://assets.kbmjj123.cc/blog/tools-workflow/ai-powered-indie-dev/multi-model-workflow-cover.png"
 draft: false
-series: null
-seriesOrder: null
 seo:
-  title: "How I Built a Cheap AI Coding Workflow with Claude and DeepSeek"
-  description: "A practical indie developer workflow for using Claude to plan and DeepSeek to execute, with a real case study on category page SEO optimization."
+  title: "Zero-Cost Multi-Model AI Coding Workflow for Indie Developers"
+  description: "How I split AI coding into planning, execution, and judgment layers using only free tiers. Claude, DeepSeek, Gemini—all free. Zero API cost."
   keywords:
-    - "claude deepseek workflow"
-    - "ai coding workflow"
-    - "indie developer ai tools"
-    - "cheap ai coding"
-    - "deepseek flash pricing"
+    - "multi model ai coding workflow free"
+    - "claude deepseek free tier workflow"
+    - "zero cost ai coding indie dev"
+    - "split model ai workflow free"
+    - "indie developer free ai tools 2026"
 ---
 
 ## TL;DR
 
-I split AI coding into three layers: Claude for planning, DeepSeek for execution, and myself for final judgment. That setup helped me keep costs under control, reduce dependency on a single model, and ship faster as an indie developer.
+One model can't do everything—at least not reliably when you're on a zero budget. I split AI coding into three layers using only free tiers: Claude for planning, DeepSeek for execution, and myself for judgment. Total cost: $0. The setup keeps working even when one model goes down.
 
 ## Background
 
-I’ve been building indie sites for about six months, and the reality has been simple: I have limited time, limited budget, and a lot of work to do outside coding. Most days I’m balancing a full-time job, family time, and the few hours I can still use to move my products forward.
+Six months into building indie products. Nights and weekends. Full-time job during the day.
 
-Because of that, I stopped thinking about AI as a magic “do everything” button. I needed a workflow that could help me plan faster, code faster, and recover faster when one tool stopped working. That pressure is what pushed me toward a split-model setup instead of depending on a single AI assistant.
+I rely on AI to move faster. But when every tool has to be free, no single model is reliable enough on its own. Free tiers disappear, accounts get flagged, quotas change without warning. The workflow needs to survive those failures.
 
-## Why I needed a hybrid workflow
+## The Problem
 
-At first, I wanted one model to handle everything. In practice, that didn’t hold up. Claude was strong for reasoning and planning, but I kept running into access issues and account risk. DeepSeek was cheaper and more flexible, but it was not something I wanted to use blindly for every task.
+Using one model for everything creates a single point of failure.
 
-The real problem was not model quality alone. It was the combination of cost, rate limits, account bans, and the fact that I needed something I could repeat every day without thinking too hard. If I could only finish a coding session when one model cooperated perfectly, the workflow was too fragile for real indie work.
+When I started, I used Claude for everything—planning, coding, debugging, research. The free Chat interface was solid. But free access isn't guaranteed. Limits change. Accounts can get restricted.
 
-So I started treating AI more like a system. Not one brain, but a chain of roles.
+The real problem wasn't Claude specifically. It was the *structure*. When one model handles every type of task, losing access means losing your entire workflow. Not just coding—also planning, research, debugging.
 
-## What each model does
+I needed a setup where no single failure could stop me from shipping.
 
-Claude is my planning layer. I use it for market research, direction setting, architecture thinking, and turning a vague idea into something structured. If I need to understand what I should build next, or what the shape of a solution should look like, Claude is usually the first stop.
+## Investigation
 
-DeepSeek is my execution layer. I use it for scaffolding, repetitive fixes, scripts, unit tests, and smaller coding tasks that need to be done quickly and cheaply. If I can make a task specific enough, DeepSeek usually gives me a result that is good enough to move forward.
+I didn't jump straight to a multi-model workflow. I tried the obvious paths first.
 
-I stay in the loop as the fallback layer. That means I’m the one making the final call, checking whether the output fits the project, and deciding whether the task needs another round of refinement. The system works because I do not let the models make big assumptions on my behalf.
+### Claude-only was great—until access became unreliable
 
-## How I split tasks in practice
+Claude's free Chat gave me the best code quality. Things ran on the first or second try. Reasoning was strong. Product decisions made sense.
 
-The easiest way to explain the workflow is with a real example: I used it when I was improving the SEO structure of my AI Image category page.
+But free access is a privilege, not a right. Every time access broke, so did my momentum. I wasn't willing to bet months of indie work on a single free tier staying available.
 
-I started with a broad question: how can I improve the SEO of this category page? That gave me a generic answer, which was useful but not enough. The page only had three tools, and the keywords were too broad to justify the kind of traffic I wanted.
+### DeepSeek-only was free but cost me debugging time
 
-So I kept narrowing the task. I asked whether I could export keywords from GSC and Bing and use those to enrich the page. Then I asked whether the category page should include articles, since my tool landing pages were not really article-heavy. That moved the discussion from “general SEO advice” to “what this page should actually be.”
+DeepSeek's free Chat was the obvious backup. For scaffolding, repetitive fixes, and small scoped tasks, it was good enough.
 
-The turning point was the real search data. Once I brought in GSC, the difference became obvious. The page was targeting terms like “ai image tools” and “remove image background,” but users were actually searching for things like `background remover 2x2` and `ai background remover passport photo`. That told me the problem was not missing content in the abstract. The problem was that the page was aimed too broadly for what it could realistically support.
+But when I tried using it as my only model, two problems surfaced:
 
-From there, the task became much more concrete. I could split it into smaller steps:
-- update the category keywords and description,
-- focus on a narrower intent like passport photo background removal,
-- treat the category page as a mini guide,
-- keep articles as support instead of the main content layer.
+1. **Code needed 3–4 rounds of debugging before it worked.** A typical multi-file feature would look right on first glance, then break on integration—wrong import paths, mismatched function signatures, missing props. I'd paste the error back, get a fix, and repeat.
 
-That is the kind of task I try to give DeepSeek now. Small enough to finish, specific enough to avoid guessing, and bounded enough that I can review it in fewer than five turns.
+2. **Web search runs on Baidu.** For an English-language tech stack (Nuxt, Cloudflare, Wasm), this was a real blocker. GitHub issues, StackOverflow threads, English documentation—Baidu barely indexes them. The expert model can't search at all.
 
-## What worked and what didn’t
+### Gemini was free too—but the quota ran out mid-task
 
-The biggest win is cost control. DeepSeek Flash is cheap enough that I can use it for frequent, smaller tasks without thinking too hard about token burn. But I also learned that “cheap” is only cheap when the task is narrow. If I let the model improvise too much, the value drops fast.
+Gemini's free tier looked promising. Code quality was better than DeepSeek in some areas. But the quota was tight enough that I'd hit rate limits in the middle of iterating on a component. Wait an hour, try again, lose my train of thought.
 
-DeepSeek Pro is stronger, but it is not the free lunch people sometimes imagine. Once the task gets more complex, cost goes up too. That is why I started being stricter about prompt design and task scope. The more specific the job, the better the output tends to be.
+### The real insight: planning and execution are different jobs
 
-Claude is still the model I trust for the harder thinking, but it also comes with real friction. For me, that meant access risk and too many account issues to treat it as a stable daily dependency. That does not make Claude worse. It just means I cannot build a reliable workflow around a tool that keeps disappearing from the table.
+After testing all three, a pattern emerged:
 
-The other thing that did not work was asking models to “just figure it out.” That sounds convenient, but it usually creates more work later. When the task is vague, the model fills in the blanks with its own assumptions, and those assumptions are often the part I have to clean up.
+| Task type | Claude (free) | DeepSeek (free) | Gemini (free) |
+|---|---|---|---|
+| Architecture & product decisions | Strong | Weak | Okay |
+| Multi-file reasoning | Strong | Needs 3–4 rounds | Decent |
+| Scaffolding & repetitive code | Overkill | Good enough | Good enough |
+| Single-file fixes | Fine | Fine | Fine |
+| English web research | Strong | Blocked by Baidu | Okay |
 
-## My current setup
+The insight wasn't "Claude is best." It was that **planning needs a different kind of intelligence than execution**. Trying to use one model for both meant either getting sloppy output on complex tasks or wasting a good planning model on scaffolding.
 
-Right now, my workflow is intentionally boring:
-- Claude for planning and structure.
-- DeepSeek for cheap execution.
-- Me for final review and decision-making.
+## Solution
 
-That setup is not glamorous, but it works. It also gives me room to keep shipping even when one layer becomes unavailable. If Claude is blocked, I can still move with DeepSeek. If DeepSeek output feels too loose, I can tighten the task or switch the work back to manual review.
+I split the workflow into three layers. Each does one job. All free.
 
-I’m also still looking for better fallback options. The point is not to worship one model or one vendor. The point is to keep building with the least amount of friction I can reasonably get away with.
+### Layer 1: Claude for planning
 
-![An indie developer AI coding workflow diagram showing Claude for planning, DeepSeek for execution, and the developer for final review.](/images/tools-workflow/claude-deepseek-workflow/claude-deepseek-workflow-planning-execution-review.webp "Claude handles planning, DeepSeek handles execution, and I stay responsible for the final review and decision-making.")
+Claude handles the thinking: product direction, architecture, market research, and anything that requires reasoning across multiple trade-offs.
 
-## What I learned from the SEO case
+Free Chat interface. No API key, no billing. If it disappears tomorrow, I lose my best planning tool, but the execution pipeline still works.
 
-The category-page SEO work taught me one more thing: AI becomes much more useful when the task is grounded in real data. Once I fed in GSC queries and asked sharper questions, the model stopped giving me generic advice and started surfacing the actual gap between my page and user intent.
+### Layer 2: DeepSeek for execution
 
-![A dark-themed SEO audit summary for an AI Image category page, highlighting broad keywords, only three tools, missing hero content, and weak article support.](/images/tools-workflow/claude-deepseek-workflow/ai-image-category-seo-audit-summary.webp)
+DeepSeek handles the doing: scaffolding, utility functions, repetitive fixes, one-off scripts. Tasks where I already know exactly what I want and just need someone to type it out.
 
-That is the real pattern I use now. First I define the problem, then I constrain the task, then I let the model do the narrow work. That order matters more than model choice in a lot of cases.
+Free Chat. I keep tasks small and specific—that's the trade-off for zero cost.
 
-For that AI Image category page, the result was a clearer direction:
-- broad terms were too competitive for a page with only three tools,
-- the page needed to target a narrower use case first,
-- articles were useful, but only as support,
-- and the category page itself had to behave more like a mini guide.
+### Layer 3: Me for judgment
 
-That outcome is a good example of why I split AI work into layers. The model helped, but it only became truly useful after I turned the problem into something specific enough to solve.
+Every piece of AI output goes through me. I catch the subtle bugs DeepSeek misses. I adjust Claude's plans when they don't fit my constraints.
 
-![A redesigned AI Image category page structure showing a hero section, filters, tool count, subcategory links, featured tools, a choice guide, and supporting articles.](/images/tools-workflow/claude-deepseek-workflow/ai-image-category-page-redesign-plan_edited.webp)
+None of the three layers trusts the others blindly. That's what makes the system work.
+
+### How it works in practice: a real example
+
+I used this workflow to optimize the SEO on my AI Image category page.
+
+**Step 1: Planning with Claude**
+
+```text
+# Broad prompt (Claude):
+"I have an AI Image category page with 3 tools. Keywords are broad
+terms like 'ai image tools.' How should I approach SEO? Should I
+add articles, or focus on the tools?"
+```
+
+Claude returned a strategy: the page was too thin for broad keywords, articles would help but only as support, and I should validate with GSC data first.
+
+That was a plan. Not code. Not copy. Just a clear direction.
+
+**Step 2: Validate with real data**
+
+I exported GSC queries and found the actual user intent. People weren't searching for "ai image tools." They were searching for `background remover 2x2` and `ai background remover passport photo`—specific, narrow queries my existing tools could serve.
+
+**Step 3: Execute with DeepSeek**
+
+Now I had something concrete:
+
+```text
+# Narrow prompt (DeepSeek):
+"Rewrite H1, meta description, and intro paragraph for my AI Image
+category page. Target passport photo background removal. Page has
+3 tools. Under 150 words. GSC queries: 'background remover 2x2'
+(320 imp/mo), 'ai background remover passport photo' (180 imp/mo)."
+```
+
+DeepSeek returned draft copy. I tweaked two sentences and deployed.
+
+The key difference: Claude got a broad question and returned a direction. DeepSeek got a narrow task and returned output. When I used to ask one model to do both, the planning was shallow and the execution needed 3–4 rounds of fixes.
+
+## My Take
+
+### Zero cost means accepting trade-offs—but those trade-offs are manageable
+
+I'm not paying for any of these tools. That's not a brag—it's a constraint. Claude's free Chat can disappear. DeepSeek's free Chat needs debugging. Gemini's free quota is unpredictable.
+
+But "free + predictable limitations" is something I can plan around. I scope tasks small. I review output carefully. I never ask DeepSeek to do anything I couldn't fix myself in 10 minutes.
+
+The alternative—paying for reliability—isn't an option when you're still validating whether your projects will generate anything. Zero cost isn't the goal. It's the reality of indie building at the stage where revenue hasn't arrived yet.
+
+### The biggest risk: the planning layer has no free backup that matches Claude
+
+Claude's free Chat is the cornerstone. If that changes—stricter limits, account restrictions—I don't have a free alternative that matches its reasoning quality. DeepSeek can't fill that gap; its reasoning isn't strong enough and its search is limited to Baidu. Gemini's quota is too tight.
+
+This is the unsolved piece. For now, I can still ship without a planning layer—I just have to think harder on my own. But it's the single biggest weakness in this setup, and I'm not going to pretend otherwise.
+
+## Result
+
+<!-- TODO: Add GSC performance data after category page changes.
+     Need: impressions trend or CTR change for target queries.
+     Screenshot preferred. -->
+![impressions trend or CTR change for target queries.
+     Screenshot preferred.](/images/tools-workflow/claude-deepseek-workflow/impression-trend-change-for-target-queries.webp)
+
+The SEO case is ongoing. I shipped the changes but don't have clean before/after data yet. I'll update this section when the numbers are clear.
+
+What I can say: splitting planning from execution turned "I should improve SEO" into a concrete task I shipped in one evening. That alone was worth the workflow change.
 
 ## Lessons Learned
 
-- A hybrid workflow is usually better than a single-model dependency.
-- Planning, execution, and final judgment should not live in the same layer.
-- Small, well-scoped tasks produce better AI output than vague “big” requests.
-- Real search data makes AI-assisted SEO much more actionable.
-- Cost, access, and reliability are part of the workflow design, not side issues.
+1. **Planning and execution are different jobs.** Give planning to the model that reasons well. Give execution to the model that's fast enough. Mixing them in one conversation produces worse output from both.
+
+2. **Free tiers mean zero SLA.** Build around the assumption that any free model can disappear tomorrow. Your workflow should survive the loss of any single component.
+
+3. **"Free per token" isn't the same as "free per working feature."** DeepSeek costs nothing to query, but 3–4 debugging rounds cost time. Scope tasks small enough that total effort stays predictable.
+
+4. **Real data makes AI actionable.** GSC queries turned "improve SEO" into "rewrite this paragraph for these specific keywords." Without data, AI gives textbook answers. With data, it finds actual gaps.
+
+5. **A layered setup degrades gracefully.** When one model goes down, the other layers still work. That's better than betting everything on a single free tier that might disappear tomorrow.
+
