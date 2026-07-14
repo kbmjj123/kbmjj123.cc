@@ -3,6 +3,7 @@ title: "How I Built a Multi-Model AI Coding Workflow for $0"
 description: "Claude for planning, DeepSeek for execution, me for judgment. A split-model workflow using only free tiers—no API bills, no subscriptions."
 date: 2026-07-09
 category: "tools-workflow"
+readTime: "8mins"
 tags:
   - "#ai"
   - "#productivity"

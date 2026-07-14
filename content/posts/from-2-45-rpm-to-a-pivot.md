@@ -3,6 +3,7 @@ title: "From $2.45 RPM to a Pivot: What I Learned About Tool Site Ads"
 description: "A batch image tool site's US RPM landed at $2.45. Here's what I found when I dug into the data—and why I'm adding paid features alongside ad optimization."
 date: 2026-07-08
 category: "product-business"
+readTime: "10mins"
 tags:
   - "#saas"
   - "#growth"
