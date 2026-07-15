@@ -1,7 +1,7 @@
 ---
 title: "Does an Indie Developer Have to Be a Jack of All Trades?"
 description: "AI now handles 85% of my indie dev workload. The real skill isn't mastering everything—it's knowing what to delegate and what to eliminate."
-date: 2026-07-07
+date: 2026-07-16
 category: "indie-mindset"
 readTime: "15mins"
 tags:
@@ -10,7 +10,7 @@ tags:
   - "#bootstrapping"
   - "#motivation"
 image: "/images/indie-mindset/does-indie-dev-have-to-be-jack-of-all-trades/jack-of-all-trades-ai-workflow-diagram.webp"
-draft: true
+draft: false
 series: null
 seriesOrder: null
 seo:
