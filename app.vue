@@ -27,6 +27,7 @@ useHead({
     { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
     { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
     { rel: 'manifest', href: '/site.webmanifest' },
+		{ rel: 'me', href: 'https://mastodon.social/@kbmjj123' }
   ],
   meta: [
     { name: 'theme-color', content: '#0b0b12' },
