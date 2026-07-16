@@ -11,6 +11,8 @@ tags:
   - "#email"
   - "#indieweb"
 draft: false
+relatedPosts:
+  - "nuxt4-cloudflare-three-deployment-modes"
 series: null
 seriesOrder: null
 image: "/images/dev-practice/building-pixel-email-subscription/email-verification-screenshot-cover.webp"

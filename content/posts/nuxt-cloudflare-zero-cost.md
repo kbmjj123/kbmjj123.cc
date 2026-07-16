@@ -11,6 +11,8 @@ tags:
   - "#saas"
 image: "/images/tools-workflow/nuxt-cloudflare-zero-cost/nuxt-cloudflare-zero-cost-architecture.svg"
 draft: false
+relatedPosts:
+  - "nuxt4-cloudflare-three-deployment-modes"
 series: null
 seriesOrder: null
 seo:

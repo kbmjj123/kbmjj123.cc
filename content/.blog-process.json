@@ -1,8 +1,8 @@
 {
   "lastUpdated": "2026-07-16",
-  "totalArticles": 19,
+  "totalArticles": 20,
   "published": 16,
-  "drafts": 3,
+  "drafts": 4,
   "series": [
     {
       "name": "ai-powered-indie-dev",
@@ -78,8 +78,10 @@
         "#indieweb"
       ],
       "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "nuxt4-cloudflare-three-deployment-modes"
+      ]
     },
     {
       "slug": "claude-deepseek-workflow",
@@ -281,8 +283,31 @@
         "#saas"
       ],
       "outgoingCount": 0,
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "nuxt4-cloudflare-three-deployment-modes"
+      ]
+    },
+    {
+      "slug": "nuxt4-cloudflare-three-deployment-modes",
+      "title": "Nuxt 4 on Cloudflare: Three Deployment Modes and When to Use Each",
+      "status": "draft",
+      "category": "dev-practice",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-17",
+      "tags": [
+        "#nuxt",
+        "#cloudflare",
+        "#deployment",
+        "#typescript"
+      ],
+      "outgoingCount": 2,
       "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [
+        "nuxt-cloudflare-zero-cost",
+        "building-pixel-email-subscription"
+      ]
     },
     {
       "slug": "platform-agnostic-ad-component-nuxt4-ssg",
@@ -396,7 +421,7 @@
     }
   ],
   "linkGraph": {
-    "totalLinks": 16,
+    "totalLinks": 18,
     "articlesWithNoOutgoing": [
       "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "building-pixel-email-subscription",
@@ -410,12 +435,11 @@
     ],
     "articlesWithNoIncoming": [
       "68k-impressions-8-clicks-image-sitemap-blind-spot",
-      "building-pixel-email-subscription",
       "does-indie-dev-have-to-be-jack-of-all-trades",
       "fixing-adsense-responsive-mobile-square",
       "gsc-impressions-zero-clicks-diagnosis",
       "how-google-tests-new-pages-explained",
-      "nuxt-cloudflare-zero-cost",
+      "nuxt4-cloudflare-three-deployment-modes",
       "platform-agnostic-ad-component-nuxt4-ssg",
       "self-hosting-umami-part-4",
       "seo-checklist-new-page-launch"
@@ -455,6 +479,16 @@
         "from": "going-serverless-part-3-macos-upgrade-wrangler",
         "to": "going-serverless-part-2-github-oauth-local-callback",
         "anchor": "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)"
+      },
+      {
+        "from": "nuxt4-cloudflare-three-deployment-modes",
+        "to": "nuxt-cloudflare-zero-cost",
+        "anchor": "Running a Zero-Cost SaaS with Nuxt and Cloudflare"
+      },
+      {
+        "from": "nuxt4-cloudflare-three-deployment-modes",
+        "to": "building-pixel-email-subscription",
+        "anchor": "Building a Pixel Email Subscription System for kbmjj123.cc"
       },
       {
         "from": "self-hosting-umami-part-1",

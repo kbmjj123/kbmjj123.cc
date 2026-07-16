@@ -1,0 +1,71 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 420" font-family="'Courier New', monospace">
+  <rect width="700" height="420" fill="#0b0b12"/>
+
+  <text x="350" y="30" text-anchor="middle" fill="#e8edf5" font-size="14" font-weight="bold">D1/R2 Binding Access Path in Nuxt 4 + Nitro</text>
+
+  <!-- ===== LEFT SIDE: Browser ===== -->
+  <rect x="40" y="65" width="130" height="36" rx="18" fill="#0b0b12" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="105" y="87" text-anchor="middle" fill="#4ade80" font-size="11">Browser</text>
+
+  <!-- arrow: Browser → Pages Function -->
+  <line x1="170" y1="83" x2="215" y2="83" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="213,78 223,83 213,88" fill="#4d5a7a"/>
+  <text x="193" y="75" text-anchor="middle" fill="#4d5a7a" font-size="7">HTTP request</text>
+
+  <!-- ===== Pages Function ===== -->
+  <rect x="225" y="60" width="180" height="48" rx="4" fill="#1a1a2e" stroke="#60a5fa" stroke-width="1.5"/>
+  <text x="315" y="79" text-anchor="middle" fill="#60a5fa" font-size="9" font-weight="bold">Cloudflare Pages Function</text>
+  <text x="315" y="94" text-anchor="middle" fill="#4d5a7a" font-size="8">Receives request · Constructs event</text>
+
+  <!-- arrow down: event passed -->
+  <line x1="315" y1="108" x2="315" y2="145" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="310,143 315,153 320,143" fill="#4d5a7a"/>
+  <text x="330" y="130" fill="#4d5a7a" font-size="7">event.context.cloudflare.env.*</text>
+
+  <!-- ===== Server Route / API Handler ===== -->
+  <rect x="180" y="155" width="270" height="80" rx="4" fill="#1a1a2e" stroke="#4ade80" stroke-width="1.5"/>
+  <text x="315" y="175" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="bold">Nuxt Server Route / API Handler</text>
+
+  <!-- Wrong way -->
+  <rect x="195" y="185" width="110" height="40" rx="3" fill="#1a1a2e" stroke="#f87171" stroke-width="1"/>
+  <text x="250" y="200" text-anchor="middle" fill="#f87171" font-size="7" font-weight="bold">❌ Wrong</text>
+  <text x="250" y="214" text-anchor="middle" fill="#f87171" font-size="7">getRequestEvent()</text>
+
+  <!-- arrow between wrong and right -->
+  <line x1="305" y1="205" x2="330" y2="205" stroke="#fbbf24" stroke-width="1.5"/>
+  <polygon points="328,200 338,205 328,210" fill="#fbbf24"/>
+
+  <!-- Right way -->
+  <rect x="340" y="185" width="95" height="40" rx="3" fill="#1a1a2e" stroke="#4ade80" stroke-width="1"/>
+  <text x="387" y="200" text-anchor="middle" fill="#4ade80" font-size="7" font-weight="bold">✅ Correct</text>
+  <text x="387" y="214" text-anchor="middle" fill="#4ade80" font-size="7">event.context.cloudflare.env.DB</text>
+
+  <!-- Arrow: correct way → D1/R2 -->
+  <line x1="387" y1="235" x2="387" y2="270" stroke="#fbbf24" stroke-width="1.5"/>
+  <polygon points="382,268 387,278 392,268" fill="#fbbf24"/>
+  <text x="402" y="258" fill="#fbbf24" font-size="7">binding access</text>
+
+  <!-- ===== D1 + R2 ===== -->
+  <rect x="310" y="280" width="80" height="36" rx="4" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="350" y="302" text-anchor="middle" fill="#fbbf24" font-size="10">D1 Database</text>
+
+  <rect x="420" y="280" width="70" height="36" rx="4" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1.5"/>
+  <text x="455" y="302" text-anchor="middle" fill="#fbbf24" font-size="10">R2 Bucket</text>
+
+  <!-- ===== Bottom: Code Comparison ===== -->
+  <line x1="40" y1="340" x2="660" y2="340" stroke="#2a2a42" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <text x="350" y="362" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">Code Comparison</text>
+
+  <!-- Wrong code -->
+  <rect x="40" y="370" width="290" height="36" rx="3" fill="#1a1a2e" stroke="#f87171" stroke-width="1"/>
+  <text x="50" y="386" fill="#f87171" font-size="7">const event = getRequestEvent()       // undefined in Workers</text>
+  <text x="50" y="398" fill="#f87171" font-size="7">const db = event.context.cloudflare?.env?.DB  // ❌ null</text>
+
+  <!-- Right code -->
+  <rect x="370" y="370" width="290" height="36" rx="3" fill="#1a1a2e" stroke="#4ade80" stroke-width="1"/>
+  <text x="380" y="386" fill="#4ade80" font-size="7">export default defineEventHandler(async (event) =&gt; {</text>
+  <text x="380" y="398" fill="#4ade80" font-size="7">  const db = event.context.cloudflare.env.DB  // ✅ works</text>
+
+  <line x1="0" y1="418" x2="700" y2="418" stroke="#4ade80" stroke-width="2" stroke-dasharray="8,4"/>
+</svg>

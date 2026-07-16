@@ -1,0 +1,175 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 520" font-family="'Courier New', monospace">
+  <rect width="900" height="520" fill="#0b0b12"/>
+
+  <!-- Title -->
+  <text x="450" y="36" text-anchor="middle" fill="#e8edf5" font-size="15" font-weight="bold" letter-spacing="1">Three Nuxt 4 Deployment Modes on Cloudflare Pages</text>
+
+  <!-- === Mode 1: Static === -->
+  <rect x="30" y="55" width="270" height="210" rx="4" fill="#13131e" stroke="#2a2a42" stroke-width="1.5"/>
+  <text x="165" y="80" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">MODE 1 — STATIC</text>
+  <text x="165" y="96" text-anchor="middle" fill="#4d5a7a" font-size="8">nuxt generate</text>
+
+  <!-- nuxi generate box -->
+  <rect x="55" y="110" width="100" height="34" rx="3" fill="#1a1a2e" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="105" y="131" text-anchor="middle" fill="#4ade80" font-size="9">nuxi generate</text>
+
+  <!-- arrow -->
+  <line x1="155" y1="127" x2="185" y2="127" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="183,122 193,127 183,132" fill="#4d5a7a"/>
+
+  <!-- .output/public box -->
+  <rect x="195" y="110" width="90" height="34" rx="3" fill="#1a1a2e" stroke="#4d5a7a" stroke-width="1"/>
+  <text x="240" y="126" text-anchor="middle" fill="#9aa8c9" font-size="7">.output/public</text>
+  <text x="240" y="137" text-anchor="middle" fill="#4d5a7a" font-size="6">static HTML</text>
+
+  <!-- arrow down -->
+  <line x1="240" y1="144" x2="240" y2="165" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="235,163 240,173 245,163" fill="#4d5a7a"/>
+
+  <!-- Cloudflare CDN box -->
+  <rect x="55" y="175" width="230" height="34" rx="3" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1.2"/>
+  <text x="170" y="190" text-anchor="middle" fill="#fbbf24" font-size="8">Cloudflare CDN Edge</text>
+  <text x="170" y="201" text-anchor="middle" fill="#4d5a7a" font-size="6">no Worker — zero runtime</text>
+
+  <!-- arrow to browser -->
+  <line x1="170" y1="209" x2="170" y2="235" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="165,233 170,243 175,233" fill="#4d5a7a"/>
+
+  <!-- Browser -->
+  <rect x="110" y="245" width="120" height="30" rx="15" fill="#0b0b12" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="170" y="264" text-anchor="middle" fill="#4ade80" font-size="10">Browser</text>
+
+  <!-- Label: no Worker -->
+  <text x="165" y="295" text-anchor="middle" fill="#4d5a7a" font-size="7">⚡ Zero cold start · No compute cost · No API</text>
+
+  <!-- === Mode 2: SSR === -->
+  <rect x="315" y="55" width="270" height="210" rx="4" fill="#13131e" stroke="#2a2a42" stroke-width="1.5"/>
+  <text x="450" y="80" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">MODE 2 — SSR</text>
+  <text x="450" y="96" text-anchor="middle" fill="#4d5a7a" font-size="8">nitro.preset: 'cloudflare-pages'</text>
+
+  <!-- Browser top -->
+  <rect x="340" y="110" width="100" height="30" rx="15" fill="#0b0b12" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="390" y="129" text-anchor="middle" fill="#4ade80" font-size="10">Browser</text>
+
+  <!-- arrow -->
+  <line x1="440" y1="125" x2="465" y2="125" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="463,120 473,125 463,130" fill="#4d5a7a"/>
+
+  <!-- Pages Function (Worker) box -->
+  <rect x="475" y="108" width="95" height="36" rx="3" fill="#1a1a2e" stroke="#60a5fa" stroke-width="1.2"/>
+  <text x="522" y="124" text-anchor="middle" fill="#60a5fa" font-size="8">Pages Function</text>
+  <text x="522" y="136" text-anchor="middle" fill="#4d5a7a" font-size="6">(Worker runtime)</text>
+
+  <!-- arrow down -->
+  <line x1="522" y1="144" x2="522" y2="165" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="517,163 522,173 527,163" fill="#4d5a7a"/>
+
+  <!-- Nuxt SSR box -->
+  <rect x="400" y="175" width="170" height="34" rx="3" fill="#1a1a2e" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="485" y="190" text-anchor="middle" fill="#4ade80" font-size="8">Nuxt SSR Server</text>
+  <text x="485" y="201" text-anchor="middle" fill="#4d5a7a" font-size="6">renders HTML per request</text>
+
+  <!-- arrow back -->
+  <line x1="485" y1="209" x2="485" y2="235" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="480,233 485,243 490,233" fill="#4d5a7a"/>
+
+  <!-- Browser bottom -->
+  <rect x="340" y="245" width="120" height="30" rx="15" fill="#0b0b12" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="400" y="264" text-anchor="middle" fill="#4ade80" font-size="10">Browser (HTML)</text>
+
+  <!-- Label -->
+  <text x="450" y="295" text-anchor="middle" fill="#4d5a7a" font-size="7">⚡ 0-5ms cold start · Workers runtime ≠ Node.js</text>
+
+  <!-- === Mode 3: Content + SSR Hybrid === -->
+  <rect x="600" y="55" width="270" height="210" rx="4" fill="#13131e" stroke="#2a2a42" stroke-width="1.5"/>
+  <text x="735" y="80" text-anchor="middle" fill="#fbbf24" font-size="11" font-weight="bold">MODE 3 — HYBRID</text>
+  <text x="735" y="96" text-anchor="middle" fill="#4d5a7a" font-size="8">content + D1 + cloudflare-pages</text>
+
+  <!-- Browser -->
+  <rect x="620" y="110" width="100" height="30" rx="15" fill="#0b0b12" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="670" y="129" text-anchor="middle" fill="#4ade80" font-size="10">Browser</text>
+
+  <!-- arrow -->
+  <line x1="720" y1="125" x2="745" y2="125" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="743,120 753,125 743,130" fill="#4d5a7a"/>
+
+  <!-- Worker box -->
+  <rect x="755" y="108" width="95" height="36" rx="3" fill="#1a1a2e" stroke="#60a5fa" stroke-width="1.2"/>
+  <text x="802" y="124" text-anchor="middle" fill="#60a5fa" font-size="8">Pages Function</text>
+  <text x="802" y="136" text-anchor="middle" fill="#4d5a7a" font-size="6">(Worker runtime)</text>
+
+  <!-- arrow down -->
+  <line x1="802" y1="144" x2="802" y2="165" stroke="#4d5a7a" stroke-width="1.5"/>
+  <polygon points="797,163 802,173 807,163" fill="#4d5a7a"/>
+
+  <!-- Nuxt SSR + Content -->
+  <rect x="680" y="175" width="175" height="34" rx="3" fill="#1a1a2e" stroke="#4ade80" stroke-width="1.2"/>
+  <text x="767" y="188" text-anchor="middle" fill="#4ade80" font-size="7">Nuxt SSR + @nuxt/content</text>
+  <text x="767" y="200" text-anchor="middle" fill="#4d5a7a" font-size="6">content → D1 via binding</text>
+
+  <!-- arrow to D1 -->
+  <line x1="767" y1="209" x2="767" y2="228" stroke="#fbbf24" stroke-width="1.2"/>
+  <polygon points="762,226 767,236 772,226" fill="#fbbf24"/>
+
+  <!-- D1 + R2 boxes -->
+  <rect x="710" y="240" width="60" height="22" rx="3" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1"/>
+  <text x="740" y="254" text-anchor="middle" fill="#fbbf24" font-size="7">D1</text>
+
+  <rect x="780" y="240" width="60" height="22" rx="3" fill="#1a1a2e" stroke="#fbbf24" stroke-width="1"/>
+  <text x="810" y="254" text-anchor="middle" fill="#fbbf24" font-size="7">R2</text>
+
+  <!-- access label -->
+  <text x="767" y="280" text-anchor="middle" fill="#4d5a7a" font-size="7">⚡ event.context.cloudflare.env.*</text>
+
+  <!-- === Separator line === -->
+  <line x1="30" y1="325" x2="870" y2="325" stroke="#2a2a42" stroke-width="1" stroke-dasharray="4,3"/>
+
+  <!-- === Key table === -->
+  <text x="450" y="350" text-anchor="middle" fill="#fbbf24" font-size="12" font-weight="bold">Key</text>
+
+  <!-- Table header -->
+  <rect x="80" y="365" width="200" height="22" fill="#1a1a2e" stroke="#2a2a42"/>
+  <text x="180" y="380" text-anchor="middle" fill="#e8edf5" font-size="9" font-weight="bold">Mode</text>
+  <rect x="280" y="365" width="150" height="22" fill="#1a1a2e" stroke="#2a2a42"/>
+  <text x="355" y="380" text-anchor="middle" fill="#e8edf5" font-size="9" font-weight="bold">Config</text>
+  <rect x="430" y="365" width="140" height="22" fill="#1a1a2e" stroke="#2a2a42"/>
+  <text x="500" y="380" text-anchor="middle" fill="#e8edf5" font-size="9" font-weight="bold">Bundle</text>
+  <rect x="570" y="365" width="250" height="22" fill="#1a1a2e" stroke="#2a2a42"/>
+  <text x="695" y="380" text-anchor="middle" fill="#e8edf5" font-size="9" font-weight="bold">Best For</text>
+
+  <!-- Row 1 -->
+  <rect x="80" y="387" width="200" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="100" y="400" fill="#4ade80" font-size="8">Static</text>
+  <rect x="280" y="387" width="150" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="300" y="400" fill="#9aa8c9" font-size="8">nuxt generate</text>
+  <rect x="430" y="387" width="140" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="450" y="400" fill="#9aa8c9" font-size="8">~100KB</text>
+  <rect x="570" y="387" width="250" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="590" y="400" fill="#9aa8c9" font-size="8">Docs, landing pages, blogs (no auth)</text>
+
+  <!-- Row 2 -->
+  <rect x="80" y="407" width="200" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="100" y="420" fill="#60a5fa" font-size="8">SSR</text>
+  <rect x="280" y="407" width="150" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="300" y="420" fill="#9aa8c9" font-size="8">cloudflare-pages</text>
+  <rect x="430" y="407" width="140" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="450" y="420" fill="#9aa8c9" font-size="8">~1-3MB</text>
+  <rect x="570" y="407" width="250" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="590" y="420" fill="#9aa8c9" font-size="8">Dynamic apps, API endpoints, dashboards</text>
+
+  <!-- Row 3 -->
+  <rect x="80" y="427" width="200" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="100" y="440" fill="#fbbf24" font-size="8">Hybrid</text>
+  <rect x="280" y="427" width="150" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="300" y="440" fill="#9aa8c9" font-size="8">content + D1 + SSR</text>
+  <rect x="430" y="427" width="140" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="450" y="440" fill="#9aa8c9" font-size="8">~2-5MB</text>
+  <rect x="570" y="427" width="250" height="20" fill="#13131e" stroke="#2a2a42"/>
+  <text x="590" y="440" fill="#9aa8c9" font-size="8">Content sites + dynamic features (blog + auth)</text>
+
+  <!-- Footer note -->
+  <text x="450" y="480" text-anchor="middle" fill="#4d5a7a" font-size="7">All modes deploy to Cloudflare Pages — preset choice determines runtime behavior, cost, and feature set.</text>
+
+  <!-- Green accent bar top -->
+  <line x1="0" y1="0" x2="900" y2="0" stroke="#4ade80" stroke-width="2" stroke-dasharray="8,4"/>
+</svg>
