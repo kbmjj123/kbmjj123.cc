@@ -1,0 +1,26 @@
+{
+  "skill_name": "blog-post-producer",
+  "evals": [
+    {
+      "id": 1,
+      "name": "troubleshooting-discussion",
+      "prompt": "I spent last night debugging why my Nuxt 4 SSG build keeps failing on Cloudflare Pages. The error was 'Error: ENOENT: no such file or directory, open /functions/[...].mjs'. Turns out Nitro's cloudflare_module preset generates a functions directory at build time, but my wrangler.toml had a custom `functions_directory` pointing at a non-existent path. I fixed it by removing the custom functions_directory config and letting Nitro manage it. The deploy looked fine locally with `wrangler pages dev` but failed in CI. What really threw me was that the local preview worked — it was reading the dev-generated functions, not the build-generated ones. Took me 3 hours to realize the local `pnpm dev` uses a different code path than `pnpm build` for generating the functions directory.",
+      "expected_output": "A single blog post following the Section 7 template covering the Nuxt 4 functions directory debugging experience",
+      "files": []
+    },
+    {
+      "id": 2,
+      "name": "multi-topic-discussion",
+      "prompt": "I've been working on my Nuxt site's performance for the past week. Three things I want to write about: (1) I replaced the default Nuxt image component with a custom one that uses Cloudflare Image Resizing — cut LCP from 3.2s to 1.1s. The trick was using the cf-image header instead of query params because Cloudflare caches differently for each. (2) I set up automatic image optimization in my deploy pipeline — a GitHub Action that runs sharp on all new images before commit, stripped EXIF data, converted to AVIF with fallback. The pipeline catches unoptimized images and blocks the deploy. (3) I moved my analytics script from loading in the head to a lazy-load pattern with IntersectionObserver — the lighthouse score went from 72 to 94 on mobile. Each of these could be its own article but they all came from the same optimization sprint.",
+      "expected_output": "Analysis and split recommendation — likely 3 separate articles or a series. User should be asked to confirm before writing.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "name": "incomplete-missing-resources",
+      "prompt": "Remember that issue with the Telegram bot webhook I was debugging? The one where Vercel kept returning 404 even though the API route was defined. The problem was that Vercel's serverless functions have a 10-second timeout for the free tier and my bot was trying to send the response back to Telegram before the webhook acknowledged receipt. The fix was to respond with 200 OK immediately and then process asynchronously. I don't have the actual Telegram error logs anymore since they rotate. Also I'm not sure about the exact webhook payload structure — I think it was something like {update_id: number, message: {...}}. And I never took a screenshot of the Vercel dashboard showing the timeout.",
+      "expected_output": "The skill should identify missing resources (screenshots, exact payload, error logs) and ask user for them before writing. Should NOT invent missing data.",
+      "files": []
+    }
+  ]
+}

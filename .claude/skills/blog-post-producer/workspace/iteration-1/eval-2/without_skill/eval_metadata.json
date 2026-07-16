@@ -1,0 +1,32 @@
+{
+  "eval_id": 2,
+  "eval_name": "multi-topic-discussion",
+  "prompt": "Three distinct Nuxt performance optimization topics",
+  "assertions": [
+    {
+      "name": "identifies-sub-topics",
+      "description": "Output identifies 3 distinct sub-topics from the discussion",
+      "code": "check_subtopics"
+    },
+    {
+      "name": "split-proposal",
+      "description": "Output proposes splitting into multiple articles (not writing one combined article)",
+      "code": "check_split_proposal"
+    },
+    {
+      "name": "asks-user-confirmation",
+      "description": "Output asks user to confirm the plan before writing full content",
+      "code": "check_ask_confirmation"
+    },
+    {
+      "name": "provides-per-article-outline",
+      "description": "Each proposed article has a working title, category, and key sections",
+      "code": "check_outline"
+    },
+    {
+      "name": "no-full-article-without-approval",
+      "description": "Does NOT write a full .md article without first getting user approval",
+      "code": "check_no_premature_writing"
+    }
+  ]
+}

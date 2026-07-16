@@ -1,0 +1,32 @@
+{
+  "eval_id": 3,
+  "eval_name": "incomplete-missing-resources",
+  "prompt": "Telegram bot webhook debugging with missing screenshots, error logs, and exact payload",
+  "assertions": [
+    {
+      "name": "identifies-missing-resources",
+      "description": "Output explicitly lists what information is missing (error logs, screenshots, exact payload)",
+      "code": "check_missing_resources"
+    },
+    {
+      "name": "does-not-fabricate-screenshots",
+      "description": "Does NOT include a fake screenshot path or pretend a screenshot exists",
+      "code": "check_no_fake_screenshots"
+    },
+    {
+      "name": "does-not-invent-data",
+      "description": "Does NOT invent Telegram payload structure or Vercel dashboard data",
+      "code": "check_no_invented_data"
+    },
+    {
+      "name": "marks-placeholders",
+      "description": "If writing with gaps, marks missing parts with @user or TODO comments",
+      "code": "check_placeholders"
+    },
+    {
+      "name": "asks-user-for-input",
+      "description": "Specifically asks user to provide missing items before completing the article",
+      "code": "check_ask_user"
+    }
+  ]
+}

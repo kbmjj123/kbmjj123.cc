@@ -1,0 +1,62 @@
+{
+  "eval_id": 1,
+  "eval_name": "troubleshooting-discussion",
+  "prompt": "Nuxt 4 Cloudflare Pages functions directory ENOENT debugging discussion",
+  "assertions": [
+    {
+      "name": "follows-section7-template",
+      "description": "Article uses TL;DR / Background / Problem / Investigation / Solution / My Take / Result / Lessons Learned structure (H2 headings)",
+      "code": "check_template_7"
+    },
+    {
+      "name": "frontmatter-complete",
+      "description": "Frontmatter has: title, description, date, category, readTime, tags, seo.title, seo.description, relatedPosts",
+      "code": "check_frontmatter"
+    },
+    {
+      "name": "valid-category",
+      "description": "category is one of 6 valid slugs",
+      "code": "check_category"
+    },
+    {
+      "name": "tags-from-closed-set",
+      "description": "All tags come from the 50-tag closed set",
+      "code": "check_tags"
+    },
+    {
+      "name": "readtime-format",
+      "description": "readTime field uses Nmins format",
+      "code": "check_readtime"
+    },
+    {
+      "name": "seo-title-different",
+      "description": "seo.title differs from post title (not identical)",
+      "code": "check_seo_title_diff"
+    },
+    {
+      "name": "seo-description-length",
+      "description": "seo.description is 150-160 characters",
+      "code": "check_seo_desc_length"
+    },
+    {
+      "name": "image-proper-syntax",
+      "description": "Body images use valid ![alt](url) markdown syntax",
+      "code": "check_image_syntax"
+    },
+    {
+      "name": "investigation-includes-wrong-turn",
+      "description": "Investigation section mentions at least one misdiagnosis or wrong turn",
+      "code": "check_wrong_turn"
+    },
+    {
+      "name": "specific-numbers",
+      "description": "Body includes concrete numbers (time, performance, etc.) not vague quantifiers",
+      "code": "check_specific_numbers"
+    },
+    {
+      "name": "no-ai-flavor-phrases",
+      "description": "No significantly/robustly/seamlessly/leverage/it's worth noting",
+      "code": "check_ai_flavor"
+    }
+  ]
+}

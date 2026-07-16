@@ -1,0 +1,63 @@
+{
+  "graded_at": "2026-07-16T07:54:32.674Z",
+  "total_assertions": 11,
+  "passed": 9,
+  "failed": 2,
+  "expectations": [
+    {
+      "text": "follows-section7-template",
+      "passed": true,
+      "evidence": "Found 7/8 required sections: background, problem, investigation, solution, my take, result, lessons learned"
+    },
+    {
+      "text": "frontmatter-complete",
+      "passed": true,
+      "evidence": "All required frontmatter fields present"
+    },
+    {
+      "text": "valid-category",
+      "passed": true,
+      "evidence": "tools-workflow"
+    },
+    {
+      "text": "tags-from-closed-set",
+      "passed": true,
+      "evidence": "All 4 tags valid"
+    },
+    {
+      "text": "readtime-format",
+      "passed": true,
+      "evidence": "6mins"
+    },
+    {
+      "text": "seo-title-different",
+      "passed": true,
+      "evidence": "Different from post title"
+    },
+    {
+      "text": "seo-description-length",
+      "passed": false,
+      "evidence": "Length: 216 chars"
+    },
+    {
+      "text": "image-proper-syntax",
+      "passed": true,
+      "evidence": "0/0 images use correct syntax"
+    },
+    {
+      "text": "investigation-includes-wrong-turn",
+      "passed": true,
+      "evidence": "Found: \"ruled out\""
+    },
+    {
+      "text": "specific-numbers",
+      "passed": false,
+      "evidence": "No specific numbers found (hours, %, performance deltas)"
+    },
+    {
+      "text": "no-ai-flavor-phrases",
+      "passed": true,
+      "evidence": "No AI flavor words detected"
+    }
+  ]
+}

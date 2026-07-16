@@ -1,0 +1,344 @@
+{
+  "metadata": {
+    "skill_name": "blog-post-producer",
+    "skill_path": "/Users/kbmjj123/Desktop/fullstack/kbmjj123.cc/.claude/skills/blog-post-producer",
+    "executor_model": "claude-opus-4-8",
+    "timestamp": "2026-07-16T08:07:25.207Z",
+    "evals_run": [
+      1,
+      2,
+      3
+    ],
+    "runs_per_configuration": 1
+  },
+  "runs": [
+    {
+      "eval_id": 1,
+      "eval_name": "troubleshooting-discussion",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.82,
+        "passed": 9,
+        "failed": 2,
+        "total": 11,
+        "time_seconds": 2070.2,
+        "tokens": 63251,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "follows-section7-template",
+          "passed": true,
+          "evidence": "Found 7/8 required sections: background, problem, investigation, solution, my take, result, lessons learned"
+        },
+        {
+          "text": "frontmatter-complete",
+          "passed": true,
+          "evidence": "All required frontmatter fields present"
+        },
+        {
+          "text": "valid-category",
+          "passed": true,
+          "evidence": "tools-workflow"
+        },
+        {
+          "text": "tags-from-closed-set",
+          "passed": true,
+          "evidence": "All 4 tags valid"
+        },
+        {
+          "text": "readtime-format",
+          "passed": true,
+          "evidence": "6mins"
+        },
+        {
+          "text": "seo-title-different",
+          "passed": true,
+          "evidence": "Different from post title"
+        },
+        {
+          "text": "seo-description-length",
+          "passed": false,
+          "evidence": "Length: 216 chars"
+        },
+        {
+          "text": "image-proper-syntax",
+          "passed": true,
+          "evidence": "0/0 images use correct syntax"
+        },
+        {
+          "text": "investigation-includes-wrong-turn",
+          "passed": true,
+          "evidence": "Found: \"ruled out\""
+        },
+        {
+          "text": "specific-numbers",
+          "passed": false,
+          "evidence": "No specific numbers found (hours, %, performance deltas)"
+        },
+        {
+          "text": "no-ai-flavor-phrases",
+          "passed": true,
+          "evidence": "No AI flavor words detected"
+        }
+      ]
+    },
+    {
+      "eval_id": 1,
+      "eval_name": "troubleshooting-discussion",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.73,
+        "passed": 8,
+        "failed": 3,
+        "total": 11,
+        "time_seconds": 47.3,
+        "tokens": 30617,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "follows-section7-template",
+          "passed": true,
+          "evidence": "Found 5/8 required sections: background, problem, investigation, my take, lessons learned"
+        },
+        {
+          "text": "frontmatter-complete",
+          "evidence": "relatedPosts < 1"
+        },
+        {
+          "text": "valid-category",
+          "passed": true,
+          "evidence": "tools-workflow"
+        },
+        {
+          "text": "tags-from-closed-set",
+          "passed": false,
+          "evidence": "Invalid tags: #debugging"
+        },
+        {
+          "text": "readtime-format",
+          "passed": true,
+          "evidence": "5mins"
+        },
+        {
+          "text": "seo-title-different",
+          "passed": true,
+          "evidence": "Different from post title"
+        },
+        {
+          "text": "seo-description-length",
+          "passed": true,
+          "evidence": "Length: 149 chars"
+        },
+        {
+          "text": "image-proper-syntax",
+          "passed": true,
+          "evidence": "0/0 images use correct syntax"
+        },
+        {
+          "text": "investigation-includes-wrong-turn",
+          "passed": true,
+          "evidence": "Found: \"ruled out\""
+        },
+        {
+          "text": "specific-numbers",
+          "passed": false,
+          "evidence": "1 specific numbers found"
+        },
+        {
+          "text": "no-ai-flavor-phrases",
+          "passed": true,
+          "evidence": "No AI flavor words detected"
+        }
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "multi-topic-discussion",
+      "configuration": "with_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 269.6,
+        "tokens": 46154,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "identifies-sub-topics",
+          "passed": true,
+          "evidence": "Identified 3 sub-topics"
+        },
+        {
+          "text": "split-proposal",
+          "passed": true,
+          "evidence": "Split proposed"
+        },
+        {
+          "text": "asks-user-confirmation",
+          "passed": true,
+          "evidence": "Asks for user confirmation"
+        },
+        {
+          "text": "provides-per-article-outline",
+          "passed": false,
+          "evidence": "No per-article outlines"
+        },
+        {
+          "text": "no-full-article-without-approval",
+          "passed": true,
+          "evidence": "No full articles written"
+        }
+      ]
+    },
+    {
+      "eval_id": 2,
+      "eval_name": "multi-topic-discussion",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0,
+        "passed": 0,
+        "failed": 5,
+        "total": 5,
+        "time_seconds": 228.9,
+        "tokens": 34279,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "identifies-sub-topics",
+          "passed": false,
+          "evidence": "No clear sub-topic identification"
+        },
+        {
+          "text": "split-proposal",
+          "passed": false,
+          "evidence": "No split recommendation found"
+        },
+        {
+          "text": "asks-user-confirmation",
+          "passed": false,
+          "evidence": "No user confirmation request"
+        },
+        {
+          "text": "provides-per-article-outline",
+          "passed": false,
+          "evidence": "No per-article outlines"
+        },
+        {
+          "text": "no-full-article-without-approval",
+          "passed": false,
+          "evidence": "Full article found (with TL;DR and Background)"
+        }
+      ]
+    },
+    {
+      "eval_id": 3,
+      "eval_name": "incomplete-missing-resources",
+      "configuration": "without_skill",
+      "run_number": 1,
+      "result": {
+        "pass_rate": 0.8,
+        "passed": 4,
+        "failed": 1,
+        "total": 5,
+        "time_seconds": 182.5,
+        "tokens": 27649,
+        "tool_calls": 0,
+        "errors": 0
+      },
+      "expectations": [
+        {
+          "text": "identifies-missing-resources",
+          "passed": true,
+          "evidence": "Missing resources flagged"
+        },
+        {
+          "text": "does-not-fabricate-screenshots",
+          "passed": true,
+          "evidence": "No fabricated screenshots"
+        },
+        {
+          "text": "does-not-invent-data",
+          "passed": true,
+          "evidence": "No invented data confirmed (uses user-provided structure)"
+        },
+        {
+          "text": "marks-placeholders",
+          "passed": false,
+          "evidence": "No placeholders found"
+        },
+        {
+          "text": "asks-user-for-input",
+          "passed": true,
+          "evidence": "Asks user for missing items"
+        }
+      ]
+    }
+  ],
+  "run_summary": {
+    "with_skill": {
+      "pass_rate": {
+        "mean": 0.8090909090909091,
+        "stddev": 0.012856486930664504,
+        "min": 0.8,
+        "max": 0.8181818181818182
+      },
+      "time_seconds": {
+        "mean": 1169.8999999999999,
+        "stddev": 1273.2164702044975,
+        "min": 269.6,
+        "max": 2070.2
+      },
+      "tokens": {
+        "mean": 54702.5,
+        "stddev": 12089.404637946403,
+        "min": 46154,
+        "max": 63251
+      }
+    },
+    "without_skill": {
+      "pass_rate": {
+        "mean": 0.5090909090909091,
+        "stddev": 0.4423827294762342,
+        "min": 0,
+        "max": 0.8
+      },
+      "time_seconds": {
+        "mean": 152.9,
+        "stddev": 94.34913884079705,
+        "min": 47.3,
+        "max": 228.9
+      },
+      "tokens": {
+        "mean": 30848.333333333332,
+        "stddev": 3321.048228095059,
+        "min": 27649,
+        "max": 34279
+      }
+    },
+    "delta": {
+      "pass_rate": "+0.30",
+      "time_seconds": "+1017.0",
+      "tokens": "+23854"
+    }
+  },
+  "notes": [
+    "Eval 2 (multi-topic): with-skill identifies 3 sub-topics + proposes split (4/5). without-skill writes single combined article (0/5). Largest differentiator.",
+    "Eval 1 (troubleshooting): with-skill 9/11 vs without-skill 8/11. Both miss specific-numbers; with-skill seo.description too long (216 chars).",
+    "without-skill consistently uses #debugging (invalid tag, not in 50-tag closed set).",
+    "with-skill correctly sets draft:true and omits fabricated images. without-skill sets draft:false prematurely.",
+    "Eval 3 with-skill was killed by user before completion — no data for that run."
+  ]
+}

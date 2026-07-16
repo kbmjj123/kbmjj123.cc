@@ -1,0 +1,436 @@
+{
+  "lastUpdated": "2026-07-16",
+  "totalArticles": 19,
+  "published": 16,
+  "drafts": 3,
+  "series": [
+    {
+      "name": "ai-powered-indie-dev",
+      "articles": [
+        "claude-deepseek-workflow"
+      ],
+      "complete": true,
+      "createdAt": null
+    },
+    {
+      "name": "going-serverless",
+      "articles": [
+        "going-serverless-part-1-why-cloudflare",
+        "going-serverless-part-2-github-oauth-local-callback",
+        "going-serverless-part-3-macos-upgrade-wrangler"
+      ],
+      "complete": true,
+      "createdAt": null
+    },
+    {
+      "name": "how-google-actually-tests-new-pages",
+      "articles": [
+        "gsc-impressions-zero-clicks-diagnosis",
+        "how-google-tests-new-pages-explained",
+        "seo-checklist-new-page-launch"
+      ],
+      "complete": false,
+      "createdAt": null
+    },
+    {
+      "name": "self-hosting-umami-on-vercel-supabase",
+      "articles": [
+        "self-hosting-umami-part-1",
+        "self-hosting-umami-part-2",
+        "self-hosting-umami-part-3",
+        "self-hosting-umami-part-4"
+      ],
+      "complete": true,
+      "createdAt": null
+    }
+  ],
+  "articles": [
+    {
+      "slug": "68k-impressions-8-clicks-image-sitemap-blind-spot",
+      "title": "68,000 Impressions, 8 Clicks: The Image Sitemap Blind Spot I Didn't Know I Had",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-06-28",
+      "tags": [
+        "#seo",
+        "#growth",
+        "#cloudflare"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "building-pixel-email-subscription",
+      "title": "Building a Pixel Email Subscription System for kbmjj123.cc with Resend and D1",
+      "status": "published",
+      "category": "dev-practice",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-04",
+      "tags": [
+        "#nuxt",
+        "#cloudflare",
+        "#resend",
+        "#email",
+        "#indieweb"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "claude-deepseek-workflow",
+      "title": "How I Built a Multi-Model AI Coding Workflow for $0",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": "ai-powered-indie-dev",
+      "seriesOrder": 1,
+      "createdAt": "2026-07-09",
+      "tags": [
+        "#ai",
+        "#productivity",
+        "#vscode"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "does-indie-dev-have-to-be-jack-of-all-trades",
+      "title": "Does an Indie Developer Have to Be a Jack of All Trades?",
+      "status": "published",
+      "category": "indie-mindset",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-16",
+      "tags": [
+        "#ai",
+        "#cloudflare",
+        "#bootstrapping",
+        "#motivation"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "fixing-adsense-responsive-mobile-square",
+      "title": "Why My Responsive AdSense Ad Went Square on Mobile (and Tall on Desktop) — and How I Fixed It With a Reusable Vue Component",
+      "status": "published",
+      "category": "dev-practice",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-06-24",
+      "tags": [
+        "#vue",
+        "#adsense",
+        "#frontend",
+        "#debugging"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "from-2-45-rpm-to-a-pivot",
+      "title": "From $2.45 RPM to a Pivot: What I Learned About Tool Site Ads",
+      "status": "published",
+      "category": "product-business",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-08",
+      "tags": [
+        "#saas",
+        "#growth",
+        "#pricing",
+        "#bootstrapping"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "from-zero-to-2-dollar-6-months-tool-site",
+      "title": "From Zero to $2/Day: 6 Months of Running a Tool Site as an Indie Developer",
+      "status": "published",
+      "category": "indie-mindset",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-03",
+      "tags": [
+        "#indiedeveloper",
+        "#seo",
+        "#sideproject",
+        "#nuxt",
+        "#cloudflare"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "going-serverless-part-1-why-cloudflare",
+      "title": "Why I Bet My Indie Project on Cloudflare Instead of a Server",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": "going-serverless",
+      "seriesOrder": 1,
+      "createdAt": "2026-06-23",
+      "tags": [
+        "#cloudflare",
+        "#bootstrapping",
+        "#mvp",
+        "#deployment"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "going-serverless-part-2-github-oauth-local-callback",
+      "title": "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": "going-serverless",
+      "seriesOrder": 2,
+      "createdAt": "2026-06-23",
+      "tags": [
+        "#api",
+        "#typescript",
+        "#deployment"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "going-serverless-part-3-macos-upgrade-wrangler",
+      "title": "Two Days, One Broken Monitor, and a Forced macOS Upgrade Just to Run Wrangler",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": "going-serverless",
+      "seriesOrder": 3,
+      "createdAt": "2026-06-23",
+      "tags": [
+        "#cloudflare",
+        "#bootstrapping",
+        "#productivity"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "gsc-impressions-zero-clicks-diagnosis",
+      "title": "Why Your New Page Gets Impressions But Zero Clicks in Google Search Console",
+      "status": "draft",
+      "category": "dev-practice",
+      "series": "how-google-actually-tests-new-pages",
+      "seriesOrder": 1,
+      "createdAt": "2026-07-09",
+      "tags": [
+        "#growth",
+        "#productivity",
+        "#saas"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "how-google-tests-new-pages-explained",
+      "title": "What Actually Happens When Google Tests a New Page",
+      "status": "draft",
+      "category": "dev-practice",
+      "series": "how-google-actually-tests-new-pages",
+      "seriesOrder": 2,
+      "createdAt": "2026-07-10",
+      "tags": [
+        "#growth",
+        "#productivity",
+        "#saas",
+        "#ai"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "nuxt-cloudflare-zero-cost",
+      "title": "Running a Zero-Cost SaaS with Nuxt and Cloudflare",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-13",
+      "tags": [
+        "#nuxt",
+        "#cloudflare",
+        "#deployment",
+        "#saas"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "platform-agnostic-ad-component-nuxt4-ssg",
+      "title": "A Platform-Agnostic Ad Component for Nuxt 4 SSG: Swapping AdSense and wwads Without Touching Page Code",
+      "status": "published",
+      "category": "dev-practice",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-06-29",
+      "tags": [
+        "#nuxt",
+        "#vue",
+        "#typescript",
+        "#deployment"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "self-hosting-umami-part-1",
+      "title": "When Your Free Analytics Hit the Ceiling: Why I Left Umami Cloud",
+      "status": "published",
+      "category": "startup-diary",
+      "series": "self-hosting-umami-on-vercel-supabase",
+      "seriesOrder": 1,
+      "createdAt": "2026-06-30",
+      "tags": [
+        "#saas",
+        "#cloudflare",
+        "#vercel",
+        "#bootstrapping",
+        "#growth"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "self-hosting-umami-part-2",
+      "title": "Deploying Umami on Vercel + Supabase: The Connection String Traps",
+      "status": "published",
+      "category": "startup-diary",
+      "series": "self-hosting-umami-on-vercel-supabase",
+      "seriesOrder": 2,
+      "createdAt": "2026-07-01",
+      "tags": [
+        "#deployment",
+        "#database",
+        "#vercel",
+        "#opensource"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "self-hosting-umami-part-3",
+      "title": "The Last Two Blockers: GeoIP Download and Manual Migration on Vercel",
+      "status": "published",
+      "category": "startup-diary",
+      "series": "self-hosting-umami-on-vercel-supabase",
+      "seriesOrder": 3,
+      "createdAt": "2026-07-01",
+      "tags": [
+        "#deployment",
+        "#cicd",
+        "#github",
+        "#vercel",
+        "#cloudflare"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "self-hosting-umami-part-4",
+      "title": "Why Chinese Visitors Vanished from Umami — And the Custom Domain Fix",
+      "status": "published",
+      "category": "dev-practice",
+      "series": "self-hosting-umami-on-vercel-supabase",
+      "seriesOrder": 4,
+      "createdAt": "2026-07-02",
+      "tags": [
+        "#deployment",
+        "#vercel",
+        "#cloudflare",
+        "#saas"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    },
+    {
+      "slug": "seo-checklist-new-page-launch",
+      "title": "My SEO Checklist for Every New Page (Before and After Launch)",
+      "status": "draft",
+      "category": "tools-workflow",
+      "series": "how-google-actually-tests-new-pages",
+      "seriesOrder": 3,
+      "createdAt": "2026-07-11",
+      "tags": [
+        "#growth",
+        "#productivity",
+        "#saas",
+        "#cloudflare"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": []
+    }
+  ],
+  "linkGraph": {
+    "totalLinks": 0,
+    "articlesWithNoOutgoing": [
+      "68k-impressions-8-clicks-image-sitemap-blind-spot",
+      "building-pixel-email-subscription",
+      "claude-deepseek-workflow",
+      "does-indie-dev-have-to-be-jack-of-all-trades",
+      "fixing-adsense-responsive-mobile-square",
+      "from-2-45-rpm-to-a-pivot",
+      "from-zero-to-2-dollar-6-months-tool-site",
+      "going-serverless-part-1-why-cloudflare",
+      "going-serverless-part-2-github-oauth-local-callback",
+      "going-serverless-part-3-macos-upgrade-wrangler",
+      "gsc-impressions-zero-clicks-diagnosis",
+      "how-google-tests-new-pages-explained",
+      "nuxt-cloudflare-zero-cost",
+      "platform-agnostic-ad-component-nuxt4-ssg",
+      "self-hosting-umami-part-1",
+      "self-hosting-umami-part-2",
+      "self-hosting-umami-part-3",
+      "self-hosting-umami-part-4",
+      "seo-checklist-new-page-launch"
+    ],
+    "articlesWithNoIncoming": [
+      "68k-impressions-8-clicks-image-sitemap-blind-spot",
+      "building-pixel-email-subscription",
+      "claude-deepseek-workflow",
+      "does-indie-dev-have-to-be-jack-of-all-trades",
+      "fixing-adsense-responsive-mobile-square",
+      "from-2-45-rpm-to-a-pivot",
+      "from-zero-to-2-dollar-6-months-tool-site",
+      "going-serverless-part-1-why-cloudflare",
+      "going-serverless-part-2-github-oauth-local-callback",
+      "going-serverless-part-3-macos-upgrade-wrangler",
+      "gsc-impressions-zero-clicks-diagnosis",
+      "how-google-tests-new-pages-explained",
+      "nuxt-cloudflare-zero-cost",
+      "platform-agnostic-ad-component-nuxt4-ssg",
+      "self-hosting-umami-part-1",
+      "self-hosting-umami-part-2",
+      "self-hosting-umami-part-3",
+      "self-hosting-umami-part-4",
+      "seo-checklist-new-page-launch"
+    ],
+    "allLinks": []
+  }
+}

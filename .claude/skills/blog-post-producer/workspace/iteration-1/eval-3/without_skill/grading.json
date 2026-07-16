@@ -1,0 +1,33 @@
+{
+  "graded_at": "2026-07-16T07:54:32.693Z",
+  "total_assertions": 5,
+  "passed": 4,
+  "failed": 1,
+  "expectations": [
+    {
+      "text": "identifies-missing-resources",
+      "passed": true,
+      "evidence": "Missing resources flagged"
+    },
+    {
+      "text": "does-not-fabricate-screenshots",
+      "passed": true,
+      "evidence": "No fabricated screenshots"
+    },
+    {
+      "text": "does-not-invent-data",
+      "passed": true,
+      "evidence": "No invented data confirmed (uses user-provided structure)"
+    },
+    {
+      "text": "marks-placeholders",
+      "passed": false,
+      "evidence": "No placeholders found"
+    },
+    {
+      "text": "asks-user-for-input",
+      "passed": true,
+      "evidence": "Asks user for missing items"
+    }
+  ]
+}

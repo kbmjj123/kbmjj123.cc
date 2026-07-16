@@ -1,0 +1,33 @@
+{
+  "graded_at": "2026-07-16T07:54:32.691Z",
+  "total_assertions": 5,
+  "passed": 0,
+  "failed": 5,
+  "expectations": [
+    {
+      "text": "identifies-sub-topics",
+      "passed": false,
+      "evidence": "No clear sub-topic identification"
+    },
+    {
+      "text": "split-proposal",
+      "passed": false,
+      "evidence": "No split recommendation found"
+    },
+    {
+      "text": "asks-user-confirmation",
+      "passed": false,
+      "evidence": "No user confirmation request"
+    },
+    {
+      "text": "provides-per-article-outline",
+      "passed": false,
+      "evidence": "No per-article outlines"
+    },
+    {
+      "text": "no-full-article-without-approval",
+      "passed": false,
+      "evidence": "Full article found (with TL;DR and Background)"
+    }
+  ]
+}
