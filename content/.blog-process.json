@@ -185,8 +185,8 @@
         "#mvp",
         "#deployment"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
+      "outgoingCount": 1,
+      "incomingCount": 1,
       "relatedPostsDeclared": []
     },
     {
@@ -202,8 +202,8 @@
         "#typescript",
         "#deployment"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
+      "outgoingCount": 2,
+      "incomingCount": 2,
       "relatedPostsDeclared": []
     },
     {
@@ -219,8 +219,8 @@
         "#bootstrapping",
         "#productivity"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
+      "outgoingCount": 1,
+      "incomingCount": 1,
       "relatedPostsDeclared": []
     },
     {
@@ -309,8 +309,8 @@
         "#bootstrapping",
         "#growth"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
+      "outgoingCount": 2,
+      "incomingCount": 3,
       "relatedPostsDeclared": []
     },
     {
@@ -327,8 +327,8 @@
         "#vercel",
         "#opensource"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
+      "outgoingCount": 2,
+      "incomingCount": 3,
       "relatedPostsDeclared": []
     },
     {
@@ -346,8 +346,8 @@
         "#vercel",
         "#cloudflare"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
+      "outgoingCount": 2,
+      "incomingCount": 3,
       "relatedPostsDeclared": []
     },
     {
@@ -364,7 +364,7 @@
         "#cloudflare",
         "#saas"
       ],
-      "outgoingCount": 0,
+      "outgoingCount": 3,
       "incomingCount": 0,
       "relatedPostsDeclared": []
     },
@@ -388,7 +388,7 @@
     }
   ],
   "linkGraph": {
-    "totalLinks": 0,
+    "totalLinks": 13,
     "articlesWithNoOutgoing": [
       "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "building-pixel-email-subscription",
@@ -397,17 +397,10 @@
       "fixing-adsense-responsive-mobile-square",
       "from-2-45-rpm-to-a-pivot",
       "from-zero-to-2-dollar-6-months-tool-site",
-      "going-serverless-part-1-why-cloudflare",
-      "going-serverless-part-2-github-oauth-local-callback",
-      "going-serverless-part-3-macos-upgrade-wrangler",
       "gsc-impressions-zero-clicks-diagnosis",
       "how-google-tests-new-pages-explained",
       "nuxt-cloudflare-zero-cost",
       "platform-agnostic-ad-component-nuxt4-ssg",
-      "self-hosting-umami-part-1",
-      "self-hosting-umami-part-2",
-      "self-hosting-umami-part-3",
-      "self-hosting-umami-part-4",
       "seo-checklist-new-page-launch"
     ],
     "articlesWithNoIncoming": [
@@ -418,19 +411,79 @@
       "fixing-adsense-responsive-mobile-square",
       "from-2-45-rpm-to-a-pivot",
       "from-zero-to-2-dollar-6-months-tool-site",
-      "going-serverless-part-1-why-cloudflare",
-      "going-serverless-part-2-github-oauth-local-callback",
-      "going-serverless-part-3-macos-upgrade-wrangler",
       "gsc-impressions-zero-clicks-diagnosis",
       "how-google-tests-new-pages-explained",
       "nuxt-cloudflare-zero-cost",
       "platform-agnostic-ad-component-nuxt4-ssg",
-      "self-hosting-umami-part-1",
-      "self-hosting-umami-part-2",
-      "self-hosting-umami-part-3",
       "self-hosting-umami-part-4",
       "seo-checklist-new-page-launch"
     ],
-    "allLinks": []
+    "allLinks": [
+      {
+        "from": "going-serverless-part-1-why-cloudflare",
+        "to": "going-serverless-part-2-github-oauth-local-callback",
+        "anchor": "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)"
+      },
+      {
+        "from": "going-serverless-part-2-github-oauth-local-callback",
+        "to": "going-serverless-part-1-why-cloudflare",
+        "anchor": "Why I Bet My Indie Project on Cloudflare Instead of a Server"
+      },
+      {
+        "from": "going-serverless-part-2-github-oauth-local-callback",
+        "to": "going-serverless-part-3-macos-upgrade-wrangler",
+        "anchor": "Two Days, One Broken Monitor, and a Forced macOS Upgrade Just to Run Wrangler"
+      },
+      {
+        "from": "going-serverless-part-3-macos-upgrade-wrangler",
+        "to": "going-serverless-part-2-github-oauth-local-callback",
+        "anchor": "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)"
+      },
+      {
+        "from": "self-hosting-umami-part-1",
+        "to": "self-hosting-umami-part-2",
+        "anchor": "Part 2: The Connection String Traps"
+      },
+      {
+        "from": "self-hosting-umami-part-1",
+        "to": "self-hosting-umami-part-3",
+        "anchor": "Part 3: GeoIP, Migration Bypass, and Git LFS"
+      },
+      {
+        "from": "self-hosting-umami-part-2",
+        "to": "self-hosting-umami-part-1",
+        "anchor": "← Part 1: Why I Left Umami Cloud"
+      },
+      {
+        "from": "self-hosting-umami-part-2",
+        "to": "self-hosting-umami-part-3",
+        "anchor": "Part 3: GeoIP, Migration Bypass, and Git LFS →"
+      },
+      {
+        "from": "self-hosting-umami-part-3",
+        "to": "self-hosting-umami-part-1",
+        "anchor": "← Part 1: Why I Left Umami Cloud"
+      },
+      {
+        "from": "self-hosting-umami-part-3",
+        "to": "self-hosting-umami-part-2",
+        "anchor": "← Part 2: The Connection String Traps"
+      },
+      {
+        "from": "self-hosting-umami-part-4",
+        "to": "self-hosting-umami-part-1",
+        "anchor": "← Part 1"
+      },
+      {
+        "from": "self-hosting-umami-part-4",
+        "to": "self-hosting-umami-part-2",
+        "anchor": "← Part 2"
+      },
+      {
+        "from": "self-hosting-umami-part-4",
+        "to": "self-hosting-umami-part-3",
+        "anchor": "← Part 3"
+      }
+    ]
   }
 }

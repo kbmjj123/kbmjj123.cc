@@ -68,11 +68,20 @@ function extractBody(raw) {
 
 function extractOutgoingLinks(body) {
   const links = [];
-  const re = /\[([^\]]+)\]\(\/posts\/([^)]+)\)/g;
+  // Match [text](/slug) for internal post links.
+  // Exclude: (#) anchors, (https://...) external, (/images/...) assets.
+  const re = /\[([^\]]+)\]\(\/([^)]+)\)/g;
   let m;
   while ((m = re.exec(body)) !== null) {
-    if (!links.find(l => l.targetSlug === m[2])) {
-      links.push({ targetSlug: m[2], anchorText: m[1] });
+    let slug = m[2].trim();
+    // Skip anchors, external URLs, and asset paths
+    if (slug === '#' || slug.startsWith('#') || slug.startsWith('http') || slug.startsWith('images/')) continue;
+    // Strip any trailing fragment or query
+    slug = slug.replace(/[#?].*$/, '').trim();
+    if (!slug) continue;
+    // Avoid duplicates
+    if (!links.find(l => l.targetSlug === slug)) {
+      links.push({ targetSlug: slug, anchorText: m[1].trim() });
     }
   }
   return links;
@@ -108,7 +117,7 @@ files.forEach(f => {
 
   articles.push(art);
 
-  if (fm.series && fm.series !== null) {
+  if (fm.series && fm.series !== null && fm.series !== 'null') {
     if (!seriesMap[fm.series]) seriesMap[fm.series] = [];
     seriesMap[fm.series].push({ slug, order: fm.seriesOrder || 99 });
   }
