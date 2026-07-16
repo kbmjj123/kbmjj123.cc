@@ -11,6 +11,8 @@ tags:
   - "#motivation"
 image: "/images/indie-mindset/does-indie-dev-have-to-be-jack-of-all-trades/jack-of-all-trades-ai-workflow-diagram.webp"
 draft: false
+relatedPosts:
+  - "claude-deepseek-workflow"
 series: null
 seriesOrder: null
 seo:
@@ -78,7 +80,7 @@ This is the editing role I keep coming back to. AI generates 500 words. I keep 3
 
 This is where AI's impact is most obvious and most misunderstood. People say "AI writes my code now" like that's the end of the story. The reality is messier.
 
-AI writes the first version fast. For BulkPicTools, it generated the Worker skeleton, the frontend component structure, and the Tailwind layout in a fraction of the time it would have taken me from scratch. But the code it produces is rarely production-ready on its own. It hallucinates API methods. It generates reasonable-looking patterns that hide subtle bugs. It optimizes for the happy path and ignores edge cases.
+AI writes the first version fast (I use a split-model workflow for this — [Claude plans, DeepSeek executes](/claude-deepseek-workflow)). For BulkPicTools, it generated the Worker skeleton, the frontend component structure, and the Tailwind layout in a fraction of the time it would have taken me from scratch. But the code it produces is rarely production-ready on its own. It hallucinates API methods. It generates reasonable-looking patterns that hide subtle bugs. It optimizes for the happy path and ignores edge cases.
 
 My job shifted from writing code to auditing it. I read every line. I trace the logic. When something feels off—an endpoint that should handle concurrency but doesn't, a state management pattern that'll break under rapid clicks—I catch it because I've debugged enough production issues to recognize the smell.
 

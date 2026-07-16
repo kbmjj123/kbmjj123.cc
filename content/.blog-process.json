@@ -95,8 +95,10 @@
         "#vscode"
       ],
       "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "does-indie-dev-have-to-be-jack-of-all-trades"
+      ]
     },
     {
       "slug": "does-indie-dev-have-to-be-jack-of-all-trades",
@@ -112,9 +114,11 @@
         "#bootstrapping",
         "#motivation"
       ],
-      "outgoingCount": 0,
+      "outgoingCount": 1,
       "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [
+        "claude-deepseek-workflow"
+      ]
     },
     {
       "slug": "fixing-adsense-responsive-mobile-square",
@@ -148,9 +152,11 @@
         "#pricing",
         "#bootstrapping"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "outgoingCount": 1,
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "from-zero-to-2-dollar-6-months-tool-site"
+      ]
     },
     {
       "slug": "from-zero-to-2-dollar-6-months-tool-site",
@@ -167,9 +173,11 @@
         "#nuxt",
         "#cloudflare"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "outgoingCount": 1,
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "from-2-45-rpm-to-a-pivot"
+      ]
     },
     {
       "slug": "going-serverless-part-1-why-cloudflare",
@@ -388,15 +396,12 @@
     }
   ],
   "linkGraph": {
-    "totalLinks": 13,
+    "totalLinks": 16,
     "articlesWithNoOutgoing": [
       "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "building-pixel-email-subscription",
       "claude-deepseek-workflow",
-      "does-indie-dev-have-to-be-jack-of-all-trades",
       "fixing-adsense-responsive-mobile-square",
-      "from-2-45-rpm-to-a-pivot",
-      "from-zero-to-2-dollar-6-months-tool-site",
       "gsc-impressions-zero-clicks-diagnosis",
       "how-google-tests-new-pages-explained",
       "nuxt-cloudflare-zero-cost",
@@ -406,11 +411,8 @@
     "articlesWithNoIncoming": [
       "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "building-pixel-email-subscription",
-      "claude-deepseek-workflow",
       "does-indie-dev-have-to-be-jack-of-all-trades",
       "fixing-adsense-responsive-mobile-square",
-      "from-2-45-rpm-to-a-pivot",
-      "from-zero-to-2-dollar-6-months-tool-site",
       "gsc-impressions-zero-clicks-diagnosis",
       "how-google-tests-new-pages-explained",
       "nuxt-cloudflare-zero-cost",
@@ -419,6 +421,21 @@
       "seo-checklist-new-page-launch"
     ],
     "allLinks": [
+      {
+        "from": "does-indie-dev-have-to-be-jack-of-all-trades",
+        "to": "claude-deepseek-workflow",
+        "anchor": "Claude plans, DeepSeek executes"
+      },
+      {
+        "from": "from-2-45-rpm-to-a-pivot",
+        "to": "from-zero-to-2-dollar-6-months-tool-site",
+        "anchor": "in a separate retrospective"
+      },
+      {
+        "from": "from-zero-to-2-dollar-6-months-tool-site",
+        "to": "from-2-45-rpm-to-a-pivot",
+        "anchor": "in a separate analysis"
+      },
       {
         "from": "going-serverless-part-1-why-cloudflare",
         "to": "going-serverless-part-2-github-oauth-local-callback",

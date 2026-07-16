@@ -386,8 +386,8 @@ If an article has `incomingCount: 0` and has been published for >7 days, flag to
 To fully regenerate `.blog-process.json` from scratch (e.g., after bulk edits or initial setup):
 ```bash
 node -e '
-  // Full rebuild script stored at .claude/skills/blog-post-producer/scripts/rebuild-process.js
-  // Run: node .claude/skills/blog-post-producer/scripts/rebuild-process.js
+  // Full rebuild script stored at .claude/skills/blog-post-producer/scripts/rebuild-process.cjs
+  // Run: node .claude/skills/blog-post-producer/scripts/rebuild-process.cjs
 '
 ```
 This script re-reads every `.md` file in `content/posts/`, re-parses frontmatter, rescans all body links, and writes a fresh `.blog-process.json`. Use it when the file gets out of sync or after manual bulk edits.

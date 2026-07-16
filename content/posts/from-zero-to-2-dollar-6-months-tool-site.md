@@ -12,6 +12,8 @@ tags:
   - "#cloudflare"
 image: "/images/indie-mindset/from-zero-to-2-dollar-6-months-tool-site/from-zero-to-2-dollar-6-months-tool-site-cover.webp"
 draft: false
+relatedPosts:
+  - "from-2-45-rpm-to-a-pivot"
 series: null
 seriesOrder: null
 seo:
@@ -121,7 +123,7 @@ After AdSense approval, the numbers started coming in:
 
 - **BuyMeACoffee: $27** from an overseas user
 - **WeChat: a few RMB** from domestic users
-- **AdSense: from $2/day to $5/day** within the first two weeks
+- **AdSense: from $2/day to $5/day** within the first two weeks (I later broke down what those RPM numbers actually mean [in a separate analysis](/from-2-45-rpm-to-a-pivot)).
 
 These amounts mean nothing to a full-time founder. But for a side project built in spare hours, they mean something different: **validation.** Someone found this useful enough to pay. Someone clicked an ad. Advertisers value the traffic. All three signals point in the same direction—the site is solving a real need, even if it's small.
 

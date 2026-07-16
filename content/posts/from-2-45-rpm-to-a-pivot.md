@@ -11,6 +11,8 @@ tags:
   - "#bootstrapping"
 image: "/images/product-business/from-2-15-rpm-to-a-pivot/from-2-15-rpm-to-a-pivot-cover.webp"
 draft: false
+relatedPosts:
+  - "from-zero-to-2-dollar-6-months-tool-site"
 series: null
 seriesOrder: null
 seo:
@@ -41,7 +43,7 @@ Here's the breakdown—what I found, what I tried, and where I'm going next.
 
 BulkPicTools is a tool chain site: upload a batch of images, compress, resize, convert formats, remove backgrounds, add watermarks—a suite of utilities around image processing. No account required, no paywall. Just free tools.
 
-I built it to scratch my own itch, and it got traffic faster than I expected. Once the numbers stabilized, I started paying closer attention to the ad side.
+I built it to scratch my own itch, and it got traffic faster than I expected (I covered the first six months [in a separate retrospective](/from-zero-to-2-dollar-6-months-tool-site)). Once the numbers stabilized, I started paying closer attention to the ad side.
 
 AdSense was the obvious first monetization move—low friction, no decision friction for users. But the RPM numbers made me pause.
 

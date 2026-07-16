@@ -12,6 +12,8 @@ series: "ai-powered-indie-dev"
 seriesOrder: 1
 image: "https://assets.kbmjj123.cc/blog/tools-workflow/ai-powered-indie-dev/multi-model-workflow-cover.png"
 draft: false
+relatedPosts:
+  - "does-indie-dev-have-to-be-jack-of-all-trades"
 seo:
   title: "Zero-Cost Multi-Model AI Coding Workflow for Indie Developers"
   description: "How I split AI coding into planning, execution, and judgment layers using only free tiers. Claude, DeepSeek, Gemini—all free. Zero API cost."

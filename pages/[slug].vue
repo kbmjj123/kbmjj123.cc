@@ -26,6 +26,9 @@
       <ContentRenderer v-if="body && typeof body === 'object'" :value="{ body }" />
       <p v-else style="color:var(--text-secondary);font-size:15px;line-height:1.9;">{{ excerpt }}</p>
     </div>
+
+    <!-- Related posts -->
+    <PostRelated :posts="relatedPostsForDisplay" />
   </article>
 </template>
 
@@ -66,6 +69,8 @@ const postMeta = computed(() => {
     excerpt: raw.description || '',
     body: raw.body || null,
 		image: meta.image || '',
+    image: meta.image || '',
+    relatedPosts: meta.relatedPosts || [] as string[],
   }
 })
 
@@ -85,6 +90,27 @@ const tags = computed(() => postMeta.value?.tags || [])
 const readTime = computed(() => postMeta.value?.readTime || '')
 const excerpt = computed(() => postMeta.value?.excerpt || '')
 const body = computed<any>(() => postMeta.value?.body || null)
+const relatedSlugs = computed<string[]>(() => postMeta.value?.relatedPosts || [])
+
+// Fetch related posts data
+const { data: relatedPosts } = useAsyncData(`post-${slug}-related`, async () => {
+  const slugs = relatedSlugs.value
+  if (!slugs.length) return []
+  const results = await Promise.all(
+    slugs.map(s =>
+      queryCollection('posts').path(`/posts/${s}`).first()
+        .then(p => {
+          if (!p) return null
+          const meta = typeof p.meta === 'string' ? JSON.parse(p.meta || '{}') : (p.meta || {})
+          return { slug: s, title: p.title || '', category: meta.category || '', readTime: meta.readTime || '' }
+        })
+        .catch(() => null)
+    )
+  )
+  return results.filter(Boolean)
+})
+
+const relatedPostsForDisplay = computed(() => relatedPosts.value || [])
 
 // Schema.org — BreadcrumbList + BlogPosting via @nuxtjs/seo schema-org module
 // Author auto-linked from global Person identity set in app.vue
