@@ -8,7 +8,8 @@
     "build": "nuxi build",
     "generate": "nuxi generate",
     "preview": "nuxi preview",
-    "typecheck": "nuxi typecheck"
+    "typecheck": "nuxi typecheck",
+    "watermark": "node scripts/watermark.mjs"
   },
   "dependencies": {
     "@nuxt/content": "^3.0.0",
@@ -36,6 +37,7 @@
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19.2.3",
     "satori": "^0.26.0",
+    "sharp": "0.35.2",
     "typescript": "^5.7.0",
     "unhead": "^2.0.7",
     "vue-tsc": "^3.3.6",
