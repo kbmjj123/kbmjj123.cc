@@ -92,12 +92,17 @@ function openPreview() {
   if (!items.length) return
 
   _gallery.images = Array.from(items).map((el) => {
-    const img = el as HTMLElement
+    const wrap = el as HTMLElement
+    const imgEl = wrap.querySelector('img')
+    // 优先使用实际图片尺寸，其次使用 data 属性，最后使用默认值
+    const width = imgEl?.naturalWidth || parseInt(wrap.getAttribute('data-prose-img-width') || '0', 10) || 1200
+    const height = imgEl?.naturalHeight || parseInt(wrap.getAttribute('data-prose-img-height') || '0', 10) || 800
+
     return {
-      url: img.getAttribute('data-prose-img-src') || '',
-      width: parseInt(img.getAttribute('data-prose-img-width') || '1200', 10) || 1200,
-      height: parseInt(img.getAttribute('data-prose-img-height') || '800', 10) || 800,
-      alt: img.getAttribute('data-prose-img-alt') || undefined,
+      url: wrap.getAttribute('data-prose-img-src') || '',
+      width,
+      height,
+      alt: wrap.getAttribute('data-prose-img-alt') || undefined,
     }
   })
 

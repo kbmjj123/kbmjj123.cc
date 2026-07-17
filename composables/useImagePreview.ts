@@ -56,6 +56,9 @@ export function useImagePreview() {
       preloaderDelay: 500,
       maxWidthToAnimate: 3000,
       errorMsg: 'Failed to load image',
+      initialZoomLevel: 'fit',
+      secondaryZoomLevel: 'fit',
+      maxZoomLevel: 4,
     }
 
     const { default: PhotoSwipe } = await import('photoswipe')
