@@ -1,7 +1,7 @@
 import type { PhotoSwipeOptions } from 'photoswipe'
 import type PhotoSwipeType from 'photoswipe'
 
-export interface PreviewFile {
+export interface PreviewImage {
   url: string
   width: number
   height: number
@@ -18,7 +18,7 @@ export function useImagePreview() {
   const isReady = ref(false)
 
   async function open(options: {
-    files: PreviewFile[]
+    files: PreviewImage[]
     startIndex: number
     appendToEl: HTMLElement
     padding?: { top: number; bottom: number; left: number; right: number }
@@ -28,8 +28,8 @@ export function useImagePreview() {
     currentIndex.value = startIndex
     isReady.value = false
 
-    const topPad = options.padding?.top ?? 100
-    const bottomPad = options.padding?.bottom ?? 140
+    const topPad = options.padding?.top ?? 48
+    const bottomPad = options.padding?.bottom ?? 120
 
     const opts: Partial<PhotoSwipeOptions> = {
       dataSource: files.map((f) => ({
@@ -41,7 +41,7 @@ export function useImagePreview() {
       index: startIndex,
       appendToEl,
       padding: { top: topPad, bottom: bottomPad, left: 0, right: 0 },
-      bgOpacity: 0.92,
+      bgOpacity: 0.95,
       spacing: 0.1,
       loop: true,
       escKey: true,
@@ -58,7 +58,6 @@ export function useImagePreview() {
       errorMsg: 'Failed to load image',
     }
 
-    // 动态导入，避免 SSG 预渲染时在 Node.js 环境加载浏览器 API
     const { default: PhotoSwipe } = await import('photoswipe')
     pswp = new PhotoSwipe(opts)
 
@@ -74,12 +73,10 @@ export function useImagePreview() {
       isReady.value = true
     })
 
-    // 任一关闭方式（背景点击 / ESC / 关闭按钮 / 滑动）触发时立即隐藏自定义 UI
     pswp.on('closingAnimationStart', () => {
       isReady.value = false
     })
 
-    // destroy 后清空引用，防止组件卸载时重复调用 pswp.destroy()
     pswp.on('destroy', () => {
       pswp = null
     })

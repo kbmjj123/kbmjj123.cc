@@ -1,102 +1,98 @@
 <template>
-  <!-- PhotoSwipe 挂载点（PS5 自设 position:fixed, 此 div 无需定位样式） -->
+  <!-- PhotoSwipe mount (PS5 sets position:fixed, no extra positioning needed) -->
   <Teleport to="body">
     <div ref="pswpMount" />
   </Teleport>
 
-  <!-- 自定义 UI 覆盖层 -->
+  <!-- Pixel-style custom UI overlay -->
   <Teleport to="body">
     <div
       v-if="preview.isReady.value"
-      class="fixed inset-0 z-[100001] pointer-events-none"
+      class="preview-overlay"
     >
-      <!-- ════ 上部区域 ════ -->
-      <div class="pointer-events-auto absolute inset-x-0 top-0">
-        <!-- 标题栏 -->
-        <div class="flex items-center justify-between px-4 h-12">
-          <button
-            type="button"
-            class="flex items-center justify-center w-9 h-9 rounded-full bg-white/10 backdrop-blur-md text-white/80 hover:bg-white/20 hover:text-white transition-all"
-            :title="t('common.close')"
-            @click="handleClose"
-          >
-            <Icon name="lucide:x" class="h-5 w-5" />
-          </button>
+      <!-- ════ Top bar: close + counter ════ -->
+      <div class="preview-top-bar">
+        <button
+          type="button"
+          class="preview-btn"
+          title="Close (Esc)"
+          @click="handleClose"
+        >
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+            <path d="M18 6L6 18M6 6l12 12" />
+          </svg>
+        </button>
 
-          <span class="text-sm font-medium text-white/80 select-none">
-            {{ preview.currentIndex.value + 1 }} / {{ preview.totalSlides.value }}
-          </span>
+        <span class="preview-counter">
+          {{ preview.currentIndex.value + 1 }} / {{ preview.totalSlides.value }}
+        </span>
 
-          <button
-            type="button"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md text-white/80 hover:bg-white/20 hover:text-white text-xs font-semibold transition-all"
-            @click="handleDownloadAll"
-          >
-            <Icon name="lucide:download" class="h-3.5 w-3.5" />
-            {{ t('result.download_zip') }}
-          </button>
-        </div>
+        <div class="preview-spacer" />
       </div>
 
-      <!-- ════ 下部区域 ════ -->
-      <div class="pointer-events-auto absolute inset-x-0 bottom-0">
-        <!-- 控制栏 -->
-        <div class="flex items-center justify-center gap-3 h-12 px-4">
+      <!-- ════ Bottom bar: zoom + thumbnails ════ -->
+      <div class="preview-bottom-bar">
+        <!-- Zoom controls -->
+        <div class="preview-zoom-row">
           <button
             type="button"
-            class="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white/70 hover:bg-white/20 hover:text-white transition-all disabled:opacity-30"
+            class="preview-icon-btn"
             :disabled="!canZoomOut"
+            title="Zoom out"
             @click="preview.zoomOut()"
           >
-            <Icon name="lucide:zoom-out" class="h-4 w-4" />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35M8 11h6" />
+            </svg>
           </button>
 
-          <span class="text-xs font-medium text-white/60 w-12 text-center select-none tabular-nums">
-            {{ preview.zoomLevel.value }}%
-          </span>
+          <span class="preview-zoom-level">{{ preview.zoomLevel.value }}%</span>
 
           <button
             type="button"
-            class="flex items-center justify-center w-8 h-8 rounded-lg bg-white/10 backdrop-blur-md text-white/70 hover:bg-white/20 hover:text-white transition-all disabled:opacity-30"
+            class="preview-icon-btn"
             :disabled="!canZoomIn"
+            title="Zoom in"
             @click="preview.zoomIn()"
           >
-            <Icon name="lucide:zoom-in" class="h-4 w-4" />
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <circle cx="11" cy="11" r="8" />
+              <path d="M21 21l-4.35-4.35M8 11h6M11 8v6" />
+            </svg>
           </button>
 
-          <div class="w-px h-5 bg-white/10 mx-1" />
+          <div class="preview-divider" />
 
           <button
             type="button"
-            class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-white/10 backdrop-blur-md text-white/70 hover:bg-white/20 hover:text-white text-xs font-semibold transition-all"
-            @click="handleDownloadSingle"
+            class="preview-icon-btn"
+            title="Download"
+            @click="handleDownload"
           >
-            <Icon name="lucide:download" class="h-3.5 w-3.5" />
-            {{ t('result.gallery_download') }}
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round">
+              <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3" />
+            </svg>
           </button>
         </div>
 
-        <!-- 缩略图条 -->
-        <div class="h-20 md:h-[88px] px-4 pb-3">
-          <div
-            ref="thumbScrollRef"
-            class="flex justify-center gap-2 h-full overflow-x-auto scrollbar-hide items-center"
-            style="-webkit-overflow-scrolling: touch"
+        <!-- Thumbnail strip -->
+        <div ref="thumbScrollRef" class="preview-thumb-strip">
+          <button
+            v-for="(file, i) in files"
+            :key="i"
+            type="button"
+            class="preview-thumb"
+            :class="{ active: preview.currentIndex.value === i }"
+            @click="preview.goTo(i)"
           >
-            <button
-              v-for="(file, i) in files"
-              :key="file.id"
-              type="button"
-              class="flex-shrink-0 w-14 h-14 md:w-16 md:h-16 rounded-lg overflow-hidden border-2 transition-all duration-200 focus:outline-none"
-              :class="preview.currentIndex.value === i
-                ? 'border-primary-500 shadow-lg shadow-primary-500/30 scale-105'
-                : 'border-white/15 hover:border-white/40 opacity-60 hover:opacity-90'"
-              @click="preview.goTo(i)"
-            >
-              <video v-if="isVideoFile(file)" :src="file.url" muted autoplay loop playsinline class="w-full h-full object-cover" preload="auto" />
-              <img v-else :src="file.url" :alt="file.name" class="w-full h-full object-cover" loading="lazy" draggable="false" />
-            </button>
-          </div>
+            <img
+              :src="file.url"
+              :alt="file.alt || ''"
+              loading="lazy"
+              draggable="false"
+            />
+          </button>
         </div>
       </div>
     </div>
@@ -104,21 +100,16 @@
 </template>
 
 <script setup lang="ts">
-import type { ProcessedFile } from '~/types/result'
+import type { PreviewImage } from '~/composables/useImagePreview'
 
 const props = defineProps<{
-  files: ProcessedFile[]
+  files: PreviewImage[]
   startIndex: number
 }>()
 
 const emit = defineEmits<{
   close: []
 }>()
-
-const { t } = useI18n()
-
-const isVideoFile = (file: ProcessedFile): boolean =>
-  file.blob?.type?.startsWith('video/') ?? false
 
 // PhotoSwipe mount
 const pswpMount = ref<HTMLDivElement>()
@@ -130,25 +121,17 @@ const preview = useImagePreview()
 const canZoomOut = computed(() => preview.zoomLevel.value > 10)
 const canZoomIn = computed(() => preview.zoomLevel.value < 500)
 
-// ── Lifecycle ──────────────────────────────────────────────
+// ── Lifecycle ─────────────────────────────────────────
 
 onMounted(() => {
   if (!pswpMount.value) return
 
-  const topPad = 48 + (showAd.value ? 120 : 0)
-
   preview.open({
-    files: props.files.map((f) => ({
-      url: f.url,
-      width: f.width || 1200,
-      height: f.height || 800,
-      alt: f.name,
-    })),
+    files: props.files,
     startIndex: props.startIndex,
     appendToEl: pswpMount.value,
-    padding: { top: topPad, bottom: 140, left: 0, right: 0 },
+    padding: { top: 48, bottom: 120, left: 0, right: 0 },
   }).then(() => {
-    // 等待 open() 完成（pswp 实例创建）后才可注册 destroy 回调
     preview.onDestroy(() => {
       emit('close')
     })
@@ -159,30 +142,18 @@ onUnmounted(() => {
   preview.destroy()
 })
 
-// ── Handlers ───────────────────────────────────────────────
+// ── Handlers ─────────────────────────────────────────
 
 function handleClose() {
   preview.close()
-  // onDestroy will emit event
 }
 
-async function handleDownloadAll() {
-  const { downloadAsZip } = useImageProcessor()
-  const blobs = props.files.map((f) => f.blob)
-  const names = props.files.map((f) => f.name)
-  try {
-    await downloadAsZip(blobs, names, 'bulkpictools-preview.zip')
-  } catch (e) {
-    console.error('Preview download all failed:', e)
-  }
-}
-
-function handleDownloadSingle() {
+function handleDownload() {
   const file = props.files[preview.currentIndex.value]
   if (!file) return
   const a = document.createElement('a')
   a.href = file.url
-  a.download = file.name
+  a.download = file.url.split('/').pop() || 'image'
   a.click()
 }
 
@@ -199,3 +170,213 @@ watch(
   },
 )
 </script>
+
+<style scoped>
+/* ═══════════════════════════════════════════════════
+   Pixel Preview Overlay
+   Matches blog theme: --bg-deep, --border-pixel,
+   --accent-green, --accent-gold, --font-pixel
+═══════════════════════════════════════════════════ */
+
+.preview-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 100001;
+  pointer-events: none;
+}
+
+/* ── Top bar ──────────────────────────────────── */
+
+.preview-top-bar {
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  height: 48px;
+  padding: 0 12px;
+  pointer-events: auto;
+  background: rgba(11, 11, 18, 0.88);
+  border-bottom: 1px solid var(--border-pixel, #2a2a42);
+}
+
+.preview-spacer {
+  flex: 1;
+}
+
+.preview-counter {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: 10px;
+  color: var(--accent-gold, #fbbf24);
+  user-select: none;
+  white-space: nowrap;
+}
+
+/* ── Bottom bar ───────────────────────────────── */
+
+.preview-bottom-bar {
+  position: absolute;
+  inset-inline: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 12px 12px;
+  pointer-events: auto;
+  background: rgba(11, 11, 18, 0.88);
+  border-top: 1px solid var(--border-pixel, #2a2a42);
+}
+
+.preview-zoom-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.preview-zoom-level {
+  font-family: var(--font-pixel, 'Press Start 2P', monospace);
+  font-size: 9px;
+  color: var(--text-secondary, #9aa8c9);
+  min-width: 48px;
+  text-align: center;
+  user-select: none;
+}
+
+.preview-divider {
+  width: 1px;
+  height: 16px;
+  background: var(--border-pixel, #2a2a42);
+  margin: 0 4px;
+}
+
+/* ── Buttons ──────────────────────────────────── */
+
+.preview-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  background: transparent;
+  border: 1px solid var(--border-pixel, #2a2a42);
+  color: var(--text-secondary, #9aa8c9);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preview-btn:hover {
+  border-color: var(--accent-green, #4ade80);
+  color: var(--accent-green, #4ade80);
+  background: rgba(74, 222, 128, 0.06);
+}
+
+.preview-icon-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  background: transparent;
+  border: 1px solid var(--border-pixel, #2a2a42);
+  color: var(--text-muted, #4d5a7a);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.preview-icon-btn:hover:not(:disabled) {
+  border-color: var(--accent-green, #4ade80);
+  color: var(--accent-green, #4ade80);
+  background: rgba(74, 222, 128, 0.06);
+}
+
+.preview-icon-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+/* ── Thumbnail strip ──────────────────────────── */
+
+.preview-thumb-strip {
+  display: flex;
+  justify-content: center;
+  gap: 6px;
+  overflow-x: auto;
+  padding: 2px 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.preview-thumb-strip::-webkit-scrollbar {
+  height: 4px;
+}
+.preview-thumb-strip::-webkit-scrollbar-track {
+  background: transparent;
+}
+.preview-thumb-strip::-webkit-scrollbar-thumb {
+  background: var(--border-pixel, #2a2a42);
+  border: 1px solid var(--accent-green, #4ade80);
+}
+.preview-thumb-strip::-webkit-scrollbar-thumb:hover {
+  background: var(--accent-green, #4ade80);
+}
+
+.preview-thumb {
+  flex-shrink: 0;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  overflow: hidden;
+  border: 2px solid var(--border-pixel, #2a2a42);
+  background: var(--bg-deep, #0b0b12);
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.preview-thumb:hover {
+  border-color: var(--accent-green, #4ade80);
+  opacity: 0.85;
+}
+
+.preview-thumb.active {
+  border-color: var(--accent-green, #4ade80);
+  box-shadow: 0 0 8px rgba(74, 222, 128, 0.3);
+  opacity: 1;
+}
+
+.preview-thumb img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* ── Responsive ───────────────────────────────── */
+
+@media (max-width: 480px) {
+  .preview-top-bar {
+    height: 42px;
+    padding: 0 8px;
+  }
+
+  .preview-bottom-bar {
+    padding: 8px 8px 10px;
+    gap: 6px;
+  }
+
+  .preview-thumb {
+    width: 40px;
+    height: 40px;
+  }
+
+  .preview-counter {
+    font-size: 8px;
+  }
+
+  .preview-zoom-level {
+    font-size: 8px;
+    min-width: 36px;
+  }
+}
+</style>
