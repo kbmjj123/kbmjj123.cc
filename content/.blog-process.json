@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-07-16",
+  "lastUpdated": "2026-07-18",
   "totalArticles": 20,
-  "published": 16,
-  "drafts": 4,
+  "published": 19,
+  "drafts": 1,
   "series": [
     {
       "name": "ai-powered-indie-dev",
@@ -29,7 +29,7 @@
         "how-google-tests-new-pages-explained",
         "seo-checklist-new-page-launch"
       ],
-      "complete": false,
+      "complete": true,
       "createdAt": null
     },
     {
@@ -59,7 +59,7 @@
         "#cloudflare"
       ],
       "outgoingCount": 0,
-      "incomingCount": 0,
+      "incomingCount": 2,
       "relatedPostsDeclared": []
     },
     {
@@ -236,37 +236,43 @@
     {
       "slug": "gsc-impressions-zero-clicks-diagnosis",
       "title": "Why Your New Page Gets Impressions But Zero Clicks in Google Search Console",
-      "status": "draft",
+      "status": "published",
       "category": "dev-practice",
       "series": "how-google-actually-tests-new-pages",
       "seriesOrder": 1,
-      "createdAt": "2026-07-09",
+      "createdAt": "2026-07-18",
       "tags": [
         "#growth",
         "#productivity",
         "#saas"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "outgoingCount": 1,
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "68k-impressions-8-clicks-image-sitemap-blind-spot",
+        "how-google-tests-new-pages-explained"
+      ]
     },
     {
       "slug": "how-google-tests-new-pages-explained",
       "title": "What Actually Happens When Google Tests a New Page",
-      "status": "draft",
+      "status": "published",
       "category": "dev-practice",
       "series": "how-google-actually-tests-new-pages",
       "seriesOrder": 2,
-      "createdAt": "2026-07-10",
+      "createdAt": "2026-07-18",
       "tags": [
         "#growth",
         "#productivity",
         "#saas",
         "#ai"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "outgoingCount": 1,
+      "incomingCount": 2,
+      "relatedPostsDeclared": [
+        "gsc-impressions-zero-clicks-diagnosis",
+        "seo-checklist-new-page-launch"
+      ]
     },
     {
       "slug": "nuxt-cloudflare-zero-cost",
@@ -404,45 +410,40 @@
     {
       "slug": "seo-checklist-new-page-launch",
       "title": "My SEO Checklist for Every New Page (Before and After Launch)",
-      "status": "draft",
+      "status": "published",
       "category": "tools-workflow",
       "series": "how-google-actually-tests-new-pages",
       "seriesOrder": 3,
-      "createdAt": "2026-07-11",
+      "createdAt": "2026-07-18",
       "tags": [
         "#growth",
         "#productivity",
         "#saas",
         "#cloudflare"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "outgoingCount": 2,
+      "incomingCount": 1,
+      "relatedPostsDeclared": [
+        "how-google-tests-new-pages-explained",
+        "68k-impressions-8-clicks-image-sitemap-blind-spot"
+      ]
     }
   ],
   "linkGraph": {
-    "totalLinks": 18,
+    "totalLinks": 23,
     "articlesWithNoOutgoing": [
-      "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "building-pixel-email-subscription",
       "claude-deepseek-workflow",
       "fixing-adsense-responsive-mobile-square",
-      "gsc-impressions-zero-clicks-diagnosis",
-      "how-google-tests-new-pages-explained",
       "nuxt-cloudflare-zero-cost",
-      "platform-agnostic-ad-component-nuxt4-ssg",
-      "seo-checklist-new-page-launch"
+      "platform-agnostic-ad-component-nuxt4-ssg"
     ],
     "articlesWithNoIncoming": [
-      "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "does-indie-dev-have-to-be-jack-of-all-trades",
       "fixing-adsense-responsive-mobile-square",
-      "gsc-impressions-zero-clicks-diagnosis",
-      "how-google-tests-new-pages-explained",
       "nuxt4-cloudflare-three-deployment-modes",
       "platform-agnostic-ad-component-nuxt4-ssg",
-      "self-hosting-umami-part-4",
-      "seo-checklist-new-page-launch"
+      "self-hosting-umami-part-4"
     ],
     "allLinks": [
       {
@@ -479,6 +480,26 @@
         "from": "going-serverless-part-3-macos-upgrade-wrangler",
         "to": "going-serverless-part-2-github-oauth-local-callback",
         "anchor": "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)"
+      },
+      {
+        "from": "gsc-impressions-zero-clicks-diagnosis",
+        "to": "68k-impressions-8-clicks-image-sitemap-blind-spot",
+        "anchor": "68,000 wasted image impressions I didn't know I had"
+      },
+      {
+        "from": "how-google-tests-new-pages-explained",
+        "to": "gsc-impressions-zero-clicks-diagnosis",
+        "anchor": "the previous post in this series"
+      },
+      {
+        "from": "seo-checklist-new-page-launch",
+        "to": "gsc-impressions-zero-clicks-diagnosis",
+        "anchor": "the diagnosis case study"
+      },
+      {
+        "from": "seo-checklist-new-page-launch",
+        "to": "how-google-tests-new-pages-explained",
+        "anchor": "the full discovery-to-convergence mechanism"
       },
       {
         "from": "nuxt4-cloudflare-three-deployment-modes",

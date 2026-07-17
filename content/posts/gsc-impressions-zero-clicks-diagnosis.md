@@ -1,23 +1,24 @@
 ---
 title: "Why Your New Page Gets Impressions But Zero Clicks in Google Search Console"
-description: "Two real GSC cases — one with thousands of impressions and zero clicks, one nearly invisible — show why 'impressions but no clicks' is actually two different problems with opposite fixes."
-date: 2026-07-09
+description: "Two real GSC cases — thousands of impressions with zero clicks vs. a nearly invisible page — show why this is two different problems with opposite fixes."
+date: 2026-07-18
 category: "dev-practice"
+readTime: "6mins"
 tags:
   - "#growth"
   - "#productivity"
   - "#saas"
 image: "https://assets.kbmjj123.cc/blog/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-impressions-zero-clicks-diagnosis-quadrant-diagram.png"
-draft: true
+draft: false
 series: "how-google-actually-tests-new-pages"
 seriesOrder: 1
 seo:
   title: "Impressions But No Clicks in GSC? Here's How to Diagnose Why"
   description: "A step-by-step method to tell apart a CTR problem from a ranking problem in Google Search Console, with two real tool-page case studies."
-  keywords:
-    - "google search console impressions no clicks"
-    - "gsc high impressions zero clicks"
-    - "ctr problem vs ranking problem seo"
+  keywords: []
+relatedPosts:
+  - "68k-impressions-8-clicks-image-sitemap-blind-spot"
+  - "how-google-tests-new-pages-explained"
 ---
 
 ## TL;DR
@@ -26,7 +27,7 @@ If a page in Google Search Console shows a lot of impressions and almost no clic
 
 ## Background
 
-I run [bulkpictools.com](https://bulkpictools.com), a local-only bulk image tool site (compress, convert, crop, with tool chaining), currently sitting at 44 tool pages. Checking GSC for each page is part of my normal maintenance routine, and two pages surfaced the same surface-level symptom within the same week: a healthy-looking impression count, and almost nobody clicking through.
+I run [bulkpictools.com](https://bulkpictools.com), a local-only bulk image tool site (compress, convert, crop, with tool chaining), currently sitting at 44 tool pages. Checking GSC for each page is part of my normal maintenance routine — the same routine that surfaced [68,000 wasted image impressions I didn't know I had](/posts/68k-impressions-8-clicks-image-sitemap-blind-spot) — and two pages surfaced the same surface-level symptom within the same week: a healthy-looking impression count, and almost nobody clicking through.
 
 My first instinct both times was the same — "the title must be bad, let me rewrite it." That instinct was right for one page and completely wrong for the other. Here's how I learned to tell which is which before changing anything.
 
@@ -92,4 +93,4 @@ What actually changed my approach was forcing myself to open the query-level bre
 5. The two fixes (title rewrite vs. wait-and-benchmark) are mutually exclusive in the short term. Diagnosing wrong doesn't just fail to help — it costs you an entire observation cycle on the page that actually needed action.
 
 ---
-*Part of the "How Google Actually Tests New Pages" series. Next: [What Actually Happens When Google Tests a New Page](#) — the full mechanism behind why `split-image`'s ranking keeps jumping between 90 and 1.*
+*Part of the "How Google Actually Tests New Pages" series. Next: [What Actually Happens When Google Tests a New Page](/posts/how-google-tests-new-pages-explained)*

@@ -1,25 +1,25 @@
 ---
 title: "What Actually Happens When Google Tests a New Page"
 description: "A mechanism-level walkthrough of the seven stages a new page goes through after launch — discovery, crawling, indexing, the per-query testing loop, signal collection, and convergence — using real GSC data from a page stuck between position 1 and 90."
-date: 2026-07-10
+date: 2026-07-18
 category: "dev-practice"
+readTime: "9mins"
 tags:
   - "#growth"
   - "#productivity"
   - "#saas"
   - "#ai"
 image: "https://assets.kbmjj123.cc/blog/dev-practice/how-google-tests-new-pages-explained/how-google-tests-new-pages-explained-pipeline-diagram.png"
-draft: true
+draft: false
 series: "how-google-actually-tests-new-pages"
 seriesOrder: 2
 seo:
   title: "How Google Tests New Pages: Discovery to Convergence Explained"
-  description: "What actually happens between a page going live and its ranking stabilizing — per-query testing, NavBoost-style signals, true vs false convergence, explained with real GSC data."
-  keywords:
-    - "how google ranks new pages"
-    - "google sandbox new page testing"
-    - "navboost ranking signal explained"
-    - "google search ranking convergence"
+  description: "What actually happens between a page going live and its ranking stabilizing — per-query testing, NavBoost-style signals, true vs false convergence."
+  keywords: []
+relatedPosts:
+  - "gsc-impressions-zero-clicks-diagnosis"
+  - "seo-checklist-new-page-launch"
 ---
 
 ## TL;DR
@@ -28,7 +28,7 @@ A new page does not get "a ranking" once it's indexed — it gets tested, query 
 
 ## Background
 
-This continues directly from [the previous post in this series](#), where `split-image` on bulkpictools.com turned out to have a ranking problem rather than a CTR problem — buried at an average position of 51.37, with most queries sitting past position 60. The obvious next question was: why is it bouncing around like that instead of just sitting at some stable (if low) number? Working through that question with an AI in a long back-and-forth, I kept arriving at wrong mental models first and had to get them corrected — which turned out to be more useful than getting it right on the first try, because the wrong models are the ones most people default to.
+This continues directly from [the previous post in this series](/posts/gsc-impressions-zero-clicks-diagnosis), where `split-image` on bulkpictools.com turned out to have a ranking problem rather than a CTR problem — buried at an average position of 51.37, with most queries sitting past position 60. The obvious next question was: why is it bouncing around like that instead of just sitting at some stable (if low) number? Working through that question with an AI in a long back-and-forth, I kept arriving at wrong mental models first and had to get them corrected — which turned out to be more useful than getting it right on the first try, because the wrong models are the ones most people default to.
 
 ## The Problem
 
@@ -120,4 +120,4 @@ Worth being explicit about the limits here: the NavBoost name and the general sh
 5. Domain authority sets the starting line and the tolerance for early noise — it doesn't determine where a page eventually settles. That's earned per-page, per-query.
 
 ---
-*Part of the "How Google Actually Tests New Pages" series. Previous: [Why Your New Page Gets Impressions But Zero Clicks](#) · Next: [My SEO Checklist for Every New Page](#)*
+*Part of the "How Google Actually Tests New Pages" series. Previous: [Why Your New Page Gets Impressions But Zero Clicks](/posts/gsc-impressions-zero-clicks-diagnosis) · Next: [My SEO Checklist for Every New Page](/posts/seo-checklist-new-page-launch)*

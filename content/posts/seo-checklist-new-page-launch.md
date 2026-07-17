@@ -1,24 +1,25 @@
 ---
 title: "My SEO Checklist for Every New Page (Before and After Launch)"
 description: "A six-phase checklist for launching a new tool page, where every task is tied back to a specific mechanism in how Google discovers, tests, and converges a page's ranking — not a generic to-do list."
-date: 2026-07-11
+date: 2026-07-18
 category: "tools-workflow"
+readTime: "8mins"
 tags:
   - "#growth"
   - "#productivity"
   - "#saas"
   - "#cloudflare"
 image: "https://assets.kbmjj123.cc/blog/tools-workflow/seo-checklist-new-page-launch/seo-checklist-new-page-launch-timeline.png"
-draft: true
+draft: false
 series: "how-google-actually-tests-new-pages"
 seriesOrder: 3
 seo:
   title: "New Page SEO Checklist: From Launch to Ranking Convergence"
   description: "A six-phase, mechanism-backed checklist for launching a new page — keyword grouping, indexing, exploration-period prep, weekly review, and convergence diagnosis."
-  keywords:
-    - "new page seo checklist"
-    - "google search console new page launch"
-    - "seo launch checklist indie developer"
+  keywords: []
+relatedPosts:
+  - "how-google-tests-new-pages-explained"
+  - "68k-impressions-8-clicks-image-sitemap-blind-spot"
 ---
 
 ## TL;DR
@@ -27,7 +28,7 @@ This is the checklist I now run for every new tool page on bulkpictools.com. It'
 
 ## Background
 
-After working through [the diagnosis case study](#) and [the full discovery-to-convergence mechanism](#), I turned the discussion into a checklist I could actually run against `split-image` and every tool page after it, instead of re-deriving the reasoning from scratch each time. This is that checklist, with the "why" kept attached so it stays useful months from now.
+After working through [the diagnosis case study](/posts/gsc-impressions-zero-clicks-diagnosis) and [the full discovery-to-convergence mechanism](/posts/how-google-tests-new-pages-explained), I turned the discussion into a checklist I could actually run against `split-image` and every tool page after it, instead of re-deriving the reasoning from scratch each time. This is that checklist, with the "why" kept attached so it stays useful months from now.
 
 ![Six-phase timeline overview of the new-page SEO checklist, showing content/keyword, technical/indexing, and signal/data tracks across each phase](https://assets.kbmjj123.cc/blog/tools-workflow/seo-checklist-new-page-launch/seo-checklist-new-page-launch-timeline.svg)
 
@@ -121,4 +122,4 @@ The other thing I'd flag: Phase 4's "don't touch the same section for 2-3 weeks"
 5. Convergence diagnosis isn't the end of the process — a converged-but-mediocre position is a new starting point for diagnosing which underlying input (content, authority, or engagement) needs work next.
 
 ---
-*Part of the "How Google Actually Tests New Pages" series. Previous: [What Actually Happens When Google Tests a New Page](#) · [Back to Part 1: Why Your New Page Gets Impressions But Zero Clicks](#)*
+*Part of the "How Google Actually Tests New Pages" series. Previous: [What Actually Happens When Google Tests a New Page](/posts/how-google-tests-new-pages-explained) · [Back to Part 1: Impressions But Zero Clicks](/posts/gsc-impressions-zero-clicks-diagnosis)*
