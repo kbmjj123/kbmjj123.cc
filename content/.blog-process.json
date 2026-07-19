@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-07-18",
+  "lastUpdated": "2026-07-20",
   "totalArticles": 20,
-  "published": 19,
-  "drafts": 1,
+  "published": 16,
+  "drafts": 4,
   "series": [
     {
       "name": "ai-powered-indie-dev",
@@ -29,7 +29,7 @@
         "how-google-tests-new-pages-explained",
         "seo-checklist-new-page-launch"
       ],
-      "complete": true,
+      "complete": false,
       "createdAt": null
     },
     {
@@ -58,9 +58,11 @@
         "#growth",
         "#cloudflare"
       ],
-      "outgoingCount": 0,
-      "incomingCount": 2,
-      "relatedPostsDeclared": []
+      "outgoingCount": 1,
+      "incomingCount": 3,
+      "relatedPostsDeclared": [
+        "gsc-impressions-zero-clicks-diagnosis"
+      ]
     },
     {
       "slug": "building-pixel-email-subscription",
@@ -236,7 +238,7 @@
     {
       "slug": "gsc-impressions-zero-clicks-diagnosis",
       "title": "Why Your New Page Gets Impressions But Zero Clicks in Google Search Console",
-      "status": "published",
+      "status": "draft",
       "category": "dev-practice",
       "series": "how-google-actually-tests-new-pages",
       "seriesOrder": 1,
@@ -244,7 +246,7 @@
       "tags": [
         "#growth",
         "#productivity",
-        "#saas"
+        "#seo"
       ],
       "outgoingCount": 1,
       "incomingCount": 1,
@@ -256,7 +258,7 @@
     {
       "slug": "how-google-tests-new-pages-explained",
       "title": "What Actually Happens When Google Tests a New Page",
-      "status": "published",
+      "status": "draft",
       "category": "dev-practice",
       "series": "how-google-actually-tests-new-pages",
       "seriesOrder": 2,
@@ -264,8 +266,7 @@
       "tags": [
         "#growth",
         "#productivity",
-        "#saas",
-        "#ai"
+        "#seo"
       ],
       "outgoingCount": 1,
       "incomingCount": 2,
@@ -410,7 +411,7 @@
     {
       "slug": "seo-checklist-new-page-launch",
       "title": "My SEO Checklist for Every New Page (Before and After Launch)",
-      "status": "published",
+      "status": "draft",
       "category": "tools-workflow",
       "series": "how-google-actually-tests-new-pages",
       "seriesOrder": 3,
@@ -418,7 +419,7 @@
       "tags": [
         "#growth",
         "#productivity",
-        "#saas",
+        "#seo",
         "#cloudflare"
       ],
       "outgoingCount": 2,
@@ -430,7 +431,7 @@
     }
   ],
   "linkGraph": {
-    "totalLinks": 23,
+    "totalLinks": 24,
     "articlesWithNoOutgoing": [
       "building-pixel-email-subscription",
       "claude-deepseek-workflow",
@@ -485,6 +486,11 @@
         "from": "gsc-impressions-zero-clicks-diagnosis",
         "to": "68k-impressions-8-clicks-image-sitemap-blind-spot",
         "anchor": "68,000 wasted image impressions I didn't know I had"
+      },
+      {
+        "from": "68k-impressions-8-clicks-image-sitemap-blind-spot",
+        "to": "gsc-impressions-zero-clicks-diagnosis",
+        "anchor": "impressions but zero clicks diagnosis"
       },
       {
         "from": "how-google-tests-new-pages-explained",

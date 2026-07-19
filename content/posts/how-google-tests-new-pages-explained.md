@@ -3,14 +3,13 @@ title: "What Actually Happens When Google Tests a New Page"
 description: "A mechanism-level walkthrough of the seven stages a new page goes through after launch — discovery, crawling, indexing, the per-query testing loop, signal collection, and convergence — using real GSC data from a page stuck between position 1 and 90."
 date: 2026-07-18
 category: "dev-practice"
-readTime: "9mins"
+readTime: "11mins"
 tags:
   - "#growth"
   - "#productivity"
-  - "#saas"
-  - "#ai"
+  - "#seo"
 image: "https://assets.kbmjj123.cc/blog/dev-practice/how-google-tests-new-pages-explained/how-google-tests-new-pages-explained-pipeline-diagram.png"
-draft: false
+draft: true
 series: "how-google-actually-tests-new-pages"
 seriesOrder: 2
 seo:

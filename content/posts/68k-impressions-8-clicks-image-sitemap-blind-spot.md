@@ -21,6 +21,8 @@ seo:
     - "sitemap image video nodes seo"
     - "image title long tail keyword strategy"
     - "google search console image performance"
+relatedPosts:
+  - "gsc-impressions-zero-clicks-diagnosis"
 ---
 
 ## TL;DR

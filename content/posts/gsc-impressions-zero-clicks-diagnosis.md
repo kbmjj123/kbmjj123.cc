@@ -7,9 +7,9 @@ readTime: "6mins"
 tags:
   - "#growth"
   - "#productivity"
-  - "#saas"
+  - "#seo"
 image: "https://assets.kbmjj123.cc/blog/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-impressions-zero-clicks-diagnosis-quadrant-diagram.png"
-draft: false
+draft: true
 series: "how-google-actually-tests-new-pages"
 seriesOrder: 1
 seo:

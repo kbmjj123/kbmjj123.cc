@@ -7,10 +7,10 @@ readTime: "8mins"
 tags:
   - "#growth"
   - "#productivity"
-  - "#saas"
+  - "#seo"
   - "#cloudflare"
 image: "https://assets.kbmjj123.cc/blog/tools-workflow/seo-checklist-new-page-launch/seo-checklist-new-page-launch-timeline.png"
-draft: false
+draft: true
 series: "how-google-actually-tests-new-pages"
 seriesOrder: 3
 seo:
