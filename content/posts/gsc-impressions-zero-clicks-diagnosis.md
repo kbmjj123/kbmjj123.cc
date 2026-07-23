@@ -35,11 +35,15 @@ My first instinct both times was the same — "the title must be bad, let me rew
 
 **Case A — `compress-to-100kb`**: 5,954 impressions over 3 months, 2 clicks, average position 6.1. CTR effectively 0.03%.
 
+![GSC overview for compress-to-100kb showing 5,954 impressions, 2 clicks, average position 6.1, CTR 0.03%](/images/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-compress-to-100kb-overview.png)
+
 **Case B — `split-image`**: 116 impressions over 3 months, 3 clicks, average position 51.37.
+
+![GSC overview for split-image showing 116 impressions, 3 clicks, average position 51.37](/images/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-split-image-overview.png)
 
 Both pages "have impressions and basically no clicks." If you stopped at the top-level GSC summary, they'd look like the same problem. They are not.
 
-![Quadrant diagram comparing CTR problem versus ranking problem using average position and click count from Google Search Console](https://assets.kbmjj123.cc/blog/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-impressions-zero-clicks-diagnosis-quadrant-diagram.svg)
+![Quadrant diagram comparing CTR problem versus ranking problem using average position and click count from Google Search Console](/images/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-impressions-zero-clicks-diagnosis-quadrant-diagram.svg)
 
 The two axes that matter are average position and clicks. Position around 5–6 with zero clicks is a CTR problem: people are seeing your result and choosing not to click it. Position around 50+ with a handful of clicks is a ranking problem: most of your "impressions" never actually appeared in front of a human being who scrolls.
 
@@ -60,11 +64,15 @@ For `split-image`, the query breakdown told a different story entirely:
 | split photo online | 7 | 78.29 |
 | split image into 3 | 5 | 88.2 |
 
+![GSC Queries tab for split-image showing all query variants buried past position 60](/images/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-split-image-queries-breakdown.png)
+
 Every query is buried past position 60. There's no scenario where a normal user scrolls that far — these are what I'd call "technical impressions": Google counted the page as having appeared in the result set for that query, but no human ever saw it on a screen they'd realistically reach. A CTR calculation on these numbers is meaningless, because CTR assumes the result was visible to begin with.
 
 This is the core diagnostic question to ask before doing anything else: **is the position number itself low enough that visibility was never realistic, or is the position genuinely good and the click-through rate is the actual gap?** Everything else follows from that answer.
 
-There's a second layer worth checking once you've confirmed a real ranking problem: occasional spikes. In the `split-image` data, two specific days (5/26 and 6/2) showed the page briefly jumping to position 4 and position 1 respectively, each with a small number of impressions. Those spikes are not noise to ignore — they're the most information-dense data points you have, because they're the rare moments the page was actually visible. Filtering the query/date breakdown down to those specific days and cross-referencing which query triggered the spike tells you exactly which query Google is currently testing the page against — more on why that matters in the next article in this series.
+There's a second layer worth checking once you've confirmed a real ranking problem: occasional spikes. In the `split-image` data, two specific days (5/26 and 6/2) showed the page briefly jumping to position 4 and position 1 respectively, each with a small number of impressions.
+
+![GSC date-filtered view for split-image showing position spikes on 5/26 (position 4) and 6/2 (position 1)](/images/dev-practice/gsc-impressions-zero-clicks-diagnosis/gsc-split-image-position-spikes.png) Those spikes are not noise to ignore — they're the most information-dense data points you have, because they're the rare moments the page was actually visible. Filtering the query/date breakdown down to those specific days and cross-referencing which query triggered the spike tells you exactly which query Google is currently testing the page against — more on why that matters in the next article in this series.
 
 ## Solution
 
@@ -82,7 +90,11 @@ What actually changed my approach was forcing myself to open the query-level bre
 
 ## Result
 
-*Both pages are still being monitored. I'll update this section with the before/after title-change data for `compress-to-100kb` once enough of a new observation window has passed, and with `split-image`'s position trend once it has more query volume to evaluate.*
+The diagnosis came first; the title rewrite for `compress-to-100kb` followed. I changed the title to front-load the exact file-size constraint ("100KB") and added a trust signal — the kind of change that only matters if the page is already being shown to searchers, which the position confirmed it was.
+
+That change is now live and in its observation window. I'll publish the before/after click and CTR data here once GSC has enough post-change history to be meaningful rather than misleading — typically 2–4 weeks of stable impressions. For `split-image`, there's nothing to act on yet: the page is still in early evaluation at position 50+, and the occasional position spikes I flagged are the signals worth watching, not the title.
+
+I'd rather leave this section honest and incomplete than fill it with numbers that haven't earned their confidence interval yet.
 
 ## Lessons Learned
 

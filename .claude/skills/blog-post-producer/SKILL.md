@@ -49,16 +49,175 @@ From the input, identify distinct sub-topics or sub-stories that could each be a
 - **Type**: troubleshooting / technical implementation / principle discussion / startup diary / product analysis
 - **Whether the user has already provided enough detail per Section 5.1** (code, real data, screenshots, investigation steps)
 
-#### 1C — SEO Research (Informational Intent)
+#### 1C — Semrush Keyword Research (Mandatory)
 
-For each sub-topic, do lightweight keyword/competition research:
+For each sub-topic, perform structured keyword research using Semrush. **Goal**: find a target keyword that has real search volume and achievable difficulty, then shape the article around it.
 
-1. Search the web for the topic's likely main search query
-2. Identify: (a) search intent per Section 2.1 (Informational / Troubleshooting / Commercial Investigation), (b) what SERP looks like — crowded? dominated by docs? many thin AI-generated pages?
-3. Look for specific long-tail gaps: a specific tool + version + error message combo, a specific deployment scenario, a specific data pattern
-4. Write down your findings — which intent to target, what angle to differentiate on
+**Step 1 — Seed Keywords**
 
-**Do not skip this step**. Writing seo.title/seo.description without searching is forbidden per Section 2.1.
+Generate 3-5 seed keywords from the sub-topic. Think like a searcher, not a writer:
+
+| Your Topic (writer视角) | Seed Keywords (searcher视角) |
+|------------------------|------------------------------|
+| "我遇到 D1 FTS5 的坑" | `cloudflare d1 full text search`, `d1 fts5 tutorial` |
+| "Google 爬虫不抓我页面" | `nuxt ssg google indexing`, `cloudflare pages seo` |
+| "用 Satori 生成 OG 图" | `satori og image tutorial`, `dynamic og image cloudflare` |
+
+**Step 2 — Keyword Magic Tool**
+
+Open Semrush → **Keyword Management → Keyword Magic Tool**. Enter each seed keyword, then filter:
+
+| Filter | Setting | Why |
+|--------|---------|-----|
+| Volume | ≥ 100 | Chinese tech niche is small; 100+ is viable |
+| Keyword Difficulty (KD) | ≤ 40 | New/low-authority site can realistically rank |
+| Word Count | ≥ 4 words | Long-tail = less competition, higher intent match |
+| Intent | Informational (I) | Tech blog's primary traffic source |
+
+**Step 3 — Evaluate Candidates**
+
+For each candidate keyword, check:
+
+1. **SERP Analysis** (in Semrush, click the keyword → SERP Analysis):
+   - Are the top 10 results all official docs or mega-sites? → Hard to compete, skip
+   - Are there small blogs or forums ranking? → Opportunity exists
+   - Is the content quality in top 10 thin/outdated? → You can beat it with better content
+
+2. **Intent Match**:
+   - Informational (I) → Tutorial, guide, how-to ← **primary target**
+   - Commercial Investigation (C) → Comparison, review ← secondary
+   - Navigational (N) → Skip (people looking for a specific site)
+   - Transactional (T) → Skip (not your blog's purpose)
+
+3. **Topic-Content Fit**:
+   - Can you write genuinely useful content for this keyword from your real experience?
+   - If the keyword requires expertise you don't have → skip, don't fake it
+
+**Step 4 — Select Target Keyword**
+
+Pick ONE primary keyword per article. Apply the **two-track selection**:
+
+**Track A — Data Available** (Semrush shows Volume):
+- Volume ≥ 100 AND KD ≤ 40
+- Intent is Informational
+- You have real, specific experience to write about
+- SERP has room for a new entrant
+
+**Track B — Long-Tail No Data** (Semrush shows N/A):
+- Head term has Volume ≥ 500 (validates the topic broadly)
+- Long-tail passes ≥2 of 4 alternative demand signals (see "Fallback: Long-Tail Keywords Have No Data" below)
+- You have real, specific experience to write about
+- SERP top 10 is not dominated entirely by official docs
+
+Record your findings in this format:
+
+```
+Target Keyword: "cloudflare d1 full text search"
+Volume: 320/mo | KD: 15 | Intent: Informational
+SERP Analysis: Top 3 are official docs (generic), positions 4-10 are thin — opportunity exists
+Differentiation: Real Nuxt 4 + D1 implementation with FTS5 triggers, not just API docs
+```
+
+Or for long-tail with no Semrush data:
+
+```
+Target Keyword: "cloudflare d1 full text search"
+Volume: <100 (estimated) | KD: ~15 (estimated) | Intent: Informational
+Head Term: "cloudflare d1" — 2400/mo | KD: 45
+Demand Signals: ✅ Google Autocomplete | ✅ StackOverflow (3 questions) | ❌ Reddit | ❌ PAA
+SERP Analysis: Top 3 are generic docs, no dedicated tutorial exists — wide open
+Differentiation: Real FTS5 trigger setup + Drizzle ORM integration, not in any existing result
+```
+
+**Step 5 — Title & SEO Crafting**
+
+Based on the target keyword:
+- **Post title** (`title`): Include the keyword naturally, make it compelling. Not clickbait.
+- **SEO title** (`seo.title`): Keyword-first format for search engines. Can differ from post title.
+- **SEO description** (`seo.description`): 150-160 chars, includes keyword + value proposition.
+
+**Example**:
+```
+Target keyword: "cloudflare d1 full text search"
+
+title: "我在 Nuxt 4 里用 Cloudflare D1 FTS5 做了个全文搜索，踩了一堆坑"
+seo.title: "Cloudflare D1 FTS5 全文搜索实战教程：Nuxt 4 + Drizzle ORM 完整指南"
+seo.description: "从 Schema 设计到 FTS5 Trigger，手把手在 Nuxt 4 项目中实现 Cloudflare D1 全文搜索。包含 Drizzle ORM 集成和踩坑记录。"
+```
+
+**Do not skip this step**. Writing seo.title/seo.description without Semrush research is forbidden. If user doesn't have Semrush access, use WebSearch + Google Trends as fallback — but document that keyword data is estimated, not verified.
+
+**Fallback: No Semrush**
+
+If Semrush is unavailable:
+1. Use WebSearch to check if the topic has discussion on StackOverflow, Reddit, Dev.to
+2. Use Google Trends to compare candidate keywords
+3. Search the exact proposed title in Google — if zero results, the keyword likely has no demand
+4. Mark keyword data as `<!-- estimated, not Semrush-verified -->` in your proposal
+
+**Fallback: Long-Tail Keywords Have No Data**
+
+This is **normal** for niche technical topics. Semrush's data comes from click-stream samples — queries with very low volume show as "no data" even if people do search them. **"No data" ≠ "Nobody searches this."**
+
+When your long-tail keyword shows no Volume in Semrush, verify demand through alternative signals:
+
+| Signal | How to Check | Pass Condition |
+|--------|-------------|----------------|
+| Google Autocomplete | Type the keyword in Google search — does it appear in the dropdown? | At least partial match appears |
+| Google Related Searches | Search the keyword, scroll to bottom — are there related queries? | Related searches exist |
+| StackOverflow / Reddit | Search `site:stackoverflow.com "your keyword"` | ≥2 real questions exist |
+| People Also Ask | Search the keyword in Google — is there a PAA block? | PAA block appears with relevant questions |
+
+**Scoring**: If ≥2 of 4 signals pass → keyword has real demand, proceed to write.
+
+**When writing with unverified long-tail keywords, follow this pattern**:
+
+1. **Use the head term's data** to justify the article (e.g., "cloudflare d1" has Volume: 2400/mo)
+2. **Target the long-tail angle** in your title and content (e.g., "cloudflare d1 full text search")
+3. **Naturally include both** — the head term brings broad visibility, the long-tail angle captures specific intent
+4. **Mark data as estimated** in your proposal: `Volume: <100 (estimated via Google Autocomplete)`
+
+**Cost-Benefit Estimation (for long-tail keywords with no exact volume)**
+
+Since exact volume is unknowable for long-tail keywords, use this estimation framework to decide if the article is worth writing:
+
+```
+Article cost:  ~2-3 hours of writing
+
+Traffic estimation:
+├── Head term monthly searches: [from Semrush, e.g., 2400/mo]
+├── % who search more specifically: 5-15% (industry rule of thumb)
+├── Estimated long-tail searches: [head volume × 5-15%, e.g., 120-360/mo]
+├── CTR if ranking top 3: 8-15% (long-tail = higher intent = higher CTR)
+└── Estimated monthly clicks: [long-tail × CTR, e.g., 10-54/mo]
+```
+
+**Decision rule**: If estimated monthly clicks ≥ 5 → write. The reasoning:
+
+- **Articles are assets** — write once, earn traffic forever (unlike social posts that decay)
+- **Chinese technical content is scarce** — you may be the ONLY result, pushing CTR much higher than average
+- **Compound effect** — 10 such articles = 50-540 clicks/mo, growing as domain authority builds
+- **Low competition** — long-tail with no dedicated content = you rank top 3 almost guaranteed
+
+**Present this to the user** in the proposal as a simple cost-benefit line:
+
+```
+Cost-Benefit: ~2h writing → est. 10-50 clicks/mo (forever) → worth it
+```
+
+**Example**:
+```
+Head term: "cloudflare d1" → Volume: 2400/mo | KD: 45 (too competitive alone)
+Long-tail: "cloudflare d1 full text search" → Volume: N/A in Semrush
+Google Autocomplete: ✅ "cloudflare d1 full text search" appears
+StackOverflow: ✅ 3 relevant questions found
+Decision: ✅ Write — target long-tail angle, leverage head term for topical authority
+
+Target Keyword: "cloudflare d1 full text search"
+Volume: <100 (estimated) | KD: ~15 (estimated) | Intent: Informational
+Head Term Authority: "cloudflare d1" — 2400/mo
+Differentiation: Real FTS5 implementation, not just API reference
+```
 
 #### 1D — Split Decision
 
@@ -89,11 +248,23 @@ Identified N sub-topics: [list each with 1-sentence description]
 [Split into N articles or keep as one, with reasons based on Section 4 rules]
 [Series name if applicable — ask for confirmation]
 
+## Keyword Research Summary
+
+### Article 1: [Working Title]
+Target Keyword: "[keyword]"
+Volume: XXX/mo | KD: XX | Intent: Informational
+SERP Analysis: [1-2 sentences on competition landscape]
+Differentiation: [why your article can rank — real experience angle]
+Cost-Benefit: ~Xh writing → est. XX-XX clicks/mo (forever) → worth it / skip
+
+### Article 2: ...
+
 ## Tentative Structure
 
 ### Article 1: [Working Title]
 Category: [one slug from the 6]
-SEO Intent: [type + target query]
+SEO Title: [keyword-first title for search engines]
+SEO Description: [150-160 chars]
 Key sections: [...]
 
 ### Article 2: ...
@@ -206,6 +377,13 @@ Build the navigation links using the series slugs.
 
 Run through this checklist on every article before presenting or saving:
 
+#### Section 2.1 — Keyword Research Verification
+- [ ] Is there a documented target keyword with search data or estimated demand signals?
+- [ ] If Semrush Volume is N/A: are ≥2 of 4 alternative demand signals documented? (Google Autocomplete, Related Searches, SO/Reddit, PAA)
+- [ ] Does the post title contain or closely relate to the target keyword?
+- [ ] Do seo.title and seo.description include the target keyword naturally?
+- [ ] Was SERP analysis done? Is there a documented reason why this article can compete?
+
 #### Section 3.1 — Content Specificity
 - [ ] Can any sentence be transplanted to another post in the same category and still read naturally? If yes, rewrite to be specific to this post's project/scenario.
 - [ ] Is there at least one concrete number (time, cost, lines of code, performance delta) where a vague word could have been used?
@@ -304,6 +482,50 @@ Real posts in the project use these conventions — match them:
 - `image` path: mix of `/images/{category}/{slug}/{file}` (local) and `https://assets.kbmjj123.cc/blog/...` (R2)
 - Tags formatted `#xxx` with hash prefix
 - Description in frontmatter is a complete sentence ending with period
+
+### Semrush Quick Reference
+
+**Tool locations**:
+- Keyword Overview: Semrush → SEO → Keyword Overview (single keyword check)
+- Keyword Magic Tool: Semrush → SEO → Keyword Magic Tool (bulk discovery)
+- SERP Analysis: Click any keyword → view top 10 results + their metrics
+
+**Filter defaults for this blog**:
+
+| Metric | Threshold | Rationale |
+|--------|-----------|-----------|
+| Volume | ≥ 100/mo | Chinese tech niche; below 100 = negligible traffic |
+| KD (Keyword Difficulty) | ≤ 40 | Site is low-authority; above 40 = unrealistic to rank |
+| Word Count | ≥ 4 | Long-tail keywords have less competition |
+| Intent | Informational (I) | Primary traffic type for tech blog |
+
+**Quick decision matrix**:
+
+*Track A — Semrush has data*:
+
+| Volume | KD | Decision |
+|--------|-----|----------|
+| ≥ 500 | ≤ 30 | 🟢 **Write immediately** — high demand, low competition |
+| ≥ 200 | ≤ 40 | 🟢 **Good target** — solid opportunity |
+| ≥ 100 | ≤ 40 | 🟡 **Viable** — worth writing if you have strong angle |
+| ≥ 100 | > 40 | 🟠 **Risky** — only if you have unique authority on topic |
+
+*Track B — Long-tail shows no data in Semrush*:
+
+| Head Term Volume | Demand Signals (≥2 of 4) | Decision |
+|-----------------|-------------------------|----------|
+| ≥ 1000 | ≥ 2 pass | 🟢 **Write** — topic has broad interest, your angle captures specific intent |
+| ≥ 500 | ≥ 2 pass | 🟡 **Viable** — proceed if you have strong differentiation |
+| < 500 | any | 🔴 **Skip** — neither broad topic nor specific angle has demand |
+
+The 4 demand signals: Google Autocomplete, Related Searches, StackOverflow/Reddit, People Also Ask.
+
+**Common seed keywords for this blog's tech stack**:
+```
+nuxt 4, nuxt content, cloudflare pages, cloudflare d1, cloudflare r2,
+cloudflare workers, drizzle orm, satori og image, static site generation,
+nuxt deployment, cloudflare pages nuxt, d1 full text search
+```
 
 ---
 
