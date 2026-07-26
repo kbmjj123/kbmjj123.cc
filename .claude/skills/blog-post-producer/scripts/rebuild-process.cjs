@@ -89,6 +89,21 @@ function extractOutgoingLinks(body) {
 
 // --- Main ---
 
+// Load existing performance data before rebuilding
+const existingPerformance = {};
+if (fs.existsSync(OUTPUT_FILE)) {
+  try {
+    const existing = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf8'));
+    if (existing.articles) {
+      existing.articles.forEach(a => {
+        if (a.performance) existingPerformance[a.slug] = a.performance;
+      });
+    }
+  } catch (e) {
+    // File may be corrupted; proceed without performance data
+  }
+}
+
 const files = fs.readdirSync(POSTS_DIR).filter(f => f.endsWith('.md')).sort();
 const articles = [];
 const seriesMap = {};
@@ -151,7 +166,7 @@ const series = Object.entries(seriesMap).map(([name, entries]) => {
   };
 });
 
-// Assemble output
+// Assemble output (preserve performance data from previous rebuild)
 const output = {
   lastUpdated: new Date().toISOString().split('T')[0],
   totalArticles: articles.length,
@@ -170,6 +185,7 @@ const output = {
     outgoingCount: a.outgoingCount,
     incomingCount: a.incomingCount,
     relatedPostsDeclared: a.relatedPostsDeclared,
+    ...(existingPerformance[a.slug] ? { performance: existingPerformance[a.slug] } : {}),
   })),
   linkGraph: {
     totalLinks: allLinks.length,

@@ -34,6 +34,79 @@ User pastes ≥200 characters of discussion content, technical notes, troublesho
 
 ## Workflow (Mandatory — Follow Step by Step)
 
+### Phase 0: Content Strategy Check
+
+Before writing anything, check if performance data and pattern memory exist. This phase shapes what to write and how to write it.
+
+**If the user hasn't decided what to write yet**: trigger the `content-strategist` skill first to get data-driven content recommendations. Say: "要我先用 content-strategist 推荐选题吗？"
+
+**Step 0A — Load Performance Data**
+
+Check if `content/.gsc-performance.json` exists and has `lastPulled` set (not null).
+
+- If exists and has data: load it. Identify top 3 performers (by clicks) and bottom 3 performers (by impressions with position > 30).
+- If not exists or `lastPulled: null`: skip this step (first run, no data yet). Proceed directly to Phase 1.
+
+**Step 0B — Load Pattern Memory**
+
+Check if memory file `successful-content-patterns.md` exists in the project memory directory.
+
+- If exists: read it. These are learned patterns from previous performance reviews — apply them when deciding article structure, keyword targeting, and content style.
+- If not exists: skip. Will be created after the first performance review.
+
+**Step 0C — Content Matrix Check**
+
+Scan `content/posts/` and `content/.blog-process.json` to build a content matrix:
+
+| Category | Published | Drafts | Top Performer | Coverage |
+|----------|-----------|--------|---------------|----------|
+| dev-practice | N | N | [slug] | [good/thin/empty] |
+| product-business | N | N | [slug] | [good/thin/empty] |
+| indie-mindset | N | N | [slug] | [good/thin/empty] |
+| tools-workflow | N | N | [slug] | [good/thin/empty] |
+| startup-diary | N | N | [slug] | [good/thin/empty] |
+| tech-trends | N | N | [slug] | [good/thin/empty] |
+
+Identify:
+- **Over-covered categories**: >5 published articles with low average performance
+- **Under-covered categories**: <2 published articles (content gap)
+- **Missing topics**: topics competitors cover (from memory) that you don't
+
+**Step 0D — Output Strategy Recommendation**
+
+Present to the user before Phase 1:
+
+```
+## Content Strategy Recommendation
+
+Based on [N months] of performance data:
+
+**What's working** (replicate these patterns):
+- [pattern 1 from winners]
+- [pattern 2 from winners]
+
+**What's not working** (avoid these patterns):
+- [pattern 1 from underperformers]
+
+**Content gaps to fill**:
+- [category/topic with no coverage]
+
+**Recommended focus for this article**:
+- Target the [category] gap
+- Follow the [pattern] structure that works for [top performer]
+```
+
+If no performance data exists, present:
+
+```
+## Content Strategy
+
+No performance data yet — this will be the baseline article.
+After publishing, run `node scripts/gsc-pull.cjs` monthly to build performance history.
+```
+
+---
+
 ### Phase 1: Receive, Analyze, and Research
 
 #### 1A — Read and Index
@@ -352,6 +425,11 @@ For **troubleshooting / technical implementation** posts, use the Section 7 temp
 ## Lessons Learned
 ```
 
+Write every section with the reader's ability to replicate in mind. Detailed checks are in Phase 5 Actionability Check — two quick tests during writing:
+
+- **Copy-Paste Test**: Can the reader copy any code block and run it? If not, add missing context.
+- **Next Time Test**: Does the ending give the reader a reusable tool (checklist, framework, template)? If it's just "and then it worked", rewrite.
+
 For **principle / concept** posts, adapt structure — don't force the template. The key requirement is that every Section 3.1 rule is met: each sentence is specific to this post, could not be swapped into another post unchanged.
 
 For **startup-diary / product-business** posts, use narrative structure but still include My Take (with data) and Lessons Learned.
@@ -416,6 +494,15 @@ Run through this checklist on every article before presenting or saving:
 
 #### Section 10 — Cover Image
 - [ ] image field: either omitted, or a real image that represents core article content. Not a generic unrelated cover.
+
+#### Actionability Check — "Can the Reader Copy-Paste and Learn?"
+- [ ] **Copy-Paste Test**: Can the reader copy any code block and run it without modification? If not, is the missing context (imports, config, env setup) explicitly stated?
+- [ ] **Environment Check**: Are versions/tools/specifics mentioned? (Node version, framework version, package manager, OS if relevant)
+- [ ] **Expected Output**: Does each code/command block show what the reader should expect to see? (console output, file structure, browser behavior)
+- [ ] **Wrong Turns**: Does Investigation include at least one dead end the reader can learn from? (Not just the happy path)
+- [ ] **Complete Configs**: Are config files shown in full, not as "add this to your config" fragments?
+- [ ] **"Next Time" Test**: Does the ending provide a reusable checklist, decision framework, or template — not just "and then it worked"?
+- [ ] **Prerequisites**: If the article assumes prior knowledge, is it stated upfront? ("This assumes you already have X set up")
 
 ---
 

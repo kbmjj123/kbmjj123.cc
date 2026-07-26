@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-07-20",
-  "totalArticles": 20,
-  "published": 16,
-  "drafts": 4,
+  "lastUpdated": "2026-07-26",
+  "totalArticles": 17,
+  "published": 17,
+  "drafts": 0,
   "series": [
     {
       "name": "ai-powered-indie-dev",
@@ -20,16 +20,6 @@
         "going-serverless-part-3-macos-upgrade-wrangler"
       ],
       "complete": true,
-      "createdAt": null
-    },
-    {
-      "name": "how-google-actually-tests-new-pages",
-      "articles": [
-        "gsc-impressions-zero-clicks-diagnosis",
-        "how-google-tests-new-pages-explained",
-        "seo-checklist-new-page-launch"
-      ],
-      "complete": false,
       "createdAt": null
     },
     {
@@ -58,11 +48,20 @@
         "#growth",
         "#cloudflare"
       ],
-      "outgoingCount": 1,
-      "incomingCount": 3,
+      "outgoingCount": 0,
+      "incomingCount": 0,
       "relatedPostsDeclared": [
         "gsc-impressions-zero-clicks-diagnosis"
-      ]
+      ],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 1,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 6,
+        "topQueries": [],
+        "trend": "new"
+      }
     },
     {
       "slug": "building-pixel-email-subscription",
@@ -140,7 +139,18 @@
       ],
       "outgoingCount": 0,
       "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 25,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 22.4,
+        "topQueries": [
+          "new desktop and mobile responsive display ads"
+        ],
+        "trend": "new"
+      }
     },
     {
       "slug": "from-2-45-rpm-to-a-pivot",
@@ -199,7 +209,16 @@
       ],
       "outgoingCount": 1,
       "incomingCount": 1,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 2,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 12,
+        "topQueries": [],
+        "trend": "declining"
+      }
     },
     {
       "slug": "going-serverless-part-2-github-oauth-local-callback",
@@ -216,7 +235,16 @@
       ],
       "outgoingCount": 2,
       "incomingCount": 2,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 16,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 27.4,
+        "topQueries": [],
+        "trend": "declining"
+      }
     },
     {
       "slug": "going-serverless-part-3-macos-upgrade-wrangler",
@@ -233,47 +261,18 @@
       ],
       "outgoingCount": 1,
       "incomingCount": 1,
-      "relatedPostsDeclared": []
-    },
-    {
-      "slug": "gsc-impressions-zero-clicks-diagnosis",
-      "title": "Why Your New Page Gets Impressions But Zero Clicks in Google Search Console",
-      "status": "draft",
-      "category": "dev-practice",
-      "series": "how-google-actually-tests-new-pages",
-      "seriesOrder": 1,
-      "createdAt": "2026-07-18",
-      "tags": [
-        "#growth",
-        "#productivity",
-        "#seo"
-      ],
-      "outgoingCount": 1,
-      "incomingCount": 1,
-      "relatedPostsDeclared": [
-        "68k-impressions-8-clicks-image-sitemap-blind-spot",
-        "how-google-tests-new-pages-explained"
-      ]
-    },
-    {
-      "slug": "how-google-tests-new-pages-explained",
-      "title": "What Actually Happens When Google Tests a New Page",
-      "status": "draft",
-      "category": "dev-practice",
-      "series": "how-google-actually-tests-new-pages",
-      "seriesOrder": 2,
-      "createdAt": "2026-07-18",
-      "tags": [
-        "#growth",
-        "#productivity",
-        "#seo"
-      ],
-      "outgoingCount": 1,
-      "incomingCount": 2,
-      "relatedPostsDeclared": [
-        "gsc-impressions-zero-clicks-diagnosis",
-        "seo-checklist-new-page-launch"
-      ]
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 12,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 32.7,
+        "topQueries": [
+          "wrangler macos"
+        ],
+        "trend": "declining"
+      }
     },
     {
       "slug": "nuxt-cloudflare-zero-cost",
@@ -298,7 +297,7 @@
     {
       "slug": "nuxt4-cloudflare-three-deployment-modes",
       "title": "Nuxt 4 on Cloudflare: Three Deployment Modes and When to Use Each",
-      "status": "draft",
+      "status": "published",
       "category": "dev-practice",
       "series": null,
       "seriesOrder": null,
@@ -332,7 +331,16 @@
       ],
       "outgoingCount": 0,
       "incomingCount": 0,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 24,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 28.3,
+        "topQueries": [],
+        "trend": "new"
+      }
     },
     {
       "slug": "self-hosting-umami-part-1",
@@ -351,7 +359,19 @@
       ],
       "outgoingCount": 2,
       "incomingCount": 3,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-07-26",
+        "impressions": 28,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 28,
+        "topQueries": [
+          "umami cloud",
+          "umami analytics free"
+        ],
+        "trend": "new"
+      }
     },
     {
       "slug": "self-hosting-umami-part-2",
@@ -407,32 +427,12 @@
       "outgoingCount": 3,
       "incomingCount": 0,
       "relatedPostsDeclared": []
-    },
-    {
-      "slug": "seo-checklist-new-page-launch",
-      "title": "My SEO Checklist for Every New Page (Before and After Launch)",
-      "status": "draft",
-      "category": "tools-workflow",
-      "series": "how-google-actually-tests-new-pages",
-      "seriesOrder": 3,
-      "createdAt": "2026-07-18",
-      "tags": [
-        "#growth",
-        "#productivity",
-        "#seo",
-        "#cloudflare"
-      ],
-      "outgoingCount": 2,
-      "incomingCount": 1,
-      "relatedPostsDeclared": [
-        "how-google-tests-new-pages-explained",
-        "68k-impressions-8-clicks-image-sitemap-blind-spot"
-      ]
     }
   ],
   "linkGraph": {
-    "totalLinks": 24,
+    "totalLinks": 18,
     "articlesWithNoOutgoing": [
+      "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "building-pixel-email-subscription",
       "claude-deepseek-workflow",
       "fixing-adsense-responsive-mobile-square",
@@ -440,6 +440,7 @@
       "platform-agnostic-ad-component-nuxt4-ssg"
     ],
     "articlesWithNoIncoming": [
+      "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "does-indie-dev-have-to-be-jack-of-all-trades",
       "fixing-adsense-responsive-mobile-square",
       "nuxt4-cloudflare-three-deployment-modes",
@@ -481,31 +482,6 @@
         "from": "going-serverless-part-3-macos-upgrade-wrangler",
         "to": "going-serverless-part-2-github-oauth-local-callback",
         "anchor": "Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)"
-      },
-      {
-        "from": "gsc-impressions-zero-clicks-diagnosis",
-        "to": "68k-impressions-8-clicks-image-sitemap-blind-spot",
-        "anchor": "68,000 wasted image impressions I didn't know I had"
-      },
-      {
-        "from": "68k-impressions-8-clicks-image-sitemap-blind-spot",
-        "to": "gsc-impressions-zero-clicks-diagnosis",
-        "anchor": "impressions but zero clicks diagnosis"
-      },
-      {
-        "from": "how-google-tests-new-pages-explained",
-        "to": "gsc-impressions-zero-clicks-diagnosis",
-        "anchor": "the previous post in this series"
-      },
-      {
-        "from": "seo-checklist-new-page-launch",
-        "to": "gsc-impressions-zero-clicks-diagnosis",
-        "anchor": "the diagnosis case study"
-      },
-      {
-        "from": "seo-checklist-new-page-launch",
-        "to": "how-google-tests-new-pages-explained",
-        "anchor": "the full discovery-to-convergence mechanism"
       },
       {
         "from": "nuxt4-cloudflare-three-deployment-modes",
