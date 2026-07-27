@@ -341,6 +341,17 @@ SEO Description: [150-160 chars]
 Key sections: [...]
 
 ### Article 2: ...
+
+## Visual Assets
+
+| # | Type | Description | Placement | Source |
+|---|------|-------------|-----------|--------|
+| 1 | Screenshot | [what the user sees] | [after which paragraph] | ⚠️ User captures |
+| 2 | Architecture | [system design / data flow] | [before/after which section] | ✅ AI generates SVG |
+| 3 | Flowchart | [decision tree / process] | [section name] | ✅ AI generates SVG |
+| 4 | Code Output | [terminal result / JSON] | [after which code block] | ⚠️ User captures or AI simulates |
+
+Priority: [Must-have screenshots marked with ⚠️, nice-to-have unmarked]
 ```
 
 Then list **what you need from the user** (per Section 5.1):
@@ -438,6 +449,73 @@ For **startup-diary / product-business** posts, use narrative structure but stil
 
 Per Section 3.1: Every diagram/SVG I generate **must be embedded** in the markdown body at the correct paragraph position. Not just saved to disk — verify it appears in the `.md` file output.
 
+#### 4D — Visual Assets Plan
+
+Every tutorial/how-to article should include visual assets to improve readability and user retention. During Phase 2, generate a **Visual Assets List** as part of the proposal.
+
+**Asset Types & When to Use**:
+
+| Type | When to Use | Can Generate? | Example |
+|------|------------|---------------|---------|
+| **Screenshot** | Real UI steps (console, dashboard, terminal output) | ❌ Must be real | GSC settings page, Cloud Console create service account |
+| **Architecture Diagram** | System design, data flow, multi-component interaction | ✅ SVG/mermaid | JWT auth flow, data pipeline overview |
+| **Flowchart** | Decision trees, conditional logic, troubleshooting paths | ✅ SVG/mermaid | "Which auth method to choose" decision tree |
+| **Code Output** | Terminal results, JSON structure, API responses | ⚠️ Can use real output | `node scripts/gsc-pull.cjs` terminal output |
+| **Comparison Table** | Before/after, tool comparison, feature matrix | ✅ HTML table in markdown | OAuth vs Service Account comparison |
+| **Sequence Diagram** | Multi-step interactions between systems | ✅ mermaid | Client → Google OAuth → Token Exchange → API |
+
+**Screenshot Naming Convention**:
+
+```
+public/images/{category}/{article-slug}/
+├── {short-descriptive-name}.webp       # Primary (1200px wide)
+└── {short-descriptive-name}-m.webp     # Mobile variant (600px wide)
+```
+
+Examples:
+```
+gsc-api-enable-api.webp           # Step: enabling the API
+gsc-api-create-service-account.webp  # Step: creating service account
+gsc-api-add-user.webp             # Step: adding user in GSC
+gsc-api-terminal-output.webp      # Result: script running
+gsc-api-json-output.webp          # Result: JSON data structure
+```
+
+**Markdown Embedding Format**:
+
+```markdown
+![Alt text describing what the screenshot shows](/images/{category}/{article-slug}/{filename}.webp)
+```
+
+Rules:
+- Alt text must describe **what is shown**, not just "screenshot" or "image"
+- Place image **immediately after** the paragraph that references it
+- One image per major step (don't cluster 5 screenshots together)
+- Mobile variant (`-m.webp`) is optional, used for responsive display
+
+**Visual Assets List Template** (include in Phase 2 proposal):
+
+```markdown
+### Visual Assets
+
+| # | Type | Description | Placement | Source |
+|---|------|-------------|-----------|--------|
+| 1 | Screenshot | Cloud Console: enable Search Console API | Step 1, after "enable it" | User captures |
+| 2 | Screenshot | Cloud Console: create service account form | Step 1, after "fill in a name" | User captures |
+| 3 | Architecture | JWT auth flow diagram | Step 3, before code | AI generates SVG |
+| 4 | Screenshot | GSC: add user permissions page | Step 2, after "Add user" | User captures |
+| 5 | Code Output | Terminal: script execution result | Step 5, after code block | User captures or AI simulates |
+| 6 | Flowchart | Decision tree: which auth method | "Auth Method" section | AI generates SVG |
+```
+
+**Priority Rules** (if user can only provide limited screenshots):
+
+1. **Must-have**: Any step where the UI is non-obvious or easy to get wrong
+2. **Should-have**: Final result/output verification
+3. **Nice-to-have**: Intermediate setup steps (text instructions are often sufficient)
+
+For each "Must-have" screenshot, mark it in the proposal as `⚠️ Required — user must capture`.
+
 #### 4D — Series Navigation (Section 9.1)
 
 If this article is part of a series, append at the bottom:
@@ -503,6 +581,7 @@ Run through this checklist on every article before presenting or saving:
 - [ ] **Complete Configs**: Are config files shown in full, not as "add this to your config" fragments?
 - [ ] **"Next Time" Test**: Does the ending provide a reusable checklist, decision framework, or template — not just "and then it worked"?
 - [ ] **Prerequisites**: If the article assumes prior knowledge, is it stated upfront? ("This assumes you already have X set up")
+- [ ] **Visual Assets**: For tutorial/how-to articles — are there screenshots at every non-obvious UI step? Are architecture/flow diagrams included for multi-component systems? Are all "⚠️ User captures" items clearly marked in the proposal?
 
 ---
 
@@ -513,6 +592,7 @@ Run through this checklist on every article before presenting or saving:
 3. Present the output to user with:
    - List of files written
    - Summary of what's draft vs ready
+   - **Visual Assets Checklist**: all required screenshots/diagrams with placement instructions
    - What still needs user action (screenshots, data, draft→published flip)
 4. **Ask user to review before setting `draft: false`**
 
