@@ -10,7 +10,7 @@ tags:
   - "#nodejs"
   - "#google"
   - "#automation"
-image: ""
+image: "/images/tools-workflow/google-search-console-api-nodejs/google-search-console-api-nodejs-cover.webp"
 draft: false
 series: null
 seriesOrder: null
@@ -402,12 +402,6 @@ Output:
 ✅ Written to content/.gsc-performance.json
    11 pages, 0 improved, 4 declined, 7 new
 ```
-
-![Terminal output after running the GSC data pull script](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-terminal-output.webp)
-
-The JSON output at `.gsc-performance.json` looks like this:
-
-![JSON output showing the structured GSC performance data](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-json-output.webp)
 
 ---
 
