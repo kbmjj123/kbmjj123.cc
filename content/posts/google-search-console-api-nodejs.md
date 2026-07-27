@@ -71,12 +71,20 @@ The tradeoff: you need to add the service account email as a user in GSC manuall
 2. Create a project (or use an existing one)
 3. Navigate to **APIs & Services → Library**
 4. Search for **Google Search Console API** and enable it
+
+![Google Cloud Console — enabling the Google Search Console API](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-enable-api.webp)
+
 5. Go to **APIs & Services → Credentials**
 6. Click **Create Credentials → Service Account**
 7. Fill in a name (e.g., `gsc-data-puller`), click **Create and Continue**
+
+![Creating a service account in Google Cloud Console](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-create-service-account.webp)
+
 8. Skip the optional steps, click **Done**
 9. Click on the newly created service account → **Keys** tab → **Add Key → Create new key**
 10. Choose **JSON** format → download the key file
+
+![Downloading the JSON key file from the service account Keys tab](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-download-key.webp)
 
 Save this file somewhere secure. I put mine at `.claude/credentials/gsc-service-account.json` (gitignored).
 
@@ -105,6 +113,9 @@ The two fields we need: `client_email` and `private_key`.
 2. Select your site
 3. Go to **Settings → Users and permissions**
 4. Click **Add user**
+
+![Adding a service account user in Google Search Console settings](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-add-user.webp)
+
 5. Enter the service account email (from the JSON file)
 6. Set permission to **Restricted**
 7. Click **Add**
@@ -392,6 +403,12 @@ Output:
    11 pages, 0 improved, 4 declined, 7 new
 ```
 
+![Terminal output after running the GSC data pull script](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-terminal-output.webp)
+
+The JSON output at `.gsc-performance.json` looks like this:
+
+![JSON output showing the structured GSC performance data](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-json-output.webp)
+
 ---
 
 ## Bugs I Hit (So You Don't Have To)
@@ -413,6 +430,8 @@ const SITE_URL = 'sc-domain:kbmjj123.cc';
 ```
 
 You can check your property type in GSC — the URL in the dropdown shows either `sc-domain:` or `https://`.
+
+![GSC property selector showing sc-domain:kbmjj123.cc format](/images/tools-workflow/google-search-console-api-nodejs/gsc-api-sc-domain-property.webp)
 
 ### Bug 2: JSON Body Escaping in Shell
 
