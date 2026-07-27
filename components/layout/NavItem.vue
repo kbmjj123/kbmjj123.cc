@@ -1,13 +1,13 @@
 <template>
   <NuxtLink v-if="!isExternal" :to="resolvedTo" class="nav-item" :class="{ active: isActive }"
     @click="handleClick">
-    <span v-if="icon" class="w-4 h-4 flex items-center justify-center text-sm shrink-0">{{ icon }}</span>
-    <span class="truncate">{{ label }}</span>
+    <span v-if="icon" class="nav-icon">{{ icon }}</span>
+    <span class="nav-label">{{ label }}</span>
     <span v-if="count !== undefined" class="nav-count">{{ count }}</span>
   </NuxtLink>
   <a v-else :href="to" target="_blank" rel="noopener noreferrer" class="nav-item" @click="emitClick">
-    <span v-if="icon" class="w-4 h-4 flex items-center justify-center text-sm shrink-0">{{ icon }}</span>
-    <span class="truncate">{{ label }}</span>
+    <span v-if="icon" class="nav-icon">{{ icon }}</span>
+    <span class="nav-label">{{ label }}</span>
     <span v-if="count !== undefined" class="nav-count">{{ count }}</span>
   </a>
 </template>
@@ -88,3 +88,20 @@ const isActive = computed(() => {
   return false
 })
 </script>
+
+<style scoped>
+.nav-icon {
+  width: 16px;
+  height: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  flex-shrink: 0;
+}
+.nav-label {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+</style>

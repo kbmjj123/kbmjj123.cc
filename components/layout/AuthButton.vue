@@ -1,11 +1,11 @@
 <template>
-  <div class="flex items-center">
+  <div class="auth-wrap">
     <!-- Logged in: avatar + dropdown -->
-    <div v-if="isLoggedIn && user" class="relative" @click.stop>
-      <button class="flex items-center gap-1.5 px-2 py-1 rounded-md transition-colors"
+    <div v-if="isLoggedIn && user" style="position:relative;" @click.stop>
+      <button class="auth-trigger"
         :style="{ color: 'var(--color-text-secondary)' }"
         @click="dropdownOpen = !dropdownOpen">
-        <div class="w-6 h-6 rounded-full flex items-center justify-center font-sans font-bold text-[10px]"
+        <div class="auth-avatar"
           :style="{ background: 'var(--color-accent)', color: '#000' }">
           {{ user.username[0]?.toUpperCase() }}
         </div>
@@ -13,21 +13,21 @@
           <path d="M6 9l6 6 6-6" />
         </svg>
       </button>
-      <div v-if="dropdownOpen" class="absolute right-0 top-full mt-1 w-44 py-1 rounded-lg z-50"
+      <div v-if="dropdownOpen" class="auth-dropdown"
         :style="{ background: 'var(--color-bg-elevated)', border: '1px solid var(--color-border)', boxShadow: 'var(--shadow-modal)' }"
         @click="dropdownOpen = false">
-        <div class="px-3 py-2 font-body text-[11px] truncate" :style="{ color: 'var(--color-text-muted)' }">
+        <div class="auth-email" :style="{ color: 'var(--color-text-muted)' }">
           {{ user.email || user.username }}
         </div>
         <div :style="{ borderTop: '1px solid var(--color-border)' }" />
-        <button class="w-full text-left px-3 py-2 font-body text-[12px] transition-colors"
+        <button class="auth-signout"
           :style="{ color: 'var(--color-text-secondary)' }"
           @click="logout">Sign Out</button>
       </div>
     </div>
 
     <!-- Not logged in: sign in button -->
-    <button v-else class="flex items-center gap-1.5 h-7 px-2.5 rounded-md font-body text-[11px] transition-colors"
+    <button v-else class="auth-signin"
       :style="{ color: 'var(--color-text-secondary)', border: '1px solid var(--color-border)' }"
       @click="login">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
@@ -47,3 +47,71 @@ if (import.meta.client) {
   document.addEventListener('click', () => { dropdownOpen.value = false })
 }
 </script>
+
+<style scoped>
+.auth-wrap {
+  display: flex;
+  align-items: center;
+}
+.auth-trigger {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.auth-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 9999px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 10px;
+}
+.auth-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%;
+  margin-top: 4px;
+  width: 176px;
+  padding: 4px 0;
+  border-radius: 10px;
+  z-index: 50;
+}
+.auth-email {
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.auth-signout {
+  width: 100%;
+  text-align: left;
+  padding: 8px 12px;
+  font-family: var(--font-body);
+  font-size: 12px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+}
+.auth-signin {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  height: 28px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 11px;
+  background: transparent;
+  cursor: pointer;
+}
+</style>

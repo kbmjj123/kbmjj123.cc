@@ -1,5 +1,5 @@
 <template>
-  <nav class="sm:hidden mobile-tabbar flex">
+  <nav class="mobile-tabbar">
     <NuxtLink v-for="tab in tabs" :key="tab.to" :to="tab.to"
       class="mobile-tab" :class="{ active: isActive(tab.to) }">
       <span v-html="tab.icon"></span>
@@ -23,3 +23,13 @@ function isActive(to: string) {
   return route.path.startsWith(to + '/')
 }
 </script>
+
+<style scoped>
+.mobile-tabbar {
+  display: flex;
+}
+
+@media (min-width: 640px) {
+  .mobile-tabbar { display: none; }
+}
+</style>

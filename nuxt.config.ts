@@ -84,10 +84,4 @@ export default defineNuxtConfig({
 		exclude: ['/admin/**'],
 		sources: ['/api/sitemap-posts']
 	},
-
-	vite: {
-		plugins: [
-			(await import('@tailwindcss/vite')).default(),
-		],
-	},
 })
