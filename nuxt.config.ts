@@ -87,6 +87,13 @@ export default defineNuxtConfig({
 
 	postcss: {
 		plugins: {
+			'postcss-import': {
+				filter(id) {
+					// 让 @tailwindcss/postcss 处理 tailwindcss 导入
+					if (id === 'tailwindcss') return false
+					return true
+				},
+			},
 			'@tailwindcss/postcss': {},
 		},
 	},
