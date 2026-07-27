@@ -1,6 +1,6 @@
 {
-  "generatedAt": "2026-07-26T16:05:54.646Z",
-  "top": 10,
+  "generatedAt": "2026-07-27T03:36:25.336Z",
+  "top": 15,
   "ideas": [
     {
       "query": "supabase",
@@ -12,8 +12,8 @@
       "kd": null,
       "autocompleteSuggestions": [
         "supabase",
-        "supabase pricing",
         "supabase login",
+        "supabase pricing",
         "supabase careers",
         "supabase mcp",
         "supabase cli",
@@ -40,10 +40,10 @@
         "ci cd pipeline example",
         "ci cd pipeline system design",
         "ci cd pipeline interview questions",
+        "ci cd pipeline full form",
         "ci cd pipeline github",
-        "ci cd pipelines explained",
-        "ci cd pipeline diagram",
-        "ci cd pipeline full form"
+        "ci cd pipeline explained",
+        "ci cd pipeline diagram"
       ],
       "existingPage": null,
       "parentQuery": null
@@ -61,19 +61,19 @@
         "google search console login",
         "google search console api",
         "google search console mcp",
-        "google search console logo",
-        "google search console removals tool",
         "google search console account",
+        "google search console removal tool",
         "google search console vs google analytics",
+        "google search console logo",
         "google search console tools",
-        "google search console url inspection tool"
+        "google search console sign in"
       ],
       "existingPage": null,
       "parentQuery": null
     },
     {
       "query": "server side rendering",
-      "score": 151,
+      "score": 154,
       "source": "seed",
       "impressions": 0,
       "position": 0,
@@ -81,13 +81,13 @@
       "kd": null,
       "autocompleteSuggestions": [
         "server side rendering",
-        "server side rendering vs client side rendering",
         "server side rendering react",
+        "server side rendering vs client side rendering",
         "server side rendering angular",
         "server side rendering frameworks",
         "server side rendering next js",
-        "server side rendering vs static site generation",
         "server side rendering meaning",
+        "server side rendering vs static site generation",
         "server side rendering vs spa",
         "server side rendering and static site generation"
       ],
@@ -128,37 +128,14 @@
       "autocompleteSuggestions": [
         "drizzle orm",
         "drizzle orm vs prisma",
-        "drizzle orm npm",
         "drizzle orm github",
+        "drizzle orm npm",
         "drizzle orm migrations",
         "drizzle orm docs",
+        "drizzle orm sqlite",
         "drizzle orm skills",
         "drizzle orm d1",
-        "drizzle orm mcp",
-        "drizzle orm zod"
-      ],
-      "existingPage": null,
-      "parentQuery": null
-    },
-    {
-      "query": "core web vitals",
-      "score": 130,
-      "source": "seed",
-      "impressions": 0,
-      "position": 0,
-      "volume": null,
-      "kd": null,
-      "autocompleteSuggestions": [
-        "core web vitals",
-        "core web vitals test",
-        "core web vitals assessment",
-        "core web vitals checker",
-        "core web vitals metrics",
-        "core web vitals assessment failed",
-        "core web vitals inp",
-        "core web vitals google",
-        "core web vitals lcp",
-        "core web vitals chrome extension"
+        "drizzle orm mcp"
       ],
       "existingPage": null,
       "parentQuery": null
@@ -180,31 +157,31 @@
         "static site generation meaning",
         "static site generation ssg in next js",
         "static site generation vite",
-        "static site generation example",
-        "static site generation nuxt"
+        "static site generation nuxt",
+        "static site generation example"
       ],
       "existingPage": null,
       "parentQuery": null
     },
     {
-      "query": "github actions deploy",
-      "score": 106,
+      "query": "core web vitals",
+      "score": 127,
       "source": "seed",
       "impressions": 0,
       "position": 0,
       "volume": null,
       "kd": null,
       "autocompleteSuggestions": [
-        "github actions deployments",
-        "github actions deploy pages",
-        "github actions deploy to aws",
-        "github actions deploy to server",
-        "github actions deployment false",
-        "github actions deploy to on prem server",
-        "github actions deploy to azure",
-        "github actions deployment protection rules",
-        "github actions deploy to ec2",
-        "github actions deploy to cloudflare pages"
+        "core web vitals",
+        "core web vitals test",
+        "core web vitals assessment",
+        "core web vitals metrics",
+        "core web vitals checker",
+        "core web vitals google",
+        "core web vitals assessment failed",
+        "core web vitals inp",
+        "core web vitals chrome extension",
+        "core web vitals lcp"
       ],
       "existingPage": null,
       "parentQuery": null
@@ -218,19 +195,113 @@
       "volume": null,
       "kd": null,
       "autocompleteSuggestions": [
-        "web performance metrics",
         "web performance",
+        "web performance metrics",
         "web performance optimization techniques",
         "web performance test",
+        "web performance camshafts",
         "web performance engineering in the age of ai",
+        "web performance best practices",
         "web performance fundamentals",
         "web performance api",
-        "web performance best practices",
-        "web performance optimization best practices",
-        "web performance tuning"
+        "web performance optimization best practices"
       ],
       "existingPage": null,
       "parentQuery": null
+    },
+    {
+      "query": "github actions deploy",
+      "score": 103,
+      "source": "seed",
+      "impressions": 0,
+      "position": 0,
+      "volume": null,
+      "kd": null,
+      "autocompleteSuggestions": [
+        "github actions deployments",
+        "github actions deploy to aws",
+        "github actions deploy pages",
+        "github actions deployment false",
+        "github actions deploy to server",
+        "github actions deploy to on prem server",
+        "github actions deploy to azure app service",
+        "github actions deploy to azure",
+        "github actions deploy to ec2",
+        "github actions deployment protection rules"
+      ],
+      "existingPage": null,
+      "parentQuery": null
+    },
+    {
+      "query": "seo for developers",
+      "score": 55,
+      "source": "seed",
+      "impressions": 0,
+      "position": 0,
+      "volume": null,
+      "kd": null,
+      "autocompleteSuggestions": [
+        "seo for developers",
+        "seo for developers course",
+        "seo for web developers",
+        "technical seo for developers",
+        "seo for frontend developers",
+        "seo checklist for developers",
+        "google seo for developers",
+        "seo basics for developers",
+        "seo for real estate developers",
+        "seo guide for web developers"
+      ],
+      "existingPage": null,
+      "parentQuery": null
+    },
+    {
+      "query": "supabase careers",
+      "score": 25,
+      "source": "autocomplete",
+      "impressions": 0,
+      "position": 0,
+      "volume": null,
+      "kd": null,
+      "autocompleteSuggestions": [],
+      "existingPage": null,
+      "parentQuery": "supabase"
+    },
+    {
+      "query": "supabase mcp",
+      "score": 25,
+      "source": "autocomplete",
+      "impressions": 0,
+      "position": 0,
+      "volume": null,
+      "kd": null,
+      "autocompleteSuggestions": [],
+      "existingPage": null,
+      "parentQuery": "supabase"
+    },
+    {
+      "query": "supabase cli",
+      "score": 25,
+      "source": "autocomplete",
+      "impressions": 0,
+      "position": 0,
+      "volume": null,
+      "kd": null,
+      "autocompleteSuggestions": [],
+      "existingPage": null,
+      "parentQuery": "supabase"
+    },
+    {
+      "query": "supabase auth",
+      "score": 25,
+      "source": "autocomplete",
+      "impressions": 0,
+      "position": 0,
+      "volume": null,
+      "kd": null,
+      "autocompleteSuggestions": [],
+      "existingPage": null,
+      "parentQuery": "supabase"
     }
   ]
 }
