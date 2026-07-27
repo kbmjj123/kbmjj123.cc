@@ -85,16 +85,9 @@ export default defineNuxtConfig({
 		sources: ['/api/sitemap-posts']
 	},
 
-	postcss: {
-		plugins: {
-			'postcss-import': {
-				filter(id) {
-					// 让 @tailwindcss/postcss 处理 tailwindcss 导入
-					if (id === 'tailwindcss') return false
-					return true
-				},
-			},
-			'@tailwindcss/postcss': {},
-		},
+	vite: {
+		plugins: [
+			(await import('@tailwindcss/vite')).default(),
+		],
 	},
 })
