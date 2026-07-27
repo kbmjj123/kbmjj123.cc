@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2026-07-26",
-  "totalArticles": 17,
-  "published": 17,
+  "lastUpdated": "2026-07-27",
+  "totalArticles": 18,
+  "published": 18,
   "drafts": 0,
   "series": [
     {
@@ -275,6 +275,27 @@
       }
     },
     {
+      "slug": "google-search-console-api-nodejs",
+      "title": "Google Search Console API with Node.js: Pull Real SEO Data Without googleapis",
+      "status": "published",
+      "category": "tools-workflow",
+      "series": null,
+      "seriesOrder": null,
+      "createdAt": "2026-07-26",
+      "tags": [
+        "#seo",
+        "#growth",
+        "#nodejs",
+        "#google",
+        "#automation"
+      ],
+      "outgoingCount": 0,
+      "incomingCount": 0,
+      "relatedPostsDeclared": [
+        "68k-impressions-8-clicks-image-sitemap-blind-spot"
+      ]
+    },
+    {
       "slug": "nuxt-cloudflare-zero-cost",
       "title": "Running a Zero-Cost SaaS with Nuxt and Cloudflare",
       "status": "published",
@@ -436,6 +457,7 @@
       "building-pixel-email-subscription",
       "claude-deepseek-workflow",
       "fixing-adsense-responsive-mobile-square",
+      "google-search-console-api-nodejs",
       "nuxt-cloudflare-zero-cost",
       "platform-agnostic-ad-component-nuxt4-ssg"
     ],
@@ -443,6 +465,7 @@
       "68k-impressions-8-clicks-image-sitemap-blind-spot",
       "does-indie-dev-have-to-be-jack-of-all-trades",
       "fixing-adsense-responsive-mobile-square",
+      "google-search-console-api-nodejs",
       "nuxt4-cloudflare-three-deployment-modes",
       "platform-agnostic-ad-component-nuxt4-ssg",
       "self-hosting-umami-part-4"
