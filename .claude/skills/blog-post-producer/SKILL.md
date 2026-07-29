@@ -13,6 +13,10 @@ compatibility:
     - Write (for writing .md files)
     - Edit (for editing relatedPosts on existing posts)
     - WebSearch/WebFetch (for SEO keyword research per Section 2.1)
+  sub_skills:
+    - content-strategist (Phase 0: content recommendations)
+    - image-planner (Phase 4D: automatic image handling)
+    - content-evolver (Phase 0: loads learned patterns and competitor intelligence)
   platforms:
     - Claude Code
     - Claude.ai (some steps adapt)
@@ -49,10 +53,18 @@ Check if `content/.gsc-performance.json` exists and has `lastPulled` set (not nu
 
 **Step 0B — Load Pattern Memory**
 
-Check if memory file `successful-content-patterns.md` exists in the project memory directory.
+Check if memory files exist in the project memory directory. Load all that exist:
 
-- If exists: read it. These are learned patterns from previous performance reviews — apply them when deciding article structure, keyword targeting, and content style.
-- If not exists: skip. Will be created after the first performance review.
+- `memory/successful-content-patterns.md` — learned patterns from performance reviews. Apply when deciding article structure, keyword targeting, and content style.
+- `memory/competitor-intelligence.md` — SERP analysis and competitor gaps. Use to identify sections competitors cover that you should include.
+- `memory/content-gaps.md` — prioritized keyword opportunities. Reference when evaluating if the article topic has demand.
+
+If any file doesn't exist: skip that file. It will be created by `content-evolver` after the first review cycle.
+
+**Apply memory data during writing**:
+- If competitor intelligence shows top results include a section your article doesn't → add it
+- If content patterns show winners average [X] words → target similar length
+- If content gaps list this keyword → mark it as covered after publishing
 
 **Step 0C — Content Matrix Check**
 
@@ -448,6 +460,30 @@ For **startup-diary / product-business** posts, use narrative structure but stil
 #### 4C — Image Embedding
 
 Per Section 3.1: Every diagram/SVG I generate **must be embedded** in the markdown body at the correct paragraph position. Not just saved to disk — verify it appears in the `.md` file output.
+
+#### 4D — Auto-Invoke image-planner (Mandatory)
+
+After writing the article body, **automatically invoke the `image-planner` skill** to handle all image-related tasks. Do NOT manually create image directories or insert placeholders — delegate to image-planner.
+
+**Trigger**: Every article written in Phase 4, regardless of type.
+
+**What image-planner does**:
+1. Creates `public/images/{category}/{slug}/` directory
+2. Sets `image` field in frontmatter (cover image path)
+3. Inserts `![alt](path)` placeholders at appropriate body locations
+4. Generates architecture/flow SVGs where applicable
+5. Outputs an image checklist to the user
+
+**How to invoke**:
+```
+Skill: image-planner
+Args: {slug} — the article slug just written
+```
+
+After image-planner returns:
+- Verify all `![alt](path)` references are in the `.md` file
+- Verify the `image` frontmatter field is set
+- Include the image checklist in your Phase 6 output to the user
 
 #### 4D — Visual Assets Plan
 

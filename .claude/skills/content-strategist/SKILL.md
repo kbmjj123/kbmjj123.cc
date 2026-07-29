@@ -24,6 +24,13 @@ This skill generates data-driven content recommendations using real user search 
 
 **Companion skill**: `blog-post-producer` handles writing articles. This skill handles deciding **what** to write.
 
+**Learning integration**: This skill reads memory files from `content-evolver` to apply learned patterns:
+- `memory/successful-content-patterns.md` — what article structures and strategies work
+- `memory/competitor-intelligence.md` — SERP analysis and competitor gaps
+- `memory/content-gaps.md` — prioritized keyword opportunities
+
+Always load these files at the start of any recommendation workflow.
+
 ## Domain Boundary — Content Focus
 
 All content recommendations MUST stay within the blog's core identity: **a developer building products and sharing real technical experience**.
