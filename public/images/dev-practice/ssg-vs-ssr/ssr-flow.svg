@@ -1,0 +1,149 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" font-family="'Inter', -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b12"/>
+      <stop offset="100%" stop-color="#13131e"/>
+    </linearGradient>
+    <linearGradient id="nodeBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#13131e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowGold" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa"/>
+    </marker>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.5" fill="#2a2a42" opacity="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="520" fill="url(#bgGrad)"/>
+  <rect width="800" height="520" fill="url(#dots)"/>
+
+  <!-- Title -->
+  <text x="400" y="42" text-anchor="middle" fill="#e8edf5" font-size="16" font-weight="700" letter-spacing="1">SSR — Server-Side Rendering</text>
+  <text x="400" y="62" text-anchor="middle" fill="#4d5a7a" font-size="11">Every request → Worker → Render → Response</text>
+
+  <!-- ═══ Row labels ═══ -->
+  <rect x="20" y="95" width="70" height="20" rx="4" fill="#4ade80" opacity="0.1"/>
+  <text x="55" y="109" text-anchor="middle" fill="#4ade80" font-size="8" font-weight="600">REQUEST ↓</text>
+
+  <rect x="20" y="300" width="70" height="20" rx="4" fill="#fbbf24" opacity="0.1"/>
+  <text x="55" y="314" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="600">RESPONSE ↑</text>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- REQUEST PATH (top half, left to right)      -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- ═══ Node: User ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="130" width="130" height="70" rx="8" fill="url(#nodeBg)" stroke="#2a2a42" stroke-width="1.5"/>
+    <rect x="62" y="146" width="28" height="20" rx="3" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+    <line x1="62" y1="153" x2="90" y2="153" stroke="#4ade80" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="67" cy="150" r="1.5" fill="#f87171"/>
+    <circle cx="73" cy="150" r="1.5" fill="#fbbf24"/>
+    <circle cx="79" cy="150" r="1.5" fill="#4ade80"/>
+    <text x="100" y="160" fill="#e8edf5" font-size="11" font-weight="600">User</text>
+    <text x="100" y="175" fill="#4d5a7a" font-size="9">Browser</text>
+  </g>
+
+  <!-- Arrow 1: User → CDN -->
+  <line x1="170" y1="165" x2="260" y2="165" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreen)" opacity="0.8"/>
+  <text x="215" y="157" text-anchor="middle" fill="#4d5a7a" font-size="8">GET /search?q=nuxt</text>
+
+  <!-- ═══ Node: CDN ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="270" y="130" width="140" height="70" rx="8" fill="url(#nodeBg)" stroke="#2a2a42" stroke-width="1.5"/>
+    <circle cx="315" cy="160" r="14" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+    <ellipse cx="315" cy="160" rx="7" ry="14" fill="none" stroke="#4ade80" stroke-width="0.8" opacity="0.6"/>
+    <line x1="301" y1="160" x2="329" y2="160" stroke="#4ade80" stroke-width="0.8" opacity="0.6"/>
+    <text x="340" y="155" fill="#e8edf5" font-size="11" font-weight="600">CDN</text>
+    <text x="340" y="170" fill="#4d5a7a" font-size="9">Edge</text>
+    <text x="340" y="188" fill="#f87171" font-size="8" opacity="0.7">cache miss ✗</text>
+  </g>
+
+  <!-- Arrow 2: CDN → Worker (down then left) -->
+  <path d="M 340 200 L 340 240 L 205 240" fill="none" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreen)" opacity="0.8"/>
+  <text x="350" y="235" fill="#4d5a7a" font-size="8">miss → forward</text>
+
+  <!-- ═══ Node: Worker ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="245" width="150" height="100" rx="8" fill="url(#nodeBg)" stroke="#4ade80" stroke-width="1.5"/>
+    <rect x="60" y="245" width="150" height="22" rx="8" fill="#4ade80" opacity="0.08"/>
+    <text x="135" y="261" text-anchor="middle" fill="#4ade80" font-size="9" font-weight="600" letter-spacing="1">WORKER</text>
+
+    <!-- Nitro block -->
+    <rect x="78" y="278" width="42" height="50" rx="5" fill="#13131e" stroke="#2a2a42" stroke-width="1"/>
+    <text x="99" y="300" text-anchor="middle" fill="#4ade80" font-size="10" font-weight="700">N</text>
+    <text x="99" y="320" text-anchor="middle" fill="#4d5a7a" font-size="7">Nitro</text>
+
+    <text x="135" y="292" fill="#e8edf5" font-size="9">① Parse route</text>
+    <text x="135" y="307" fill="#e8edf5" font-size="9">② Query D1</text>
+    <text x="135" y="322" fill="#e8edf5" font-size="9">③ Render HTML</text>
+  </g>
+
+  <!-- Arrow 3: Worker → D1 -->
+  <line x1="135" y1="345" x2="135" y2="385" stroke="#60a5fa" stroke-width="1.2" marker-end="url(#arrowBlue)" opacity="0.7"/>
+  <text x="155" y="370" fill="#4d5a7a" font-size="8">SQL</text>
+
+  <!-- ═══ Node: D1 ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="70" y="390" width="130" height="45" rx="6" fill="url(#nodeBg)" stroke="#60a5fa" stroke-width="1"/>
+    <ellipse cx="100" cy="408" rx="10" ry="5" fill="none" stroke="#60a5fa" stroke-width="1"/>
+    <line x1="90" y1="408" x2="90" y2="423" stroke="#60a5fa" stroke-width="1"/>
+    <line x1="110" y1="408" x2="110" y2="423" stroke="#60a5fa" stroke-width="1"/>
+    <ellipse cx="100" cy="423" rx="10" ry="5" fill="none" stroke="#60a5fa" stroke-width="1"/>
+    <text x="130" y="415" fill="#e8edf5" font-size="10" font-weight="600">D1</text>
+    <text x="130" y="428" fill="#4d5a7a" font-size="8">SQLite</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- RESPONSE PATH (bottom half, right to left)  -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- Arrow 4: Worker → response (up to mid lane) -->
+  <path d="M 210 295 L 480 295" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowGold)" opacity="0.8"/>
+  <text x="345" y="288" text-anchor="middle" fill="#fbbf24" font-size="8">rendered HTML</text>
+
+  <!-- ═══ Node: Response ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="485" y="265" width="150" height="60" rx="8" fill="url(#nodeBg)" stroke="#fbbf24" stroke-width="1.5"/>
+    <text x="560" y="290" text-anchor="middle" fill="#e8edf5" font-size="11" font-weight="600">HTML Response</text>
+    <text x="560" y="308" text-anchor="middle" fill="#4d5a7a" font-size="9">cached at CDN edge</text>
+  </g>
+
+  <!-- Arrow 5: Response → User -->
+  <path d="M 485 295 L 485 440 L 105 440 L 105 205" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowGold)" opacity="0.6"/>
+  <text x="300" y="455" text-anchor="middle" fill="#fbbf24" font-size="8">delivered to browser</text>
+
+  <!-- ═══ Legend ═══ -->
+  <g transform="translate(520, 100)">
+    <rect width="160" height="75" rx="6" fill="#13131e" stroke="#2a2a42" stroke-width="1" opacity="0.8"/>
+    <circle cx="16" cy="20" r="4" fill="#4ade80"/>
+    <text x="28" y="24" fill="#9aa8c9" font-size="9">Request (inbound)</text>
+    <circle cx="16" cy="40" r="4" fill="#fbbf24"/>
+    <text x="28" y="44" fill="#9aa8c9" font-size="9">Response (outbound)</text>
+    <circle cx="16" cy="60" r="4" fill="#60a5fa"/>
+    <text x="28" y="64" fill="#9aa8c9" font-size="9">Data query</text>
+  </g>
+
+  <!-- ═══ Key insight ═══ -->
+  <g transform="translate(440, 130)">
+    <rect width="260" height="110" rx="8" fill="url(#nodeBg)" stroke="#2a2a42" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="130" y="22" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">What happens per request</text>
+    <line x1="15" y1="32" x2="245" y2="32" stroke="#2a2a42" stroke-width="0.5"/>
+    <text x="15" y="50" fill="#9aa8c9" font-size="9">① CDN misses static cache</text>
+    <text x="15" y="66" fill="#9aa8c9" font-size="9">② Forwarded to Worker (0-5ms)</text>
+    <text x="15" y="82" fill="#9aa8c9" font-size="9">③ Nitro renders HTML server-side</text>
+    <text x="15" y="98" fill="#9aa8c9" font-size="9">④ HTML returned, cached at edge</text>
+  </g>
+</svg>

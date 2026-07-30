@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" font-family="'Inter', -apple-system, sans-serif">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b12"/>
+      <stop offset="100%" stop-color="#13131e"/>
+    </linearGradient>
+    <linearGradient id="nodeBg" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" stop-color="#1a1a2e"/>
+      <stop offset="100%" stop-color="#13131e"/>
+    </linearGradient>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="130%">
+      <feDropShadow dx="0" dy="4" stdDeviation="6" flood-color="#000" flood-opacity="0.4"/>
+    </filter>
+    <marker id="arrowGreen" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#4ade80"/>
+    </marker>
+    <marker id="arrowGold" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#fbbf24"/>
+    </marker>
+    <marker id="arrowBlue" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#60a5fa"/>
+    </marker>
+    <marker id="arrowPurple" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+      <polygon points="0 0, 10 3.5, 0 7" fill="#c084fc"/>
+    </marker>
+    <pattern id="dots" x="0" y="0" width="20" height="20" patternUnits="userSpaceOnUse">
+      <circle cx="10" cy="10" r="0.5" fill="#2a2a42" opacity="0.5"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="800" height="560" fill="url(#bgGrad)"/>
+  <rect width="800" height="560" fill="url(#dots)"/>
+
+  <!-- Title -->
+  <text x="400" y="42" text-anchor="middle" fill="#e8edf5" font-size="16" font-weight="700" letter-spacing="1">Hybrid — Content + SSR</text>
+  <text x="400" y="62" text-anchor="middle" fill="#4d5a7a" font-size="11">Static pages from CDN · Dynamic routes via Worker · API routes hit D1</text>
+
+  <!-- ═══ Row labels ═══ -->
+  <rect x="20" y="85" width="70" height="20" rx="4" fill="#4ade80" opacity="0.1"/>
+  <text x="55" y="99" text-anchor="middle" fill="#4ade80" font-size="8" font-weight="600">ROUTE ↓</text>
+
+  <rect x="20" y="240" width="70" height="20" rx="4" fill="#4ade80" opacity="0.1"/>
+  <text x="55" y="254" text-anchor="middle" fill="#4ade80" font-size="8" font-weight="600">STATIC</text>
+
+  <rect x="20" y="330" width="70" height="20" rx="4" fill="#fbbf24" opacity="0.1"/>
+  <text x="55" y="344" text-anchor="middle" fill="#fbbf24" font-size="8" font-weight="600">DYNAMIC</text>
+
+  <rect x="20" y="420" width="70" height="20" rx="4" fill="#60a5fa" opacity="0.1"/>
+  <text x="55" y="434" text-anchor="middle" fill="#60a5fa" font-size="8" font-weight="600">API</text>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- TOP: User → Router                          -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- ═══ Node: User ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="40" y="110" width="130" height="70" rx="8" fill="url(#nodeBg)" stroke="#2a2a42" stroke-width="1.5"/>
+    <rect x="62" y="126" width="28" height="20" rx="3" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+    <line x1="62" y1="133" x2="90" y2="133" stroke="#4ade80" stroke-width="0.8" opacity="0.6"/>
+    <circle cx="67" cy="130" r="1.5" fill="#f87171"/>
+    <circle cx="73" cy="130" r="1.5" fill="#fbbf24"/>
+    <circle cx="79" cy="130" r="1.5" fill="#4ade80"/>
+    <text x="100" y="140" fill="#e8edf5" font-size="11" font-weight="600">User</text>
+    <text x="100" y="155" fill="#4d5a7a" font-size="9">Browser</text>
+  </g>
+
+  <!-- Arrow: User → Router -->
+  <line x1="170" y1="145" x2="270" y2="145" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreen)" opacity="0.8"/>
+
+  <!-- ═══ Node: Router ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="280" y="105" width="160" height="90" rx="8" fill="url(#nodeBg)" stroke="#c084fc" stroke-width="1.5"/>
+    <rect x="280" y="105" width="160" height="22" rx="8" fill="#c084fc" opacity="0.08"/>
+    <text x="360" y="121" text-anchor="middle" fill="#c084fc" font-size="9" font-weight="600" letter-spacing="1">NITRO ROUTER</text>
+
+    <rect x="298" y="140" width="36" height="40" rx="4" fill="#13131e" stroke="#2a2a42" stroke-width="1"/>
+    <text x="316" y="158" text-anchor="middle" fill="#c084fc" font-size="14">⚡</text>
+    <text x="316" y="174" text-anchor="middle" fill="#4d5a7a" font-size="7">match</text>
+
+    <text x="358" y="152" fill="#e8edf5" font-size="9">Route type?</text>
+    <text x="358" y="167" fill="#4d5a7a" font-size="8">static</text>
+    <text x="358" y="179" fill="#4d5a7a" font-size="8">dynamic · api</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LANE 1: Static path (green)                 -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- Arrow: Router → Static HTML -->
+  <path d="M 440 135 L 520 135 L 520 265 L 610 265" fill="none" stroke="#4ade80" stroke-width="1.5" marker-end="url(#arrowGreen)" opacity="0.8"/>
+  <text x="520" y="200" text-anchor="middle" fill="#4ade80" font-size="8">/posts/* → Content</text>
+
+  <!-- ═══ Node: Static HTML ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="615" y="235" width="155" height="60" rx="8" fill="url(#nodeBg)" stroke="#4ade80" stroke-width="1.5"/>
+    <rect x="633" y="250" width="22" height="28" rx="2" fill="none" stroke="#4ade80" stroke-width="1.2"/>
+    <polyline points="633,250 647,250 655,258" fill="none" stroke="#4ade80" stroke-width="1"/>
+    <line x1="639" y1="263" x2="649" y2="263" stroke="#4ade80" stroke-width="0.6" opacity="0.6"/>
+    <line x1="639" y1="268" x2="649" y2="268" stroke="#4ade80" stroke-width="0.6" opacity="0.6"/>
+    <text x="665" y="260" fill="#e8edf5" font-size="11" font-weight="600">Static HTML</text>
+    <text x="665" y="275" fill="#4d5a7a" font-size="9">pre-rendered · CDN</text>
+    <text x="692" y="290" text-anchor="middle" fill="#4ade80" font-size="8" opacity="0.7">~0ms</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LANE 2: Dynamic path (gold)                 -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- Arrow: Router → Worker (dynamic) -->
+  <path d="M 360 195 L 360 355 L 240 355" fill="none" stroke="#fbbf24" stroke-width="1.5" marker-end="url(#arrowGold)" opacity="0.8"/>
+  <text x="370" y="280" fill="#fbbf24" font-size="8">/search, /tags</text>
+
+  <!-- ═══ Node: Worker ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="60" y="325" width="180" height="100" rx="8" fill="url(#nodeBg)" stroke="#fbbf24" stroke-width="1.5"/>
+    <rect x="60" y="325" width="180" height="22" rx="8" fill="#fbbf24" opacity="0.06"/>
+    <text x="150" y="341" text-anchor="middle" fill="#fbbf24" font-size="9" font-weight="600" letter-spacing="1">CLOUDFLARE WORKER</text>
+
+    <rect x="78" y="358" width="42" height="50" rx="5" fill="#13131e" stroke="#2a2a42" stroke-width="1"/>
+    <text x="99" y="380" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="700">N</text>
+    <text x="99" y="400" text-anchor="middle" fill="#4d5a7a" font-size="7">Nitro</text>
+
+    <text x="135" y="372" fill="#e8edf5" font-size="9">Query D1</text>
+    <text x="135" y="387" fill="#e8edf5" font-size="9">Render HTML</text>
+    <text x="135" y="402" fill="#e8edf5" font-size="9">Return response</text>
+  </g>
+
+  <!-- Arrow: Worker → D1 -->
+  <line x1="150" y1="425" x2="150" y2="460" stroke="#60a5fa" stroke-width="1.2" marker-end="url(#arrowBlue)" opacity="0.7"/>
+  <text x="170" y="448" fill="#4d5a7a" font-size="8">SQL</text>
+
+  <!-- ═══ Node: D1 ═══ -->
+  <g filter="url(#shadow)">
+    <rect x="85" y="465" width="130" height="45" rx="6" fill="url(#nodeBg)" stroke="#60a5fa" stroke-width="1"/>
+    <ellipse cx="115" cy="483" rx="10" ry="5" fill="none" stroke="#60a5fa" stroke-width="1"/>
+    <line x1="105" y1="483" x2="105" y2="498" stroke="#60a5fa" stroke-width="1"/>
+    <line x1="125" y1="483" x2="125" y2="498" stroke="#60a5fa" stroke-width="1"/>
+    <ellipse cx="115" cy="498" rx="10" ry="5" fill="none" stroke="#60a5fa" stroke-width="1"/>
+    <text x="145" y="490" fill="#e8edf5" font-size="10" font-weight="600">D1</text>
+    <text x="145" y="502" fill="#4d5a7a" font-size="8">SQLite + FTS5</text>
+  </g>
+
+  <!-- ═══════════════════════════════════════════ -->
+  <!-- LANE 3: API path (blue)                     -->
+  <!-- ═══════════════════════════════════════════ -->
+
+  <!-- Arrow: Router → Worker (API) -->
+  <path d="M 440 175 L 520 175 L 520 475 L 215 475" fill="none" stroke="#60a5fa" stroke-width="1.5" marker-end="url(#arrowBlue)" opacity="0.8"/>
+  <text x="530" y="340" fill="#60a5fa" font-size="8">/api/* → JSON</text>
+
+  <!-- ═══ Key insight box ═══ -->
+  <g transform="translate(480, 360)">
+    <rect width="290" height="170" rx="8" fill="url(#nodeBg)" stroke="#2a2a42" stroke-width="1" stroke-dasharray="4,3"/>
+    <text x="145" y="22" text-anchor="middle" fill="#fbbf24" font-size="10" font-weight="600">How Hybrid Routes Work</text>
+    <line x1="15" y1="32" x2="275" y2="32" stroke="#2a2a42" stroke-width="0.5"/>
+
+    <!-- Static -->
+    <circle cx="25" cy="52" r="5" fill="#4ade80" opacity="0.3"/>
+    <text x="37" y="56" fill="#4ade80" font-size="9" font-weight="600">Static routes</text>
+    <text x="45" y="72" fill="#9aa8c9" font-size="8.5">Blog posts, about, projects</text>
+    <text x="45" y="86" fill="#9aa8c9" font-size="8.5">@nuxt/content at build → CDN</text>
+
+    <!-- Dynamic -->
+    <circle cx="25" cy="106" r="5" fill="#fbbf24" opacity="0.3"/>
+    <text x="37" y="110" fill="#fbbf24" font-size="9" font-weight="600">Dynamic routes</text>
+    <text x="45" y="126" fill="#9aa8c9" font-size="8.5">Search, tags, comments</text>
+    <text x="45" y="140" fill="#9aa8c9" font-size="8.5">Worker → D1 → HTML per request</text>
+
+    <!-- API -->
+    <circle cx="25" cy="155" r="5" fill="#60a5fa" opacity="0.3"/>
+    <text x="37" y="159" fill="#60a5fa" font-size="9" font-weight="600">API routes</text>
+    <text x="45" y="165" fill="#9aa8c9" font-size="8.5">/api/* → JSON responses</text>
+  </g>
+
+  <!-- ═══ Legend ═══ -->
+  <g transform="translate(480, 100)">
+    <rect width="180" height="90" rx="6" fill="#13131e" stroke="#2a2a42" stroke-width="1" opacity="0.8"/>
+    <circle cx="16" cy="20" r="4" fill="#4ade80"/>
+    <text x="28" y="24" fill="#9aa8c9" font-size="9">Static path</text>
+    <circle cx="16" cy="40" r="4" fill="#fbbf24"/>
+    <text x="28" y="44" fill="#9aa8c9" font-size="9">Dynamic path</text>
+    <circle cx="16" cy="60" r="4" fill="#60a5fa"/>
+    <text x="28" y="64" fill="#9aa8c9" font-size="9">API / Data query</text>
+    <circle cx="16" cy="80" r="4" fill="#c084fc"/>
+    <text x="28" y="84" fill="#9aa8c9" font-size="9">Router</text>
+  </g>
+</svg>
