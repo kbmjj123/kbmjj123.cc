@@ -43,7 +43,7 @@ useSchemaOrg([
     url: 'https://kbmjj123.cc',
     sameAs: [
       'https://github.com/kbmjj123',
-      'https://twitter.com/solomaker282',
+      'https://x.com/solomaker282',
     ],
   }),
 ])
