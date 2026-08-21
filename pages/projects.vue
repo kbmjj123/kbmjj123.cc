@@ -29,7 +29,7 @@ const projects = [
     tags: ['#Vue', '#PWA', '#WebAssembly', '#Canvas'],
     links: [
       { label: 'Website', url: 'https://bulkpictools.com' },
-      { label: 'Website', url: 'https://github.com/kbmjj123/BulkPicTools' },
+      { label: 'GitHub', url: 'https://github.com/kbmjj123/BulkPicTools' },
     ],
   },
   {

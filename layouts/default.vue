@@ -184,7 +184,7 @@ const daysSince = computed(() => {
 
 const socialLinks = [
   { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
-  { label: 'Twitter', url: 'https://twitter.com/solomaker282' },
+  { label: 'X', url: 'https://x.com/solomaker282' },
   { label: 'RSS', url: '/feed.xml' },
 ]
 
