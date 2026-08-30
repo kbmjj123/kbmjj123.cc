@@ -51,6 +51,15 @@ const projects = [
     ],
   },
   {
+    name: '🧰 JSON Toolbox',
+    desc: 'Free online JSON tools for developers. Format, validate, convert (CSV/YAML/TypeScript/XML), compare, minify, and test JSONPath — all in your browser, nothing to install. Open source.',
+    tags: ['#Vue', '#OpenSource', '#WebTools', '#JSON'],
+    links: [
+      { label: 'Website', url: 'https://jsontoolbox.cc' },
+      { label: 'GitHub', url: 'https://github.com/kbmjj123/jsontoolbox.cc' },
+    ],
+  },
+  {
     name: '💻 kbmjj123.cc',
     desc: 'This very site — an indie developer blog with pixel aesthetic. Built with Nuxt 4, Cloudflare D1/R2/Pages, Nuxt Content v3, and Tailwind v4. Features full-text search, RSS, newsletter, and dynamic OG images.',
     tags: ['#Nuxt', '#Cloudflare', '#Tailwind', '#D1', '#R2'],
