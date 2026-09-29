@@ -22,11 +22,9 @@ seo:
     - "cloudflare workers d1 r2 kv solo developer"
 ---
 
-## TL;DR
-
-No server. No on-call rotation. No "what if the disk fills up at 3am." I run every one of my indie projects on Cloudflare — D1, Workers, KV, and R2 — instead of renting and maintaining a server. This post is about why, and what I'm honestly giving up by doing it.
-
 ## I've Run Servers Before — That's Exactly Why I'm Walking Away From Them
+
+No server. No on-call rotation. No "what if the disk fills up at 3am." I run every one of my indie projects on Cloudflare — D1, Workers, KV, and R2 — instead of renting and maintaining a server.
 
 This isn't a "I've never touched a server so I'm scared of one" post. I have run servers. Regular maintenance, patching, the occasional 2am restart because something silently died — I've done that work, on real projects, more than once.
 
@@ -90,13 +88,13 @@ That number doesn't worry me today. But I'm not going to pretend it's nothing, e
 
 This decision didn't come for free, even setting aside future billing. Getting to the point where I could actually use this stack day to day surfaced two very different, very real problems — one with GitHub OAuth failing silently during local development, and one that had nothing to do with code at all: a piece of decade-old hardware that flatly refused to run the tooling I needed. Both are getting their own posts in this series.
 
-## Lessons Learned
+## The Trade-Offs I'm Accepting
 
-- Choosing the "simple" path isn't free — it just moves the cost somewhere else, and it's worth knowing where before you commit.
-- Having actually run servers before gave me a real number to compare against — not "servers are annoying" in the abstract, but specific recurring tasks (patching, backups, restarts) I could weigh against Cloudflare's free tier before switching.
-- A generous free tier is still a tier — track your usage early, even before you have real traffic, so the eventual transition to paid isn't a surprise.
-- Picking a stack where the pieces are designed together (Workers + D1 + KV + R2) removes a category of integration problems before they happen.
-- Being honest about what you don't know yet (will this scale? will it stay free?) is more useful to future-you than confidence you haven't earned.
+- Choosing the "simple" path isn't free — it just moves the cost somewhere else. Know where before you commit.
+- Having actually run servers gave me a real number to compare against — specific recurring tasks I could weigh against Cloudflare's free tier, not "servers are annoying" in the abstract.
+- A generous free tier is still a tier. Track usage early, even before you have real traffic.
+- Picking a stack where the pieces are designed together removes a category of integration problems before they happen.
+- Being honest about what you don't know yet is more useful to future-you than confidence you haven't earned.
 
 ---
 *Part of the "Going Serverless" series. Next: [Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)](/going-serverless-part-2-github-oauth-local-callback)*

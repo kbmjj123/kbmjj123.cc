@@ -139,12 +139,21 @@ For all 🟢 Winners, extract:
 | Dimension | What to Extract |
 |-----------|----------------|
 | **Title** | Format (listicle/how-to/comparison), length, keyword placement |
-| **Structure** | Number of H2s, use of tables/code/images, TL;DR presence |
+| **Structure** | Which Archetype (A-E) was used? Opening style? Closing style? H2 count? Use of tables/code/images? |
 | **Content** | Word count, code block count, image count |
 | **SEO** | Keyword density, internal link count, related posts count |
 | **Category** | Which category performs best? |
 | **Tags** | Which tags correlate with high performance? |
 | **Timing** | Day of week published, time since publication |
+
+**⚠️ Critical: Do NOT treat structural uniformity as a winning pattern.**
+
+If all winners share the same H2 skeleton (e.g., all have TL;DR → Background → Problem → ...), that is a **confounding variable**, not a causal factor. The blog historically produced posts with identical structure — so "has TL;DR" correlates with "is a winner" only because ALL posts have TL;DR.
+
+Instead, look for:
+- **Does the archetype match the content type?** (Tutorial content in Tutorial archetype = good fit)
+- **Does structural variety across the blog correlate with better average performance?**
+- **Which specific opening/closing styles appear in top performers?** (e.g., "Data Shock openings average 2x CTR")
 
 #### 3B — Underperformer Anti-Patterns
 
@@ -221,7 +230,21 @@ Recommended addition:
 
 #### 5A — Generate Proposals
 
-Based on Phases 3-4, generate specific rule update proposals:
+Based on Phases 3-4, generate specific rule update proposals.
+
+**⚠️ Guard: Never propose rules that increase structural uniformity.**
+
+Reject any proposal that would:
+- Mandate a specific H2 skeleton for all posts (e.g., "always include TL;DR")
+- Require the same opening/closing style across articles
+- Remove the Archetype system or collapse it to one template
+- Treat a section header (e.g., "Lessons Learned") as mandatory regardless of content type
+
+Instead, proposals should aim for:
+- **Better archetype-content fit** (e.g., "tutorials with Step 1/2/3 headers get 15% more time-on-page")
+- **Specific opening/closing styles that perform better** (e.g., "Data Shock openings correlate with 2x CTR")
+- **Structural variety as a positive signal** (e.g., "posts with 5-6 H2s outperform those with 8+")
+- **Content-specific improvements** (e.g., "add code output screenshots to troubleshooting posts")
 
 ```
 ## Proposed Rule Updates

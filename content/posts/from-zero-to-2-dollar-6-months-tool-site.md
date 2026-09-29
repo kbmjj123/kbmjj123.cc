@@ -27,13 +27,17 @@ seo:
     - "side project revenue"
 ---
 
-## TL;DR
+## January 1, 2026: A Domain, an Idea, and Zero Expectations
 
-On January 1, 2026, I launched a tool site as an SEO learning project. Six months later: 52 tools, 480+ pages, 6 languages, $2–$5/day AdSense revenue, $27 in BuyMeACoffee donations, a few RMB from WeChat, and one rejection from Google followed by approval 24 hours after resubmission. The only cost so far: the domain. This isn't a success story—it's a record of what happens when you actually finish something and keep adjusting.
+On January 1, 2026, I registered a domain and launched a tool site as an SEO learning project. I didn't expect to make money. I wanted to run through the entire SEO lifecycle — domain, content, links, search console, ads — and actually *know* how each piece worked.
+
+Six months later: 52 tools, 480+ pages, 6 languages, $2–$5/day AdSense revenue, $27 in BuyMeACoffee donations, a few RMB from WeChat, and one rejection from Google followed by approval 24 hours after resubmission. The only cost so far: the domain.
+
+This isn't a success story. It's a record of what happens when you actually finish something and keep adjusting.
 
 ---
 
-## Background — Why I Built It
+## Why I Built It
 
 I didn't build this site to make money on day one. I built it to learn—to run through the entire SEO lifecycle from start to finish: domain registration, site setup, content creation, link building, search console integration, and eventually ad monetization. I wanted to *know* how each piece worked, not just read about it.
 
@@ -143,31 +147,25 @@ I woke up on July 1—exactly six months after launch—to that number. It's not
 
 ---
 
-## My Take — What I Actually Learned
+## What I Actually Learned
 
-**On tech selection:** The best stack is the one that frees your brain. Nuxt + Cloudflare isn't the fastest or the most flexible—but it lets me *forget about infrastructure*. For someone with limited attention (and even more limited evening hours), that's the killer feature. Static sites mean no servers to patch, no database to migrate, no "why is this down at 2 AM." It's boring, and that's exactly what I need.
+**On tech selection:** The best stack is the one that frees your brain. Nuxt + Cloudflare isn't the fastest or the most flexible — but it lets me *forget about infrastructure*. Static sites mean no servers to patch, no database to migrate, no "why is this down at 2 AM." It's boring. That's exactly what I need.
 
-**On copying:** For an indie developer, the first priority isn't "innovation." It's *finishing a complete cycle*. Copying a proven market avoids the hardest part—validating demand—so you can focus on execution. Novelty is for after you know how to ship.
+**On copying:** The first priority isn't innovation. It's *finishing a complete cycle*. Copying a proven market removes the hardest variable — demand validation — so you can focus on execution.
 
-**On AI and content:** The email that called my site "AI garbage" was uncomfortable but necessary. AI-generated content isn't inherently bad—but it's not done. The value comes from what you personally add: screenshots, notes, edge cases, honest limitations. AI writes the first draft; *you* make it useful.
+**On AI and content:** The "AI garbage" email was uncomfortable but necessary. AI writes the first draft; *you* make it useful. Getting called out early saved me from building a bigger problem later.
 
-**On side projects:** It's slow. It's easy to doubt yourself. Some weeks I don't open the code. But that's also the upside—there's no urgency, no investors, no "must succeed" pressure. You can adjust direction quietly. You can afford to be wrong.
+**On multi-language:** Thin translations drag your whole site down. If you add languages, actually fill them.
 
 **The core principle:** *Make the user feel like they gained something.* On every page, ask: "What did the user get from this that they didn't have before?" If you can't answer, rewrite it until you can.
 
 ---
 
-## Lessons Learned
+## What's Next
 
-1. **AI is a starting point, not the output.** Getting called out early saved me from building a bigger problem later.
+Six months in, the site earns enough to cover the domain and not much more. That's fine — this was a learning project, and the learning has been worth more than the revenue.
 
-2. **Multi-language is not a free win.** Thin translations drag your whole site down. If you add languages, actually fill them.
-
-3. **Users pay when they feel helped.** $27 isn't a living—but it's proof that someone values what you built.
-
-4. **Part-time projects are harder to sustain—but also easier to course-correct.** You have time to reflect.
-
-5. **The right stack doesn't add features; it subtracts distractions.** If your tech keeps you from thinking about your product, switch.
+The next six months: fill out the thin language versions, test whether the tool-chain upgrade moves the numbers, and write about what happens when a side project stops being a side project. I don't know if the revenue curve bends. I know the adjustment loop works.
 
 ---
 
