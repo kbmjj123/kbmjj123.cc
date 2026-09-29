@@ -20,8 +20,8 @@
         :src="src"
         :alt="alt"
         :title="title"
-        :width="width"
-        :height="height"
+        :width="width || 800"
+        :height="height || 600"
         loading="lazy"
       />
     </picture>

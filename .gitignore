@@ -43,8 +43,6 @@ yarn-error.log*
 .dev.vars.local
 wrangler.local.toml
 
-# lockfile
-pnpm-lock.yaml
 
 # claude
 .claude/scripts/scrape-yo-directory.ts
