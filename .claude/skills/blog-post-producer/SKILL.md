@@ -680,6 +680,142 @@ Write every section with the reader's ability to replicate in mind. Two quick te
 
 Per Section 3.1: Every diagram/SVG I generate **must be embedded** in the markdown body at the correct paragraph position. Not just saved to disk — verify it appears in the `.md` file output.
 
+#### 4C-2 — SVG Cover Generation (Mandatory)
+
+After writing the article body, **automatically generate an SVG cover image** and write it to `public/images/{category}/{slug}/cover.svg`. No user input needed — the cover is pure SVG code.
+
+**Output path**: `public/images/{category}/{slug}/cover.svg`
+**Frontmatter**: set `image: "/images/{category}/{slug}/cover.svg"`
+
+**Cover SVG Template** — follow the pixel design system exactly. Here is the base template:
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b12"/>
+      <stop offset="100%" stop-color="#13131e"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Dot grid pattern -->
+    <pattern id="dots" width="50" height="50" patternUnits="userSpaceOnUse">
+      <circle cx="25" cy="25" r="1" fill="rgba(74,222,128,0.03)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Top decorative bar (dashed green) -->
+  <rect x="0" y="0" width="1200" height="4" fill="#4ade80" stroke="none"
+        stroke-dasharray="8 8" opacity="0.8"/>
+  <line x1="0" y1="2" x2="1200" y2="2" stroke="#4ade80" stroke-width="4"
+        stroke-dasharray="8 8" opacity="0.6"/>
+
+  <!-- Border frame -->
+  <rect x="16" y="16" width="1168" height="598" fill="none" stroke="#2a2a42" stroke-width="2"/>
+
+  <!-- Site identifier -->
+  <rect x="80" y="64" width="16" height="16" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+  <text x="108" y="78" font-family="'Press Start 2P', monospace" font-size="18"
+        fill="#4ade80" letter-spacing="2">KB<tspan fill="#fbbf24">MJJ123</tspan><tspan fill="#4d5a7a" font-size="12">.cc</tspan></text>
+
+  <!-- Separator line -->
+  <rect x="80" y="108" width="60" height="2" fill="#4ade80" opacity="0.5"/>
+
+  <!-- Title (adjust font-size based on length) -->
+  <text x="80" y="180" font-family="'Press Start 2P', monospace" font-size="32"
+        fill="#e8edf5" letter-spacing="-0.5">
+    <!-- Title line 1 -->
+  </text>
+  <text x="80" y="228" font-family="'Press Start 2P', monospace" font-size="32"
+        fill="#e8edf5" letter-spacing="-0.5">
+    <!-- Title line 2 (if needed) -->
+  </text>
+
+  <!-- Description area -->
+  <rect x="80" y="280" width="680" height="2" fill="#2a2a42"/>
+  <text x="80" y="330" font-family="Inter, sans-serif" font-size="18" fill="#9aa8c9">
+    <!-- Description line 1 -->
+  </text>
+  <text x="80" y="358" font-family="Inter, sans-serif" font-size="18" fill="#9aa8c9">
+    <!-- Description line 2 -->
+  </text>
+
+  <!-- Category badge -->
+  <rect x="80" y="420" width="180" height="32" rx="4" fill="rgba(74,222,128,0.08)"
+        stroke="rgba(74,222,128,0.2)" stroke-width="1"/>
+  <text x="100" y="441" font-family="'Press Start 2P', monospace" font-size="10" fill="#4ade80">
+    <!-- category-slug -->
+  </text>
+
+  <!-- Decorative pixel blocks (right side) -->
+  <rect x="900" y="160" width="24" height="24" fill="#4ade80" opacity="0.15"/>
+  <rect x="940" y="160" width="24" height="24" fill="#4ade80" opacity="0.25"/>
+  <rect x="980" y="160" width="24" height="24" fill="#4ade80" opacity="0.15"/>
+  <rect x="920" y="200" width="24" height="24" fill="#fbbf24" opacity="0.2"/>
+  <rect x="960" y="200" width="24" height="24" fill="#fbbf24" opacity="0.35"/>
+  <rect x="940" y="240" width="24" height="24" fill="#fbbf24" opacity="0.15"/>
+
+  <!-- Bottom tagline -->
+  <text x="80" y="545" font-family="'Press Start 2P', monospace" font-size="9"
+        fill="#4d5a7a" letter-spacing="1">✦ pixel · indie · craft ✦</text>
+
+  <!-- Gold accent block bottom-right -->
+  <rect x="1148" y="582" width="20" height="20" fill="#fbbf24" stroke="#fbbf24"
+        stroke-width="2" opacity="0.6"/>
+</svg>
+```
+
+**Design tokens (MUST use these exact values)**:
+| Element | Value |
+|---------|-------|
+| Background | `#0b0b12` → `#13131e` gradient |
+| Border | `#2a2a42`, 2px |
+| Primary accent (green) | `#4ade80` |
+| Secondary accent (gold) | `#fbbf24` |
+| Title text | `#e8edf5` |
+| Body text | `#9aa8c9` |
+| Muted text | `#4d5a7a` |
+| Pixel font | `'Press Start 2P', monospace` |
+| UI font | `Inter, sans-serif` |
+| Dot grid | `rgba(74,222,128,0.03)`, 50px spacing |
+
+**Title sizing rules**:
+| Title length | Font size | Lines |
+|-------------|-----------|-------|
+| < 30 chars | 36px | 1 |
+| 30-55 chars | 32px | 2 |
+| 55-80 chars | 28px | 2-3 |
+| > 80 chars | 24px | 3 |
+
+**Category badge colors** (pick one based on article category):
+| Category | Badge color |
+|----------|-------------|
+| `dev-practice` | green `#4ade80` |
+| `tools-workflow` | gold `#fbbf24` |
+| `indie-mindset` | blue `#60a5fa` |
+| `startup-diary` | orange `#f59e0b` |
+| `product-business` | purple `#a78bfa` |
+| `tech-trends` | cyan `#06b6d4` |
+
+**Customization per article**:
+1. Replace title text (split into lines based on length)
+2. Replace description text (1-2 lines, key takeaway)
+3. Set category badge text and color
+4. Optionally adjust decorative pixel blocks (vary positions/opacity)
+5. Keep the overall layout consistent — this is the brand identity
+
+**Quality check**: The SVG must render correctly in browser. After writing, verify:
+- viewBox is `0 0 1200 630`
+- All fonts are specified (Press Start 2P for pixel, Inter for UI)
+- No hardcoded text that doesn't match the article
+- Color values match the design tokens exactly
+
 #### 4D — Auto-Invoke image-planner (Mandatory)
 
 After writing the article body, **automatically invoke the `image-planner` skill** to handle all image-related tasks. Do NOT manually create image directories or insert placeholders — delegate to image-planner.
@@ -834,6 +970,16 @@ Run through this checklist on every article before presenting or saving:
 - [ ] Is the **closing style** different from the previous post?
 - [ ] Did I pick a specific **archetype** (A-E) that matches the content type? (Not just defaulting to Troubleshooting.)
 - [ ] Does the H2 sequence feel fresh — would a reader who's read the last 3 posts notice this is different at a glance?
+
+#### SVG Cover Check
+- [ ] `public/images/{category}/{slug}/cover.svg` exists
+- [ ] viewBox is `0 0 1200 630`
+- [ ] Uses pixel design tokens (exact colors: `#0b0b12`, `#4ade80`, `#fbbf24`, `#2a2a42`, `#e8edf5`, `#9aa8c9`, `#4d5a7a`)
+- [ ] Title matches the article (not a placeholder)
+- [ ] Font sizes follow the title-length sizing rules
+- [ ] Category badge uses correct color for the article's category
+- [ ] `image` field in frontmatter points to `/images/{category}/{slug}/cover.svg`
+- [ ] SVG renders correctly (no broken text, no overflow)
 
 #### Chinese Version Check
 - [ ] Chinese version exists at `content/translations/{slug}.zh.md`
