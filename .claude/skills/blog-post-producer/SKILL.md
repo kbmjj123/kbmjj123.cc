@@ -317,6 +317,86 @@ Head Term Authority: "cloudflare d1" — 2400/mo
 Differentiation: Real FTS5 implementation, not just API reference
 ```
 
+#### 1C-2 — SERP Intent Matching (Mandatory)
+
+**Before writing, search the target keyword and analyze the top 10 results.** Google ranks content types that match what searchers want — if your format doesn't match, you won't rank regardless of quality.
+
+**Step 1**: Search the exact target keyword in Google (WebSearch).
+
+**Step 2**: Classify each of the top 10 results:
+
+| Content Type | Signal | Your Article Must Be |
+|-------------|--------|---------------------|
+| **Tutorial / How-To** | "How to...", "Step by step", numbered steps | A tutorial with actionable steps |
+| **Listicle / Roundup** | "10 Best...", "Top 5...", numbered list | A list-based article |
+| **Comparison** | "X vs Y", "X or Y", comparison tables | A comparison article |
+| **Concept / Guide** | "What is...", "The complete guide", "Everything about" | A comprehensive explainer |
+| **Tool / Product Page** | Official docs, SaaS landing pages | Hard to compete — consider different angle |
+
+**Step 3**: Record the dominant format:
+
+```
+SERP Intent Analysis for "[target keyword]":
+
+Top 10 format breakdown:
+- Tutorials: 6/10 ← dominant format
+- Listicles: 2/10
+- Concept guides: 1/10
+- Product pages: 1/10
+
+Dominant intent: Tutorial (I) — searcher wants "how to do X"
+Your article format: MUST be a tutorial
+Differentiation opportunity: 8/10 have no real code. 9/10 have no screenshots of actual results.
+```
+
+**Step 4**: If SERP is dominated by official docs/mega-sites → re-evaluate whether this keyword is achievable. Consider a long-tail variant instead.
+
+**Why this matters**: A brilliant comparison article targeting a tutorial keyword will NOT rank. Format match is a prerequisite, not an optimization.
+
+#### 1C-3 — Keyword Layering (Mandatory)
+
+Don't just pick one keyword. Build a **keyword pyramid** to maximize coverage:
+
+```
+         ┌─────────────────┐
+         │   Target Word    │  1 primary keyword → Title, H1, first 100 words
+         │  (1,000+ vol)   │
+         ├─────────────────┤
+         │  Variant Words   │  3-5 keyword variants → H2 headings, subheadings
+         │  (200-1,000 vol) │
+         ├─────────────────┤
+         │   Long-Tail       │  5-8 long-tail questions/queries → Body paragraphs
+         │   (< 200 vol)    │  (answer each as a mini-section)
+         └─────────────────┘
+```
+
+**Process**:
+
+1. **Target word** (already selected in 1C): the primary keyword in title + meta
+2. **Variant words**: grammatical/semantic variants, synonyms, related terms
+   - "technical seo checklist" → "seo audit checklist", "technical seo audit", "site audit checklist"
+   - Map each variant to an H2 or H3
+3. **Long-tail words**: question-based and specific-intent queries
+   - "how to do technical seo audit", "technical seo checklist for new website", "free technical seo tools"
+   - Answer each naturally in body paragraphs
+
+**Output format** (include in Phase 2 proposal):
+
+```
+## Keyword Pyramid
+
+Target: "technical seo checklist" (3,600 vol, KD 34)
+├─ Variants → H2 mapping:
+│   ├─ "technical seo audit checklist" (2,400) → H2: "The Technical SEO Audit Checklist"
+│   ├─ "seo checklist template" (1,300) → H2: "Free Checklist Template"
+│   └─ "technical seo for beginners" (720) → H2: "Getting Started"
+├─ Long-tails → body coverage:
+│   ├─ "how to do technical seo audit" → Answered in Step 2 paragraph
+│   ├─ "technical seo checklist for new website" → Covered in "For New Sites" callout
+│   └─ "technical seo tools free" → Covered in "Free Tools" list
+└─ Related topic cluster: links to image-sitemap, sitemap-xml, google-search-console articles
+```
+
 #### 1D — Split Decision
 
 Apply Section 4 rules:
@@ -351,11 +431,24 @@ Identified N sub-topics: [list each with 1-sentence description]
 ### Article 1: [Working Title]
 Target Keyword: "[keyword]"
 Volume: XXX/mo | KD: XX | Intent: Informational
-SERP Analysis: [1-2 sentences on competition landscape]
-Differentiation: [why your article can rank — real experience angle]
+SERP Format: [dominant format in top 10 — e.g., "6/10 tutorials"]
+Your Format: [must match — e.g., "Tutorial (Archetype B)"]
+Competitive Gap: [2+ things top 10 DON'T do that you will]
 Cost-Benefit: ~Xh writing → est. XX-XX clicks/mo (forever) → worth it / skip
 
 ### Article 2: ...
+
+## Keyword Pyramid
+
+### Article 1: [Working Title]
+Target: "[keyword]" (vol, KD)
+├─ Variants → H2 mapping:
+│   ├─ "[variant 1]" (vol) → H2: "..."
+│   └─ "[variant 2]" (vol) → H2: "..."
+├─ Long-tails → body coverage:
+│   ├─ "[long-tail 1]" → answered in [section]
+│   └─ "[long-tail 2]" → covered in [section]
+└─ Cluster links: [existing posts to link to]
 
 ## Tentative Structure
 
@@ -751,6 +844,16 @@ Run through this checklist on every article before presenting or saving:
 - [ ] Frontmatter includes `note` field pointing to English original
 - [ ] No Chinese tech-blog filler ("本文将介绍..." / "总结一下..." / "希望这篇文章对您有帮助")
 
+#### SEO Quality & Intent Check
+- [ ] **SERP format match**: Does this article's format (tutorial/listicle/comparison/guide) match the dominant format in the top 10 results?
+- [ ] **Keyword pyramid**: Target word in title + first 100 words? Variant words mapped to H2s? Long-tails answered in body?
+- [ ] **Search intent match**: Would someone searching the target keyword be satisfied with this content? (Not just "related to" — actually answers their query.)
+- [ ] **Real data density**: At least 3 specific numbers (time/cost/performance/revenue/lines of code)? Not vague claims like "it's fast" or "it saved time."
+- [ ] **Copy-paste artifact**: Does the article give the reader something to save/bookmark? (Checklist, template, decision tree, complete config, code repo.)
+- [ ] **Competitive gap filled**: Does this article do at least 2 things the top 10 results DON'T do? (Real code, real screenshots, error paths, 2026 data, decision frameworks, specific niche like Nuxt+Cloudflare+D1.)
+- [ ] **Topic cluster**: Does this article connect to existing posts? (2-3 body internal links + relatedPosts.)
+- [ ] **E-E-A-T signals**: Real experience evident (specific error messages, actual project names, honest limitations)? No fabricated data?
+
 #### Section 2.1 — Keyword Research Verification
 - [ ] Is there a documented target keyword with search data or estimated demand signals?
 - [ ] If Semrush Volume is N/A: are ≥2 of 4 alternative demand signals documented? (Google Autocomplete, Related Searches, SO/Reddit, PAA)
@@ -819,6 +922,15 @@ Run through this checklist on every article before presenting or saving:
    - **Visual Assets Checklist**: all required screenshots/diagrams with placement instructions
    - What still needs user action (screenshots, data, draft→published flip)
 5. **Ask user to review before setting `draft: false`**
+6. **Remind user of post-publish optimization cycle**:
+   ```
+   📅 发布后优化提醒:
+   - 30 天后: 运行 `node scripts/gsc-pull.cjs` 查看收录和排名
+   - CTR < 2%: 改标题和 meta description
+   - 排名 10-20: 补充内容深度、加内链
+   - 排名 30+: 考虑重写或合并到集群主文章
+   - 6 个月后: 更新过时数据，补充新内容
+   ```
 
 ---
 
