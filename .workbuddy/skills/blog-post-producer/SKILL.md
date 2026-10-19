@@ -1,22 +1,24 @@
 ---
 name: blog-post-producer
-description: >
-  Produce blog posts for kbmjj123.cc following the detailed production manual.
-  MANDATORY trigger: whenever the user pastes a long discussion, technical notes, or records a conversation about something that could become a blog post — even if they don't explicitly say "write a post". 
-  Also trigger when user says "turn this into a post", "write this up", "make an article from this", "publish this", or similar.
-  Do NOT just start writing — you must first analyze, propose split plan, ask for missing resources, 
-  and get user approval before writing any .md file.
-compatibility:
-  tools_required:
-    - Bash (for reading existing posts, writing files)
-    - Read (for reading discussion content, existing posts)
-    - Write (for writing .md files)
-    - Edit (for editing relatedPosts on existing posts)
-    - WebSearch/WebFetch (for SEO keyword research per Section 2.1)
-  platforms:
-    - Claude Code
-    - Claude.ai (some steps adapt)
+display_name: 博客文章产出
+display_name_en: Blog Post Producer
+description: 把讨论记录、技术笔记、排查日志转成 kbmjj123.cc 可发布的 .md 文章。用户粘贴长段技术讨论或说"写成文章""发布这个"时触发。写文件前必须先分析、提出拆分方案并获用户批准。
+description_zh: 将技术讨论/笔记转化为符合执行手册的博客文章，写入 content/posts/。
+description_en: Converts technical discussions and notes into publishable blog posts under content/posts/.
+version: 1.0.0
+author: kbmjj123
+tags: [blog, writing, SEO, 文章产出]
+examples_zh: ["把这段写成文章", "发布这个", "整理成一篇文章", "这个能写成博客吗"]
+examples_en: ["Turn this into a post", "Write this up", "Publish this"]
 ---
+
+> ⚠️ **文章结构已改**：旧的六段固定公式（TL;DR / Background / … / Lessons Learned）
+> 已废弃——它导致全站 19 篇结构雷同。现在按四类原型走，见
+> `devlog-system/07-article-archetypes.md`（踩坑排查 / 决策权衡 / 教程操作 / 复盘叙事）。
+> 正文里若仍引用旧公式，以 07 为准。
+
+> 📥 **Phase 0 之前先做一步**：读 `~/.dev-log/projects/*/log.md`，
+> 有可用素材优先用素材决定结构，而不是先套模板再填素材。
 
 # Blog Post Producer — kbmjj123.cc
 

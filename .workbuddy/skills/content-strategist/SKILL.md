@@ -1,20 +1,24 @@
 ---
 name: content-strategist
-description: >
-  Data-driven content strategy for kbmjj123.cc. Handles GSC data pulls,
-  content idea generation, outline creation, and performance reviews.
-  Works with real search data (GSC API + Google Autocomplete + optional Semrush CSV).
-  Triggers on: "推荐选题", "what should I write", "content ideas", "拉取数据",
-  "performance review", "月度报告", "generate outline", "给我大纲", "选题".
-compatibility:
-  tools_required:
-    - Bash (for running scripts)
-    - Read (for reading data files)
-    - WebSearch (for competitor analysis)
-    - WebFetch (for fetching competitor content)
-  platforms:
-    - Claude Code
+display_name: 内容选题策略
+display_name_en: Content Strategist
+description: kbmjj123.cc 的内容选题。基于 GSC 真实搜索数据做选题、大纲与效果复盘。当用户说"推荐选题""给我大纲""拉取数据""月度报告""performance review""选题"时使用。
+description_zh: 用 GSC 真实搜索数据驱动选题、生成大纲、做效果复盘。
+description_en: Data-driven content strategy for kbmjj123.cc — GSC pulls, idea generation, outlines, performance reviews.
+version: 1.0.0
+author: kbmjj123
+tags: [content-strategy, SEO, GSC, 选题, 大纲]
+examples_zh: ["推荐选题", "给我大纲", "拉取数据", "月度报告", "这个月表现怎么样"]
+examples_en: ["What should I write next?", "Generate an outline", "Pull GSC data"]
 ---
+
+> ⚠️ **本机无法直连 Google API**（googleapis.com 网络不可达，已实测）。
+> 拉取 GSC 数据请用 `node scripts/gsc-import.cjs --pages <csv> --baseline`（手工从 GSC 后台导出 CSV 后导入），
+> 不要用 `scripts/gsc-pull.cjs`。二者产出的 JSON 结构完全一致。
+
+> 📥 **选题时多一个素材源**：先读 `~/.dev-log/projects/*/log.md`，
+> 把日志里的真实踩坑纳入候选。关键词数据告诉你"有人搜"，
+> 日志告诉你"你真的踩过"——**两者都命中才优先写**。
 
 # Content Strategist — kbmjj123.cc
 
