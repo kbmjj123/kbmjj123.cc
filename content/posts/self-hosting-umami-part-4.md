@@ -93,7 +93,7 @@ The critical detail in this setup: `umami.bulkpictools.com` is configured in Clo
 
 Cloudflare isn't doing anything special here — DNS-only mode just resolves the name. The fix works because that name itself isn't blocked.
 
-![Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-4-gfw-domain-paths.svg)
+![Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-4-gfw-domain-paths.svg)
 
 ---
 

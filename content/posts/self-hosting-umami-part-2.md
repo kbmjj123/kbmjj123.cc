@@ -75,7 +75,7 @@ The critical constraint: **Prisma's migration engine requires a direct connectio
 So the problem was structural: the build was trying to run database migrations through the connection pool, which is architecturally wrong regardless of credentials or network conditions.
 
 
-![Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432](/images/startup-umami/self-hosting-umami/supabase_connection_paths_diagram.svg)
+![Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432](/images/startup-diary/self-hosting-umami/supabase_connection_paths_diagram.svg)
 
 ### Splitting DATABASE_URL From DIRECT_DATABASE_URL Stopped the Hang — Almost
 
@@ -93,7 +93,7 @@ Both environment variables need to be set in Vercel under Settings → Environme
 
 Where to find these strings in Supabase: navigate to your project, click the **Connect** button (green, near the top), then look for the "Transaction pooler" and "Direct connection" sections. Each one has a copy button that gives you the complete string with your project reference already filled in — you only need to substitute your database password.
 
-![Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-2-supabase-connect-page.webp)
+![Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-2-supabase-connect-page.webp)
 
 I set both variables, redeployed, and watched the build hang at the exact same spot.
 

@@ -244,7 +244,7 @@ Skipping database migration.
 ✓ Build completed successfully.
 ```
 
-![Vercel deployment dashboard showing successful build with Ready status](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-3-vercel-deploy-success.webp)
+![Vercel deployment dashboard showing successful build with Ready status](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-3-vercel-deploy-success.webp)
 
 Replace the tracking script in your website's `<head>` with the new one from your self-hosted Umami instance. Within a few minutes, data starts flowing in — identical dashboard, no event limits, no monthly ceiling.
 
