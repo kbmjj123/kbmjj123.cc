@@ -18,64 +18,141 @@
 
 不停机，可立即做。
 
-- [ ] **P0.1** 拉取 GSC 数据 —— **注意：本机网络不可达 Google，见下方阻断说明**
+- [x] **P0.1** 拉取 GSC 数据 ✅ **2026-10-19 已完成**（此前"永久不可用"的结论已证伪，见下方更正）
 
-  **路径 A（本机 API，当前不可用）**
   ```bash
-  node scripts/gsc-pull.cjs --days 120
+  env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890 \
+      HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 \
+      NO_PROXY=localhost,127.0.0.1,0.0.0.0,::1 \
+      node scripts/gsc-pull.cjs --days 120
   ```
 
-  **路径 B（手工 CSV 导入，随时可用）** ← 当前走这条
-  1. GSC 后台 → Performance → 日期选 **Last 3 months**
-  2. Tab **Pages** → Export → Download CSV
-  3. Tab **Queries** → Export → Download CSV（可选）
-  4. 想看涨跌就再切上一个等长周期，导出一份 prev CSV
-  ```bash
-  node scripts/gsc-import.cjs \
-    --pages ~/Downloads/pages.csv \
-    --queries ~/Downloads/queries.csv \
-    --compare-pages ~/Downloads/prev.csv \
-    --start 2026-07-19 --end 2026-10-16 \
-    --baseline
-  ```
-  产出结构与 `gsc-pull.cjs` **完全一致**，下游（content-strategist / 聚合）无需改动。
+  **拿到的数据（2026-06-21 → 2026-10-16，118 天）：**
 
-- [ ] **P0.2** 存基线快照（**不要被下次拉取覆盖**，单独存一份）
-  ```bash
-  cp content/.gsc-performance.json content/.gsc-baseline-2026-10.json
-  ```
-  （用 `gsc-import.cjs --baseline` 会自动写到带月份的文件名，可跳过这步）
-- [ ] **P0.3** 补查另外三个开站阈值指标，记进快照文件
-  - `site:kbmjj123.cc` 收录页数
-  - DR（Ahrefs 免费版 / Moz）
-  - 有多少 query 进过前 10
+  | 指标 | 数值 |
+  |---|---|
+  | 总 impressions | **405** |
+  | 总 clicks | **0** |
+  | 日均 impressions | **3.4** |
+  | GSC 有数据的 URL | 13（其中文章 9、页面 4） |
+  | **118 天里零曝光的文章** | **11 / 20 篇** |
+
+  **位次分布（决定 0 点击的性质）：**
+
+  | 路径 | imp | avgPos |
+  |---|---|---|
+  | /about | 12 | **4.4** |
+  | /archive | 5 | **5.0** |
+  | /from-zero-to-2-dollar… | 2 | **6.0** |
+  | / | 2 | 9.5 |
+  | /projects | 14 | 12.5 |
+  | /going-serverless-part-3 | 22 | 28.4 |
+  | /fixing-adsense… | 48 | 34.3 |
+  | /going-serverless-part-2 | 42 | 36.0 |
+  | /platform-agnostic-ad… | 69 | 44.2 |
+  | /self-hosting-umami-part-1 | **140** | 46.5 |
+  | /self-hosting-umami-part-3 | 18 | 48.8 |
+  | /going-serverless-part-1 | 25 | 59.4 |
+  | /68k-impressions… | 6 | 43.5 |
+
+- [x] **P0.2** 基线快照已存 → `content/.gsc-baseline-2026-10.json`
+- [x] **P0.3** 收录状况已用 **URL Inspection API** 精确查出（比 `site:` 准，逐 URL 官方判定）
+  - **20 篇文章：9 篇已收录，11 篇 `URL is unknown to Google`（从未被抓取）**
+  - 已收录的 9 篇恰好 = GSC 里有数据的那 9 篇一一对应
+  - 已收录的抓取时间全部落在 10/08–10/18 → Google 正在以约每天 1 篇的速度慢慢发现
+  - 有多少 query 进过前 10：**13 条 query 中只有 `wwads` 到过第 1 位**
+- [ ] **P0.4** DR（Ahrefs 免费版 / Moz）—— 仍需外部工具，唯一未拿到的指标
 
 **验收**：能一口气答出"我现在多少 impressions / clicks / 收录 / DR"，不用现查。
 
 > 这一步不依赖后面任何决定。**现在就能做，别等。**
 
-### ⚠️ 已确认的阻断：本机无法访问 Google API
+### ⚠️ 更正：2026-10-18 的"永久不可用"结论是**错的**
 
-实测（2026-10-18）：
+**当时的错误判断**：认定本机到 Google API 是结构性黑洞，`gsc-pull.cjs` 永久跑不通。
 
-| 目标 | 结果 |
+**实际原因**：本机代理在 `127.0.0.1:7890`，但 shell 环境里的 `HTTP_PROXY/HTTPS_PROXY`
+被 WorkBuddy 沙箱**覆盖成了自己的 `127.0.0.1:51595`**，那个代理不放行 Google。
+脚本用 `curl` 且没显式指定 `-x`，于是走到沙箱代理 → 超时。
+
+**证据**（2026-10-19 复测）：
+
+| 方式 | 结果 |
 |---|---|
-| `example.com` / `baidu.com` / `cloudflare.com` | 200 / 301 / 301 ✅ |
-| `www.google.com` | 超时 ❌ |
-| `oauth2.googleapis.com` | 超时 ❌ |
-| `www.googleapis.com` | 超时 ❌ |
+| 默认环境（走 51595 沙箱代理） | `000` 超时 ❌ |
+| `curl -x http://127.0.0.1:7890` | `404` ✅ 到达 Google |
+| `env https_proxy=...7890 node gsc-pull.cjs` | ✅ 完整拉取成功 |
 
-DNS 能解析（74.125.204.95），握手超时 —— 网络层面黑洞，不是凭据问题。
-凭据本身是完好的（`.claude/credentials/gsc-service-account.json`，service account + 1704 位私钥）。
+**教训**：故障结论写得太死了。实际只是**代理变量被覆盖**这一层，一指定就通。
+以后下"不可用"判断前，先确认环境里到底哪一层在生效。
 
-**这意味着 `gsc-pull.cjs` 在本机永远跑不通。** 它不是"暂时失败"，是结构性不可用。
-
-**连带结论：P3.4 的 cron 必须跑在 Cloudflare 上，不能跑在本地。**
-Cloudflare Worker 运行在 CF 网络内，可以到达 Google API；本地不行。
-所以 GSC 自动化的正确形态是 **Worker + Cron Trigger 写入 D1**，而不是本地定时任务。
-这同时也顺带解决了原问题：手工跑脚本会断（已经断了三个月），cron 不会。
+**连带修正**：P3.4 的 cron 不再必须跑在 Cloudflare 上——本机 API 路径是通的。
+但仍**建议**走 Worker + Cron，理由不是网络，而是：本机要开机、要手动执行，
+而历史上"手工跑脚本"已经断过一次（停了三个月）。**cron 解决的是人会忘，不是网络不通。**
 
 ---
+
+## 🚨 关键发现：索引断裂（优先级高于一切内容优化）
+
+**2026-10-19 通过 GSC URL Inspection API 逐 URL 精确判定。**
+
+### 事实
+
+| 指标 | 数值 |
+|---|---|
+| 已收录 | **9 / 20 篇** |
+| `URL is unknown to Google`（从未被抓取） | **11 / 20 篇** |
+| sitemap 被 Google 处理过吗 | **从未**（`isPending: true`，2026-07-21 提交后三个月未处理） |
+| 已收录 9 篇的抓取时间 | 全部落在 10/08–10/18 |
+
+**已收录的 9 篇，与 GSC 里有曝光数据的 9 篇完全重合。**
+
+> 零曝光不是因为排名差，是因为 Google 根本不知道它们存在。
+
+### 这意味着什么
+
+此前所有关于"排名优化"的讨论都建立在错误前提上。真实顺序是：
+
+```
+未收录  →  收录  →  排名  →  点击
+   ↑
+  卡在这里
+```
+
+**以下工作在当前阶段无效，应推迟：**
+
+- 修内链 / 统一分类 —— 作用于已收录页面之间的权重传递
+- 改文章结构 / TL;DR —— 作用于已收录页面的排名与 CTR
+- 挑文章做 A/B 对比 —— 405 imp 的样本量无法归因
+
+### 已执行
+
+- [x] 重新提交 sitemap → **HTTP 204 成功**，`lastSubmitted` 从 `2026-07-21` 更新为 `2026-10-19`
+  ```bash
+  env https_proxy=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 \
+      node scripts/gsc-submit-sitemap.cjs
+  ```
+  注意：必须用 **full scope** 自行取 token。复用 `gsc-pull.cjs` 的 readonly token 会 403
+  （`ACCESS_TOKEN_SCOPE_INSUFFICIENT`）—— 卡点是 scope 声明，不是 GSC 用户级别。
+
+### 待验证（1–7 天后）
+
+- [ ] sitemap 的 `isPending` 是否变 false，并出现"已发现 URL 数"
+- [ ] 重跑 `gsc-pull.cjs`，看 impressions 是否因收录增加而跳涨
+- [ ] 重跑 URL Inspection，看 11 篇未收录是否变成 Discovered / Crawled / Indexed
+
+### 已排除的四种可能
+
+| 假设 | 验证方式 | 结果 |
+|---|---|---|
+| robots.txt 屏蔽 | 拉取线上 robots.txt | ❌ `Allow: *`，已收录页 `robotsTxtState: ALLOWED` |
+| 页面带 noindex | 检查未收录页 HTML | ❌ 是 `index, follow` |
+| 移动端渲染差异 | Googlebot Mobile UA 抓首页 | ❌ 与桌面端逐字节一致（51520 bytes，均含 20 条链接） |
+| 首页/归档页缺链接 | grep 静态 HTML | ❌ 两页都有完整 20 条链接 |
+
+**剩下的解释**：站点权重极低，抓取预算只够每天发现约 1 篇。
+而本该绕过这个限制的 sitemap 通道，因三个月未被处理而失效。
+**重新提交 sitemap 是目前唯一能显著加速的杠杆。**
 
 ## Phase 1 · 环境搭建
 
