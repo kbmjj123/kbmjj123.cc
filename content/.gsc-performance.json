@@ -1,49 +1,56 @@
 {
-  "lastPulled": "2026-07-26",
+  "lastPulled": "2026-10-19",
   "siteUrl": "sc-domain:kbmjj123.cc",
   "period": {
-    "start": "2026-06-26",
-    "end": "2026-07-23"
+    "start": "2026-06-21",
+    "end": "2026-10-16"
   },
   "pages": {
     "/": {
       "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 24.5,
+      "avgPosition": 9.5,
       "topQueries": [],
-      "trend": "declining"
+      "trend": "new"
     },
     "/68k-impressions-8-clicks-image-sitemap-blind-spot": {
-      "impressions": 1,
+      "impressions": 6,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 6,
+      "avgPosition": 43.5,
       "topQueries": [],
       "trend": "new"
     },
     "/about": {
-      "impressions": 2,
+      "impressions": 12,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 4,
+      "avgPosition": 4.4,
       "topQueries": [],
       "trend": "new"
     },
     "/archive": {
-      "impressions": 2,
+      "impressions": 5,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 7,
+      "avgPosition": 5,
       "topQueries": [],
       "trend": "new"
     },
     "/fixing-adsense-responsive-mobile-square": {
-      "impressions": 25,
+      "impressions": 48,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 22.4,
+      "avgPosition": 34.3,
       "topQueries": [
+        {
+          "query": "adsbygoogle push error no slot size for availablewidth 0",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 43
+        },
         {
           "query": "new desktop and mobile responsive display ads",
           "impressions": 1,
@@ -54,28 +61,65 @@
       ],
       "trend": "new"
     },
-    "/going-serverless-part-1-why-cloudflare": {
+    "/from-zero-to-2-dollar-6-months-tool-site": {
       "impressions": 2,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 12,
+      "avgPosition": 6,
       "topQueries": [],
-      "trend": "declining"
+      "trend": "new"
+    },
+    "/going-serverless-part-1-why-cloudflare": {
+      "impressions": 25,
+      "clicks": 0,
+      "ctr": 0,
+      "avgPosition": 59.4,
+      "topQueries": [
+        {
+          "query": "cloudflare kv vs redis",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 61
+        },
+        {
+          "query": "oauth tutorial for renters",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 222
+        },
+        {
+          "query": "redis vs cloudflare kv",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 70
+        }
+      ],
+      "trend": "new"
     },
     "/going-serverless-part-2-github-oauth-local-callback": {
-      "impressions": 16,
+      "impressions": 42,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 27.4,
+      "avgPosition": 36,
       "topQueries": [],
-      "trend": "declining"
+      "trend": "new"
     },
     "/going-serverless-part-3-macos-upgrade-wrangler": {
-      "impressions": 12,
+      "impressions": 22,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 32.7,
+      "avgPosition": 28.4,
       "topQueries": [
+        {
+          "query": "wrangler mac",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 28
+        },
         {
           "query": "wrangler macos",
           "impressions": 1,
@@ -84,36 +128,44 @@
           "position": 27
         }
       ],
-      "trend": "declining"
+      "trend": "new"
     },
     "/platform-agnostic-ad-component-nuxt4-ssg": {
-      "impressions": 24,
+      "impressions": 69,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 28.3,
-      "topQueries": [],
+      "avgPosition": 44.2,
+      "topQueries": [
+        {
+          "query": "wwads",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 1
+        }
+      ],
       "trend": "new"
     },
     "/projects": {
-      "impressions": 5,
+      "impressions": 14,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 4.6,
+      "avgPosition": 12.5,
       "topQueries": [],
       "trend": "new"
     },
     "/self-hosting-umami-part-1": {
-      "impressions": 28,
+      "impressions": 140,
       "clicks": 0,
       "ctr": 0,
-      "avgPosition": 28,
+      "avgPosition": 46.5,
       "topQueries": [
         {
           "query": "umami cloud",
-          "impressions": 5,
+          "impressions": 24,
           "clicks": 0,
           "ctr": 0,
-          "position": 59.8
+          "position": 64.1
         },
         {
           "query": "umami analytics free",
@@ -121,99 +173,108 @@
           "clicks": 0,
           "ctr": 0,
           "position": 69.7
+        },
+        {
+          "query": "umami hosting",
+          "impressions": 3,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 78
+        },
+        {
+          "query": "umami cloud analytics",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 57
+        },
+        {
+          "query": "umami cloud pricing",
+          "impressions": 1,
+          "clicks": 0,
+          "ctr": 0,
+          "position": 58
         }
       ],
       "trend": "new"
+    },
+    "/self-hosting-umami-part-3": {
+      "impressions": 18,
+      "clicks": 0,
+      "ctr": 0,
+      "avgPosition": 48.8,
+      "topQueries": [],
+      "trend": "new"
     }
   },
-  "previousPeriod": {
-    "/": {
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "avgPosition": 1
-    },
-    "/going-serverless-part-1-why-cloudflare": {
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "avgPosition": 2
-    },
-    "/going-serverless-part-2-github-oauth-local-callback": {
-      "impressions": 2,
-      "clicks": 0,
-      "ctr": 0,
-      "avgPosition": 6
-    },
-    "/going-serverless-part-3-macos-upgrade-wrangler": {
-      "impressions": 1,
-      "clicks": 0,
-      "ctr": 0,
-      "avgPosition": 3
-    }
-  },
+  "previousPeriod": {},
   "changes": {
     "improved": [],
-    "declined": [
-      {
-        "slug": "/",
-        "metric": "position",
-        "from": 1,
-        "to": 24.5
-      },
-      {
-        "slug": "/going-serverless-part-1-why-cloudflare",
-        "metric": "position",
-        "from": 2,
-        "to": 12
-      },
-      {
-        "slug": "/going-serverless-part-2-github-oauth-local-callback",
-        "metric": "position",
-        "from": 6,
-        "to": 27.4
-      },
-      {
-        "slug": "/going-serverless-part-3-macos-upgrade-wrangler",
-        "metric": "position",
-        "from": 3,
-        "to": 32.7
-      }
-    ],
+    "declined": [],
     "new": [
       {
+        "slug": "/",
+        "impressions": 2,
+        "clicks": 0
+      },
+      {
         "slug": "/68k-impressions-8-clicks-image-sitemap-blind-spot",
-        "impressions": 1,
+        "impressions": 6,
         "clicks": 0
       },
       {
         "slug": "/about",
-        "impressions": 2,
+        "impressions": 12,
         "clicks": 0
       },
       {
         "slug": "/archive",
-        "impressions": 2,
-        "clicks": 0
-      },
-      {
-        "slug": "/fixing-adsense-responsive-mobile-square",
-        "impressions": 25,
-        "clicks": 0
-      },
-      {
-        "slug": "/platform-agnostic-ad-component-nuxt4-ssg",
-        "impressions": 24,
-        "clicks": 0
-      },
-      {
-        "slug": "/projects",
         "impressions": 5,
         "clicks": 0
       },
       {
+        "slug": "/fixing-adsense-responsive-mobile-square",
+        "impressions": 48,
+        "clicks": 0
+      },
+      {
+        "slug": "/from-zero-to-2-dollar-6-months-tool-site",
+        "impressions": 2,
+        "clicks": 0
+      },
+      {
+        "slug": "/going-serverless-part-1-why-cloudflare",
+        "impressions": 25,
+        "clicks": 0
+      },
+      {
+        "slug": "/going-serverless-part-2-github-oauth-local-callback",
+        "impressions": 42,
+        "clicks": 0
+      },
+      {
+        "slug": "/going-serverless-part-3-macos-upgrade-wrangler",
+        "impressions": 22,
+        "clicks": 0
+      },
+      {
+        "slug": "/platform-agnostic-ad-component-nuxt4-ssg",
+        "impressions": 69,
+        "clicks": 0
+      },
+      {
+        "slug": "/projects",
+        "impressions": 14,
+        "clicks": 0
+      },
+      {
         "slug": "/self-hosting-umami-part-1",
-        "impressions": 28,
+        "impressions": 140,
+        "clicks": 0
+      },
+      {
+        "slug": "/self-hosting-umami-part-3",
+        "impressions": 18,
         "clicks": 0
       }
     ]

@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2026-07-27",
+  "lastUpdated": "2026-10-19",
   "totalArticles": 18,
   "published": 18,
   "drafts": 0,
@@ -54,11 +54,11 @@
         "gsc-impressions-zero-clicks-diagnosis"
       ],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 1,
+        "lastChecked": "2026-10-19",
+        "impressions": 6,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 6,
+        "avgPosition": 43.5,
         "topQueries": [],
         "trend": "new"
       }
@@ -141,12 +141,13 @@
       "incomingCount": 0,
       "relatedPostsDeclared": [],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 25,
+        "lastChecked": "2026-10-19",
+        "impressions": 48,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 22.4,
+        "avgPosition": 34.3,
         "topQueries": [
+          "adsbygoogle push error no slot size for availablewidth 0",
           "new desktop and mobile responsive display ads"
         ],
         "trend": "new"
@@ -191,7 +192,16 @@
       "incomingCount": 1,
       "relatedPostsDeclared": [
         "from-2-45-rpm-to-a-pivot"
-      ]
+      ],
+      "performance": {
+        "lastChecked": "2026-10-19",
+        "impressions": 2,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 6,
+        "topQueries": [],
+        "trend": "new"
+      }
     },
     {
       "slug": "going-serverless-part-1-why-cloudflare",
@@ -211,13 +221,17 @@
       "incomingCount": 1,
       "relatedPostsDeclared": [],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 2,
+        "lastChecked": "2026-10-19",
+        "impressions": 25,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 12,
-        "topQueries": [],
-        "trend": "declining"
+        "avgPosition": 59.4,
+        "topQueries": [
+          "cloudflare kv vs redis",
+          "oauth tutorial for renters",
+          "redis vs cloudflare kv"
+        ],
+        "trend": "new"
       }
     },
     {
@@ -237,13 +251,13 @@
       "incomingCount": 2,
       "relatedPostsDeclared": [],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 16,
+        "lastChecked": "2026-10-19",
+        "impressions": 42,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 27.4,
+        "avgPosition": 36,
         "topQueries": [],
-        "trend": "declining"
+        "trend": "new"
       }
     },
     {
@@ -263,15 +277,16 @@
       "incomingCount": 1,
       "relatedPostsDeclared": [],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 12,
+        "lastChecked": "2026-10-19",
+        "impressions": 22,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 32.7,
+        "avgPosition": 28.4,
         "topQueries": [
+          "wrangler mac",
           "wrangler macos"
         ],
-        "trend": "declining"
+        "trend": "new"
       }
     },
     {
@@ -354,12 +369,14 @@
       "incomingCount": 0,
       "relatedPostsDeclared": [],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 24,
+        "lastChecked": "2026-10-19",
+        "impressions": 69,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 28.3,
-        "topQueries": [],
+        "avgPosition": 44.2,
+        "topQueries": [
+          "wwads"
+        ],
         "trend": "new"
       }
     },
@@ -382,14 +399,17 @@
       "incomingCount": 3,
       "relatedPostsDeclared": [],
       "performance": {
-        "lastChecked": "2026-07-26",
-        "impressions": 28,
+        "lastChecked": "2026-10-19",
+        "impressions": 140,
         "clicks": 0,
         "ctr": 0,
-        "avgPosition": 28,
+        "avgPosition": 46.5,
         "topQueries": [
           "umami cloud",
-          "umami analytics free"
+          "umami analytics free",
+          "umami hosting",
+          "umami cloud analytics",
+          "umami cloud pricing"
         ],
         "trend": "new"
       }
@@ -429,7 +449,16 @@
       ],
       "outgoingCount": 2,
       "incomingCount": 3,
-      "relatedPostsDeclared": []
+      "relatedPostsDeclared": [],
+      "performance": {
+        "lastChecked": "2026-10-19",
+        "impressions": 18,
+        "clicks": 0,
+        "ctr": 0,
+        "avgPosition": 48.8,
+        "topQueries": [],
+        "trend": "new"
+      }
     },
     {
       "slug": "self-hosting-umami-part-4",

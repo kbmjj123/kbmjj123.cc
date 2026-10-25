@@ -12,9 +12,17 @@ examples_zh: ["推荐选题", "给我大纲", "拉取数据", "月度报告", "�
 examples_en: ["What should I write next?", "Generate an outline", "Pull GSC data"]
 ---
 
-> ⚠️ **本机无法直连 Google API**（googleapis.com 网络不可达，已实测）。
-> 拉取 GSC 数据请用 `node scripts/gsc-import.cjs --pages <csv> --baseline`（手工从 GSC 后台导出 CSV 后导入），
-> 不要用 `scripts/gsc-pull.cjs`。二者产出的 JSON 结构完全一致。
+> 🌐 **调用 GSC 脚本必须显式指定代理**（本机代理 = `127.0.0.1:7890`）。
+> shell 里的 `HTTP_PROXY/HTTPS_PROXY` 会被宿主机沙箱覆盖成它自己的端口（如 `127.0.0.1:51595`），
+> 那个端口不放行 Google。所以**不能**裸跑 `node scripts/gsc-pull.cjs`，必须前置代理变量：
+> ```bash
+> env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890 \
+>     HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 \
+>     NO_PROXY=localhost,127.0.0.1,0.0.0.0,::1 \
+>     node scripts/gsc-pull.cjs --days 120
+> ```
+> 下文所有 `gsc-pull.cjs` 命令都要按这个方式调用。
+> 备选（不走网络）：`scripts/gsc-import.cjs` 解析手工导出的 CSV，产出结构一致。
 
 > 📥 **选题时多一个素材源**：先读 `~/.dev-log/projects/*/log.md`，
 > 把日志里的真实踩坑纳入候选。关键词数据告诉你"有人搜"，
