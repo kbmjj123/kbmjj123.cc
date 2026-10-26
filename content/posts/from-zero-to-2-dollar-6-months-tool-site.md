@@ -161,8 +161,7 @@ I woke up on July 1—exactly six months after launch—to that number. It's not
 
 ---
 
-## What's Next
-
+## Where the site stands six months in
 Six months in, the site earns enough to cover the domain and not much more. That's fine — this was a learning project, and the learning has been worth more than the revenue.
 
 The next six months: fill out the thin language versions, test whether the tool-chain upgrade moves the numbers, and write about what happens when a side project stops being a side project. I don't know if the revenue curve bends. I know the adjustment loop works.

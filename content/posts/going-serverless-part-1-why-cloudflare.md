@@ -84,8 +84,7 @@ Right now, neither of my two live projects is under real production load. One is
 
 That number doesn't worry me today. But I'm not going to pretend it's nothing, either. If that second project gets real traffic and more pages — which is the whole point of building it — I expect to cross into paid usage at some point, and probably sooner than I'd assume from the marketing copy around "generous free tiers." I'd rather say that plainly now than discover it the hard way later and write a more frustrated post about it.
 
-## What's Next
-
+## What the decision cost before I could actually use the stack
 This decision didn't come for free, even setting aside future billing. Getting to the point where I could actually use this stack day to day surfaced two very different, very real problems — one with GitHub OAuth failing silently during local development, and one that had nothing to do with code at all: a piece of decade-old hardware that flatly refused to run the tooling I needed. Both are getting their own posts in this series.
 
 ## The Trade-Offs I'm Accepting
