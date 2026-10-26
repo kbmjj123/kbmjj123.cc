@@ -1,24 +1,26 @@
 ---
 name: blog-post-producer
-display_name: 博客文章产出
-display_name_en: Blog Post Producer
-description: 把讨论记录、技术笔记、排查日志转成 kbmjj123.cc 可发布的 .md 文章。用户粘贴长段技术讨论或说"写成文章""发布这个"时触发。写文件前必须先分析、提出拆分方案并获用户批准。
-description_zh: 将技术讨论/笔记转化为符合执行手册的博客文章，写入 content/posts/。
-description_en: Converts technical discussions and notes into publishable blog posts under content/posts/.
-version: 1.0.0
-author: kbmjj123
-tags: [blog, writing, SEO, 文章产出]
-examples_zh: ["把这段写成文章", "发布这个", "整理成一篇文章", "这个能写成博客吗"]
-examples_en: ["Turn this into a post", "Write this up", "Publish this"]
+description: >
+  Produce blog posts for kbmjj123.cc following the detailed production manual.
+  MANDATORY trigger: whenever the user pastes a long discussion, technical notes, or records a conversation about something that could become a blog post — even if they don't explicitly say "write a post". 
+  Also trigger when user says "turn this into a post", "write this up", "make an article from this", "publish this", or similar.
+  Do NOT just start writing — you must first analyze, propose split plan, ask for missing resources, 
+  and get user approval before writing any .md file.
+compatibility:
+  tools_required:
+    - Bash (for reading existing posts, writing files)
+    - Read (for reading discussion content, existing posts)
+    - Write (for writing .md files)
+    - Edit (for editing relatedPosts on existing posts)
+    - WebSearch/WebFetch (for SEO keyword research per Section 2.1)
+  sub_skills:
+    - content-strategist (Phase 0: content recommendations)
+    - image-planner (Phase 4D: automatic image handling)
+    - content-evolver (Phase 0: loads learned patterns and competitor intelligence)
+  platforms:
+    - Claude Code
+    - Claude.ai (some steps adapt)
 ---
-
-> ⚠️ **文章结构已改**：旧的六段固定公式（TL;DR / Background / … / Lessons Learned）
-> 已废弃——它导致全站 19 篇结构雷同。现在按四类原型走，见
-> `devlog-system/07-article-archetypes.md`（踩坑排查 / 决策权衡 / 教程操作 / 复盘叙事）。
-> 正文里若仍引用旧公式，以 07 为准。
-
-> 📥 **Phase 0 之前先做一步**：读 `~/.dev-log/projects/*/log.md`，
-> 有可用素材优先用素材决定结构，而不是先套模板再填素材。
 
 # Blog Post Producer — kbmjj123.cc
 
@@ -51,10 +53,18 @@ Check if `content/.gsc-performance.json` exists and has `lastPulled` set (not nu
 
 **Step 0B — Load Pattern Memory**
 
-Check if memory file `successful-content-patterns.md` exists in the project memory directory.
+Check if memory files exist in the project memory directory. Load all that exist:
 
-- If exists: read it. These are learned patterns from previous performance reviews — apply them when deciding article structure, keyword targeting, and content style.
-- If not exists: skip. Will be created after the first performance review.
+- `memory/successful-content-patterns.md` — learned patterns from performance reviews. Apply when deciding article structure, keyword targeting, and content style.
+- `memory/competitor-intelligence.md` — SERP analysis and competitor gaps. Use to identify sections competitors cover that you should include.
+- `memory/content-gaps.md` — prioritized keyword opportunities. Reference when evaluating if the article topic has demand.
+
+If any file doesn't exist: skip that file. It will be created by `content-evolver` after the first review cycle.
+
+**Apply memory data during writing**:
+- If competitor intelligence shows top results include a section your article doesn't → add it
+- If content patterns show winners average [X] words → target similar length
+- If content gaps list this keyword → mark it as covered after publishing
 
 **Step 0C — Content Matrix Check**
 
@@ -115,7 +125,20 @@ After publishing, run `node scripts/gsc-pull.cjs` monthly to build performance h
 
 1. Read the user's input (discussion, notes, chat log). If it references other conversations or files, ask for them.
 2. Scan `content/posts/` to see what already exists — check for existing related posts, tags in use, slug conflicts.
-3. Index the full input using context-mode (`ctx_index`) so you can search across it without holding it all in context.
+3. **Identify historical articles to reference** — look for posts that cover:
+   - **Same project/product** (e.g., BulkPicTools, the tool site) → can cite earlier data/decisions
+   - **Same technology** (e.g., Cloudflare, Nuxt) → can link as background reading
+   - **Same journey/thread** (e.g., revenue updates, deployment stories) → can build on previous posts
+   - **Contradictory or evolving views** (e.g., "I said X 3 months ago, now I think Y") → powerful narrative device
+4. Index the full input using context-mode (`ctx_index`) so you can search across it without holding it all in context.
+
+**Historical reference is encouraged**: if a previous post has relevant experience, data, or context, reference it naturally in the new article. Don't just link — actually use the content ("When I set up Umami three months ago, I hit X. Here's what changed since then.").
+
+**Reading historical posts**: Read the full body of 2-3 most relevant existing posts before writing. Extract:
+- Specific numbers/data you can reference ("last time I reported $2/day")
+- Decisions you can build on or revisit
+- Problems that connect to the new article's topic
+- Phrasing/voice to maintain consistency (but NOT structural uniformity)
 
 #### 1B — Identify Sub-Topics
 
@@ -294,6 +317,86 @@ Head Term Authority: "cloudflare d1" — 2400/mo
 Differentiation: Real FTS5 implementation, not just API reference
 ```
 
+#### 1C-2 — SERP Intent Matching (Mandatory)
+
+**Before writing, search the target keyword and analyze the top 10 results.** Google ranks content types that match what searchers want — if your format doesn't match, you won't rank regardless of quality.
+
+**Step 1**: Search the exact target keyword in Google (WebSearch).
+
+**Step 2**: Classify each of the top 10 results:
+
+| Content Type | Signal | Your Article Must Be |
+|-------------|--------|---------------------|
+| **Tutorial / How-To** | "How to...", "Step by step", numbered steps | A tutorial with actionable steps |
+| **Listicle / Roundup** | "10 Best...", "Top 5...", numbered list | A list-based article |
+| **Comparison** | "X vs Y", "X or Y", comparison tables | A comparison article |
+| **Concept / Guide** | "What is...", "The complete guide", "Everything about" | A comprehensive explainer |
+| **Tool / Product Page** | Official docs, SaaS landing pages | Hard to compete — consider different angle |
+
+**Step 3**: Record the dominant format:
+
+```
+SERP Intent Analysis for "[target keyword]":
+
+Top 10 format breakdown:
+- Tutorials: 6/10 ← dominant format
+- Listicles: 2/10
+- Concept guides: 1/10
+- Product pages: 1/10
+
+Dominant intent: Tutorial (I) — searcher wants "how to do X"
+Your article format: MUST be a tutorial
+Differentiation opportunity: 8/10 have no real code. 9/10 have no screenshots of actual results.
+```
+
+**Step 4**: If SERP is dominated by official docs/mega-sites → re-evaluate whether this keyword is achievable. Consider a long-tail variant instead.
+
+**Why this matters**: A brilliant comparison article targeting a tutorial keyword will NOT rank. Format match is a prerequisite, not an optimization.
+
+#### 1C-3 — Keyword Layering (Mandatory)
+
+Don't just pick one keyword. Build a **keyword pyramid** to maximize coverage:
+
+```
+         ┌─────────────────┐
+         │   Target Word    │  1 primary keyword → Title, H1, first 100 words
+         │  (1,000+ vol)   │
+         ├─────────────────┤
+         │  Variant Words   │  3-5 keyword variants → H2 headings, subheadings
+         │  (200-1,000 vol) │
+         ├─────────────────┤
+         │   Long-Tail       │  5-8 long-tail questions/queries → Body paragraphs
+         │   (< 200 vol)    │  (answer each as a mini-section)
+         └─────────────────┘
+```
+
+**Process**:
+
+1. **Target word** (already selected in 1C): the primary keyword in title + meta
+2. **Variant words**: grammatical/semantic variants, synonyms, related terms
+   - "technical seo checklist" → "seo audit checklist", "technical seo audit", "site audit checklist"
+   - Map each variant to an H2 or H3
+3. **Long-tail words**: question-based and specific-intent queries
+   - "how to do technical seo audit", "technical seo checklist for new website", "free technical seo tools"
+   - Answer each naturally in body paragraphs
+
+**Output format** (include in Phase 2 proposal):
+
+```
+## Keyword Pyramid
+
+Target: "technical seo checklist" (3,600 vol, KD 34)
+├─ Variants → H2 mapping:
+│   ├─ "technical seo audit checklist" (2,400) → H2: "The Technical SEO Audit Checklist"
+│   ├─ "seo checklist template" (1,300) → H2: "Free Checklist Template"
+│   └─ "technical seo for beginners" (720) → H2: "Getting Started"
+├─ Long-tails → body coverage:
+│   ├─ "how to do technical seo audit" → Answered in Step 2 paragraph
+│   ├─ "technical seo checklist for new website" → Covered in "For New Sites" callout
+│   └─ "technical seo tools free" → Covered in "Free Tools" list
+└─ Related topic cluster: links to image-sitemap, sitemap-xml, google-search-console articles
+```
+
 #### 1D — Split Decision
 
 Apply Section 4 rules:
@@ -328,11 +431,24 @@ Identified N sub-topics: [list each with 1-sentence description]
 ### Article 1: [Working Title]
 Target Keyword: "[keyword]"
 Volume: XXX/mo | KD: XX | Intent: Informational
-SERP Analysis: [1-2 sentences on competition landscape]
-Differentiation: [why your article can rank — real experience angle]
+SERP Format: [dominant format in top 10 — e.g., "6/10 tutorials"]
+Your Format: [must match — e.g., "Tutorial (Archetype B)"]
+Competitive Gap: [2+ things top 10 DON'T do that you will]
 Cost-Benefit: ~Xh writing → est. XX-XX clicks/mo (forever) → worth it / skip
 
 ### Article 2: ...
+
+## Keyword Pyramid
+
+### Article 1: [Working Title]
+Target: "[keyword]" (vol, KD)
+├─ Variants → H2 mapping:
+│   ├─ "[variant 1]" (vol) → H2: "..."
+│   └─ "[variant 2]" (vol) → H2: "..."
+├─ Long-tails → body coverage:
+│   ├─ "[long-tail 1]" → answered in [section]
+│   └─ "[long-tail 2]" → covered in [section]
+└─ Cluster links: [existing posts to link to]
 
 ## Tentative Structure
 
@@ -423,33 +539,306 @@ relatedPosts:
 
 **readTime calculation**: Count approximate English word count of the body (not frontmatter). Divide by 200, round to nearest minute. Format: `"12mins"`, `"5mins"`. Minimum 3mins.
 
-#### 4B — Body Structure
+#### 4B — Body Structure & Style Variation
 
-For **troubleshooting / technical implementation** posts, use the Section 7 template:
+**⚠️ MANDATORY: Pick an archetype. Do NOT default to the same skeleton every time.**
+
+Before writing, select ONE archetype that fits the content. Check the last 2-3 published posts' H2 sequences — if they share the same skeleton, **switch archetype**. Variation is a hard requirement, not a suggestion.
+
+##### Archetype A — Troubleshooting (debugging, bug fixes, "it broke")
 
 ```markdown
-## TL;DR
-## Background
-## The Problem
-## Investigation
-## Solution
-## My Take
-## Result
-## Lessons Learned
+## [Opening hook — see Opening Styles below]
+## The Problem          ← what went wrong, with the exact error
+## The Investigation    ← dead ends, wrong theories, real debugging
+## The Fix              ← the actual solution
+## Why It Happened      ← root cause, deeper explanation
+## Preventing It Next Time  ← checklist / pattern / config guard
 ```
 
-Write every section with the reader's ability to replicate in mind. Detailed checks are in Phase 5 Actionability Check — two quick tests during writing:
+Opening: error message, stack trace, or "it worked yesterday."
+Closing: **Preventing It Next Time** — a checklist or rule, NOT "Lessons Learned."
 
-- **Copy-Paste Test**: Can the reader copy any code block and run it? If not, add missing context.
+##### Archetype B — Tutorial / How-To (build something, step-by-step)
+
+```markdown
+## [Opening hook]
+## What You'll Build     ← outcome + prerequisites
+## Step 1: [Specific action]
+## Step 2: [Specific action]
+## Step 3: [Specific action]
+## Gotchas               ← things that will bite you
+## Where To Go Next      ← extensions, alternatives
+```
+
+Opening: what the reader will have when done, or why existing tutorials fall short.
+Closing: **Where To Go Next** — extensions, not a summary.
+
+##### Archetype C — Narrative / Diary (startup journey, personal story)
+
+```markdown
+## [Opening — a scene or moment, not TL;DR]
+## [Story beats as H2s — chronological or thematic]
+## The Numbers           ← real data, what happened
+## What I Actually Think ← honest reflection, not platitudes
+## What's Next
+```
+
+Opening: a specific moment in time (date, event, number). Never TL;DR.
+Closing: **What's Next** or **What I Actually Think** — forward-looking or honest, not a checklist.
+
+##### Archetype D — Opinion / Essay (philosophy, mindset, "should you X?")
+
+```markdown
+## [Opening — provocative claim or question]
+## The Common View       ← what most people think
+## Why That's Wrong      ← or "Why That's Incomplete"
+## My Position           ← the argument, with evidence
+## The Nuance            ← when the common view IS right
+## So What?              ← actionable takeaway
+```
+
+Opening: a bold claim, contrarian take, or sharp question. Never TL;DR.
+Closing: **So What?** — one clear actionable takeaway.
+
+##### Archetype E — Comparison / Analysis (tools, approaches, options)
+
+```markdown
+## [Opening — the decision context]
+## The Candidates        ← what's being compared
+## Head-to-Head          ← dimensions that matter
+## When to Use Which     ← decision framework
+## What I Chose          ← and why
+```
+
+Opening: the decision that forced the comparison.
+Closing: **When to Use Which** — a decision framework, not "it depends."
+
+##### Opening Styles (pick one — rotate across posts)
+
+| Style | Example | Best For |
+|-------|---------|----------|
+| **Scene/Moment** | "Last Tuesday, I was watching my kid at a playground..." | Narrative, Diary |
+| **Error/Output** | "The build hung for 4 minutes after `prisma migrate deploy`..." | Troubleshooting |
+| **Data Shock** | "68,000 impressions. 8 clicks. That ratio told me something was deeply wrong." | Analysis, Opinion |
+| **Bold Claim** | "AI handles 85% of my workload. The other 15% is the only part that matters." | Opinion, Essay |
+| **Question** | "Does an indie developer actually need to learn Figma, SEO, and copywriting?" | Opinion |
+| **Direct Dive** | Skip the intro. Start with the code, the config, or the first step. | Tutorial |
+
+**Forbidden openings**: "Recently, while working on X...", "In today's post, we'll...", "TL;DR:" as the first section (use a scene or claim instead — put the TL;DR-style summary at the END if needed).
+
+##### Closing Styles (pick one — rotate across posts)
+
+| Style | Example | Best For |
+|-------|---------|----------|
+| **Prevent Next Time** | Checklist of 3-5 rules to avoid the bug | Troubleshooting |
+| **Where To Go Next** | "If you want to go further, try X..." | Tutorial |
+| **What's Next** | "Next month I'm testing Y..." | Diary, Narrative |
+| **So What?** | "The takeaway: stop optimizing what to learn, start optimizing what to eliminate." | Opinion |
+| **Decision Framework** | "Use A when X, B when Y, C when Z." | Comparison |
+| **Open Question** | "I'm still not sure if this scales past 100 users. What do you think?" | Opinion, Diary |
+
+**Forbidden closings**: "In conclusion...", "In summary...", "Lessons Learned" as a formulaic section header (extract 1-2 concrete lessons inline in the narrative instead — a "Lessons Learned" H2 is acceptable ONLY in Troubleshooting archetype and only if it's a genuine checklist, not a paragraph of platitudes).
+
+##### Style Variation Rules (Hard Constraints)
+
+1. **Consecutive posts must NOT share the same H2 skeleton.** Check the last 2-3 published posts before writing.
+2. **Rotate opening styles.** No two consecutive posts use the same opening type.
+3. **Rotate closing styles.** No two consecutive posts end the same way.
+4. **Vary section count.** Some posts are 5 H2s, some are 8+. Don't land on 7 every time.
+5. **Vary H2 length.** Mix short punchy titles ("The Fix") with longer descriptive ones ("Why `*.vercel.app` Is Blocked but a Custom Domain Isn't").
+6. **The archetype must match the content type** — don't force a Troubleshooting skeleton onto an opinion piece.
+
+##### Internal Links — Natural Placement (Flexible Position)
+
+Internal links can appear **anywhere in the body** where they naturally fit. There is no fixed position — no "Related Posts" section at the bottom, no "See also" block, no "As I wrote before" only in the intro.
+
+**Where to link** — anywhere a sentence naturally references another post:
+
+| Context | Example |
+|---------|---------|
+| **Background/callback** | "When I [set up Umami on Vercel](/self-hosting-umami-part-2) three months ago, the connection string was the first thing that broke." |
+| **Data reference** | "Last month I reported [$2/day in ad revenue](/from-zero-to-2-dollar-6-months-tool-site). Here's what changed." |
+| **Contradiction/evolution** | "I used to recommend [OAuth for GSC auth](/google-search-console-api-nodejs). I've changed my mind — here's why." |
+| **Technical depth** | "For the full FTS5 trigger setup, see [my D1 search implementation](/nuxt4-cloudflare-three-deployment-modes)." |
+| **Sidebar mention** | "This is the same [ad component problem](/platform-agnostic-ad-component-nuxt4-ssg) from a different angle." |
+| **Inline aside** | "(I covered the [Cloudflare free tier limits](/nuxt-cloudflare-zero-cost) in detail if you want the numbers.)" |
+
+**Rules**:
+- **Semantic anchor text** — the link text should describe what it points to. Not "click here", not "this post", not the bare URL.
+- **Don't force it** — if a sentence doesn't naturally reference another post, don't add a link. 1-3 body links per article is enough. 0 is OK if nothing genuinely connects.
+- **Don't over-link** — don't link the same post twice in one article. Don't link every technical noun.
+- **Link placement follows the sentence, not the structure** — a link can appear in the first paragraph, in the middle of a code explanation, or in the final reflection. Whatever reads naturally.
+- **relatedPosts frontmatter is still needed** (1-3 slugs) for the sidebar widget — but body links are independent and more important for SEO and reader navigation.
+
+Write every section with the reader's ability to replicate in mind. Two quick tests during writing:
+
+- **Copy-Paste Test** (tutorials/troubleshooting): Can the reader copy any code block and run it? If not, add missing context.
 - **Next Time Test**: Does the ending give the reader a reusable tool (checklist, framework, template)? If it's just "and then it worked", rewrite.
-
-For **principle / concept** posts, adapt structure — don't force the template. The key requirement is that every Section 3.1 rule is met: each sentence is specific to this post, could not be swapped into another post unchanged.
-
-For **startup-diary / product-business** posts, use narrative structure but still include My Take (with data) and Lessons Learned.
 
 #### 4C — Image Embedding
 
 Per Section 3.1: Every diagram/SVG I generate **must be embedded** in the markdown body at the correct paragraph position. Not just saved to disk — verify it appears in the `.md` file output.
+
+#### 4C-2 — SVG Cover Generation (Mandatory)
+
+After writing the article body, **automatically generate an SVG cover image** and write it to `public/images/{category}/{slug}/cover.svg`. No user input needed — the cover is pure SVG code.
+
+**Output path**: `public/images/{category}/{slug}/cover.svg`
+**Frontmatter**: set `image: "/images/{category}/{slug}/cover.svg"`
+
+**Cover SVG Template** — follow the pixel design system exactly. Here is the base template:
+
+```svg
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0b0b12"/>
+      <stop offset="100%" stop-color="#13131e"/>
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="4" result="blur"/>
+      <feMerge><feMergeNode in="blur"/><feMergeNode in="SourceGraphic"/></feMerge>
+    </filter>
+    <!-- Dot grid pattern -->
+    <pattern id="dots" width="50" height="50" patternUnits="userSpaceOnUse">
+      <circle cx="25" cy="25" r="1" fill="rgba(74,222,128,0.03)"/>
+    </pattern>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- Top decorative bar (dashed green) -->
+  <rect x="0" y="0" width="1200" height="4" fill="#4ade80" stroke="none"
+        stroke-dasharray="8 8" opacity="0.8"/>
+  <line x1="0" y1="2" x2="1200" y2="2" stroke="#4ade80" stroke-width="4"
+        stroke-dasharray="8 8" opacity="0.6"/>
+
+  <!-- Border frame -->
+  <rect x="16" y="16" width="1168" height="598" fill="none" stroke="#2a2a42" stroke-width="2"/>
+
+  <!-- Site identifier -->
+  <rect x="80" y="64" width="16" height="16" fill="#fbbf24" stroke="#fbbf24" stroke-width="2"/>
+  <text x="108" y="78" font-family="'Press Start 2P', monospace" font-size="18"
+        fill="#4ade80" letter-spacing="2">KB<tspan fill="#fbbf24">MJJ123</tspan><tspan fill="#4d5a7a" font-size="12">.cc</tspan></text>
+
+  <!-- Separator line -->
+  <rect x="80" y="108" width="60" height="2" fill="#4ade80" opacity="0.5"/>
+
+  <!-- Title (adjust font-size based on length) -->
+  <text x="80" y="180" font-family="'Press Start 2P', monospace" font-size="32"
+        fill="#e8edf5" letter-spacing="-0.5">
+    <!-- Title line 1 -->
+  </text>
+  <text x="80" y="228" font-family="'Press Start 2P', monospace" font-size="32"
+        fill="#e8edf5" letter-spacing="-0.5">
+    <!-- Title line 2 (if needed) -->
+  </text>
+
+  <!-- Description area -->
+  <rect x="80" y="280" width="680" height="2" fill="#2a2a42"/>
+  <text x="80" y="330" font-family="Inter, sans-serif" font-size="18" fill="#9aa8c9">
+    <!-- Description line 1 -->
+  </text>
+  <text x="80" y="358" font-family="Inter, sans-serif" font-size="18" fill="#9aa8c9">
+    <!-- Description line 2 -->
+  </text>
+
+  <!-- Category badge -->
+  <rect x="80" y="420" width="180" height="32" rx="4" fill="rgba(74,222,128,0.08)"
+        stroke="rgba(74,222,128,0.2)" stroke-width="1"/>
+  <text x="100" y="441" font-family="'Press Start 2P', monospace" font-size="10" fill="#4ade80">
+    <!-- category-slug -->
+  </text>
+
+  <!-- Decorative pixel blocks (right side) -->
+  <rect x="900" y="160" width="24" height="24" fill="#4ade80" opacity="0.15"/>
+  <rect x="940" y="160" width="24" height="24" fill="#4ade80" opacity="0.25"/>
+  <rect x="980" y="160" width="24" height="24" fill="#4ade80" opacity="0.15"/>
+  <rect x="920" y="200" width="24" height="24" fill="#fbbf24" opacity="0.2"/>
+  <rect x="960" y="200" width="24" height="24" fill="#fbbf24" opacity="0.35"/>
+  <rect x="940" y="240" width="24" height="24" fill="#fbbf24" opacity="0.15"/>
+
+  <!-- Bottom tagline -->
+  <text x="80" y="545" font-family="'Press Start 2P', monospace" font-size="9"
+        fill="#4d5a7a" letter-spacing="1">✦ pixel · indie · craft ✦</text>
+
+  <!-- Gold accent block bottom-right -->
+  <rect x="1148" y="582" width="20" height="20" fill="#fbbf24" stroke="#fbbf24"
+        stroke-width="2" opacity="0.6"/>
+</svg>
+```
+
+**Design tokens (MUST use these exact values)**:
+| Element | Value |
+|---------|-------|
+| Background | `#0b0b12` → `#13131e` gradient |
+| Border | `#2a2a42`, 2px |
+| Primary accent (green) | `#4ade80` |
+| Secondary accent (gold) | `#fbbf24` |
+| Title text | `#e8edf5` |
+| Body text | `#9aa8c9` |
+| Muted text | `#4d5a7a` |
+| Pixel font | `'Press Start 2P', monospace` |
+| UI font | `Inter, sans-serif` |
+| Dot grid | `rgba(74,222,128,0.03)`, 50px spacing |
+
+**Title sizing rules**:
+| Title length | Font size | Lines |
+|-------------|-----------|-------|
+| < 30 chars | 36px | 1 |
+| 30-55 chars | 32px | 2 |
+| 55-80 chars | 28px | 2-3 |
+| > 80 chars | 24px | 3 |
+
+**Category badge colors** (pick one based on article category):
+| Category | Badge color |
+|----------|-------------|
+| `dev-practice` | green `#4ade80` |
+| `tools-workflow` | gold `#fbbf24` |
+| `indie-mindset` | blue `#60a5fa` |
+| `startup-diary` | orange `#f59e0b` |
+| `product-business` | purple `#a78bfa` |
+| `tech-trends` | cyan `#06b6d4` |
+
+**Customization per article**:
+1. Replace title text (split into lines based on length)
+2. Replace description text (1-2 lines, key takeaway)
+3. Set category badge text and color
+4. Optionally adjust decorative pixel blocks (vary positions/opacity)
+5. Keep the overall layout consistent — this is the brand identity
+
+**Quality check**: The SVG must render correctly in browser. After writing, verify:
+- viewBox is `0 0 1200 630`
+- All fonts are specified (Press Start 2P for pixel, Inter for UI)
+- No hardcoded text that doesn't match the article
+- Color values match the design tokens exactly
+
+#### 4D — Auto-Invoke image-planner (Mandatory)
+
+After writing the article body, **automatically invoke the `image-planner` skill** to handle all image-related tasks. Do NOT manually create image directories or insert placeholders — delegate to image-planner.
+
+**Trigger**: Every article written in Phase 4, regardless of type.
+
+**What image-planner does**:
+1. Creates `public/images/{category}/{slug}/` directory
+2. Sets `image` field in frontmatter (cover image path)
+3. Inserts `![alt](path)` placeholders at appropriate body locations
+4. Generates architecture/flow SVGs where applicable
+5. Outputs an image checklist to the user
+
+**How to invoke**:
+```
+Skill: image-planner
+Args: {slug} — the article slug just written
+```
+
+After image-planner returns:
+- Verify all `![alt](path)` references are in the `.md` file
+- Verify the `image` frontmatter field is set
+- Include the image checklist in your Phase 6 output to the user
 
 #### 4D — Visual Assets Plan
 
@@ -518,7 +907,47 @@ Rules:
 
 For each "Must-have" screenshot, mark it in the proposal as `⚠️ Required — user must capture`.
 
-#### 4D — Series Navigation (Section 9.1)
+#### 4E — Chinese Version (Mandatory)
+
+Every article written in Phase 4 must also produce a **Chinese reference version**. This version is for the author and Chinese readers — it does NOT participate in deployment.
+
+**Output location**: `content/translations/{slug}.zh.md`
+
+This directory is NOT matched by the Nuxt Content collection (`source: 'posts/*.md'`), so it won't be built or deployed.
+
+**Format**:
+
+```markdown
+---
+title: "中文标题"
+description: "中文描述"
+slug: "{same-as-english-slug}"
+originalDate: <same date as English version>
+category: <same as English version>
+tags: <same as English version>
+note: "中文参考版本 — 不参与部署。英文原版: content/posts/{slug}.md"
+---
+
+[Full Chinese translation of the English article body]
+
+[Same H2/H3 structure as the English version]
+[Same code blocks — code stays in English, comments can be Chinese]
+[Same images — same paths, alt text in Chinese]
+```
+
+**Translation rules**:
+- **Full translation** — not a summary. Every section, every paragraph.
+- **Code blocks**: keep code in English (variable names, function names). Comments and explanations around code in Chinese.
+- **Technical terms**: keep English for tool/tech names (Cloudflare, Nuxt, Workers, D1, etc.). Translate concepts (e.g., "full-text search" → "全文搜索").
+- **Tone**: match the English version's voice. If the English is casual/conversational, Chinese should be too — not stiff formal Chinese.
+- **H2/H3 titles**: translate naturally, don't force literal translation. Keep the same structural rhythm.
+- **Alt text for images**: in Chinese.
+
+**When to write**: Immediately after the English article body is finalized (Phase 4B-4D complete). Write both versions before moving to Phase 5 Self-Check.
+
+**Self-check addition**: The Chinese version should pass the same content-specificity check — no generic Chinese tech-blog filler.
+
+#### 4F — Series Navigation (Section 9.1)
 
 If this article is part of a series, append at the bottom:
 
@@ -534,6 +963,42 @@ Build the navigation links using the series slugs.
 ### Phase 5: Self-Check (Mandatory Before Output)
 
 Run through this checklist on every article before presenting or saving:
+
+#### Style Variation Check (NEW — run this FIRST)
+- [ ] Does this article use a **different H2 skeleton** from the last 2-3 published posts? (If the last post was Troubleshooting, this one must NOT be.)
+- [ ] Is the **opening style** different from the previous post? (No two consecutive "TL;DR:" or "Scene/Moment" openings.)
+- [ ] Is the **closing style** different from the previous post?
+- [ ] Did I pick a specific **archetype** (A-E) that matches the content type? (Not just defaulting to Troubleshooting.)
+- [ ] Does the H2 sequence feel fresh — would a reader who's read the last 3 posts notice this is different at a glance?
+
+#### SVG Cover Check
+- [ ] `public/images/{category}/{slug}/cover.svg` exists
+- [ ] viewBox is `0 0 1200 630`
+- [ ] Uses pixel design tokens (exact colors: `#0b0b12`, `#4ade80`, `#fbbf24`, `#2a2a42`, `#e8edf5`, `#9aa8c9`, `#4d5a7a`)
+- [ ] Title matches the article (not a placeholder)
+- [ ] Font sizes follow the title-length sizing rules
+- [ ] Category badge uses correct color for the article's category
+- [ ] `image` field in frontmatter points to `/images/{category}/{slug}/cover.svg`
+- [ ] SVG renders correctly (no broken text, no overflow)
+
+#### Chinese Version Check
+- [ ] Chinese version exists at `content/translations/{slug}.zh.md`
+- [ ] Full translation — every section of the English version is present (not a summary)
+- [ ] Same H2/H3 structure as English version
+- [ ] Code blocks unchanged (code in English, explanations in Chinese)
+- [ ] Tone matches the English version (not stiff formal Chinese if English is conversational)
+- [ ] Frontmatter includes `note` field pointing to English original
+- [ ] No Chinese tech-blog filler ("本文将介绍..." / "总结一下..." / "希望这篇文章对您有帮助")
+
+#### SEO Quality & Intent Check
+- [ ] **SERP format match**: Does this article's format (tutorial/listicle/comparison/guide) match the dominant format in the top 10 results?
+- [ ] **Keyword pyramid**: Target word in title + first 100 words? Variant words mapped to H2s? Long-tails answered in body?
+- [ ] **Search intent match**: Would someone searching the target keyword be satisfied with this content? (Not just "related to" — actually answers their query.)
+- [ ] **Real data density**: At least 3 specific numbers (time/cost/performance/revenue/lines of code)? Not vague claims like "it's fast" or "it saved time."
+- [ ] **Copy-paste artifact**: Does the article give the reader something to save/bookmark? (Checklist, template, decision tree, complete config, code repo.)
+- [ ] **Competitive gap filled**: Does this article do at least 2 things the top 10 results DON'T do? (Real code, real screenshots, error paths, 2026 data, decision frameworks, specific niche like Nuxt+Cloudflare+D1.)
+- [ ] **Topic cluster**: Does this article connect to existing posts? (2-3 body internal links + relatedPosts.)
+- [ ] **E-E-A-T signals**: Real experience evident (specific error messages, actual project names, honest limitations)? No fabricated data?
 
 #### Section 2.1 — Keyword Research Verification
 - [ ] Is there a documented target keyword with search data or estimated demand signals?
@@ -553,7 +1018,7 @@ Run through this checklist on every article before presenting or saving:
 - [ ] For any solution/code — is the logic accurate to the user's real project? (Not generic placeholder.)
 
 #### Section 7.1 — H3 Title Quality
-- [ ] Every H3 under Investigation/Solution/Lessons Learned: does it name a specific object + specific conclusion? Or could it be any troubleshooting post ("Attempt 1", "Checking the config")?
+- [ ] Every H3: does it name a specific object + specific conclusion? Or could it fit any article on the blog ("Attempt 1", "Checking the config", "Step 1")?
 - [ ] Under any H2, can two H3s be swapped without reader noticing? If yes, reconsider the sub-division logic.
 - [ ] Is each H3 clearly about ONE sub-problem, not two?
 
@@ -563,12 +1028,17 @@ Run through this checklist on every article before presenting or saving:
 - [ ] Any sentence that sounds like it's trying to "balance" both sides when the post clearly takes one side?
 - [ ] Are sentence lengths too uniform? Manually vary a few.
 - [ ] Does Investigation include at least one wrong turn or misdiagnosis? (Section 5.1 requires it — if user didn't provide one, ask.)
-- [ ] Any "In conclusion" or summary paragraph before Lessons Learned? Remove.
-- [ ] Does the opening avoid the fixed phrase "Recently, while working on X..."? Rewrite to something specific (direct quote of error message, a striking number, a wrong initial assumption).
+- [ ] Any "In conclusion" / "In summary" / formulaic closing paragraph? Remove — end with the chosen closing style instead.
+- [ ] Does the opening avoid the fixed phrase "Recently, while working on X..."? Rewrite to the chosen opening style (scene, error, data shock, bold claim, question, or direct dive).
+- [ ] If a "Lessons Learned" section exists: is it a genuine checklist the reader can act on? Or is it generic platitudes that could appear in any post? If the latter, remove the section and weave specific lessons into the narrative.
 
-#### Section 9 — Internal Links
-- [ ] relatedPosts has 1-3 existing post slugs (not empty, not >3)
-- [ ] At least 1 natural anchor-text link in body to another post (not "click here" — use semantic anchor text)
+#### Section 9 — Internal Links & Historical References
+- [ ] **Historical references**: Did I read and use relevant existing posts? (Data callbacks, past decisions, evolving views — not just "see also")
+- [ ] **Body links are natural**: Are internal links placed where the sentence naturally references another post? (Not clustered at top/bottom, not in a "Related Posts" section)
+- [ ] **Semantic anchor text**: Does each link's text describe the target? (Not "click here" / "this post" / bare URL)
+- [ ] **No forced links**: Is every body link genuinely relevant? (0 links is OK if nothing connects. Don't force.)
+- [ ] **No duplicate links**: Same post not linked twice in one article
+- [ ] relatedPosts has 1-3 existing post slugs (for sidebar widget)
 - [ ] If series: navigation footer present and links are correct
 - [ ] If this post references existing posts: check if those posts need their relatedPosts updated to back-link (Section 9.1)
 
@@ -576,27 +1046,37 @@ Run through this checklist on every article before presenting or saving:
 - [ ] image field: either omitted, or a real image that represents core article content. Not a generic unrelated cover.
 
 #### Actionability Check — "Can the Reader Copy-Paste and Learn?"
-- [ ] **Copy-Paste Test**: Can the reader copy any code block and run it without modification? If not, is the missing context (imports, config, env setup) explicitly stated?
+- [ ] **Copy-Paste Test** (tutorials/troubleshooting): Can the reader copy any code block and run it without modification? If not, is the missing context (imports, config, env setup) explicitly stated?
 - [ ] **Environment Check**: Are versions/tools/specifics mentioned? (Node version, framework version, package manager, OS if relevant)
 - [ ] **Expected Output**: Does each code/command block show what the reader should expect to see? (console output, file structure, browser behavior)
-- [ ] **Wrong Turns**: Does Investigation include at least one dead end the reader can learn from? (Not just the happy path)
+- [ ] **Wrong Turns** (troubleshooting): Does Investigation include at least one dead end the reader can learn from? (Not just the happy path)
 - [ ] **Complete Configs**: Are config files shown in full, not as "add this to your config" fragments?
-- [ ] **"Next Time" Test**: Does the ending provide a reusable checklist, decision framework, or template — not just "and then it worked"?
-- [ ] **Prerequisites**: If the article assumes prior knowledge, is it stated upfront? ("This assumes you already have X set up")
-- [ ] **Visual Assets**: For tutorial/how-to articles — are there screenshots at every non-obvious UI step? Are architecture/flow diagrams included for multi-component systems? Are all "⚠️ User captures" items clearly marked in the proposal?
+- [ ] **"Next Time" Test**: Does the ending give the reader something reusable — a checklist, decision framework, or template? (Match to the chosen closing style: "Prevent Next Time", "Where To Go Next", "So What?", etc.)
+- [ ] **Prerequisites**: If the article assumes prior knowledge, is it stated upfront?
+- [ ] **Visual Assets**: For tutorial/how-to articles — are there screenshots at every non-obvious UI step? Are architecture/flow diagrams included for multi-component systems?
 
 ---
 
 ### Phase 6: Save and Link
 
 1. **Write** each `.md` file to `content/posts/{slug}.md` with `draft: true`
-2. For each broken `relatedPosts` entry pointing to an existing post — **Edit** the target post's frontmatter to add a back-link in its `relatedPosts` (if not already at 3 cap; if at cap, replace weakest)
-3. Present the output to user with:
-   - List of files written
+2. **Write** the Chinese version to `content/translations/{slug}.zh.md`
+3. For each broken `relatedPosts` entry pointing to an existing post — **Edit** the target post's frontmatter to add a back-link in its `relatedPosts` (if not already at 3 cap; if at cap, replace weakest)
+4. Present the output to user with:
+   - List of files written (English + Chinese versions)
    - Summary of what's draft vs ready
    - **Visual Assets Checklist**: all required screenshots/diagrams with placement instructions
    - What still needs user action (screenshots, data, draft→published flip)
-4. **Ask user to review before setting `draft: false`**
+5. **Ask user to review before setting `draft: false`**
+6. **Remind user of post-publish optimization cycle**:
+   ```
+   📅 发布后优化提醒:
+   - 30 天后: 运行 `node scripts/gsc-pull.cjs` 查看收录和排名
+   - CTR < 2%: 改标题和 meta description
+   - 排名 10-20: 补充内容深度、加内链
+   - 排名 30+: 考虑重写或合并到集群主文章
+   - 6 个月后: 更新过时数据，补充新内容
+   ```
 
 ---
 
@@ -651,6 +1131,8 @@ Real posts in the project use these conventions — match them:
 - `image` path: mix of `/images/{category}/{slug}/{file}` (local) and `https://assets.kbmjj123.cc/blog/...` (R2)
 - Tags formatted `#xxx` with hash prefix
 - Description in frontmatter is a complete sentence ending with period
+
+**⚠️ Do NOT match the structural uniformity of existing posts.** Older posts all share the same H2 skeleton (TL;DR → Background → Problem → Investigation → Solution → My Take → Result → Lessons Learned). That's the problem this update fixes. Follow the Archetype system (4B) instead.
 
 ### Semrush Quick Reference
 

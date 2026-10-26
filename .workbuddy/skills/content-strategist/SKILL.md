@@ -36,6 +36,13 @@ This skill generates data-driven content recommendations using real user search 
 
 **Companion skill**: `blog-post-producer` handles writing articles. This skill handles deciding **what** to write.
 
+**Learning integration**: This skill reads memory files from `content-evolver` to apply learned patterns:
+- `memory/successful-content-patterns.md` — what article structures and strategies work
+- `memory/competitor-intelligence.md` — SERP analysis and competitor gaps
+- `memory/content-gaps.md` — prioritized keyword opportunities
+
+Always load these files at the start of any recommendation workflow.
+
 ## Domain Boundary — Content Focus
 
 All content recommendations MUST stay within the blog's core identity: **a developer building products and sharing real technical experience**.
@@ -201,8 +208,26 @@ User wants an article outline for a specific keyword.
    - Include differentiation angle (what you uniquely offer)
    - Include actionable elements (checklist, code, framework)
 
-5. **Present outline** and ask:
+5. **Select Archetype** (mandatory before presenting):
+   - Check the last 2-3 published posts' H2 sequences — pick a DIFFERENT archetype
+   - Use the Archetype system from `blog-post-producer` Phase 4B (A: Troubleshooting, B: Tutorial, C: Narrative, D: Opinion, E: Comparison)
+   - The archetype determines the H2 skeleton — don't default to the same one
+   - Also pick an Opening Style and Closing Style that differ from recent posts
+
+6. **Present outline** with archetype selected and ask:
    ```
+   ## 大纲提案
+
+   **Archetype**: [A/B/C/D/E — e.g., "B: Tutorial"]
+   **Opening Style**: [e.g., "Data Shock"]
+   **Closing Style**: [e.g., "Where To Go Next"]
+   **为什么选这个骨架**: [一句话：上两篇用了 X/Y，这次用 Z 变化]
+
+   ### H2 结构
+   1. [H2 title]
+   2. [H2 title]
+   ...
+
    要我用这个大纲开始写文章吗？（触发 blog-post-producer）
    ```
 
