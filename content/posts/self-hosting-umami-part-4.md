@@ -23,14 +23,12 @@ seo:
     - "umami x-vercel-ip-country wrong country"
 ---
 
-## TL;DR
-
+## The short version: China was missing, and a custom domain brought it back
 After the self-hosted Umami setup was running cleanly, I noticed that mainland China was nearly absent from the visitor map — despite bulkpictools.com having Chinese users. The initial instinct was wrong: it looked like an IP parsing bug, but it was actually simpler and more fundamental. The `*.vercel.app` domain is blocked in mainland China. Chinese users' browsers were sending the `/api/send` tracking request, hitting a timeout, and silently dropping it. The fix was binding a custom domain to the Vercel project and updating `data-host-url` in the frontend.
 
 ---
 
-## Background
-
+## The signal: one or two data points a day from mainland China
 China had one or two data points a day. That's the number that made me stop and look — for a site like bulkpictools.com, mainland China should be a meaningful slice of traffic, not a rounding error.
 
 A few weeks into running the self-hosted Umami setup from Parts 1–3, the dashboard otherwise looked healthy: accurate visitor counts, correct geographic breakdowns everywhere else, no event ceiling. Japan, South Korea, and Singapore all showed up normally. China didn't.
@@ -39,8 +37,7 @@ The first assumption was that something was wrong with the GeoIP database or the
 
 ---
 
-## Investigation
-
+## What I checked first: the geolocation stack
 ### The Wrong Diagnosis: IP Parsing
 
 The natural place to look first was the geolocation stack. Umami reads `x-vercel-ip-country` to get the visitor's country without having to resolve the IP through MaxMind. I added a temporary log to `getClientInfo` to see what headers were actually arriving:
@@ -93,12 +90,11 @@ The critical detail in this setup: `umami.bulkpictools.com` is configured in Clo
 
 Cloudflare isn't doing anything special here — DNS-only mode just resolves the name. The fix works because that name itself isn't blocked.
 
-![Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-4-gfw-domain-paths.svg)
+![Diagram showing blocked path from China to *.vercel.app versus working path through custom domain umami.bulkpictools.com with DNS-only Cloudflare configuration](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-4-gfw-domain-paths.svg)
 
 ---
 
-## Solution
-
+## The fix: point Umami at a custom domain instead of *.vercel.app
 ### Step 1 — Bind the custom domain in Vercel
 
 In the Vercel dashboard, go to your project → Settings → Domains → Add Domain. Enter the subdomain you want to use — in this case `umami.bulkpictools.com`.
@@ -141,8 +137,7 @@ The quickest verification is checking Vercel Function Logs immediately after dep
 
 ---
 
-## My Take
-
+## The wrong turn cost me an evening — what I check first now
 The frustrating part of this diagnosis was spending time on IP parsing — looking at `x-forwarded-for` values, checking `prisma.config.ts`, adding debug logs — when the actual problem had nothing to do with any of that. The Chinese requests weren't being misattributed. They didn't exist.
 
 The lesson I've internalized: when data from a specific geography is missing entirely rather than incorrect, the first question should be "are requests from this region reaching the server at all?" — not "is the server parsing the data correctly?" Missing data and wrong data have different root causes. I jumped to the wrong branch of the debugging tree.
@@ -155,16 +150,14 @@ The DNS-only configuration also means there's no Cloudflare CDN caching in front
 
 ---
 
-## Result
-
+## After the domain change: mainland China appeared within minutes
 After deploying the custom domain change, mainland China data started appearing in the Umami dashboard within minutes.
 
 ![Umami analytics dashboard showing China appearing in the countries list after custom domain fix](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-4-china-data-restored.webp)
 
 ---
 
-## Lessons Learned
-
+## Missing data and wrong data are different problems
 **Missing data and wrong data have different root causes.** When an entire geography shows zero rather than incorrect values, debug connectivity before parsing. The question is "are requests arriving?" not "are requests being misread?"
 
 **`*.vercel.app` is blocked in mainland China.** So is `*.netlify.app`, and periodically `*.github.io`. If China traffic matters to your project, a bound custom domain belongs in the initial setup checklist, not the backlog.
@@ -178,3 +171,17 @@ After deploying the custom domain change, mainland China data started appearing 
 ---
 
 *Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1](/self-hosting-umami-part-1) · [← Part 2](/self-hosting-umami-part-2) · [← Part 3](/self-hosting-umami-part-3)*
+
+## Frequently asked questions
+
+**Why did mainland China show almost no visitors in Umami?**
+Not because the geolocation data was wrong — because the requests never arrived. The Umami instance was served from a `*.vercel.app` domain that is blocked in mainland China, so the tracking script never loaded for those visitors.
+
+**Is `*.vercel.app` blocked in mainland China?**
+Yes. Vercel's default domain resolves to shared infrastructure whose IP space is blocked. `*.netlify.app` is in the same position, and `*.github.io` is blocked periodically. A custom domain on your own DNS is not affected.
+
+**Does adding a custom domain change how Umami resolves country?**
+No. Umami still reads the country from request headers exactly as before. The custom domain only makes the tracking script reachable in the first place, so requests from that region start arriving.
+
+**How do I tell connectivity from a code bug when data is missing?**
+Look at whether the data is missing or wrong. An entire geography at zero, while every other region reports correctly, points at requests not arriving. Incorrect values for arriving requests point at the parsing or geolocation layer.

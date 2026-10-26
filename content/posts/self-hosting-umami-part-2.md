@@ -24,14 +24,12 @@ seo:
     - "prisma config ts datasource url"
 ---
 
-## TL;DR
-
+## The short version: Umami on Supabase needs two connection strings, not one
 Deploying Umami to Vercel with a Supabase database requires two separate connection strings — not one. The official docs mention this, but they don't explain *why*, which meant I spent hours debugging a build that silently hung with no error output. The root cause was Prisma's migration command running against the connection pool port instead of the direct connection port, combined with a `prisma.config.ts` file that quietly overrode my environment variables.
 
 ---
 
-## Background
-
+## The plan: fork Umami, import to Vercel, point it at Supabase
 After deciding to self-host Umami (covered in [Part 1](#)), the deployment path looked straightforward: fork the official repo, import to Vercel, set `DATABASE_URL`, deploy. The official documentation at `docs.umami.is/docs/install` lists the environment variables and the expected connection string format. I had a Supabase project ready. Should have been 20 minutes.
 
 It ate most of an evening instead.
@@ -58,8 +56,7 @@ The script was calling `prisma migrate deploy` internally. That command was the 
 
 ---
 
-## Investigation
-
+## Why PgBouncer and Prisma migrations do not get along
 ### Why `prisma migrate deploy` Can't Use the Connection Pool
 
 Supabase exposes your PostgreSQL database through two different endpoints:
@@ -75,7 +72,7 @@ The critical constraint: **Prisma's migration engine requires a direct connectio
 So the problem was structural: the build was trying to run database migrations through the connection pool, which is architecturally wrong regardless of credentials or network conditions.
 
 
-![Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432](/images/startup-umami/self-hosting-umami/supabase_connection_paths_diagram.svg)
+![Diagram showing two Supabase connection paths: runtime queries through PgBouncer on port 6543, and Prisma migrations requiring direct connection on port 5432](/images/startup-diary/self-hosting-umami/supabase_connection_paths_diagram.svg)
 
 ### Splitting DATABASE_URL From DIRECT_DATABASE_URL Stopped the Hang — Almost
 
@@ -93,7 +90,7 @@ Both environment variables need to be set in Vercel under Settings → Environme
 
 Where to find these strings in Supabase: navigate to your project, click the **Connect** button (green, near the top), then look for the "Transaction pooler" and "Direct connection" sections. Each one has a copy button that gives you the complete string with your project reference already filled in — you only need to substitute your database password.
 
-![Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432](/images/startup-umami/self-hosting-umami/self-hosting-umami-part-2-supabase-connect-page.webp)
+![Supabase Connect page showing Transaction pooler connection string on port 6543 and Direct connection string on port 5432](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-2-supabase-connect-page.webp)
 
 I set both variables, redeployed, and watched the build hang at the exact same spot.
 
@@ -164,8 +161,7 @@ The characters `!` `@` `#` have reserved meaning in URIs. The safest fix is to r
 
 ---
 
-## Solution
-
+## The working prisma.config.ts after both fixes
 The complete `prisma.config.ts` after all fixes:
 
 ```ts
@@ -197,8 +193,7 @@ Substitute `[project-ref]`, `[region]`, and `[password]` with values from your S
 
 ---
 
-## My Take
-
+## The trap the docs skip: prisma.config.ts outranks your env vars
 The official Umami documentation does mention both `DATABASE_URL` and `DIRECT_DATABASE_URL`. What it doesn't explain is the *reason* — that PgBouncer in transaction mode blocks the advisory locks Prisma's migration engine depends on. Without understanding why, the two-URL requirement looks like an arbitrary configuration detail you might skip. That's exactly what I did on the first attempt.
 
 The `prisma.config.ts` override is the nastier trap because it's a file in the repository that silently wins over your environment variables. If you set `DIRECT_DATABASE_URL` correctly in Vercel but the config file doesn't map it to `directUrl`, Prisma ignores your variable entirely. The fix is two lines, but you have to know to look for the file — and nothing in the build output points you there.
@@ -207,8 +202,7 @@ This architecture — pooler for runtime, direct for migrations — isn't Umami-
 
 ---
 
-## Result
-
+## After both URLs were set: Umami loaded on localhost:3000
 With both URLs set correctly and `prisma.config.ts` updated, the local development server started cleanly and the Umami login page loaded at `localhost:3000`.
 
 ![Umami login page running locally at localhost:3000 after successful database connection](/images/startup-diary/self-hosting-umami/self-hosting-umami-part-2-local-login.webp)
@@ -219,8 +213,7 @@ Vercel deployment, however, still had one more blocker — not related to the da
 
 ---
 
-## Lessons Learned
-
+## Two connection strings, and why one is not enough
 **PgBouncer in transaction mode blocks Prisma migrations.** This isn't a bug or a misconfiguration — it's an architectural incompatibility. Prisma's migration engine uses PostgreSQL advisory locks that PgBouncer doesn't forward in transaction pooling mode. Always use a direct connection (port 5432) for `prisma migrate deploy`, regardless of what your runtime `DATABASE_URL` points to.
 
 **`prisma.config.ts` wins over environment variables.** If this file exists in your project and doesn't map `directUrl`, your `DIRECT_DATABASE_URL` variable is effectively ignored. Check this file first when Prisma migration behavior doesn't match what your env vars suggest.
@@ -232,3 +225,17 @@ Vercel deployment, however, still had one more blocker — not related to the da
 ---
 
 *Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1: Why I Left Umami Cloud](/self-hosting-umami-part-1) · [Part 3: GeoIP, Migration Bypass, and Git LFS →](/self-hosting-umami-part-3)*
+
+## Frequently asked questions
+
+**Why does Umami on Supabase need DATABASE_URL and DIRECT_DATABASE_URL?**
+Because the two do different jobs. Supabase routes normal queries through PgBouncer, a connection pooler, while migrations need a direct connection to the database. One string cannot safely serve both.
+
+**What breaks when Prisma migrations run through PgBouncer?**
+PgBouncer in transaction mode does not support the session-level features Prisma's migration engine relies on, so `prisma migrate deploy` hangs instead of completing. This is an architectural incompatibility, not a misconfiguration.
+
+**Does prisma.config.ts override environment variables?**
+Yes. If that file exists in the project and does not map `directUrl`, it silently wins over whatever you set in `DIRECT_DATABASE_URL`. This is the trap that is hardest to see, because the environment variable looks correct.
+
+**Where do I find the direct connection string in Supabase?**
+In the Supabase dashboard under project database connection settings. It is listed separately from the pooled connection string and uses a different port.

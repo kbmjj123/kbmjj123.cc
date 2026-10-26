@@ -25,8 +25,7 @@ relatedPosts:
   - "gsc-impressions-zero-clicks-diagnosis"
 ---
 
-## TL;DR
-
+## The short version: 68,200 image impressions produced 8 clicks
 I had 68,200 image search impressions across my tool site [bulkpictools.com](https://bulkpictools.com) and only 8 clicks. Average ranking: 47.9. I didn't even know this data existed until recently — because I'd never opened the Image tab in Google Search Console. The root cause wasn't bad content. It was that I had never told Google what my images actually were. This post is about what I found, why it happened, and what I changed.
 
 ---
@@ -199,8 +198,7 @@ The alt doesn't need to be long. It needs to be specific to what's actually in t
 
 ---
 
-## My Take
-
+## Three things I am still thinking about
 Three things I'm still thinking about:
 
 **"Already discovered" is not "indexed."** The aifindr.org video node showing up as "discovered" felt like a win, but discovered and indexed are different states. Google found it; it hasn't committed to showing it in results yet. I was initially excited by how fast Google responded. But I'm being careful not to treat a crawl confirmation as a ranking improvement.
@@ -211,8 +209,7 @@ Three things I'm still thinking about:
 
 ---
 
-## Result
-
+## Where it stands: image nodes are live, video nodes are waiting
 As of publishing, the `image:image` nodes are live in the sitemap. The video node structure is in place, waiting for video content. I've also updated alt text across the main tool pages.
 
 The GSC data won't reflect these changes immediately — Google needs to recrawl the sitemap and reprocess the images. I'll check back in 4–6 weeks and update this post with what changed.
@@ -221,8 +218,7 @@ The GSC data won't reflect these changes immediately — Google needs to recrawl
 
 ---
 
-## Lessons Learned
-
+## What the Image tab changed about how I read Search Console
 1. **Open the Image tab in Google Search Console.** It's under Performance → Search Type: Image. Most developers have never looked at it. If you have any images on your site, the data is probably there.
 
 2. **High impressions + low position = signal problem, not content problem.** Google already knows your images are relevant. You just haven't given it enough evidence to rank them higher. The fix is adding signal, not replacing images.
@@ -235,8 +231,7 @@ The GSC data won't reflect these changes immediately — Google needs to recrawl
 
 ---
 
-## Frequently Asked Questions
-
+## Frequently asked questions
 ### Does adding images to a sitemap guarantee they'll rank in Google Image Search?
 No. The sitemap tells Google where your images are and gives it metadata to evaluate them. Whether they rank — and how high — depends on the relevance signals across alt text, surrounding content, filename, and the image itself. The sitemap is one input, not a guarantee.
 

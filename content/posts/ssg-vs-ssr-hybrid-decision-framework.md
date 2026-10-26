@@ -28,8 +28,7 @@ seo:
     - "ssr vs ssg"
 ---
 
-## TL;DR
-
+## The short version: three projects, three modes, one decision tree
 I run three projects on Nuxt 4 + Cloudflare, each using a different deployment mode. Not because I planned it — each project hit the limits of the previous mode. This article is the decision framework I wish I had before building them.
 
 | Mode | Best for | Watch out for |
@@ -259,3 +258,17 @@ Three projects. Three modes. Each chosen for a reason.
 - [Nuxt 4 on Cloudflare: Three Deployment Modes and When to Use Each](/nuxt4-cloudflare-three-deployment-modes) — the deep-dive config guide for each mode
 - [Why I Bet My Indie Project on Cloudflare Instead of a Server](/going-serverless-part-1-why-cloudflare) — the infrastructure decision behind all three projects
 - [Running a Zero-Cost SaaS with Nuxt and Cloudflare](/nuxt-cloudflare-zero-cost) — how the cost structure works at scale
+
+## Frequently asked questions
+
+**When is SSG the wrong choice?**
+When content changes without a rebuild, when pages depend on per-request data, or when you need personalization. Build-time output cannot respond to anything that happens after the build.
+
+**When is SSR overkill?**
+When the content is fixed and the traffic is cacheable. Paying a function invocation for a page that never changes buys flexibility you are not using.
+
+**Is hybrid mode worth the extra complexity?**
+It is for this blog, because some routes are static and some need a database. The tradeoff is that you now maintain two rendering paths and need to know which one a given route uses.
+
+**How do I pick a mode quickly?**
+Answer three questions: does the data change per request, does it change per deploy, and where does it live. Those three answers point at one of the modes without needing the full comparison.

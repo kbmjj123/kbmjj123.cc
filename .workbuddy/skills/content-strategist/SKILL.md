@@ -1,20 +1,32 @@
 ---
 name: content-strategist
-description: >
-  Data-driven content strategy for kbmjj123.cc. Handles GSC data pulls,
-  content idea generation, outline creation, and performance reviews.
-  Works with real search data (GSC API + Google Autocomplete + optional Semrush CSV).
-  Triggers on: "推荐选题", "what should I write", "content ideas", "拉取数据",
-  "performance review", "月度报告", "generate outline", "给我大纲", "选题".
-compatibility:
-  tools_required:
-    - Bash (for running scripts)
-    - Read (for reading data files)
-    - WebSearch (for competitor analysis)
-    - WebFetch (for fetching competitor content)
-  platforms:
-    - Claude Code
+display_name: 内容选题策略
+display_name_en: Content Strategist
+description: kbmjj123.cc 的内容选题。基于 GSC 真实搜索数据做选题、大纲与效果复盘。当用户说"推荐选题""给我大纲""拉取数据""月度报告""performance review""选题"时使用。
+description_zh: 用 GSC 真实搜索数据驱动选题、生成大纲、做效果复盘。
+description_en: Data-driven content strategy for kbmjj123.cc — GSC pulls, idea generation, outlines, performance reviews.
+version: 1.0.0
+author: kbmjj123
+tags: [content-strategy, SEO, GSC, 选题, 大纲]
+examples_zh: ["推荐选题", "给我大纲", "拉取数据", "月度报告", "这个月表现怎么样"]
+examples_en: ["What should I write next?", "Generate an outline", "Pull GSC data"]
 ---
+
+> 🌐 **调用 GSC 脚本必须显式指定代理**（本机代理 = `127.0.0.1:7890`）。
+> shell 里的 `HTTP_PROXY/HTTPS_PROXY` 会被宿主机沙箱覆盖成它自己的端口（如 `127.0.0.1:51595`），
+> 那个端口不放行 Google。所以**不能**裸跑 `node scripts/gsc-pull.cjs`，必须前置代理变量：
+> ```bash
+> env http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890 \
+>     HTTP_PROXY=http://127.0.0.1:7890 HTTPS_PROXY=http://127.0.0.1:7890 \
+>     NO_PROXY=localhost,127.0.0.1,0.0.0.0,::1 \
+>     node scripts/gsc-pull.cjs --days 120
+> ```
+> 下文所有 `gsc-pull.cjs` 命令都要按这个方式调用。
+> 备选（不走网络）：`scripts/gsc-import.cjs` 解析手工导出的 CSV，产出结构一致。
+
+> 📥 **选题时多一个素材源**：先读 `~/.dev-log/projects/*/log.md`，
+> 把日志里的真实踩坑纳入候选。关键词数据告诉你"有人搜"，
+> 日志告诉你"你真的踩过"——**两者都命中才优先写**。
 
 # Content Strategist — kbmjj123.cc
 
@@ -196,8 +208,26 @@ User wants an article outline for a specific keyword.
    - Include differentiation angle (what you uniquely offer)
    - Include actionable elements (checklist, code, framework)
 
-5. **Present outline** and ask:
+5. **Select Archetype** (mandatory before presenting):
+   - Check the last 2-3 published posts' H2 sequences — pick a DIFFERENT archetype
+   - Use the Archetype system from `blog-post-producer` Phase 4B (A: Troubleshooting, B: Tutorial, C: Narrative, D: Opinion, E: Comparison)
+   - The archetype determines the H2 skeleton — don't default to the same one
+   - Also pick an Opening Style and Closing Style that differ from recent posts
+
+6. **Present outline** with archetype selected and ask:
    ```
+   ## 大纲提案
+
+   **Archetype**: [A/B/C/D/E — e.g., "B: Tutorial"]
+   **Opening Style**: [e.g., "Data Shock"]
+   **Closing Style**: [e.g., "Where To Go Next"]
+   **为什么选这个骨架**: [一句话：上两篇用了 X/Y，这次用 Z 变化]
+
+   ### H2 结构
+   1. [H2 title]
+   2. [H2 title]
+   ...
+
    要我用这个大纲开始写文章吗？（触发 blog-post-producer）
    ```
 

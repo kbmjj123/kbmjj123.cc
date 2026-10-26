@@ -9,7 +9,8 @@
     "generate": "nuxi generate",
     "preview": "nuxi preview",
     "typecheck": "nuxi typecheck",
-    "watermark": "node scripts/watermark.mjs"
+    "watermark": "node scripts/watermark.mjs",
+    "gen:image": "node scripts/gen-image.mjs"
   },
   "dependencies": {
     "@nuxt/content": "^3.0.0",

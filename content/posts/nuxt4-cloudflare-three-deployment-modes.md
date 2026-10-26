@@ -22,8 +22,7 @@ seo:
   keywords: []
 ---
 
-## TL;DR
-
+## The short version: three Nitro presets, three real sites
 Nuxt 4 deploys to Cloudflare Pages in three distinct modes, each controlled by the Nitro preset in `nuxt.config.ts`. I run three separate sites, each using a different mode:
 
 | Mode | Preset / Command | Bundle | Runtime | API Support | Cold Start |
@@ -301,8 +300,7 @@ Does your project need server-side logic?
 
 ---
 
-## My Take
-
+## The preset is a question about your data, not about what Nuxt can do
 Three modes, three real sites, and one conclusion: the preset choice isn't about "what Nuxt can do" — it's about where your project's data lives.
 
 Static mode is the most honest: if your content doesn't change per request, don't run code per request. BulkPicTools has been static for six months, handling 5k+ daily UV with zero infrastructure cost. When I needed per-request ad routing for a different project (AIFindr), I built it with SSR from scratch — a separate site with its own config, not a migration of the static one.
@@ -315,8 +313,7 @@ The real cost of hybrid mode isn't compute — it's the local debugging complexi
 
 ---
 
-## Result
-
+## All three modes running in production today
 All three modes are running in production:
 
 | Site | Mode | Daily Traffic | Cost |
@@ -330,8 +327,7 @@ No infrastructure bill across any mode. The cost is in configuration complexity,
 
 ---
 
-## Lessons Learned
-
+## How I pick a preset now
 1. **Match the preset to where your data lives, not what's trendy.** Static is not "less capable" — it's the right choice when your data doesn't change per request. Adding SSR before you need it just adds cold starts and dependency audit work.
 
 2. **`event.context.cloudflare.env` is the binding access path.** Not `getRequestEvent()`. Not `useRuntimeConfig()`. If you're writing a server route on the Cloudflare preset and can't access D1, check which event object you're reading. The parameter directly passed by `defineEventHandler` is the one that has the bindings.
@@ -345,3 +341,17 @@ No infrastructure bill across any mode. The cost is in configuration complexity,
 ---
 
 *This post is part of a series comparing Nuxt 4 deployment strategies. Related: [Running a Zero-Cost SaaS with Nuxt and Cloudflare](/nuxt-cloudflare-zero-cost) (static mode in depth) and [Building a Pixel Email Subscription System for kbmjj123.cc](/building-pixel-email-subscription) (hybrid mode in practice).*
+
+## Frequently asked questions
+
+**What are the Nuxt 4 deployment modes on Cloudflare?**
+Three that I run: static output via `nuxt generate`, server-side rendering with the `cloudflare-pages` Nitro preset, and a content-plus-SSR hybrid using `@nuxt/content` with D1. Each is selected by the Nitro preset in `nuxt.config.ts`.
+
+**How do I choose between static and SSR on Cloudflare Pages?**
+Start from where the data lives. If content is fixed at build time, static is the right answer and not a downgrade. If pages depend on per-request data, or on a database, you need SSR.
+
+**Can `@nuxt/content` run against Cloudflare D1?**
+Yes. That is the third mode in this post: content queried from D1 at request time, with the rest of the app server-rendered on Cloudflare Pages.
+
+**Does switching Nitro presets mean rewriting the application?**
+No. The preset changes how the app is built and where it runs. It does not change component or page code, which is why all three modes here came out of the same codebase shape.

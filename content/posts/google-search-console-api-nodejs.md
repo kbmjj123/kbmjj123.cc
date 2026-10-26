@@ -27,8 +27,7 @@ relatedPosts:
   - "68k-impressions-8-clicks-image-sitemap-blind-spot"
 ---
 
-## TL;DR
-
+## The short version: GSC data in Node with zero dependencies
 I needed to pull Google Search Console data into my blog's content pipeline. Every tutorial I found used the `googleapis` npm package — a 50MB+ dependency I didn't want. So I built it with just Node.js `crypto` and `curl`. Service account JWT auth, no OAuth flow, no external packages. The whole script is ~300 lines and runs in any Node.js environment, including restricted ones like Cloudflare Workers.
 
 This post covers: setting up a GSC service account, implementing JWT authentication from scratch, querying the Search Analytics API, and the bugs I hit along the way.
@@ -557,8 +556,7 @@ node scripts/gsc-pull.cjs
 
 ---
 
-## Summary
-
+## Summary: the five steps, and where the time actually goes
 | Step | What | Time |
 |------|------|------|
 | Create service account | Google Cloud Console | 5 min |
@@ -570,3 +568,17 @@ node scripts/gsc-pull.cjs
 No `googleapis` dependency. No OAuth flow. No browser interaction. Just a JSON key file and `curl`.
 
 The data is yours — now go build something with it.
+
+## Frequently asked questions
+
+**Do I need the `googleapis` package to call the GSC API?**
+No. The API is plain HTTP, and authentication can be done with a signed JWT built from a service account key. That removes a large dependency tree for what is a handful of requests.
+
+**Should I use OAuth or a service account?**
+A service account, for anything automated. OAuth requires a browser consent flow and refresh handling, which is unnecessary when the script runs unattended on your own property.
+
+**Why does my GSC API call return 403?**
+Most often the service account has not been added as a user of the property in Search Console. Creating the account in Google Cloud is not enough; it also has to be authorized on the site.
+
+**What are the limits on the Search Analytics API?**
+Google publishes quotas on requests per day and per minute, and the data itself is delayed by a couple of days. Both matter if you are pulling data on a schedule rather than by hand.

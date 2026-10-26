@@ -22,12 +22,10 @@ seo:
     - "vue adsense component"
 ---
 
-## TL;DR
-
+## The short version: AdSense picks the size, not your CSS
 A `type="responsive"` AdSense ad on my site rendered as a square block on mobile and grew taller than expected on desktop. The root cause was the combination of `data-ad-format="auto"` and `data-full-width-responsive="true"` — both hand control of the ad's final size to Google. I ended up not fixing this with JavaScript resize detection, but by following Google's own documented CSS media query approach and baking it into a single reusable Vue component with built-in size presets per breakpoint.
 
-## Background
-
+## The placement: two spots on an image tool site
 This particular placement isn't on this blog — it's on [bulkpictools.com](https://bulkpictools.com), another site of mine that's a batch image-processing toolchain. I'm running this ad in two spots there: in the file upload area on the tool pages, and on the output/results page. I wired it up about a week before writing this.
 
 I originally wired up the ad with:
@@ -38,8 +36,7 @@ I originally wired up the ad with:
 
 I assumed `type="responsive"` meant the ad would adapt its width *and* height to whatever container it sat in, matching the layout I'd already designed around it. That assumption turned out to be wrong — "responsive" in AdSense doesn't mean "fits your design's intended proportions," it means "Google decides the final size based on available space and ad inventory," which is a different thing.
 
-## The Problem
-
+## The symptom: a square block on mobile, too tall on desktop
 On mobile, the ad rendered as a square block instead of the horizontal banner shape I expected:
 
 ![AdSense responsive ad rendering as a square block on mobile instead of a horizontal banner](/images/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-mobile-broken.webp)
@@ -48,8 +45,7 @@ What surprised me more was that the *desktop* version wasn't stable either — t
 
 ![AdSense ad height exceeding the expected 90px on desktop, pushing page content down](/images/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-desktop-height-broken.webp)
 
-## Investigation
-
+## Why container width was not the cause
 I started by checking whether this was a container-width problem — my first guess was that the parent element wasn't wide enough for Google to calculate a sensible size, which is one of AdSense's own documented failure modes for responsive units. That wasn't it; the container had a defined width.
 
 Inspecting the actual `<ins>` element in the rendered DOM pointed at the real cause: the component was setting
@@ -70,8 +66,7 @@ I considered three different ways to fix this, in this order:
 
 Option 2 fails immediately on a 375px-wide phone screen: a hardcoded 728px-wide container either overflows (horizontal scrollbar) or gets visually compressed by the browser, which AdSense's own policies flag as a layout problem. Option 1 works, but it means maintaining a `resize` event listener, a `screenWidth` ref, manual cleanup on unmount, and an SSR-safe check for `window` — a fair amount of client-side state for something Google already solves with CSS. I went with option 3.
 
-## Solution
-
+## The fix: drop data-ad-format, set the height in CSS
 The fix itself, per Google's documented pattern, is to delete `data-ad-format="auto"` and `data-full-width-responsive="true"`, and instead size the *parent container* with a unique class name and three `@media` breakpoints — Google's own example uses 320×100 below 500px, 468×60 between 500–799px, and 728×90 at 800px and above.
 
 I didn't want to hand-write that media query block every time I dropped an ad onto the site, so I folded it into the `AdAdsense` component as a set of internal presets, one per `type`:
@@ -407,16 +402,14 @@ Tracing back through the component's history explained why: an earlier iteration
 
 Rather than patch that one line, I rewrote the component from a clean copy: removed the `responsive` prop declaration entirely, removed every remaining reference to `props.responsive`, and made the internal `RESPONSIVE_CONFIG_MAP` the only source of sizing — no external size config accepted at all.
 
-## My Take
-
+## Why I skipped JavaScript resize detection
 I didn't go with the JavaScript resize-detection approach even though it technically also works, because the cost wasn't worth it for what is, in the end, a pure CSS layout problem — `window.innerWidth` tracking, listener cleanup, and SSR guards are real maintenance surface for something `@media` already handles natively, and Google's own docs explicitly recommend the CSS route as the policy-safe modification.
 
 The trade-off I made instead is baking the breakpoint sizes into the component as fixed presets rather than exposing them as a prop. That's a deliberate loss of flexibility: if a future ad placement needs a non-standard breakpoint or size, I have to edit the component source rather than just pass a different value at the call site. For a one-person blog with a handful of ad placements, that's a trade I'm fine with — it keeps every call site to a single `type` attribute. It wouldn't be the right call on a site with many ad placements needing different sizing per page.
 
 The component also splits behavior by visitor region — domestic vs. international — which is a separate decision with its own reasoning that I'll cover properly in a dedicated post later, since the "why" there deserves more than a side note here.
 
-## Result
-
+## After the fix: a fixed 728x90 on desktop, no reflow
 After the fix, the desktop placement holds at a fixed 728×90 regardless of how the surrounding layout reflows:
 
 ![AdSense ad rendering at a fixed 728x90 on desktop after the CSS media query fix](/images/dev-practice/fixing-adsense-responsive-mobile-square/fixing-adsense-responsive-mobile-square-desktop-fixed.webp)
@@ -428,10 +421,22 @@ On mobile, the ad now renders at the breakpoint-appropriate size instead of fall
 
 <!-- PLACEHOLDER（可选）：如果有国内/国外检测后展示不同广告位的对比截图，在此插入并配 alt 文本 -->
 
-## Lessons Learned
-
+## What I would check first next time
 - `data-full-width-responsive="true"` is Google's own recommended setting for maximizing revenue, but the trade-off is giving up control over the final rendered size — read that as "Google decides," not "fits your layout."
 - Setting `data-ad-format="auto"` lets Google pick between horizontal, rectangle, and other shapes based on inventory; if you need a guaranteed shape, you need to constrain it yourself.
 - CSS media queries on the ad's container, per Google's own documentation, are an explicitly approved way to control responsive ad sizing — no policy risk, unlike some other modifications.
 - A JS-based resize listener can solve the same problem, but it's strictly more code and more state to maintain than letting CSS handle a CSS problem.
 - Baking configuration into component presets versus exposing it as props is a real maintainability trade-off, not a style preference — know which one you're choosing and why.
+## Frequently asked questions
+
+**Why did my responsive AdSense ad render as a square?**
+Because `data-ad-format="auto"` combined with `data-full-width-responsive="true"` hands the final size decision to Google. The ad picks a size based on available space and ad inventory, not on the proportions your layout was designed around.
+
+**Do I need JavaScript to detect the container width?**
+No. Google's documented approach uses CSS media queries to set a fixed height per breakpoint. JavaScript resize detection also works, but it adds a resize listener and a re-render for something CSS already handles.
+
+**Does `type="responsive"` mean the ad adapts to my design?**
+No. In AdSense, "responsive" means Google decides the final size based on available space and inventory. It does not mean the ad matches the shape your layout expects.
+
+**Is controlling ad size with CSS against AdSense policy?**
+No. CSS media queries on the ad container are an explicitly approved way to control responsive ad sizing in Google's own documentation.

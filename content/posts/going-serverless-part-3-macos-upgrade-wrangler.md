@@ -21,8 +21,7 @@ seo:
     - "cloudflare wrangler system requirements"
 ---
 
-## TL;DR
-
+## The short version: Wrangler needs macOS 14, my Mac is from 2015
 Wrangler requires macOS 14 or newer. My Mac is from 2015, and Apple stopped offering an official upgrade path for it years ago. I didn't check this before committing to the Cloudflare stack in Part 1 — I'm writing this so you can check it before you do.
 
 ## What Happened, Briefly
@@ -73,12 +72,10 @@ That's the actual trade-off, not a hypothetical one: the forced upgrade had an u
 
 The upgrade itself went through. The external monitor stopped working correctly afterward — unrelated to Wrangler or Cloudflare, a direct side effect of forcing an unsupported OS jump onto older hardware. Diagnosing and fixing that, on top of the upgrade itself, brought the total to two full days before I could start actual development work.
 
-## My Take
-
+## This did not change the Part 1 decision — but it changed my checklist
 This doesn't change my decision from Part 1 — I'd still choose Cloudflare over running my own server. But the first real cost of "going serverless" had nothing to do with serverless architecture at all. It was a tooling requirement I hadn't checked against hardware I'd already decided to keep using. That's a planning gap, not a Cloudflare problem, and it's exactly the kind of cost that's easy to skip in a write-up unless you go looking for it on purpose.
 
-## Lessons Learned
-
+## The checks I run before adopting any CLI tool now
 - Before adopting any CLI tool, look up its minimum OS/runtime requirement directly from the vendor's docs — not from a tutorial that may already be outdated.
 - Cross-check your specific hardware model against the vendor's official supported-device list before assuming "old but upgradable."
 - If your hardware has no official upgrade path, weigh a cloud-based dev environment against an unofficial upgrade on the actual axis that matters: one-time unknown risk versus ongoing setup-and-reset friction — not just which one is cheaper.
@@ -87,3 +84,17 @@ This doesn't change my decision from Part 1 — I'd still choose Cloudflare over
 
 ---
 *Part of the "Going Serverless" series. Previous: [Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)](/going-serverless-part-2-github-oauth-local-callback)*
+
+## Frequently asked questions
+
+**What macOS version does Wrangler require?**
+macOS 14 or newer at the time I hit this. The requirement is in Cloudflare's own docs, and it is the kind of line worth reading before you build a workflow around a tool.
+
+**Can I run Wrangler on an old Mac?**
+Not on the supported path. Apple had stopped offering an official upgrade for my 2015 machine, which left an unofficial upgrade, a cloud-based dev environment, or abandoning the toolchain.
+
+**What were the alternatives to upgrading?**
+Running the dev environment in the cloud was the serious one, and I weighed it before deciding. I still chose the upgrade, but that was a judgment about my own setup, not the only correct answer.
+
+**How do I avoid this before adopting a tool?**
+Look up the minimum OS and runtime version from the vendor's documentation, not from a blog post or a package README. Check it before the tool becomes the foundation of your workflow.

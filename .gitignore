@@ -7,7 +7,7 @@ node_modules/
 .output/
 .data/
 .nuxt/
-dist/
+dist
 content/tools-raw/
 # testing
 coverage/
@@ -51,3 +51,13 @@ scripts/scraper/futurepedia.ts
 
 # code-review-graph
 .code-review-graph/
+
+# dev-log：只提交配置，忽略其余
+.dev-log/*
+!.dev-log/config.md
+
+# AI 配图生成的临时产物
+public/images/gen/
+
+# WorkBuddy 会话日志（不入库）
+.workbuddy/memory/

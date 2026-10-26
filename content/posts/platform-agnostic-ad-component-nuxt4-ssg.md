@@ -24,16 +24,14 @@ seo:
     - "nuxt adsense spa navigation"
 ---
 
-## TL;DR
-
+## The short version: two layers, and ad swaps never touch page code
 Most guides for adding ads to a Nuxt site tell you to install `@nuxtjs/google-adsense` and drop `<Adsbygoogle />` into your pages. That works fine until you need to serve different ad platforms to different locales, or until you navigate back to a page and see `TagError: adsbygoogle.push() error: All ins elements in the DOM with class=adsbygoogle already have ads in them.` in the console.
 
 This post covers how I built a two-layer ad system for [BulkPicTools](https://bulkpictools.com) — a multilingual Nuxt 4 SSG site deployed on Cloudflare. The outer layer (`AdPlaceholder` + `useAdPlatform`) handles platform routing and kill switches. The inner layer (`AdAdsense`, `AdWwads`) handles each platform's SDK independently. Page code never touches platform logic.
 
 ---
 
-## Background
-
+## The constraint: a static multilingual site with no server
 BulkPicTools is a browser-only image processing tool — Canvas + WebWorkers, zero server uploads, deployed as a static site on Cloudflare Pages. It supports six languages and gets traffic from both Chinese-speaking users and the rest of the world.
 
 When I decided to add ads, the naive approach would have been to hardcode `<ins class="adsbygoogle">` wherever I needed a placement. That falls apart the moment you need:
@@ -46,8 +44,7 @@ The `@nuxtjs/google-adsense` module doesn't offer any of this. It also doesn't s
 
 ---
 
-## Architecture
-
+## Two layers: platform routing separate from platform rendering
 Two layers with strictly separated responsibilities.
 
 **Layer 1: platform logic**
@@ -416,8 +413,7 @@ onBeforeUnmount(() => {
 
 ---
 
-## My Take
-
+## Why I route by locale code instead of IP detection
 **Why locale code instead of IP detection**
 
 An SSG site has no server. There's no request context where you could read a header like `CF-IPCountry`. The locale is already available client-side via `useI18n()` the moment the component hydrates — no extra network request, no edge function dependency.
@@ -440,8 +436,7 @@ AdSense and wwads both refuse to serve real ads on `localhost`. The component be
 
 ---
 
-## Result
-
+## In production: wwads on the Chinese locale, AdSense on English
 Both platforms running in production, routing correctly by locale. Chinese locale (left) shows a wwads unit. English locale (right) shows an AdSense unit at the same page position.
 
 ![wwads ad unit showing on the Chinese locale version of BulkPicTools homepage](/images/dev-practice/platform-agnostic-ad-component-nuxt4-ssg/ad-platform-zh-wwads-filled.webp)
@@ -450,8 +445,7 @@ Both platforms running in production, routing correctly by locale. Chinese local
 
 ---
 
-## Lessons Learned
-
+## What the two-layer split actually bought me
 **1. Separate platform routing from platform rendering at the component boundary, not inside a single component.** A single component with an `if (platform === 'adsense')` branch eventually becomes unmanageable. Two lean implementation components behind a routing shell stays readable and independently testable.
 
 **2. `push()` succeeding is not the same as an ad rendering.** Use `MutationObserver` on `data-ad-status` to know when AdSense has actually committed to filling or not filling the slot. Anything that depends on ad presence — hiding skeletons, adjusting layout — should wait for that signal, not for the SDK call.
@@ -459,3 +453,17 @@ Both platforms running in production, routing correctly by locale. Chinese local
 **3. The `already-have-ads` error is a lifecycle mismatch, not an AdSense bug.** Vue's component lifecycle and AdSense's internal DOM marking don't know about each other. `onBeforeUnmount` is the right place to bridge that gap. One line of `innerHTML = ''` is enough.
 
 **4. On SSG sites, plan for production-only ad debugging from the start.** Build a skeleton/unfilled UI you're confident in locally, then accept that any state involving real ad fill requires a production deployment to verify. Trying to approximate this locally with mock data is possible but rarely worth the effort — the SDK's own behaviour is what you need to test against.
+
+## Frequently asked questions
+
+**Why not just use `@nuxtjs/google-adsense`?**
+It works until you need a second network. The module hardcodes AdSense assumptions into your pages, so adding a network for one locale means editing page code. The two-layer component keeps that decision in one place.
+
+**Why route ads by locale instead of detecting IP?**
+A statically generated site has no server, so there is no request context to read a header like `CF-IPCountry` from. The locale is already available client-side, and it is what the ad network needs anyway.
+
+**How do I confirm an AdSense unit actually rendered?**
+`push()` succeeding only means the request was accepted. Watch the `data-ad-status` attribute with a `MutationObserver` to know when AdSense has actually committed to filling the slot.
+
+**Can this pattern work with ad networks other than AdSense and wwads?**
+Yes. The routing layer only needs to answer "which network for this context," and the rendering layer only needs to know how to mount one network. Adding a third network means adding one rendering component, not editing pages.

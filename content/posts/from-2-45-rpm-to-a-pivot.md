@@ -25,8 +25,7 @@ seo:
     - "indie developer ad revenue"
 ---
 
-## TL;DR
-
+## The short version: US RPM $2.45, most countries under $1
 I run [BulkPicTools](https://bulkpictools.com), a free batch image processing tool chain. Its US AdSense RPM landed at $2.45.
 
 Not terrible. But lower than I expected.
@@ -39,8 +38,7 @@ Here's the breakdown—what I found, what I tried, and where I'm going next.
 
 ---
 
-## Background
-
+## The site: a free batch image processing tool chain
 BulkPicTools is a tool chain site: upload a batch of images, compress, resize, convert formats, remove backgrounds, add watermarks—a suite of utilities around image processing. No account required, no paywall. Just free tools.
 
 I built it to scratch my own itch, and it got traffic faster than I expected (I covered the first six months [in a separate retrospective](/from-zero-to-2-dollar-6-months-tool-site)). Once the numbers stabilized, I started paying closer attention to the ad side.
@@ -49,8 +47,7 @@ AdSense was the obvious first monetization move—low friction, no decision fric
 
 ---
 
-## The Numbers
-
+## The numbers: country-level RPM as the dashboard reports it
 Here's what the dashboard looked like (country-level RPM):
 
 | Country | RPM |
@@ -72,8 +69,7 @@ I needed to understand why.
 
 ---
 
-## The Investigation
-
+## Why visitors do not stay: in-and-out usage behavior
 ### User behavior: in and out
 
 I looked at session duration and bounce rate.
@@ -144,8 +140,7 @@ The ad optimization work isn't wasted. It funds the product while the paid tier 
 
 ---
 
-## My Take
-
+## What I would tell myself if I were starting over
 A few things I'd tell myself if I were starting over:
 
 ### 1. Tool sites can work with AdSense—but the ROI ceiling is real
@@ -193,8 +188,7 @@ The key is knowing which lever to pull when. For BulkPicTools, I'm pulling both:
 
 ---
 
-## Lessons Learned
-
+## Country-level RPM told me more than the global average ever did
 1. **Country-level RPM tells you more than the global average.** US $2.45 vs. rest-of-world $0.50–$1.00 means your traffic mix matters as much as your content.
 
 2. **Keywords are the throttle on ad revenue.** If your pages say "free" and "tool," you'll match low-bid advertisers. Use-case pages with commercial platforms do better.
@@ -206,3 +200,17 @@ The key is knowing which lever to pull when. For BulkPicTools, I'm pulling both:
 5. **$2.45 isn't a signal to stop.** It's a signal to think about the full picture—traffic, keywords, user behavior, and what you're building next.
 
 6. **Not every category has the same ad ROI.** That doesn't mean you shouldn't build in it. It means you should know what you're optimizing for—and build your revenue model accordingly.
+
+## Frequently asked questions
+
+**Why is my AdSense RPM far below the numbers I see quoted?**
+Because those numbers are usually a global or US-weighted average. RPM is set by visitor geography and intent, and a tool that people use once and leave monetizes differently from a site people read.
+
+**Does moving ad placement fix low RPM on a tool site?**
+It helps at the margin. Placement cannot change the underlying fact that users arrive to complete one task and leave, which limits how many ad impressions a session can produce.
+
+**Is non-US traffic worth monetizing at all?**
+It depends on what you are optimizing. Country-level RPM showed me where the revenue actually comes from, which changed what I decided to build next more than any global figure did.
+
+**What counts as a good RPM for an image tool site?**
+There is no universal number. The useful comparison is your own country-level breakdown against your own traffic mix, not against someone else's average.
