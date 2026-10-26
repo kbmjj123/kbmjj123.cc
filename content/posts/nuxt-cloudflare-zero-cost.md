@@ -26,12 +26,10 @@ seo:
     - "no workers no d1 architecture"
 ---
 
-## TL;DR
-
+## The short version: 700+ pages, 3.5k+ daily UV, no hosting bill
 I run a 700+ page SaaS frontend on Nuxt SSG + Cloudflare Pages + R2. It handles 3.5k+ daily UV, costs nothing to host, and still doesn't need Workers, D1, or KV. The catch: builds take 10 minutes, ONNX models load in ~10 seconds, and I can't add any feature that needs a server. Here's the full breakdown.
 
-## Background
-
+## The product: a browser-only image tool with no server behind it
 The project is a pure browser-side image tool — GIF processing, AI-powered edits via ONNX inference, batch format conversion. No user accounts, no saved projects, no server-side logic. Everything runs in the browser.
 
 When I started, I set one constraint: don't pay for hosting until the product demands it. Not "keep it cheap" — actually zero. That ruled out Node servers, VPS, even serverless functions. The only path that made sense was static generation plus edge storage.
@@ -100,18 +98,30 @@ If any of those had been a yes, I would have added Workers immediately. But addi
 
 The rule I landed on: add backend infrastructure when the product logic demands it, not when the tech stack makes it easy. Cloudflare makes it very easy to bolt on Workers. That doesn't mean you should.
 
-## My Take
-
+## "Zero cost" only works when the product shape matches the stack
 "Zero-cost SaaS" gets thrown around as a badge of honor, but it only works when the product shape matches the architecture. My project is a pure browser tool — no auth, no persistence, no server-side logic — so the static stack fits naturally. If your project needs user accounts or dynamic data, this architecture will feel like a straitjacket, not a smart optimization.
 
 The 10-minute builds and 10-second model loads are real trade-offs. I accept them because the alternative — adding paid infrastructure for a product that hasn't proven it needs it — feels premature. But I wouldn't recommend this stack to someone building a collaborative tool or anything with real-time features. The cost you save on hosting, you pay in product constraints.
 
 Static isn't a philosophy. It's a phase. The architecture stays static until the product outgrows it, and the moment that happens, I'll add Workers and D1 without hesitation. The goal isn't to keep costs at zero forever. It's to delay the first infrastructure decision until the product genuinely earns it.
 
-## Lessons Learned
-
+## What a zero hosting bill actually costs me
 - **Match the stack to the product, not the other way around.** A browser-only tool on a static stack makes sense. A collaborative tool on the same stack would be painful. Start with what the product actually does.
 - **Build time scales with page count.** At 50 pages, SSG builds took under a minute. At 700+, it's 10 minutes. If you're planning a content-heavy site, test build performance early — it's harder to fix after you've added 500 markdown files.
 - **Large client-side assets need a loading strategy.** ONNX models at 20 MB don't load instantly. A loading indicator is the bare minimum. If your users expect sub-second interactions, you either need smaller models or server-side inference.
 - **Don't add Workers because you can.** If none of your features need server-side logic, Workers add complexity with no benefit. Wait until a specific feature forces the decision.
 - **Static isn't the destination — it's the default.** Stay static as long as the product allows, but treat it as a temporary phase, not a permanent identity. The moment dynamic features create more value than they cost, switch.
+
+## Frequently asked questions
+
+**Can a Nuxt static site handle thousands of daily users?**
+Yes, if the work happens in the browser. This site does GIF processing and ONNX model inference client-side, so the static host only serves files. Traffic does not translate into server load.
+
+**What does zero-cost hosting actually cost?**
+Time and user experience, in my case: build minutes, manual asset handling, and accepting that anything needing a server has to be redesigned around the browser instead.
+
+**When should I add Workers, D1, or KV?**
+When the product logic demands it. I skipped them while the tool could run entirely client-side, and adding a backend only becomes the right call once a feature genuinely cannot be done in the browser.
+
+**Is Cloudflare R2 part of the zero-cost setup?**
+It holds the ONNX models and blog images here. The cost question is the same as with Pages: free tiers cover this scale, but the reason it stays free is that the product never asks the server to do work per request.

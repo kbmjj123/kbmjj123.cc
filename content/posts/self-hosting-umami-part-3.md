@@ -25,14 +25,12 @@ seo:
     - "git lfs large file github push"
 ---
 
-## TL;DR
-
+## The short version: two more blockers, both silent build hangs
 After fixing the database connection strings in [Part 2](#), the Vercel build still hung — this time silently, with no error output at all. The cause was two separate issues: a 66MB GeoIP database file that the build tried to download at compile time and couldn't, and the `prisma migrate deploy` step that couldn't reach Supabase's direct connection port from the build environment. The solution was to pre-bundle the GeoIP file in the repository using Git LFS, skip the build-time migration entirely with `SKIP_DB_MIGRATION=1`, and run the database schema manually through Supabase's SQL Editor.
 
 ---
 
-## Background
-
+## Where Part 2 left off: local was clean, Vercel was not
 At the end of Part 2, the local development server was running cleanly. Both connection strings were correct, `prisma.config.ts` was updated, and Umami loaded at `localhost:3000`. The logical next step was to push to GitHub and let Vercel handle the deployment.
 
 The Vercel build log reached the same three green checkmarks as before:
@@ -250,8 +248,7 @@ Replace the tracking script in your website's `<head>` with the new one from you
 
 ---
 
-## My Take
-
+## Looking back: none of the problems were hard, all of them were invisible
 Looking back at the full three-part journey, what stands out is that none of the individual problems were particularly hard. The connection string issue has a documented fix. The GeoIP download is a known constraint. Git LFS is a standard tool. But they're sequential — you can't discover problem 3 until you've solved problems 1 and 2 — and each one presents the same symptom: a silent hang with no actionable error output.
 
 That's the real difficulty. When a build fails with an error, you fix the error. When a build hangs silently, you're debugging a ghost. The mental model I developed by the end: any time a Vercel build hangs after the database checks pass, the next question isn't "what's wrong with my code" — it's "what network request is this build environment failing to complete."
@@ -264,8 +261,7 @@ The GitHub repository for my self-hosted Umami setup: [kbmjj123/umami-serve](htt
 
 ---
 
-## Lessons Learned
-
+## Silent build hangs are almost always blocked network requests
 **Silent build hangs almost always mean a blocked network request.** Vercel's build environment has different network access than its runtime environment, and different again from your local machine. When the build stops responding after a successful step, look for HTTP requests or TCP connections in the subsequent code — one of them isn't completing.
 
 **Pre-bundle large static assets instead of downloading them at build time.** The 66MB GeoIP database could in principle be downloaded fresh on every build, but that's fragile — dependent on MaxMind's servers, your network, and Vercel's build timeout. Committing it to the repo via Git LFS makes the build deterministic. The same principle applies to any build-time asset that isn't generated from source code.
@@ -293,3 +289,17 @@ If you're setting this up yourself and hit a step that isn't covered here, the r
 ---
 
 *Part of the "Self-Hosting Umami on Vercel + Supabase" series. [← Part 1: Why I Left Umami Cloud](/self-hosting-umami-part-1) · [← Part 2: The Connection String Traps](/self-hosting-umami-part-2)*
+
+## Frequently asked questions
+
+**Why does the Vercel build hang when everything works locally?**
+Because the build environment has a different network policy than your machine. A download or database call that succeeds locally can sit without timing out during a build, which looks like a hang rather than a failure.
+
+**Why can't Umami download the GeoIP database during the build?**
+Umami resolves visitor IP addresses with MaxMind's GeoLite2-City database, which is a large file fetched at build time. If that fetch is blocked, the build has no clear error to report and stalls instead.
+
+**Why is `prisma migrate deploy` blocked from the build environment?**
+Running migrations requires a direct connection to the database. Build environments often cannot reach it, and the command waits rather than failing fast. Pre-running migrations outside the build avoids this entirely.
+
+**Should I commit the GeoIP file to the repository?**
+That is what I ended up doing: pre-bundle the file so the build never needs to fetch it. It is not elegant, and it means updating the file deliberately, but it removes the blocked-network dependency from the build.

@@ -22,8 +22,7 @@ seo:
     - "cloudflare workers d1 r2 kv solo developer"
 ---
 
-## TL;DR
-
+## The short version: no server, no on-call rotation, no 3am disk alerts
 No server. No on-call rotation. No "what if the disk fills up at 3am." I run every one of my indie projects on Cloudflare — D1, Workers, KV, and R2 — instead of renting and maintaining a server. This post is about why, and what I'm honestly giving up by doing it.
 
 ## I've Run Servers Before — That's Exactly Why I'm Walking Away From Them
@@ -86,12 +85,10 @@ Right now, neither of my two live projects is under real production load. One is
 
 That number doesn't worry me today. But I'm not going to pretend it's nothing, either. If that second project gets real traffic and more pages — which is the whole point of building it — I expect to cross into paid usage at some point, and probably sooner than I'd assume from the marketing copy around "generous free tiers." I'd rather say that plainly now than discover it the hard way later and write a more frustrated post about it.
 
-## What's Next
-
+## What comes next in this series: the setup cost I did not expect
 This decision didn't come for free, even setting aside future billing. Getting to the point where I could actually use this stack day to day surfaced two very different, very real problems — one with GitHub OAuth failing silently during local development, and one that had nothing to do with code at all: a piece of decade-old hardware that flatly refused to run the tooling I needed. Both are getting their own posts in this series.
 
-## Lessons Learned
-
+## What choosing the simple path actually costs
 - Choosing the "simple" path isn't free — it just moves the cost somewhere else, and it's worth knowing where before you commit.
 - Having actually run servers before gave me a real number to compare against — not "servers are annoying" in the abstract, but specific recurring tasks (patching, backups, restarts) I could weigh against Cloudflare's free tier before switching.
 - A generous free tier is still a tier — track your usage early, even before you have real traffic, so the eventual transition to paid isn't a surprise.
@@ -100,3 +97,17 @@ This decision didn't come for free, even setting aside future billing. Getting t
 
 ---
 *Part of the "Going Serverless" series. Next: [Why GitHub OAuth Login Failed Locally (And How I Faked My Way Around It)](/going-serverless-part-2-github-oauth-local-callback)*
+
+## Frequently asked questions
+
+**Why choose serverless over a traditional server for indie projects?**
+Because the maintenance is the cost. Running a server means patching, monitoring disk, and being available when it breaks at 3am — work that produces nothing new for the product.
+
+**Why Cloudflare specifically, over Vercel or AWS?**
+Two things decided it for me: the free tiers covered the scale I was actually at, and the pieces I needed — Pages, R2, D1, Workers — were one vendor with one bill instead of several.
+
+**What do you give up by going serverless?**
+Long-running processes, arbitrary filesystem access, and full control of the runtime. For a product that serves files and does work in the browser, none of those were load-bearing.
+
+**Is serverless actually cheaper for small projects?**
+At small scale, yes — mostly because it is free. The cost shows up differently, as build minutes and platform constraints, rather than as a monthly invoice.

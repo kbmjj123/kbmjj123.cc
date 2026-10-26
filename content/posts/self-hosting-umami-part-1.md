@@ -24,22 +24,19 @@ seo:
     - "self-host umami vercel supabase"
 ---
 
-## TL;DR
-
+## The short version: Umami Cloud hit 100k events and stopped collecting
 My Umami Cloud free plan hit the 100k events/month ceiling and data collection silently stopped. I tried Cloudflare Web Analytics as a zero-cost drop-in — it showed 4x the traffic Umami did, which turned out to be mostly bots. That wasn't good enough. So I decided to self-host Umami on Vercel + Supabase. This post is about the decision; the actual deployment nightmare gets its own two posts.
 
 ---
 
-## Background
-
+## The site: a bulk image tool with real daily traffic
 [bulkpictools.com](https://bulkpictools.com) is a side project I've been running for a while — bulk image processing that runs entirely in the browser, no uploads, no server. Traffic had been growing steadily. I was on Umami Cloud's Hobby free tier because it checked all the boxes: clean UI, privacy-respecting, no cookie banners, and a dashboard that shows exactly the signal I care about — real human visitors, where they came from, which tools they used.
 
 One day in late May I opened the dashboard and it was showing zero visitors for the past few days. Not a dip. Zero.
 
 ---
 
-## The Problem
-
+## The symptom: data collection stopped silently, with no error
 My first instinct was that the tracking script had gotten blocked, or something on the site had broken. I opened DevTools and checked the network tab — the `/api/send` request was going out fine, returning 200. The script was loading. I spent close to fifteen minutes chasing that theory: checking whether an ad blocker was involved, whether a browser extension was interfering, reloading in incognito. Nothing.
 
 Then I checked the Usage page at `cloud.umami.is/settings/usage`, and the actual cause was staring back at me.
@@ -92,8 +89,7 @@ I went with Vercel + Supabase. It wasn't the easiest path — Parts 2 and 3 of t
 
 ---
 
-## My Take
-
+## The ceiling was predictable — I just had not done the math
 The free tier ceiling was predictable, and I just hadn't done the math. 1,000 active daily users, multiple trackable events per session — bulkpictools.com tracks tool usage on top of page views — and 100k events a month runs out fast. I signed up for the Hobby plan without ever multiplying those numbers together.
 
 Free tiers on analytics tools are sized for projects that haven't taken off yet. Once a project gets real traffic, you're a paying customer whether you've accepted that or not. Umami's pricing is fair by SaaS standards — $20/month for 1M events isn't unreasonable — I just hadn't priced in my own growth.
@@ -104,8 +100,7 @@ For me, the missing piece was longitudinal data — watching a specific URL clim
 
 ---
 
-## What's Next
-
+## What came next: the deployment was harder than the tutorials suggest
 The actual Vercel + Supabase deployment turned out to be more complicated than the tutorials suggest. There are connection string traps, a Prisma migration that silently hangs due to the wrong port, and a 66MB GeoIP database that can silently kill your Vercel build if you don't handle it correctly.
 
 Part 2 covers the connection string issues and why `prisma migrate deploy` kept hanging — specifically the `DATABASE_URL` vs `DIRECT_DATABASE_URL` distinction that the official docs mention but don't fully explain.
@@ -113,3 +108,17 @@ Part 2 covers the connection string issues and why `prisma migrate deploy` kept 
 ---
 
 *Part of the "Self-Hosting Umami on Vercel + Supabase" series. · [Part 2: The Connection String Traps](/self-hosting-umami-part-2) · [Part 3: GeoIP, Migration Bypass, and Git LFS](/self-hosting-umami-part-3)*
+
+## Frequently asked questions
+
+**What happens when Umami Cloud passes the free plan limit?**
+Collection stops. There is no error in the dashboard and no warning on the site, so the first sign is usually a flat analytics chart rather than a notification.
+
+**Is Cloudflare Web Analytics a replacement for Umami?**
+It is a reasonable substitute for top-line traffic numbers, and it is one click to enable if the site is already behind Cloudflare. It does not give you the event-level detail that self-hosted Umami does.
+
+**When does self-hosting Umami make sense?**
+When you have passed the free event ceiling, want event-level data, or need analytics running on infrastructure you control. It costs an evening of setup and some maintenance in exchange.
+
+**How much traffic fits inside Umami Cloud's free plan?**
+It is an event limit, not a visitor limit. Multiple tracked events per visitor per day consume the allowance far faster than the user count suggests, which is the mistake I made when estimating.

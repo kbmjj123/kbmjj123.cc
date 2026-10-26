@@ -27,8 +27,7 @@ seo:
     - "side project revenue"
 ---
 
-## TL;DR
-
+## The short version: 52 tools, 480+ pages, six months, about $2/day
 On January 1, 2026, I launched a tool site as an SEO learning project. Six months later: 52 tools, 480+ pages, 6 languages, $2–$5/day AdSense revenue, $27 in BuyMeACoffee donations, a few RMB from WeChat, and one rejection from Google followed by approval 24 hours after resubmission. The only cost so far: the domain. This isn't a success story—it's a record of what happens when you actually finish something and keep adjusting.
 
 ---
@@ -157,8 +156,7 @@ I woke up on July 1—exactly six months after launch—to that number. It's not
 
 ---
 
-## Lessons Learned
-
+## What six months of building a tool site in public taught me
 1. **AI is a starting point, not the output.** Getting called out early saved me from building a bigger problem later.
 
 2. **Multi-language is not a free win.** Thin translations drag your whole site down. If you add languages, actually fill them.
@@ -171,3 +169,16 @@ I woke up on July 1—exactly six months after launch—to that number. It's not
 
 ---
 
+## Frequently asked questions
+
+**Can a site with AI-generated content get AdSense approval?**
+Not as generated, in my experience. The first application was rejected as low-value content. Approval came after the pages were rewritten so each tool actually did something, rather than describing something.
+
+**How long does it take a tool site to get traffic?**
+Google started paying attention around the third month here. That is a rough number for one site, not a promise — the useful signal is that it was months, not weeks.
+
+**Why was AdSense rejected the first time?**
+Because a large share of the pages were AI-written filler around a thin tool. The fix was making the tool itself the content, not adding more words around it.
+
+**Is $2/day after six months worth it?**
+As income, barely. As tuition for learning the whole SEO lifecycle end to end on a real site, it was the point of the project.

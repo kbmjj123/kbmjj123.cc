@@ -27,12 +27,10 @@ seo:
     - "dmarc setup for indie dev"
 ---
 
-## TL;DR
-
+## The short version: Resend sends, D1 stores, no third-party widget
 I built a lightweight email subscription system for my personal blog using **Resend** for email delivery, **Cloudflare D1** for data storage, and **Nuxt's Nitro server routes** for API endpoints. The system handles signups, verification, and unsubscribes with no third-party marketing platforms — just API calls and SQLite. Zero monthly cost. The first verification email went to Gmail spam. I fixed it with a DMARC record and manual training. This post documents the entire process.
 
-## Background
-
+## Why a blog with zero subscribers got an email system
 I launched [kbmjj123.cc](https://kbmjj123.cc) as a space to write about building things — mostly indie development, technical decisions, and the occasional deep dive. A few weeks in, I had 0 subscribers (still do at the time of writing), but I've learned the hard way that infrastructure should arrive before traffic.
 
 Email felt like a necessary piece. RSS works for the tech crowd but email reaches people where they already live. I needed something that checked a few boxes:
@@ -74,8 +72,7 @@ I considered `@react-email/components` — it's elegant, type-safe, and widely u
 
 Instead, I wrote the email as a pure function that returns an HTML string. Same component-based architecture, zero runtime dependencies. The template stays in the codebase, not in a separate React renderer.
 
-## Implementation
-
+## Implementation: the D1 schema and the subscribe route
 ### D1 Schema
 
 Cloudflare D1 is a serverless SQLite database that works seamlessly with Nuxt's Nitro server routes. I created two tables — one for subscribers, one for logs.
@@ -155,8 +152,7 @@ The widget sits in the sidebar on article pages and on the homepage — anywhere
 
 ![Sidebar subscription widget showing three states: idle form, success confirmation, and error message](/images/dev-practice/building-pixel-email-subscription/sidebar-widget-states.webp)
 
-## Deployment & Config
-
+## Deployment: the cloudflare-module preset and where the secrets live
 The blog runs on Cloudflare Pages with the `cloudflare-module` preset. Environment variables are set in the Cloudflare Dashboard.
 
 **Step 1: Get a Resend API key**
@@ -253,8 +249,7 @@ git push
 - SPF / DKIM records (set up during Resend domain verification)
 - DMARC record: `v=DMARC1; p=none` (at `_dmarc.yourdomain.com`)
 
-## Lessons Learned
-
+## What building it before needing it taught me
 1. **Build infrastructure before you need it.** I have zero subscribers. The system cost me a few evenings and no money. When someone does want to subscribe, it's ready. Waiting until after the first 50 readers would have meant rushing or using a platform I didn't want.
 
 2. **DMARC is not optional for Gmail deliverability.** The "Needs attention" warning is real. Add `_dmarc` TXT records as soon as you configure any transactional email. `p=none` is fine for starting — it won't break anything and gives you visibility.
@@ -263,8 +258,7 @@ git push
 
 4. **Stick to the stack you know.** I could have used `@react-email/components` or the Resend SDK. But the `fetch` API + pure HTML function approach just worked, with zero compatibility issues. For a personal blog, that's the right tradeoff.
 
-## What's Next
-
+## What I am iterating on next
 The system is live, but I'm planning a few iterations:
 
 - **Verification confirmation page** — a pixel-themed landing page after verification, instead of a silent redirect to the homepage
@@ -277,3 +271,17 @@ But for now, the MVP is shipped. Three API routes, one sidebar component, one em
 ---
 
 *Code available at [github.com/kbmjj123/kbmjj123.cc](https://github.com/kbmjj123/kbmjj123.cc).*
+
+## Frequently asked questions
+
+**Why build an email system when the blog has no subscribers?**
+Because the cost is a few evenings and nothing per month, while retrofitting it later means doing it under time pressure. Infrastructure built early is infrastructure you can forget about.
+
+**Why Resend instead of Mailchimp or Substack?**
+Resend is an API for sending email, not a platform that owns the list. The subscriber data stays in my own D1 database, and there is no dashboard I have to log into or a brand that wraps the emails.
+
+**Why store subscribers in Cloudflare D1?**
+The blog already runs on Cloudflare, so D1 adds no new vendor and no new billing relationship. A single table with an email and a timestamp is enough for a list this size.
+
+**Does a self-built form handle unsubscribes?**
+It has to, and that is the part you cannot skip. Every sent email needs a working unsubscribe path, otherwise the deliverability of the whole domain suffers.

@@ -25,12 +25,10 @@ seo:
     - "indie hacker tool stack 2026"
 ---
 
-## TL;DR
-
+## The short version: six months from zero to $5/day, built alone
 Six months ago I shipped [BulkPicTools](https://bulkpictools.com) from zero to production. Today it makes $5/day through Google Ads—not life-changing, but it proved the model works. The real story isn't the money. It's how AI rewired my entire workflow so that I, a single developer with no design or marketing background, could ship a product that actually earns. I didn't become a jack of all trades. I became an editor.
 
-## Background
-
+## The old playbook: take a ticket, write code, pass QA, deploy
 I spent years working on company projects. The playbook was simple: get a ticket, write code, pass QA, deploy, move on. Someone else owned the design. Someone else worried about SEO. Someone else handled user feedback. My job stopped at the edge of the codebase.
 
 When I decided to build something on my own, the wall hit immediately. The work didn't end when the code compiled. It barely started.
@@ -142,8 +140,7 @@ But here's what that number actually means:
 
 $5/day is a validation milestone, not a destination. The real output of these six months isn't the revenue—it's the repeatable system: AI-assisted development + zero-cost infrastructure + SEO-driven organic traffic. That system works for any lightweight web tool, not just image processing.
 
-## My Take
-
+## The question "must indie devs do everything?" is asking the wrong thing
 ### The Question "Must Indie Devs Be Jacks of All Trades?" Is Asking the Wrong Thing
 
 The premise assumes indie dev is about acquiring skills. It's not. It's about managing output.
@@ -180,8 +177,7 @@ AI can't do these things, and I don't expect it to anytime soon:
 - **Recognizing when something feels fragile.** AI generates code that works for the test case. It doesn't generate code that communicates "this will break under load" or "this pattern will be impossible to debug six months from now." That intuition comes from shipping and breaking things repeatedly.
 - **Writing authentically.** AI can mimic my tone. It can't have my experiences. Every piece of content I publish goes through an editorial pass where I inject the specific details—the actual error messages, the real numbers, the wrong turns I took—that make it trustworthy. Without those details, AI-generated content is grammatically correct and substantively hollow.
 
-## Lessons Learned
-
+## What the breadth pressure looks like once AI handles execution
 **The "jack of all trades" pressure is obsolete when AI handles execution.** The remaining skill isn't breadth of competence—it's the judgment to distinguish AI output that's ready to ship from output that needs another pass. That's a narrower skill, but it's not a shallow one.
 
 **Every infrastructure choice is a future attention cost.** When you're solo, server maintenance isn't "free after setup." It's a recurring tax on your focus. Cloudflare Workers cost me some initial discomfort. A traditional backend stack would have cost me ongoing context-switching. For indie projects, the cheaper option isn't always the one with the lower monthly bill—it's the one you stop thinking about after you deploy.
@@ -189,3 +185,17 @@ AI can't do these things, and I don't expect it to anytime soon:
 **AI-assisted development is a speed multiplier, not a skill replacement.** The bottleneck moves from "how fast can I produce output" to "how fast can I accurately evaluate output." If you can't audit AI-generated code for correctness, you're not going faster—you're just generating bugs faster. The foundation still matters. AI makes a competent developer much faster. It doesn't make an incompetent developer competent.
 
 **The meta-skill that compounds is building reusable AI instructions.** Every time you catch AI making a mistake, encode that check into a Skill. Every time you refine your writing tone, update the Skill. Over months, these accumulate into an AI assistant that knows your stack, your preferences, and your quality bar—not because it learned from somewhere, but because you taught it from repeated corrections. That's the difference between using AI and collaborating with it.
+
+## Frequently asked questions
+
+**Do indie developers still need to be jacks of all trades?**
+Less than the phrase implies. AI handles most of the execution across domains I am not expert in, so the remaining skill is judgment about what to build and whether the output is correct — not breadth of manual skill.
+
+**What share of the work can AI actually handle?**
+In my case roughly 85%, with me reviewing. That number only holds when tasks are scoped small enough that I can verify the result; the review step is the part that cannot be handed over.
+
+**Is $5/day after six months a good result?**
+It is a small number in absolute terms, and I treat it as a signal rather than an income. The more useful reading is that one person shipped and monetized a complete product in six months.
+
+**Should I build a backend for a browser-only tool?**
+I almost did, out of habit from company projects. The tool did not need one, and building it would have added cost and maintenance without changing what users got.

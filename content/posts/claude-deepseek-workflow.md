@@ -25,18 +25,15 @@ seo:
     - "indie developer free ai tools 2026"
 ---
 
-## TL;DR
-
+## The short version: three layers, three free tiers, no single point of failure
 One model can't do everything—at least not reliably when you're on a zero budget. I split AI coding into three layers using only free tiers: Claude for planning, DeepSeek for execution, and myself for judgment. Total cost: $0. The setup keeps working even when one model goes down.
 
-## Background
-
+## The constraint: nights and weekends, and no budget for API bills
 Six months into building indie products. Nights and weekends. Full-time job during the day.
 
 I rely on AI to move faster. But when every tool has to be free, no single model is reliable enough on its own. Free tiers disappear, accounts get flagged, quotas change without warning. The workflow needs to survive those failures.
 
-## The Problem
-
+## Why using one model for everything became the risk
 Using one model for everything creates a single point of failure.
 
 When I started, I used Claude for everything—planning, coding, debugging, research. The free Chat interface was solid. But free access isn't guaranteed. Limits change. Accounts can get restricted.
@@ -45,8 +42,7 @@ The real problem wasn't Claude specifically. It was the *structure*. When one mo
 
 I needed a setup where no single failure could stop me from shipping.
 
-## Investigation
-
+## What I tried before splitting the workflow
 I didn't jump straight to a multi-model workflow. I tried the obvious paths first.
 
 ### Claude-only was great—until access became unreliable
@@ -83,8 +79,7 @@ After testing all three, a pattern emerged:
 
 The insight wasn't "Claude is best." It was that **planning needs a different kind of intelligence than execution**. Trying to use one model for both meant either getting sloppy output on complex tasks or wasting a good planning model on scaffolding.
 
-## Solution
-
+## The three layers: Claude plans, DeepSeek executes, I judge
 I split the workflow into three layers. Each does one job. All free.
 
 ### Layer 1: Claude for planning
@@ -142,8 +137,7 @@ DeepSeek returned draft copy. I tweaked two sentences and deployed.
 
 The key difference: Claude got a broad question and returned a direction. DeepSeek got a narrow task and returned output. When I used to ask one model to do both, the planning was shallow and the execution needed 3–4 rounds of fixes.
 
-## My Take
-
+## The trade-off I accepted: zero cost means zero SLA
 ### Zero cost means accepting trade-offs—but those trade-offs are manageable
 
 I'm not paying for any of these tools. That's not a brag—it's a constraint. Claude's free Chat can disappear. DeepSeek's free Chat needs debugging. Gemini's free quota is unpredictable.
@@ -158,20 +152,14 @@ Claude's free Chat is the cornerstone. If that changes—stricter limits, accoun
 
 This is the unsolved piece. For now, I can still ship without a planning layer—I just have to think harder on my own. But it's the single biggest weakness in this setup, and I'm not going to pretend otherwise.
 
-## Result
-
-<!-- TODO: Add GSC performance data after category page changes.
-     Need: impressions trend or CTR change for target queries.
-     Screenshot preferred. -->
-![impressions trend or CTR change for target queries.
-     Screenshot preferred.](/images/tools-workflow/claude-deepseek-workflow/impression-trend-change-for-target-queries.webp)
+## What changed: one evening from "improve SEO" to a shipped fix
+![Impressions and clicks trend for the target queries before and after the rewrite](/images/tools-workflow/claude-deepseek-workflow/impression-trend-change-for-target-queries.webp)
 
 The SEO case is ongoing. I shipped the changes but don't have clean before/after data yet. I'll update this section when the numbers are clear.
 
 What I can say: splitting planning from execution turned "I should improve SEO" into a concrete task I shipped in one evening. That alone was worth the workflow change.
 
-## Lessons Learned
-
+## What the layered setup taught me
 1. **Planning and execution are different jobs.** Give planning to the model that reasons well. Give execution to the model that's fast enough. Mixing them in one conversation produces worse output from both.
 
 2. **Free tiers mean zero SLA.** Build around the assumption that any free model can disappear tomorrow. Your workflow should survive the loss of any single component.
@@ -182,3 +170,16 @@ What I can say: splitting planning from execution turned "I should improve SEO" 
 
 5. **A layered setup degrades gracefully.** When one model goes down, the other layers still work. That's better than betting everything on a single free tier that might disappear tomorrow.
 
+## Frequently asked questions
+
+**Why not just use one AI model for everything?**
+Because a single model becomes a single point of failure. When that model is a free tier, access can change without notice, and losing it takes down planning, coding, and debugging at the same time.
+
+**Does splitting planning and execution across models actually save time?**
+It did for me, mostly because the layers fail independently. When one free tier stopped being reliable, the rest of the workflow kept running instead of stopping everything at once.
+
+**Is DeepSeek really free if it costs three or four debugging rounds?**
+Free per token, not free per working feature. The workaround is scope: keep each task small enough that the number of debugging rounds stays predictable, so the time cost does not compound.
+
+**What happens if the planning layer disappears?**
+That is the unsolved part of this setup. I have not found a free model that matches Claude's reasoning quality, so if it goes away I ship without a planning layer and do more of that thinking myself.

@@ -21,20 +21,16 @@ seo:
     - "mock oauth login local development"
 ---
 
-## TL;DR
-
+## The short version: a dev-only mock beat a tunnel
 GitHub's OAuth callback wasn't reaching my local dev server — a network environment problem, not a code bug. Instead of reaching for a tunneling tool, I built a single dev-only endpoint that returns a fake "logged in" response, so the rest of the app could keep moving.
 
-## Background
-
+## The setup: GitHub login for a second product
 My second project needs GitHub login. Straightforward in theory: redirect to GitHub, user authorizes, GitHub calls back to my app with a code, I exchange it for a token. I'd built this flow before. The problem wasn't the flow — it was the environment I was building it in.
 
-## The Problem
-
+## The symptom: consent screen appeared, then nothing
 Locally, the redirect to GitHub's authorization page worked fine. The user could see the GitHub consent screen, approve access — and then nothing. The callback that's supposed to land back on my local dev server never arrived in any usable way. No error in my app, no obvious stack trace pointing at "this line is broken." From the app's point of view, it just stalled at the point where it should have received the user back.
 
-## Investigation
-
+## Ruling out my code: the same route worked once deployed
 The first thing I ruled out was my own code. The callback route existed, it was wired up correctly, and the same logic worked once deployed. That narrowed it down fast: this wasn't a logic bug, it was a reachability problem between GitHub's servers and my local machine, specific to developing from inside China's network environment.
 
 At that point I looked at the two realistic options:
@@ -48,8 +44,7 @@ Here's the difference between the three states laid out side by side — what wo
 
 ![OAuth callback flow comparison: production succeeds, local development fails to reach the callback, and a dev-only mock endpoint bypasses the real exchange to return a fake session](/images/going-serverless/part-2-github-oauth-local-callback/going-serverless-part-2-oauth-flow-diagram.svg)
 
-## Solution
-
+## The fix: one dev-only endpoint that returns a fake logged-in user
 I added a single endpoint that only exists in development, gated behind an environment variable check, that returns a mocked "successful login" payload — the same shape my real callback handler would produce after a successful GitHub exchange.
 
 ```ts
@@ -71,18 +66,15 @@ export default defineEventHandler((event) => {
 
 With that in place, the rest of my app — anything depending on "the user is logged in" — could be built and tested locally without ever touching GitHub's real OAuth flow during development.
 
-## My Take
-
+## Why I skipped a tunnel: I needed a logged-in user, not a public URL
 I chose the mock endpoint over a tunnel because of what I actually needed versus what a tunnel gives you. A tunnel solves "make my local server reachable from the internet" — which is a real solution, but it's solving a more general problem than the one in front of me. I didn't need GitHub to be able to reach my machine in general; I needed the rest of my app to behave correctly when a user is logged in.
 
 There's also a timing argument here that matters more than the technical one: I'm working with limited time, trying to get a working product out, not trying to build the most architecturally faithful local dev environment. A tunnel is the right tool when the integration itself is what you're testing — for example, I expect to reach for exactly that approach later when integrating ads locally, where the actual request/response behavior of a third party matters. For OAuth login, where the third-party exchange itself isn't what I'm debugging, faking the outcome was the faster, lower-risk path to the same result.
 
-## Result
-
+## After the mock: protected routes and user data stopped blocking
 Local development stopped blocking on the OAuth callback entirely. Everything downstream of "user is logged in" — protected routes, user-specific data fetching, UI states — could be built and verified without depending on GitHub's servers or my network path to them.
 
-## Lessons Learned
-
+## What I check first when a third-party callback goes silent
 - When a third-party callback doesn't reach your local environment, check whether it's a network/environment issue before assuming it's your code.
 - A tunneling tool isn't free even when it's free to install — it's another moving part to maintain and trust.
 - If what you actually need is "pretend this dependency succeeded," a dev-only mock is often cheaper than making the real dependency reachable.
@@ -91,3 +83,17 @@ Local development stopped blocking on the OAuth callback entirely. Everything do
 
 ---
 *Part of the "Going Serverless" series. Previous: [Why I Bet My Indie Project on Cloudflare Instead of a Server](/going-serverless-part-1-why-cloudflare) · Next: [Two Days, One Broken Monitor, and a Forced macOS Upgrade Just to Run Wrangler](/going-serverless-part-3-macos-upgrade-wrangler)*
+
+## Frequently asked questions
+
+**Why did the GitHub OAuth callback reach my deployed app but not localhost?**
+The callback URL has to be reachable by GitHub's servers, and a localhost address is not. When the network path between GitHub and your machine is also restricted, the request never arrives at all — which is why there is no error to read. The browser just waits for a redirect that never comes.
+
+**Is a dev-only mock login endpoint safe to keep in the codebase?**
+Only if it is gated so it cannot be registered in production. The check should prevent the route from existing in a production build, not just hide it behind a flag that someone could flip.
+
+**When is a tunnel the better choice?**
+When the integration behavior itself is what you are testing: the shape of the callback payload, error states returned by the provider, or the redirect chain. A mock cannot tell you whether the real round trip works.
+
+**Does mocking hide real OAuth bugs?**
+Yes, for anything inside the round trip. That is the part the mock replaces. Everything downstream — token storage, session handling, protected routes, user-specific queries — still runs the same code as production.

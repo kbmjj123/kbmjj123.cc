@@ -28,8 +28,7 @@ relatedPosts:
   - "claude-deepseek-workflow"
 ---
 
-## TL;DR
-
+## The short version: one tool, $29/month, driven from my phone
 I use Claude Code from my phone. While watching my kid. While waiting for coffee. Before bed, I kick off a translation task and wake up to find it done. The total cost: $29/month — Claude Code CLI (free), DeepSeek API (~$27/month), and a mini PC running 24/7 (~$2/month in electricity).
 
 I stopped chasing AI coding tools two months ago. No Cursor, no Copilot, no "let me try this new thing." The time I used to spend evaluating tools now goes into building my product. One tool, used deeply, beats ten tools explored shallowly.
@@ -146,7 +145,7 @@ You get:
 
 ### Real Scenarios from My Week
 
-![Claude Code running on a phone browser via Cockpit web terminal](/images/tools-workflow/claude-code-on-phone-29-dollar-workflow/phone-cockpit-terminal.webp)
+<!-- screenshot needed: Claude Code running in a phone browser via the Cockpit web terminal -->
 
 **Watching my kid at the playground.** A CSS bug report comes in. I fix it from my phone in 3 minutes.
 
@@ -308,3 +307,17 @@ Claude Code on my phone removed the biggest barrier: location.
 The next time you're waiting in line, watching your kid, or lying in bed — ask yourself: what could I build if I had my AI coding assistant right now?
 
 With this setup, you do.
+
+## Frequently asked questions
+
+**Can you really run Claude Code from a phone?**
+Yes, if the terminal is reachable. The setup that worked for me was a phone-accessible terminal session against a machine running Claude Code, so the phone is an input device rather than the computer doing the work.
+
+**Why drop Cursor for Claude Code?**
+It came down to what I was paying for. I needed a terminal and a model, not an editor subscription, and the $20/month was buying interface rather than capability.
+
+**Is $29/month worth it for a side project?**
+It depends on how much fragmented time you have. The value is not speed at a desk — it is being able to use the ten minutes waiting for coffee, which is time that was previously wasted.
+
+**What is this setup bad at?**
+Anything needing a real review pass. Phone sessions are good for starting tasks, fixing small bugs, and kicking off background work; they are not where I make architectural decisions.
