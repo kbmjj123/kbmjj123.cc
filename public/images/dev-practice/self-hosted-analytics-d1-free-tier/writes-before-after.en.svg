@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 620" width="1000" height="620" font-family="Inter, system-ui, -apple-system, sans-serif">
+  <rect width="1000" height="620" fill="#0b0b12"/>
+  <text x="40" y="56" fill="#e5e7eb" font-size="26" font-weight="600">Rows written per day</text>
+
+  <line x1="40" y1="140" x2="960" y2="140" stroke="#fbbf24" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="960" y="130" fill="#fbbf24" font-size="18" text-anchor="end">100,000 rows/day — free tier cap</text>
+
+  <line x1="40" y1="440" x2="960" y2="440" stroke="#2a2a42" stroke-width="2"/>
+
+  <defs>
+    <pattern id="hatch" width="10" height="10" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <line x1="0" y1="0" x2="0" y2="10" stroke="#4ade80" stroke-width="3" opacity="0.45"/>
+    </pattern>
+  </defs>
+
+  <rect x="150" y="100" width="150" height="340" fill="url(#hatch)" stroke="#4ade80" stroke-width="2"/>
+  <text x="225" y="88" fill="#4ade80" font-size="20" text-anchor="middle" font-weight="600">Day 1</text>
+  <text x="225" y="474" fill="#9ca3af" font-size="17" text-anchor="middle">spiked</text>
+  <text x="225" y="496" fill="#6b7280" font-size="15" text-anchor="middle">exact number</text>
+  <text x="225" y="516" fill="#6b7280" font-size="15" text-anchor="middle">not captured</text>
+
+  <rect x="430" y="350" width="150" height="90" fill="#4ade80"/>
+  <text x="505" y="338" fill="#4ade80" font-size="20" text-anchor="middle" font-weight="600">After narrowing</text>
+  <text x="505" y="401" fill="#0b0b12" font-size="22" text-anchor="middle" font-weight="600">≈30%</text>
+  <text x="505" y="474" fill="#9ca3af" font-size="17" text-anchor="middle">one row per job</text>
+  <text x="505" y="496" fill="#6b7280" font-size="15" text-anchor="middle">success / failure only</text>
+  <text x="505" y="516" fill="#6b7280" font-size="15" text-anchor="middle">≈30% of daily cap</text>
+
+  <rect x="710" y="140" width="150" height="300" fill="none" stroke="#2a2a42" stroke-width="2" stroke-dasharray="6 5"/>
+  <text x="785" y="474" fill="#9ca3af" font-size="17" text-anchor="middle">free tier</text>
+  <text x="785" y="496" fill="#6b7280" font-size="15" text-anchor="middle">what you are</text>
+  <text x="785" y="516" fill="#6b7280" font-size="15" text-anchor="middle">budgeting against</text>
+
+  <text x="40" y="572" fill="#9ca3af" font-size="16">One job, one row. D1 bills rows written, not bytes — trimming fields does not lower this number.</text>
+</svg>
