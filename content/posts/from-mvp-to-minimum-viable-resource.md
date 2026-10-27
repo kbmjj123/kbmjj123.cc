@@ -11,8 +11,7 @@ tags:
   - "#seo"
 image: "/images/dev-practice/from-mvp-to-minimum-viable-resource/moat-or-stack.en.png"
 draft: false
-relatedPosts:
-  - "self-hosted-analytics-d1-free-tier"
+relatedPosts: []
 series: null
 seriesOrder: null
 seo:

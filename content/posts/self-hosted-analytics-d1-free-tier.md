@@ -10,7 +10,7 @@ tags:
   - "#indie-dev"
   - "#analytics"
 image: "/images/dev-practice/self-hosted-analytics-d1-free-tier/writes-before-after.en.png"
-draft: false
+draft: true
 relatedPosts:
   - "nuxt-cloudflare-zero-cost"
   - "self-hosting-umami-part-1"
