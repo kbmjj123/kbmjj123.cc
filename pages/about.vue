@@ -121,11 +121,14 @@ const milestones = [
   { year: 'Now', desc: '<strong>Expanding</strong> — building new web tools and mobile apps, growing through SEO and content.' },
 ]
 
-const links = [
+const { count: videoCount } = useVideos()
+
+const links = computed(() => [
   { label: 'GitHub', url: 'https://github.com/kbmjj123' },
   { label: 'X / Twitter', url: 'https://x.com/solomaker282' },
+  { label: 'YouTube', url: 'https://www.youtube.com/@kbmjj123', videosOnly: true },
   { label: '✉️ Email', url: 'mailto:hello@kbmjj123.cc' },
-]
+].filter(link => !('videosOnly' in link) || videoCount.value > 0))
 </script>
 
 <style scoped>

@@ -118,14 +118,18 @@ useHead({
 
 const mobileMenuOpen = ref(false)
 
-const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'projects'].includes(route.params.slug as string))
+const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'projects', 'videos'].includes(route.params.slug as string))
 
-const navItems = [
+// Videos entry only appears once there are videos to show
+const { count: videoCount } = useVideos()
+
+const navItems = computed(() => [
   { path: '/', label: 'Home' },
   { path: '/archive', label: 'Archive' },
+  { path: '/videos', label: 'Videos' },
   { path: '/about', label: 'About' },
   { path: '/projects', label: 'Projects' },
-]
+].filter(item => item.path !== '/videos' || videoCount.value > 0))
 
 // Dynamic categories, tags, and stats from real posts
 type Category = { slug: string; name: string; count: number }
@@ -182,11 +186,12 @@ const daysSince = computed(() => {
   return Math.floor((now.getTime() - start.getTime()) / 86400000)
 })
 
-const socialLinks = [
+const socialLinks = computed(() => [
   { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
   { label: 'X', url: 'https://x.com/solomaker282' },
+  { label: 'YouTube', url: 'https://www.youtube.com/@kbmjj123', videosOnly: true },
   { label: 'RSS', url: '/feed.xml' },
-]
+].filter(link => !('videosOnly' in link) || videoCount.value > 0))
 
 function isActive(path: string) {
   if (path === '/') return route.path === '/'
