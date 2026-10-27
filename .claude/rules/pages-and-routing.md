@@ -9,6 +9,7 @@ Follow @.claude/docs/*.html for page design. Route list in PRD `§9.1`.
 | `/` | `index.html` | Post list (home) |
 | `/[slug]` | — | Post detail (from HTML post-list link) |
 | `/archive` | `archive.html` | Posts grouped by year |
+| `/videos` | `videos.html` | YouTube grid, data from `data/videos.json` |
 | `/about` | `about.html` | Author info, timeline, tech stack |
 | `/projects` | `project.html` | 2-col project card grid |
 | `/tags` | `tags.html` | Tag cloud page |
@@ -33,5 +34,5 @@ Use `NuxtErrorBoundary` for error states across pages.
 
 ## Nav Items
 
-Standard links: Home, Archive, About, Projects
+Standard links: Home, Archive, Videos, About, Projects
 Active page identified by matching route, applies `.active` class.

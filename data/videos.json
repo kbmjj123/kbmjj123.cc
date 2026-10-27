@@ -1,0 +1,10 @@
+{
+  "_howToEdit": "手写数据源。每条视频手工填写后 push 即可，构建时不请求外网。字段说明：id=YouTube 视频 ID（watch?v= 后面那段）; duration=ISO8601 时长（PT8M12S），同时用于 schema.org VideoObject; featured=true 的会出现在首页最新视频最前; publishedAt=YYYY-MM-DD。缩略图默认取 https://i.ytimg.com/vi/<id>/hqdefault.jpg，加载失败会回落到像素占位图。videos 为空数组时，全站（首页 Latest Videos 区块、导航栏 Videos 项、视频页的网格与订阅 CTA）均不渲染视频相关元素。",
+  "channel": {
+    "handle": "@kbmjj123",
+    "url": "https://www.youtube.com/@kbmjj123",
+    "title": "KB MJJ123 — Indie Dev Log",
+    "description": "Independent dev log: building web products, breaking things, and walking through what actually worked."
+  },
+  "videos": []
+}

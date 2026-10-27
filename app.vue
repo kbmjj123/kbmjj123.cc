@@ -35,6 +35,9 @@ useHead({
   script: extraScripts,
 })
 
+// YouTube profile only cited once there are actually videos to point at
+const { count: videoCount } = useVideos()
+
 // Global schema.org identity — Person for indie blog author
 // Auto-linked to defineArticle() on post pages as author
 useSchemaOrg([
@@ -44,6 +47,7 @@ useSchemaOrg([
     sameAs: [
       'https://github.com/kbmjj123',
       'https://x.com/solomaker282',
+      ...(videoCount.value > 0 ? ['https://www.youtube.com/@kbmjj123'] : []),
     ],
   }),
 ])

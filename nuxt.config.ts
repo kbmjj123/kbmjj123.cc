@@ -6,6 +6,7 @@ export default defineNuxtConfig({
 		'/archive': { prerender: true },
 		'/about': { prerender: true },
 		'/projects': { prerender: true },
+		'/videos': { prerender: true },
 
 		'/api/comments/**': { ssr: true },   // 评论接口,读写都要现场处理
 		'/auth/**': { ssr: true },           // GitHub OAuth 回调,必须现场处理 session/cookie

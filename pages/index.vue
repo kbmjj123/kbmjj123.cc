@@ -10,6 +10,24 @@
       <NuxtLink to="/" style="font-family:var(--font-pixel);font-size:8px;color:var(--accent-gold);text-decoration:none;border:1px solid var(--accent-gold);padding:2px 10px;transition:all 0.15s;" @mouseenter="$event.target.style.background='var(--accent-gold)';$event.target.style.color='var(--bg-deep)'" @mouseleave="$event.target.style.background='transparent';$event.target.style.color='var(--accent-gold)'">✕ Clear</NuxtLink>
     </div>
 
+    <!-- Latest Videos — hand-maintained in data/videos.json, hidden while filtering -->
+    <section v-if="latestVideos.length && !hasFilter" class="latest-videos" aria-labelledby="latest-videos-title">
+      <div class="latest-videos-head">
+        <h2 id="latest-videos-title" class="latest-videos-title">
+          <span aria-hidden="true">▶</span> Latest Videos
+        </h2>
+        <NuxtLink to="/videos" class="latest-videos-all">All videos →</NuxtLink>
+      </div>
+      <div class="latest-videos-grid">
+        <VideoCard
+          v-for="(v, i) in latestVideos"
+          :key="v.id"
+          :video="v"
+          :style="{ animationDelay: `${i * 0.08}s` }"
+        />
+      </div>
+    </section>
+
     <!-- Loading state -->
     <LoadingState v-if="pending" />
 
@@ -40,7 +58,13 @@
 </template>
 
 <script setup lang="ts">
+import { useVideos } from '~/composables/useVideos'
+
 const route = useRoute()
+
+// --- Latest videos (hand-maintained data/videos.json) ---
+const { latest } = useVideos()
+const latestVideos = computed(() => latest.value.slice(0, 3))
 
 // --- SEO base — via @nuxtjs/seo (defineSeoMeta + defineOgImage) ---
 usePageSeo({
@@ -150,6 +174,43 @@ const hasFilter = computed(() => !!activeFilter.value)
   flex-direction: column;
   gap: 28px;
 }
+.latest-videos {
+  background: rgba(255,255,255,0.015);
+  border: 1.5px solid var(--border-pixel);
+  border-left: 3px solid var(--accent-gold);
+  padding: 18px 20px 20px;
+}
+.latest-videos-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 12px;
+  border-bottom: 1px dashed var(--border-pixel);
+  padding-bottom: 10px;
+  margin-bottom: 16px;
+}
+.latest-videos-title {
+  font-family: var(--font-pixel);
+  font-size: 10px;
+  color: var(--accent-gold);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+.latest-videos-title span { color: var(--accent-green); }
+.latest-videos-all {
+  font-family: var(--font-pixel);
+  font-size: 8px;
+  color: var(--text-muted);
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.latest-videos-all:hover { color: var(--accent-green); }
+.latest-videos-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px;
+}
+
 .filter-bar {
   display: flex;
   justify-content: space-between;
@@ -239,6 +300,8 @@ const hasFilter = computed(() => !!activeFilter.value)
 }
 
 @media (max-width: 480px) {
+  .latest-videos-grid { grid-template-columns: 1fr; }
+  .latest-videos-title { font-size: 9px; }
   .post-item { padding: 16px 14px 18px; }
   .post-title { font-size: 12px; }
   .post-excerpt { font-size: 14px; }
