@@ -47,7 +47,7 @@ Spreading one MVP across ten modules leaves ten shallow products, each facing th
 
 I did the shallow version myself. By the time my site passed a hundred landing pages, I was convinced I had built something durable. More pages meant more entry points, and anyone catching up would have to reproduce a hundred pages first.
 
-![Ten modules side by side versus one asset that thickens over time](moat-or-stack.en.png)
+![Ten modules side by side versus one asset that thickens over time](/images/dev-practice/from-mvp-to-minimum-viable-resource/moat-or-stack.en.png)
 
 ## Three questions that separate a moat from a pile of demos
 
@@ -105,7 +105,7 @@ If I can answer, that thing is the product. The code is the shell around it.
 
 I call it Minimum Viable Resource, or MVR. What it validates is not whether I can build the thing. It is whether there is something here that only I can get.
 
-![The first question before starting a project, changed from MVP to MVR](mvr-decision.en.png)
+![The first question before starting a project, changed from MVP to MVR](/images/dev-practice/from-mvp-to-minimum-viable-resource/mvr-decision.en.png)
 
 ## Dead projects fail the resource test, not the build test
 
