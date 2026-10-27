@@ -1,0 +1,37 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 520" width="1000" height="520" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1000" height="520" fill="#F7F5F0"/>
+
+  <text x="60" y="60" font-size="28" font-weight="700" fill="#2C2C2A">Ten modules versus one asset, two years later</text>
+
+  <!-- Left: stacking modules -->
+  <rect x="60" y="90" width="400" height="356" rx="14" fill="#FFFFFF" stroke="#DED9CF" stroke-width="2"/>
+  <text x="88" y="134" font-size="21" font-weight="700" fill="#8A867E">Stacking modules</text>
+
+  <rect x="88" y="185" width="44" height="90" rx="7" fill="#E1DDD4" stroke="#C9C4B8" stroke-width="2"/>
+  <rect x="140" y="185" width="44" height="90" rx="7" fill="#E1DDD4" stroke="#C9C4B8" stroke-width="2"/>
+  <rect x="192" y="185" width="44" height="90" rx="7" fill="#E1DDD4" stroke="#C9C4B8" stroke-width="2"/>
+  <rect x="244" y="185" width="44" height="90" rx="7" fill="#E1DDD4" stroke="#C9C4B8" stroke-width="2"/>
+  <rect x="296" y="185" width="44" height="90" rx="7" fill="#E1DDD4" stroke="#C9C4B8" stroke-width="2"/>
+  <rect x="348" y="185" width="44" height="90" rx="7" fill="#E1DDD4" stroke="#C9C4B8" stroke-width="2"/>
+
+  <text x="88" y="320" font-size="18" fill="#6B6660">User 1,000 arrives</text>
+  <text x="88" y="350" font-size="18" fill="#6B6660">User 1 gets nothing new</text>
+  <text x="88" y="392" font-size="19" font-weight="700" fill="#8A867E">Two years later: still ten</text>
+
+  <!-- Right: building an asset -->
+  <rect x="540" y="90" width="400" height="356" rx="14" fill="#FFFFFF" stroke="#E0CFA8" stroke-width="2"/>
+  <text x="568" y="134" font-size="21" font-weight="700" fill="#B08D57">Building an asset</text>
+
+  <rect x="568" y="250" width="44" height="25" rx="7" fill="#E7D6B4"/>
+  <rect x="620" y="235" width="44" height="40" rx="7" fill="#DCC79B"/>
+  <rect x="672" y="217" width="44" height="58" rx="7" fill="#CDB382"/>
+  <rect x="724" y="195" width="44" height="80" rx="7" fill="#C0A26E"/>
+  <rect x="776" y="170" width="44" height="105" rx="7" fill="#B08D57"/>
+  <rect x="828" y="145" width="44" height="130" rx="7" fill="#9C7A48"/>
+
+  <text x="568" y="320" font-size="18" fill="#6B6660">User 1,000 arrives</text>
+  <text x="568" y="350" font-size="18" fill="#6B6660">User 1 has more than before</text>
+  <text x="568" y="392" font-size="19" font-weight="700" fill="#B08D57">Later: nobody can move it</text>
+
+  <text x="500" y="486" font-size="19" fill="#6B6660" text-anchor="middle">The difference is not how much you built, it is whether user 1,000 improves things for user 1</text>
+</svg>

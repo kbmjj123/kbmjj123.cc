@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 470" width="1000" height="470" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Helvetica, Arial, sans-serif">
+  <rect x="0" y="0" width="1000" height="470" fill="#F7F5F0"/>
+
+  <text x="60" y="58" font-size="27" font-weight="700" fill="#2C2C2A">The first question, before any code</text>
+
+  <!-- Old question -->
+  <rect x="60" y="88" width="880" height="92" rx="12" fill="#EDEAE3" stroke="#D6D1C6" stroke-width="2"/>
+  <text x="92" y="128" font-size="20" font-weight="700" fill="#A9A49A">MVP</text>
+  <text x="92" y="163" font-size="24" fill="#8A867E">Can I build this?</text>
+  <text x="820" y="148" font-size="20" fill="#B4AFA5" text-anchor="end">The answer is always yes</text>
+
+  <!-- Arrow -->
+  <line x1="500" y1="188" x2="500" y2="228" stroke="#B08D57" stroke-width="3"/>
+  <path d="M488 220 L500 232 L512 220" fill="none" stroke="#B08D57" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+
+  <!-- New question -->
+  <rect x="60" y="236" width="880" height="92" rx="12" fill="#FBF3E4" stroke="#B08D57" stroke-width="2"/>
+  <text x="92" y="276" font-size="20" font-weight="700" fill="#B08D57">MVR</text>
+  <text x="92" y="311" font-size="24" font-weight="700" fill="#2C2C2A">What can only I get?</text>
+
+  <!-- Fork -->
+  <rect x="92" y="398" width="200" height="56" rx="10" fill="#FFFFFF" stroke="#C9C4B8" stroke-width="2"/>
+  <rect x="328" y="398" width="200" height="56" rx="10" fill="#FFFFFF" stroke="#B08D57" stroke-width="2"/>
+
+  <line x1="310" y1="336" x2="310" y2="366" stroke="#C9C4B8" stroke-width="2"/>
+  <line x1="310" y1="366" x2="192" y2="366" stroke="#C9C4B8" stroke-width="2"/>
+  <line x1="192" y1="366" x2="192" y2="402" stroke="#C9C4B8" stroke-width="2"/>
+  <line x1="310" y1="366" x2="428" y2="366" stroke="#B08D57" stroke-width="2"/>
+  <line x1="428" y1="366" x2="428" y2="402" stroke="#B08D57" stroke-width="2"/>
+
+  <text x="192" y="423" font-size="19" fill="#8A867E" text-anchor="middle">Cannot answer</text>
+  <text x="192" y="446" font-size="18" font-weight="700" fill="#A9A49A" text-anchor="middle">Do not enter</text>
+
+  <text x="428" y="423" font-size="19" fill="#6B6660" text-anchor="middle">Can answer</text>
+  <text x="428" y="446" font-size="18" font-weight="700" fill="#B08D57" text-anchor="middle">Code is the shell</text>
+
+  <text x="620" y="423" font-size="18" fill="#6B6660">Time, relationships, trust, permission</text>
+  <text x="620" y="446" font-size="18" fill="#A9A49A">None of these can be generated</text>
+</svg>
