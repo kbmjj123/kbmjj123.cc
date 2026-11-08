@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" font-family="Helvetica, Arial, sans-serif">
+  <rect width="1200" height="630" fill="#f5f7fa"/>
+
+  <text x="600" y="54" text-anchor="middle" font-size="32" font-weight="700" fill="#111827">Two Ledgers for One Side Project</text>
+  <text x="600" y="88" text-anchor="middle" font-size="17" fill="#6b7280">What I actually paid in cash, and what I spent in evenings</text>
+
+  <!-- Left card: cash -->
+  <rect x="40" y="118" width="550" height="472" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <path d="M54 118 h522 a14 14 0 0 1 14 14 v38 h-550 v-38 a14 14 0 0 1 14 -14 z" fill="#2563eb"/>
+  <text x="60" y="151" font-size="19" font-weight="700" fill="#ffffff">Cash ledger - what I actually paid</text>
+
+  <g font-size="16">
+    <text x="60" y="206" font-weight="600" fill="#111827">Domain</text>
+    <text x="570" y="206" text-anchor="end" font-size="14" fill="#374151">$8.88 first year, $12.80 renewal</text>
+    <line x1="60" y1="224" x2="570" y2="224" stroke="#f0f1f3"/>
+
+    <text x="60" y="268" font-weight="600" fill="#111827">Hosting</text>
+    <text x="570" y="268" text-anchor="end" font-size="14" fill="#374151">Cloudflare Pages free tier - $0</text>
+    <line x1="60" y1="286" x2="570" y2="286" stroke="#f0f1f3"/>
+
+    <text x="60" y="330" font-weight="600" fill="#111827">Design</text>
+    <text x="570" y="330" text-anchor="end" font-size="14" fill="#374151">AI-generated images - $0</text>
+    <line x1="60" y1="348" x2="570" y2="348" stroke="#f0f1f3"/>
+
+    <text x="60" y="392" font-weight="600" fill="#111827">Icons</text>
+    <text x="570" y="392" text-anchor="end" font-size="14" fill="#374151">Open-source icon library - $0</text>
+    <line x1="60" y1="410" x2="570" y2="410" stroke="#f0f1f3"/>
+
+    <text x="60" y="454" font-weight="600" fill="#111827">AI coding tools</text>
+    <text x="570" y="454" text-anchor="end" font-size="14" fill="#374151">Under 100 RMB/month - shared</text>
+    <line x1="60" y1="472" x2="570" y2="472" stroke="#f0f1f3"/>
+
+    <text x="60" y="516" font-weight="600" fill="#111827">Image processing</text>
+    <text x="570" y="516" text-anchor="end" font-size="14" fill="#374151">No backend - runs in the browser</text>
+  </g>
+
+  <!-- Right card: time -->
+  <rect x="610" y="118" width="550" height="472" rx="14" fill="#ffffff" stroke="#e5e7eb" stroke-width="1.5"/>
+  <path d="M624 118 h522 a14 14 0 0 1 14 14 v38 h-550 v-38 a14 14 0 0 1 14 -14 z" fill="#059669"/>
+  <text x="620" y="151" font-size="19" font-weight="700" fill="#ffffff">Time ledger - what no one invoices</text>
+
+  <g font-size="16">
+    <text x="620" y="206" font-weight="600" fill="#111827">Build</text>
+    <text x="1140" y="206" text-anchor="end" font-size="14" fill="#374151">Pages and features, after hours</text>
+    <line x1="620" y1="224" x2="1140" y2="224" stroke="#f0f1f3"/>
+
+    <text x="620" y="282" font-weight="600" fill="#111827">Maintenance</text>
+    <text x="1140" y="282" text-anchor="end" font-size="14" fill="#374151">Layout fixes and small bugs</text>
+    <line x1="620" y1="300" x2="1140" y2="300" stroke="#f0f1f3"/>
+
+    <text x="620" y="358" font-weight="600" fill="#111827">Content</text>
+    <text x="1140" y="358" text-anchor="end" font-size="14" fill="#374151">Long-tail pages, ongoing updates</text>
+    <line x1="620" y1="376" x2="1140" y2="376" stroke="#f0f1f3"/>
+
+    <text x="620" y="434" font-weight="600" fill="#111827">Promotion</text>
+    <text x="1140" y="434" text-anchor="end" font-size="14" fill="#374151">Landing pages, links, rankings</text>
+  </g>
+
+  <rect x="620" y="468" width="520" height="100" rx="10" fill="#ecfdf5" stroke="#059669" stroke-width="1.5"/>
+  <text x="640" y="506" font-size="17" font-weight="700" fill="#065f46">Limits of this bill</text>
+  <text x="640" y="534" font-size="14" fill="#047857">Accounts, cloud storage, or server-side compute</text>
+  <text x="640" y="554" font-size="14" fill="#047857">change every line above.</text>
+</svg>
