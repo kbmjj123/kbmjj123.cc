@@ -10,7 +10,7 @@
       <!-- Empty state -->
       <div v-if="videos.length === 0" class="videos-empty">
         <p>No videos yet. First one is being edited — check back soon.</p>
-        <NuxtLink to="/">← Back to posts</NuxtLink>
+        <NuxtLink to="/blog">← Back to posts</NuxtLink>
       </div>
 
       <div v-else class="videos-grid">

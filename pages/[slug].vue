@@ -2,9 +2,9 @@
   <article class="post-detail" itemscope itemtype="https://schema.org/BlogPosting">
     <!-- Breadcrumb -->
     <nav class="breadcrumb" aria-label="Breadcrumb">
-      <NuxtLink to="/" class="breadcrumb-link">Home</NuxtLink>
+      <NuxtLink to="/blog" class="breadcrumb-link">Blog</NuxtLink>
       <span class="breadcrumb-sep">▸</span>
-      <NuxtLink v-if="category" :to="{ path: '/', query: { category: categorySlug } }" class="breadcrumb-link breadcrumb-category">{{ category }}</NuxtLink>
+      <NuxtLink v-if="category" :to="{ path: '/blog', query: { category: categorySlug } }" class="breadcrumb-link breadcrumb-category">{{ category }}</NuxtLink>
       <span class="breadcrumb-sep" v-if="category">/</span>
       <span class="breadcrumb-current">{{ title }}</span>
     </nav>
@@ -117,8 +117,8 @@ const relatedPostsForDisplay = computed(() => relatedPosts.value || [])
 useSchemaOrg([
   defineBreadcrumb({
     itemListElement: [
-      { name: 'Home', item: '/' },
-      ...(category.value ? [{ name: category.value, item: `/?category=${categorySlug.value}` }] : []),
+      { name: 'Blog', item: '/blog' },
+      ...(category.value ? [{ name: category.value, item: `/blog?category=${categorySlug.value}` }] : []),
       { name: title.value },
     ],
   }),
