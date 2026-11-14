@@ -4,6 +4,9 @@
     <div class="pixel-body-wrapper" style="padding:20px;display:flex;justify-content:center;min-height:100vh;">
       <div class="pixel-container" style="max-width:1150px;width:100%;position:relative;">
 
+        <!-- Top decorative flow bar (design system) -->
+        <div class="pixel-flowbar" aria-hidden="true"></div>
+
         <!-- Header (sticky) -->
         <header class="pixel-header" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:0;padding:12px 0 16px;border-bottom:1px solid var(--border-pixel);position:sticky;top:0;z-index:100;background:var(--bg-deep);gap:8px 0;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
           <NuxtLink to="/" style="display:flex;align-items:center;text-decoration:none;">
@@ -50,12 +53,12 @@
           </div>
         </Transition>
 
-        <!-- Main content + sidebar grid -->
-        <div class="pixel-main-grid" style="display:grid;grid-template-columns:2.2fr 1fr;gap:36px;margin-top:40px;">
+        <!-- Main content + sidebar grid. Home is full-width (no sidebar). -->
+        <div class="pixel-main-grid" :class="{ 'is-home': isHome }" style="display:grid;gap:36px;margin-top:40px;">
           <main style="min-width:0;overflow:hidden;">
             <slot />
           </main>
-          <aside class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">
+          <aside v-if="!isHome" class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">
             <PostSidebar v-if="isPostPage" />
             <template v-else>
               <!-- Categories widget -->
@@ -63,7 +66,7 @@
                 <h2 class="pixel-widget-title">Categories</h2>
                 <ul class="pixel-category-list">
                   <li v-for="cat in categories" :key="cat.slug">
-                    <h3 class="pixel-category-name"><NuxtLink :to="`/?category=${cat.slug}`">{{ cat.name }}</NuxtLink></h3>
+                    <h3 class="pixel-category-name"><NuxtLink :to="`/blog?category=${cat.slug}`">{{ cat.name }}</NuxtLink></h3>
                     <span class="pixel-category-count">{{ cat.count }}</span>
                   </li>
                 </ul>
@@ -73,7 +76,7 @@
               <div class="pixel-widget">
                 <h2 class="pixel-widget-title">Tags</h2>
                 <div class="pixel-tag-cloud">
-                  <NuxtLink v-for="t in tags.slice(0, 12)" :key="t.tag" :to="`/?tag=${t.tag.replace('#', '')}`" class="pixel-tag">{{ t.tag }}<sup style="color:var(--text-muted);margin-left:2px;">{{ t.count }}</sup></NuxtLink>
+                  <NuxtLink v-for="t in tags.slice(0, 12)" :key="t.tag" :to="`/blog?tag=${t.tag.replace('#', '')}`" class="pixel-tag">{{ t.tag }}<sup style="color:var(--text-muted);margin-left:2px;">{{ t.count }}</sup></NuxtLink>
                 </div>
               </div>
 
@@ -118,17 +121,18 @@ useHead({
 
 const mobileMenuOpen = ref(false)
 
-const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'projects', 'videos'].includes(route.params.slug as string))
+const isHome = computed(() => route.path === '/')
+const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'videos', 'blog'].includes(route.params.slug as string))
 
 // Videos entry only appears once there are videos to show
 const { count: videoCount } = useVideos()
 
 const navItems = computed(() => [
   { path: '/', label: 'Home' },
+  { path: '/blog', label: 'Blog' },
   { path: '/archive', label: 'Archive' },
   { path: '/videos', label: 'Videos' },
   { path: '/about', label: 'About' },
-  { path: '/projects', label: 'Projects' },
 ].filter(item => item.path !== '/videos' || videoCount.value > 0))
 
 // Dynamic categories, tags, and stats from real posts
@@ -202,7 +206,17 @@ function isActive(path: string) {
 <style scoped>
 .pixel-body-wrapper { flex-direction: column; align-items: center; }
 .pixel-container { padding: 0 24px 24px; flex: 1; display: flex; flex-direction: column; }
-.pixel-main-grid { flex: 1; }
+.pixel-main-grid { flex: 1; grid-template-columns: 2.2fr 1fr; }
+.pixel-main-grid.is-home { grid-template-columns: 1fr; }
+
+/* Top decorative flow bar */
+.pixel-flowbar {
+  height: 6px; width: 100%; flex-shrink: 0;
+  background: repeating-linear-gradient(90deg, var(--accent-green) 0 12px, transparent 12px 24px);
+  opacity: 0.5;
+  animation: pixelFlowLine 1.4s linear infinite;
+  margin-bottom: 4px;
+}
 
 .pixel-nav-desktop {
   display: flex;
