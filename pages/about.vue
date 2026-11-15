@@ -1,7 +1,7 @@
 <template>
   <section class="about-content" itemscope itemtype="https://schema.org/AboutPage">
     <!-- Hero -->
-    <h1>Hi, I'm KBMJJ</h1>
+    <h1>Hi, I'm KBMJJ123</h1>
     <div class="subhead" itemprop="description">
       Independent developer building practical web products, content sites, and apps.
     </div>
