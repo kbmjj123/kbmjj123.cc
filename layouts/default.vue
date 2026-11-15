@@ -10,12 +10,12 @@
         <!-- Header (sticky) -->
         <header class="pixel-header" style="display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:0;padding:12px 0 16px;border-bottom:1px solid var(--border-pixel);position:sticky;top:0;z-index:100;background:var(--bg-deep);gap:8px 0;box-shadow:0 4px 20px rgba(0,0,0,0.3);">
           <NuxtLink to="/" style="display:flex;align-items:center;text-decoration:none;">
-            <div class="site-title" style="font-family:var(--font-pixel);font-size:20px;color:var(--accent-green);text-shadow:2px 2px 0 rgba(0,0,0,0.8);display:flex;align-items:center;gap:10px;white-space:nowrap;">
+            <div class="site-title" style="font-family:var(--font-pixel);color:var(--accent-green);text-shadow:2px 2px 0 rgba(0,0,0,0.8);display:flex;align-items:center;gap:10px;white-space:nowrap;">
               <span style="display:inline-block;width:14px;height:14px;background:var(--accent-gold);border:2px solid var(--accent-gold);box-shadow:0 0 0 2px var(--bg-deep);animation:pixelBlockPulse 3s ease-in-out infinite;"></span>
               <span style="color:var(--accent-green);">KB</span>
               <span style="color:var(--accent-gold);letter-spacing:0.1em;">MJJ123</span>
               <span style="color:var(--text-muted);font-size:12px;margin-left:2px;font-family:var(--font-ui);">.cc</span>
-              <span style="font-family:var(--font-ui);font-size:13px;font-weight:400;color:var(--text-secondary);margin-left:6px;background:rgba(74,222,128,0.06);padding:0 10px;border:1px solid var(--border-pixel);">✦ Indie Log</span>
+              <span class="site-tagline" style="font-family:var(--font-ui);font-size:13px;font-weight:400;color:var(--text-secondary);margin-left:6px;background:rgba(74,222,128,0.06);padding:0 10px;border:1px solid var(--border-pixel);">✦ Indie Log</span>
             </div>
           </NuxtLink>
 
@@ -55,7 +55,7 @@
 
         <!-- Main content + sidebar grid. Home is full-width (no sidebar). -->
         <div class="pixel-main-grid" :class="{ 'is-home': isHome }" style="display:grid;gap:36px;margin-top:40px;">
-          <main style="min-width:0;overflow:hidden;">
+          <main style="min-width:0;overflow-x:clip;">
             <slot />
           </main>
           <aside v-if="!isHome" class="pixel-sidebar" style="display:flex;flex-direction:column;gap:28px;position:sticky;top:80px;align-self:start;">
@@ -208,6 +208,7 @@ function isActive(path: string) {
 .pixel-container { padding: 0 24px 24px; flex: 1; display: flex; flex-direction: column; }
 .pixel-main-grid { flex: 1; grid-template-columns: 2.2fr 1fr; }
 .pixel-main-grid.is-home { grid-template-columns: 1fr; }
+.site-title { font-size: clamp(13px, 4.2vw, 20px); }
 
 /* Top decorative flow bar */
 .pixel-flowbar {
@@ -391,14 +392,14 @@ function isActive(path: string) {
 @media (max-width: 860px) {
   .pixel-nav-desktop { display: none !important; }
   .pixel-hamburger { display: flex !important; }
-  .pixel-container { padding: 20px 18px 18px; }
+  .pixel-body-wrapper { padding: 12px !important; }
+  .pixel-container { padding: 0 16px 16px; }
   .pixel-main-grid { grid-template-columns: 1fr !important; gap: 28px; }
   .pixel-sidebar { display: none !important; }
-  .site-title { font-size: 18px; }
+  .site-tagline { display: none; }
 }
 @media (max-width: 480px) {
   .pixel-body-wrapper { padding: 8px !important; }
-  .pixel-container { padding: 10px 8px; }
-  .site-title { font-size: 15px; }
+  .pixel-container { padding: 0 8px 8px; }
 }
 </style>

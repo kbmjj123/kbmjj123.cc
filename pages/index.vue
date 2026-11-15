@@ -3,9 +3,12 @@
     <!-- Hero -->
     <section class="hero">
       <div class="hero-main">
-        <div class="badge"><span class="dot"></span> INDEPENDENT DEVELOPER · BUILDING IN PUBLIC</div>
+        <div class="badge">
+          <AuthorPhoto alt="kbmjj123, independent developer" size="sm" class="badge-photo" />
+          <span class="dot"></span> INDEPENDENT DEVELOPER · BUILDING IN PUBLIC
+        </div>
         <h1 class="hero-title">
-          I build <em>browser-first</em> tools<br />and write about how<br />they get made.
+          I build <em>browser-first</em> tools and write about how they get made.
         </h1>
         <p class="hero-sub">
           Solo developer shipping practical web products — image tools, AI directories,
@@ -19,16 +22,23 @@
       </div>
 
       <!-- Terminal status card -->
-      <div class="terminal" aria-hidden="true">
+      <div class="terminal">
         <div class="term-bar">
           <i></i><i></i><i></i>
           <span>kbmjj123@cc ~ %</span>
         </div>
-        <div class="term-body">
+        <div class="term-identity">
+          <AuthorPhoto alt="" size="lg" aria-hidden="true" />
+          <div class="term-identity-text">
+            <span class="term-who">kbmjj123</span>
+            <span class="term-role">indie_dev · building in public</span>
+          </div>
+        </div>
+        <div class="term-body" aria-hidden="true">
           <div><span class="muted">$</span> <span class="k">whoami</span></div>
           <div>&gt; indie_dev, 1 person, 0 funding</div>
           <div class="sp"><span class="muted">$</span> <span class="k">status</span> --verbose</div>
-          <div>&gt; shipping: <span class="v">5 projects</span></div>
+          <div>&gt; shipping: <span class="v">{{ projectCount }} projects</span></div>
           <div>&gt; writing: <span class="v">{{ postCount }} posts</span></div>
           <div>&gt; stack: <span class="v">Nuxt · Cloudflare</span></div>
           <div>&gt; uptime: <span class="v">since 2026.06</span></div>
@@ -39,7 +49,7 @@
 
     <!-- Stats strip -->
     <div class="stats">
-      <div class="stat"><div class="n">05</div><div class="l">PROJECTS</div></div>
+      <div class="stat"><div class="n">{{ pad(projectCount) }}</div><div class="l">PROJECTS</div></div>
       <div class="stat"><div class="n gold">{{ pad(postCount) }}</div><div class="l">POSTS</div></div>
       <div class="stat"><div class="n">06</div><div class="l">CATEGORIES</div></div>
       <div class="stat"><div class="n gold">∞</div><div class="l">SIDE QUESTS</div></div>
@@ -75,9 +85,11 @@
 
 <script setup lang="ts">
 import { usePosts } from '~/composables/usePosts'
+import { projects } from '~/data/projects'
 
 const { allPosts } = usePosts()
 const postCount = computed(() => allPosts.value.length)
+const projectCount = computed(() => projects.length)
 const pad = (n: number) => String(n).padStart(2, '0')
 
 usePageSeo({
@@ -104,16 +116,17 @@ usePageSeo({
 }
 .badge {
   display: inline-flex; align-items: center; gap: 8px;
-  font-family: var(--font-pixel); font-size: 9px; color: var(--accent-gold);
+  font-family: var(--font-pixel); font-size: clamp(7px, 1vw, 9px); color: var(--accent-gold);
   letter-spacing: 0.5px; margin-bottom: 20px;
 }
 .badge .dot {
-  width: 6px; height: 6px; background: var(--accent-green);
+  width: 6px; height: 6px; background: var(--accent-green); flex-shrink: 0;
   box-shadow: 0 0 8px var(--accent-green); animation: pixelBlink 1.6s infinite;
 }
+.badge-photo { display: none; }
 .hero-title {
-  font-family: var(--font-pixel); font-size: 24px; line-height: 1.75;
-  margin-bottom: 18px; font-weight: 400;
+  font-family: var(--font-pixel); font-size: clamp(14px, 2.2vw, 24px); line-height: 1.75;
+  margin-bottom: 18px; font-weight: 400; max-width: 620px;
 }
 .hero-title em { font-style: normal; color: var(--accent-green); }
 .hero-sub { font-size: 15px; color: var(--text-secondary); line-height: 1.9; max-width: 560px; margin-bottom: 26px; }
@@ -129,7 +142,7 @@ usePageSeo({
 .btn-ghost:hover { background: var(--accent-gold); color: var(--bg-deep); }
 
 /* Terminal */
-.terminal { background: var(--bg-deep); border: 1.5px solid var(--border-pixel); align-self: stretch; display: flex; flex-direction: column; }
+.terminal { background: var(--bg-deep); border: 1.5px solid var(--border-pixel); align-self: stretch; display: flex; flex-direction: column; min-width: 0; }
 .term-bar {
   display: flex; align-items: center; gap: 6px; padding: 9px 12px;
   border-bottom: 1px solid var(--border-pixel); background: rgba(255,255,255,0.02);
@@ -139,7 +152,11 @@ usePageSeo({
 .term-bar i:nth-child(2) { background: var(--accent-gold); }
 .term-bar i:nth-child(3) { background: var(--accent-green); }
 .term-bar span { margin-left: auto; font-family: var(--font-pixel); font-size: 7px; color: var(--text-muted); }
-.term-body { padding: 16px; flex: 1; font-family: var(--font-pixel); font-size: 9px; line-height: 2.4; color: var(--text-secondary); }
+.term-identity { display: flex; align-items: center; gap: 14px; padding: 16px 16px 0; }
+.term-identity-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.term-who { font-family: var(--font-pixel); font-size: 10px; color: var(--accent-green); }
+.term-role { font-family: var(--font-pixel); font-size: 7px; color: var(--text-muted); line-height: 1.6; }
+.term-body { padding: 12px 16px 16px; flex: 1; font-family: var(--font-pixel); font-size: 9px; line-height: 2.4; color: var(--text-secondary); }
 .term-body .k { color: var(--accent-green); }
 .term-body .v { color: var(--accent-gold); }
 .term-body .muted { color: var(--text-muted); }
@@ -147,7 +164,10 @@ usePageSeo({
 .term-body .cursor { display: inline-block; width: 8px; height: 12px; background: var(--accent-green); vertical-align: middle; animation: pixelBlink 1s infinite; }
 
 /* Stats */
-.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border-pixel); border: 1.5px solid var(--border-pixel); margin-top: 24px; }
+.stats {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 140px), 1fr));
+  gap: 1px; background: var(--border-pixel); border: 1.5px solid var(--border-pixel); margin-top: 24px;
+}
 .stat { background: var(--bg-deep); padding: 18px 20px; text-align: center; }
 .stat .n { font-family: var(--font-pixel); font-size: 20px; color: var(--accent-green); }
 .stat .n.gold { color: var(--accent-gold); }
@@ -166,7 +186,7 @@ usePageSeo({
 .section-link:hover { color: var(--accent-gold); }
 
 /* Latest writing */
-.writing-grid :deep(.post-list) { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.writing-grid :deep(.post-list) { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
 .blog-cta {
   margin-top: 22px; border: 1.5px dashed var(--accent-green);
   background: rgba(74,222,128,0.03); padding: 22px;
@@ -176,16 +196,21 @@ usePageSeo({
 .blog-cta-text .g { color: var(--accent-green); }
 
 @media (max-width: 860px) {
-  .hero { grid-template-columns: 1fr; }
+  .hero { grid-template-columns: 1fr; padding: 26px 22px; }
+  .badge-photo { display: block; }
+  .term-identity :deep(.author-photo) { display: none; }
+  .term-identity { padding-top: 12px; }
+  .btn { min-height: 44px; }
 }
 @media (max-width: 480px) {
   .hero { padding: 22px 18px; }
-  .hero-title { font-size: 15px; }
   .hero-sub { font-size: 14px; }
-  .badge { font-size: 7px; }
-  .stats { grid-template-columns: 1fr 1fr; }
+  .stat { padding: 14px 8px; }
   .section-title { font-size: 12px; }
-  .writing-grid :deep(.post-list) { grid-template-columns: 1fr; }
   .blog-cta-text { font-size: 9px; }
+  .term-body { font-size: 8px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .badge .dot, .term-body .cursor { animation: none; }
 }
 </style>
