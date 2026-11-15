@@ -48,9 +48,9 @@ export const projects: Project[] = [
 		featured: true,
 		art: { glyph: '🖼️', topLeft: 'IMG://LOCAL', bottomRight: '100% CLIENT-SIDE' },
 		shots: [
-			desktopShot('bulkpictools', '01', 'BulkPicTools batch processing workspace'),
-			desktopShot('bulkpictools', '02', 'BulkPicTools chained operations results'),
-			desktopShot('bulkpictools', '03', 'BulkPicTools format and quality settings'),
+			desktopShot('bulkpictools', '01', 'BulkPicTools landing page for local batch image processing'),
+			desktopShot('bulkpictools', '02', 'BulkPicTools batch queue with multiple images'),
+			desktopShot('bulkpictools', '03', 'BulkPicTools processing results and downloads'),
 		],
 	},
 	{
