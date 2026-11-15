@@ -1,19 +1,18 @@
 <template>
   <div class="home">
-    <!-- Hero -->
+    <!-- Hero: personal identity -->
     <section class="hero">
       <div class="hero-main">
-        <div class="badge">
-          <AuthorPhoto alt="kbmjj123, independent developer" size="sm" class="badge-photo" />
-          <span class="dot"></span> INDEPENDENT DEVELOPER · BUILDING IN PUBLIC
+        <AuthorPhoto alt="kbmjj123, independent developer" size="sm" class="hero-photo-mobile" />
+        <div class="hero-badge">
+          <span class="dot"></span> INDEPENDENT DEVELOPER · PRODUCT BUILDER
         </div>
         <h1 class="hero-title">
-          I build <em>browser-first</em> tools and write about how they get made.
+          Independent developer building <em>practical web products</em>.
         </h1>
         <p class="hero-sub">
-          Solo developer shipping practical web products — image tools, AI directories,
-          self-hosted analytics — and documenting every product decision, trade-off,
-          and dead end along the way.
+          Focus on Vue + NuxtJS + Cloudflare stack, tech for business only.
+          Simple, effective &amp; user-oriented side projects.
         </p>
         <div class="cta-row">
           <a href="#projects" class="btn btn-primary">▣ View Projects</a>
@@ -21,7 +20,7 @@
         </div>
       </div>
 
-      <!-- Terminal status card -->
+      <!-- Terminal profile card -->
       <div class="terminal">
         <div class="term-bar">
           <i></i><i></i><i></i>
@@ -30,18 +29,18 @@
         <div class="term-identity">
           <AuthorPhoto alt="" size="lg" aria-hidden="true" />
           <div class="term-identity-text">
-            <span class="term-who">kbmjj123</span>
-            <span class="term-role">indie_dev · building in public</span>
+            <span class="term-who">kbmjj123 | Indie Developer</span>
+            <span class="term-role">Independent Developer | Product Builder</span>
           </div>
         </div>
         <div class="term-body" aria-hidden="true">
           <div><span class="muted">$</span> <span class="k">whoami</span></div>
-          <div>&gt; indie_dev, 1 person, 0 funding</div>
-          <div class="sp"><span class="muted">$</span> <span class="k">status</span> --verbose</div>
+          <div>&gt; He/Him · Online / Asia</div>
+          <div class="sp"><span class="muted">$</span> <span class="k">profile</span> --verbose</div>
+          <div>&gt; stack: <span class="v">Vue3 · Nuxt3 · Cloudflare</span></div>
           <div>&gt; shipping: <span class="v">{{ projectCount }} projects</span></div>
           <div>&gt; writing: <span class="v">{{ postCount }} posts</span></div>
-          <div>&gt; stack: <span class="v">Nuxt · Cloudflare</span></div>
-          <div>&gt; uptime: <span class="v">since 2026.06</span></div>
+          <div>&gt; site: <span class="v">bulkpictools.com</span></div>
           <div class="sp"><span class="muted">$</span> <span class="cursor"></span></div>
         </div>
       </div>
@@ -55,7 +54,7 @@
       <div class="stat"><div class="n gold">∞</div><div class="l">SIDE QUESTS</div></div>
     </div>
 
-    <!-- Projects (main part) -->
+    <!-- Projects -->
     <section id="projects" class="section">
       <div class="section-head">
         <h2 class="section-title">Projects</h2>
@@ -64,20 +63,52 @@
       <ProjectGrid />
     </section>
 
-    <!-- Latest writing entry -->
-    <section class="section">
+    <!-- About me -->
+    <section id="about" class="section">
       <div class="section-head">
-        <h2 class="section-title">Latest Writing</h2>
-        <NuxtLink to="/blog" class="section-link">All posts →</NuxtLink>
+        <h2 class="section-title">About Me</h2>
+        <NuxtLink to="/about" class="section-link">Full profile →</NuxtLink>
       </div>
-      <div class="writing-grid">
-        <PostList variant="compact" :limit="3" :apply-filter="false" :show-filter="false" :show-videos="false" :show-empty="false" :show-header="false" />
-      </div>
-      <div class="blog-cta">
-        <div class="blog-cta-text">
-          More field notes on shipping, breaking things,<br />and <span class="g">what actually worked</span>.
+      <div class="about-panel">
+        <p class="about-lead">
+          Hi, I'm an independent developer who builds practical web-based products
+          and business-oriented side projects.
+        </p>
+        <p class="about-text">
+          I only choose tech stacks that fit my workflow, mainly using Vue, NuxtJS and Cloudflare
+          to develop and deploy lightweight landing pages and web tools efficiently. I focus on making
+          technology serve real business needs rather than over-engineering. I also share my
+          product-building journey, lightweight development experience and indie maker insights.
+        </p>
+        <div class="about-facts">
+          <div class="fact">
+            <span class="fact-k">LOCATION</span>
+            <span class="fact-v">Online / Asia</span>
+          </div>
+          <div class="fact">
+            <span class="fact-k">WEBSITE</span>
+            <span class="fact-v"><a href="https://bulkpictools.com" target="_blank" rel="noopener noreferrer">bulkpictools.com ↗</a></span>
+          </div>
+          <div class="fact">
+            <span class="fact-k">TECH STACK</span>
+            <span class="fact-v">Vue3 / Nuxt3 / WebAssembly / TailwindCSS / Cloudflare</span>
+          </div>
+          <div class="fact">
+            <span class="fact-k">TOPICS</span>
+            <span class="fact-v">#IndieDeveloper #WebDev #NuxtJS #Cloudflare #SideProject #ProductBuilding</span>
+          </div>
         </div>
-        <NuxtLink to="/blog" class="btn btn-primary">Read the Blog →</NuxtLink>
+        <div class="about-social">
+          <a v-for="profile in socialProfiles" :key="profile.label" :href="profile.url" target="_blank" rel="noopener noreferrer">
+            {{ profile.label }} ↗
+          </a>
+        </div>
+        <div class="blog-cta">
+          <div class="blog-cta-text">
+            Field notes on shipping, breaking things,<br />and <span class="g">what actually worked</span>.
+          </div>
+          <NuxtLink to="/blog" class="btn btn-primary">Read the Blog →</NuxtLink>
+        </div>
       </div>
     </section>
   </div>
@@ -86,6 +117,7 @@
 <script setup lang="ts">
 import { usePosts } from '~/composables/usePosts'
 import { projects } from '~/data/projects'
+import { socialProfiles } from '~/data/social'
 
 const { allPosts } = usePosts()
 const postCount = computed(() => allPosts.value.length)
@@ -94,7 +126,7 @@ const pad = (n: number) => String(n).padStart(2, '0')
 
 usePageSeo({
   title: 'Indie Developer Log',
-  description: 'KB MJJ123 .cc — indie developer building browser-first tools (BulkPicTools, aifindr.org, JSON Toolbox) and writing about product, code, and startup lessons.',
+  description: 'kbmjj123 | Indie Developer — independent product builder using Vue, NuxtJS and Cloudflare to ship practical, lightweight web tools.',
   template: 'prefix',
 })
 </script>
@@ -104,7 +136,7 @@ usePageSeo({
 
 /* Hero */
 .hero {
-  display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 28px; margin-top: 36px;
+  display: grid; grid-template-columns: 1.4fr 0.9fr; gap: 28px; margin-top: 0;
   background-color: rgba(255,255,255,0.02);
   border: 1.5px solid var(--border-pixel);
   border-left: 3px solid var(--accent-green);
@@ -114,16 +146,16 @@ usePageSeo({
   content: "◆"; color: var(--accent-green); font-size: 8px;
   position: absolute; top: -6px; left: 16px; background: var(--bg-card); padding: 0 5px;
 }
-.badge {
+.hero-badge {
   display: inline-flex; align-items: center; gap: 8px;
   font-family: var(--font-pixel); font-size: clamp(7px, 1vw, 9px); color: var(--accent-gold);
   letter-spacing: 0.5px; margin-bottom: 20px;
 }
-.badge .dot {
+.hero-badge .dot {
   width: 6px; height: 6px; background: var(--accent-green); flex-shrink: 0;
   box-shadow: 0 0 8px var(--accent-green); animation: pixelBlink 1.6s infinite;
 }
-.badge-photo { display: none; }
+.hero-photo-mobile { display: none; }
 .hero-title {
   font-family: var(--font-pixel); font-size: clamp(14px, 2.2vw, 24px); line-height: 1.75;
   margin-bottom: 18px; font-weight: 400; max-width: 620px;
@@ -154,7 +186,7 @@ usePageSeo({
 .term-bar span { margin-left: auto; font-family: var(--font-pixel); font-size: 7px; color: var(--text-muted); }
 .term-identity { display: flex; align-items: center; gap: 14px; padding: 16px 16px 0; }
 .term-identity-text { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
-.term-who { font-family: var(--font-pixel); font-size: 10px; color: var(--accent-green); }
+.term-who { font-family: var(--font-pixel); font-size: 10px; color: var(--accent-green); line-height: 1.6; }
 .term-role { font-family: var(--font-pixel); font-size: 7px; color: var(--text-muted); line-height: 1.6; }
 .term-body { padding: 12px 16px 16px; flex: 1; font-family: var(--font-pixel); font-size: 9px; line-height: 2.4; color: var(--text-secondary); }
 .term-body .k { color: var(--accent-green); }
@@ -185,10 +217,36 @@ usePageSeo({
 .section-link { font-family: var(--font-pixel); font-size: 9px; color: var(--accent-green); text-decoration: none; transition: color 0.15s; }
 .section-link:hover { color: var(--accent-gold); }
 
-/* Latest writing */
-.writing-grid :deep(.post-list) { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: 16px; }
+/* About me */
+.about-panel {
+  border: 1.5px solid var(--border-pixel);
+  background: rgba(255,255,255,0.02);
+  padding: 26px 28px;
+}
+.about-lead {
+  font-family: var(--font-pixel); font-size: 12px; line-height: 1.9;
+  color: var(--text-primary); margin-bottom: 16px;
+}
+.about-text { font-size: 15px; color: var(--text-secondary); line-height: 1.9; margin-bottom: 22px; }
+.about-facts {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 1px; background: var(--border-pixel); border: 1px solid var(--border-pixel); margin-bottom: 20px;
+}
+.fact { background: var(--bg-deep); padding: 14px 16px; display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+.fact-k { font-family: var(--font-pixel); font-size: 7px; color: var(--text-muted); letter-spacing: 0.5px; }
+.fact-v { font-size: 13px; color: var(--text-secondary); line-height: 1.7; overflow-wrap: anywhere; }
+.fact-v a { color: var(--accent-green); text-decoration: none; }
+.fact-v a:hover { text-decoration: underline; }
+.about-social { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 22px; }
+.about-social a {
+  font-family: var(--font-pixel); font-size: 8px; color: var(--accent-gold);
+  border: 1px solid var(--border-pixel); padding: 8px 12px;
+  text-decoration: none; transition: all 0.15s;
+}
+.about-social a:hover { border-color: var(--accent-green); color: var(--accent-green); }
+
 .blog-cta {
-  margin-top: 22px; border: 1.5px dashed var(--accent-green);
+  border: 1.5px dashed var(--accent-green);
   background: rgba(74,222,128,0.03); padding: 22px;
   display: flex; align-items: center; justify-content: space-between; gap: 18px; flex-wrap: wrap;
 }
@@ -197,7 +255,7 @@ usePageSeo({
 
 @media (max-width: 860px) {
   .hero { grid-template-columns: 1fr; padding: 26px 22px; }
-  .badge-photo { display: block; }
+  .hero-photo-mobile { display: block; margin-bottom: 16px; }
   .term-identity :deep(.author-photo) { display: none; }
   .term-identity { padding-top: 12px; }
   .btn { min-height: 44px; }
@@ -207,10 +265,13 @@ usePageSeo({
   .hero-sub { font-size: 14px; }
   .stat { padding: 14px 8px; }
   .section-title { font-size: 12px; }
+  .about-panel { padding: 18px 16px; }
+  .about-lead { font-size: 9px; }
+  .about-text { font-size: 14px; }
   .blog-cta-text { font-size: 9px; }
   .term-body { font-size: 8px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .badge .dot, .term-body .cursor { animation: none; }
+  .hero-badge .dot, .term-body .cursor { animation: none; }
 }
 </style>

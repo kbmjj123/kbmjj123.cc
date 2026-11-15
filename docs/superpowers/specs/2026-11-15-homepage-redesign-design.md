@@ -242,3 +242,15 @@ export interface Project {
 | 两个 JSON Toolbox 同名易混淆 | 插件展示名加 `Extension` 后缀，描述首句点明配套关系，链接区分 Website / GitHub |
 | 项目由 5 增至 8，首页可能过长 | 保持 2 列网格、图片统一 16:10、`.desc` 用 `flex:1` 底部对齐；暂不引入折叠 / 筛选（YAGNI），实测过长再评估 |
 | pixel 字体配合 `clamp` 在极窄屏过密 | 480px 以下保持 `line-height:1.75`、`letter-spacing` 不压缩，必要时隐藏 badge 副文案 |
+
+## 8. 后续变更记录（2026-11-15 当日追加）
+
+以下变更发生在设计定稿之后；前文 §1 / §4.4 / §4.6 / §4.7 / §6 / §7 中的数量描述以本节为准。
+
+- 新增项目 `📄 MinoPDF`（`https://minopdf.com`、`https://github.com/kbmjj123/minopdf`），排在 My9Tools 之后、`kbmjj123.cc` 之前。项目总数 8 → **9**，普通卡 7 → **8**，桌面截图 12 → **13**（新增 `public/images/projects/minopdf/01.webp`，由线上首页截图转换），`.delay-7` 已补齐。首页计数由 `projects.length` 派生，自动显示 `09 PROJECTS`。
+- 素材状态：13/13 截图与 `public/images/site/me.webp` 全部就位。照片为圆形裁切，`AuthorPhoto.vue` 改为圆形描边（透明底 + `border-radius: 50%`）。
+- 卡片入场动画改为默认可见的位移效果（`cardRise`），移除 `opacity: 0` 起步，保证 9 个项目从首帧起全部展示。
+- 仅对首页收紧顶部 / 底部间距（`grid margin 40→16`、`hero margin 36→0`、footer 与容器留白减半）。
+- 新增 `data/social.ts` 作为 6 个社交档案的单一来源，供 footer、`/about` 与 `Person.sameAs` 共用。
+- Hero 改为纯个人档案导向（Display Name / Job Title / 社交通用版 Bio / Tech Stack / Location / Website），移除首页 `PostList` 与 Latest Writing 区块，替换为 `About Me` 区块（英文 About Me 全文 + Location / Website / Tech Stack / Topics 事实卡 + 6 个社交档案 + `Read the Blog` 入口）。首页 SEO description 同步为新人设；中文版简介因全站英文单语未使用。
+- 12 张项目截图的最终来源：BulkPicTools 三张来自 `localbatch.net/public/promo/`，My9Tools 来自 `public/og/work.png`，JSON Toolbox 来自其博客编辑器截图，umami-serve 为 `umami.bulkpictools.com` 已登录状态下的统计页，BulkPicBridge 为 Chrome Web Store 官方 1280×800 截图，aifindr.org / kbmjj123.cc / MinoPDF / JSON 插件为浏览器或商店截图。

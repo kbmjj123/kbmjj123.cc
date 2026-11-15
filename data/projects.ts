@@ -134,6 +134,19 @@ export const projects: Project[] = [
 		],
 	},
 	{
+		name: '📄 MinoPDF',
+		desc: 'Simple PDF tools that keep your work flowing. Convert, merge, extract, compress, rotate and clean PDFs locally in your browser — no sign-up, no watermark, no daily limit, nothing uploaded. Compatible operations chain into one continuous pass.',
+		tags: ['#Nuxt', '#WebAssembly', '#PDF', '#LocalFirst', '#BrowserTools'],
+		links: [
+			{ label: 'Website', url: 'https://minopdf.com' },
+			{ label: 'GitHub', url: 'https://github.com/kbmjj123/minopdf' },
+		],
+		status: 'live',
+		shots: [
+			desktopShot('minopdf', '01', 'MinoPDF homepage with local PDF tool browser'),
+		],
+	},
+	{
 		name: '💻 kbmjj123.cc',
 		desc: 'This very site — a pixel-styled indie dev log. Nuxt 4 + Cloudflare D1/R2/Pages, Nuxt Content v3. Full-text search, RSS, newsletter, dynamic OG images.',
 		tags: ['#Nuxt', '#Cloudflare', '#Tailwind', '#D1', '#R2'],

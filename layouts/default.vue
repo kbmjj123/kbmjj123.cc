@@ -100,8 +100,8 @@
         <footer style="margin-top:36px;padding-top:20px;border-top:1px solid var(--border-pixel);display:flex;flex-wrap:wrap;justify-content:space-between;align-items:center;font-size:11px;color:var(--text-muted);font-family:var(--font-pixel);">
           <span><span style="color:#f472b6;">♥</span> 2026 <span style="color:var(--accent-green);">kbmjj123.cc</span></span>
           <span style="font-size:9px;letter-spacing:0.5px;">✦ pixel · indie · craft ✦</span>
-          <div style="display:flex;gap:0;">
-            <a v-for="link in socialLinks" :key="link.label" :href="link.url" style="color:var(--text-muted);text-decoration:none;margin-left:18px;transition:color 0.15s;font-size:10px;" @mouseenter="$event.target.style.color='var(--accent-green)'" @mouseleave="$event.target.style.color='var(--text-muted)'">{{ link.label }}</a>
+          <div style="display:flex;flex-wrap:wrap;gap:6px 12px;">
+            <a v-for="link in socialLinks" :key="link.label" :href="link.url" target="_blank" rel="noopener noreferrer" style="color:var(--text-muted);text-decoration:none;transition:color 0.15s;font-size:10px;" @mouseenter="$event.target.style.color='var(--accent-green)'" @mouseleave="$event.target.style.color='var(--text-muted)'">{{ link.label }}</a>
           </div>
         </footer>
       </div>
@@ -110,6 +110,8 @@
 </template>
 
 <script setup lang="ts">
+import { socialProfiles, siteSocialLinks } from '~/data/social'
+
 const route = useRoute()
 
 // RSS auto-discovery link
@@ -190,12 +192,14 @@ const daysSince = computed(() => {
   return Math.floor((now.getTime() - start.getTime()) / 86400000)
 })
 
-const socialLinks = computed(() => [
-  { label: 'GitHub', url: 'https://github.com/kbmjj123/kbmjj123.cc' },
-  { label: 'X', url: 'https://x.com/solomaker282' },
-  { label: 'YouTube', url: 'https://www.youtube.com/@kbmjj123', videosOnly: true },
-  { label: 'RSS', url: '/feed.xml' },
-].filter(link => !('videosOnly' in link) || videoCount.value > 0))
+const socialLinks = computed(() => {
+  const links: { label: string; url: string; videosOnly?: boolean }[] = [
+    ...socialProfiles,
+    { label: 'YouTube', url: siteSocialLinks.youtube, videosOnly: true },
+    { label: 'RSS', url: siteSocialLinks.rss },
+  ]
+  return links.filter(link => !link.videosOnly || videoCount.value > 0)
+})
 
 function isActive(path: string) {
   if (path === '/') return route.path === '/'
@@ -209,6 +213,12 @@ function isActive(path: string) {
 .pixel-main-grid { flex: 1; grid-template-columns: 2.2fr 1fr; }
 .pixel-main-grid.is-home { grid-template-columns: 1fr; }
 .site-title { font-size: clamp(13px, 4.2vw, 20px); }
+
+/* Homepage: remove the extra whitespace above the hero and below the footer */
+.pixel-body-wrapper:has(.is-home) { padding-top: 12px !important; padding-bottom: 12px !important; }
+.pixel-container:has(.is-home) { padding-bottom: 10px !important; }
+.pixel-main-grid.is-home { margin-top: 16px !important; }
+.pixel-container:has(.is-home) footer { margin-top: 20px !important; padding-top: 12px !important; }
 
 /* Top decorative flow bar */
 .pixel-flowbar {

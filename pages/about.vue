@@ -100,7 +100,7 @@
 
     <!-- Contact -->
     <div class="contact-links" itemscope itemtype="https://schema.org/Person">
-      <a v-for="link in links" :key="link.label" :href="link.url" target="_blank" rel="noopener" itemprop="sameAs">
+      <a v-for="link in links" :key="link.label" :href="link.url" target="_blank" rel="noopener noreferrer" :itemprop="link.url.startsWith('http') ? 'sameAs' : undefined">
         {{ link.label }}
       </a>
     </div>
@@ -108,6 +108,8 @@
 </template>
 
 <script setup lang="ts">
+import { socialProfiles, siteSocialLinks } from '~/data/social'
+
 usePageSeo({
   title: 'About',
   description: 'About KBMJJ123 — Independent developer building web products, content sites, and apps.',
@@ -123,12 +125,14 @@ const milestones = [
 
 const { count: videoCount } = useVideos()
 
-const links = computed(() => [
-  { label: 'GitHub', url: 'https://github.com/kbmjj123' },
-  { label: 'X / Twitter', url: 'https://x.com/solomaker282' },
-  { label: 'YouTube', url: 'https://www.youtube.com/@kbmjj123', videosOnly: true },
-  { label: '✉️ Email', url: 'mailto:hello@kbmjj123.cc' },
-].filter(link => !('videosOnly' in link) || videoCount.value > 0))
+const links = computed(() => {
+  const items: { label: string; url: string; videosOnly?: boolean }[] = [
+    ...socialProfiles.map(profile => ({ label: profile.label, url: profile.url })),
+    { label: 'YouTube', url: siteSocialLinks.youtube, videosOnly: true },
+    { label: '✉️ Email', url: siteSocialLinks.email },
+  ]
+  return items.filter(link => !link.videosOnly || videoCount.value > 0)
+})
 </script>
 
 <style scoped>

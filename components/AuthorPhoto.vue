@@ -30,9 +30,10 @@ const failed = ref(false)
 	position: relative;
 	flex-shrink: 0;
 	overflow: hidden;
-	background: var(--bg-deep);
+	background: transparent;
 	border: 1.5px solid var(--accent-green);
-	box-shadow: 3px 3px 0 rgba(74, 222, 128, 0.15);
+	border-radius: 50%;
+	box-shadow: 0 0 0 3px rgba(74, 222, 128, 0.1), 0 0 18px rgba(74, 222, 128, 0.16);
 }
 .author-photo.size-lg { width: 120px; height: 120px; }
 .author-photo.size-sm { width: 72px; height: 72px; }

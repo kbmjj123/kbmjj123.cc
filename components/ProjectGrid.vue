@@ -94,8 +94,7 @@ function openGallery(payload: { files: PreviewImage[]; startIndex: number }) {
 	background: var(--bg-deep);
 	border: 1.5px solid var(--accent-green);
 	position: relative; overflow: hidden;
-	opacity: 0; transform: translateY(20px);
-	animation: pixelFadeUp 0.5s ease forwards;
+	animation: cardRise 0.45s ease backwards;
 	transition: box-shadow 0.2s ease;
 }
 .pfeatured:hover { box-shadow: 0 8px 26px rgba(74,222,128,0.08); }
@@ -122,8 +121,7 @@ function openGallery(payload: { files: PreviewImage[]; startIndex: number }) {
 	display: flex; flex-direction: column;
 	min-width: 0;
 	transition: all 0.2s ease;
-	opacity: 0; transform: translateY(20px);
-	animation: pixelFadeUp 0.5s ease forwards;
+	animation: cardRise 0.45s ease backwards;
 }
 .delay-0 { animation-delay: 0.12s; }
 .delay-1 { animation-delay: 0.2s; }
@@ -132,6 +130,7 @@ function openGallery(payload: { files: PreviewImage[]; startIndex: number }) {
 .delay-4 { animation-delay: 0.44s; }
 .delay-5 { animation-delay: 0.52s; }
 .delay-6 { animation-delay: 0.6s; }
+.delay-7 { animation-delay: 0.68s; }
 .pcard:hover { border-color: var(--accent-green); transform: translateY(-3px); box-shadow: 0 8px 22px rgba(74,222,128,0.06); }
 
 .pcard-top { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin-bottom: 14px; }
@@ -167,6 +166,7 @@ function openGallery(payload: { files: PreviewImage[]; startIndex: number }) {
 	.pfeatured .desc { font-size: 14px; }
 	.pcard { padding: 16px 14px 18px; }
 }
+@keyframes cardRise { from { transform: translateY(12px); } to { transform: translateY(0); } }
 @media (prefers-reduced-motion: reduce) {
 	.pfeatured, .pcard { animation: none; opacity: 1; transform: none; }
 }

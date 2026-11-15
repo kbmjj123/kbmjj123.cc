@@ -5,6 +5,8 @@
 </template>
 
 <script setup lang="ts">
+import { socialProfiles, siteSocialLinks } from '~/data/social'
+
 const extraScripts = import.meta.dev ? [] : [
   {
     src: 'https://umami.bulkpictools.com/script.js',
@@ -26,8 +28,9 @@ useHead({
     { rel: 'icon', type: 'image/png', sizes: '96x96', href: '/favicon-96x96.png' },
     { rel: 'apple-touch-icon', sizes: '180x180', href: '/apple-touch-icon.png' },
     { rel: 'manifest', href: '/site.webmanifest' },
-		{ rel: 'me', href: 'https://mastodon.social/@kbmjj123' },
+		{ rel: 'me', href: siteSocialLinks.mastodon },
 		{ rel: 'me', href: 'https://github.com/kbmjj123' },
+		{ rel: 'me', href: 'https://x.com/solomaker282' },
   ],
   meta: [
     { name: 'theme-color', content: '#0b0b12' },
@@ -46,9 +49,9 @@ useSchemaOrg([
     url: 'https://kbmjj123.cc',
     image: 'https://kbmjj123.cc/images/site/me.webp',
     sameAs: [
-      'https://github.com/kbmjj123',
-      'https://x.com/solomaker282',
-      ...(videoCount.value > 0 ? ['https://www.youtube.com/@kbmjj123'] : []),
+      ...socialProfiles.map(profile => profile.url),
+      siteSocialLinks.mastodon,
+      ...(videoCount.value > 0 ? [siteSocialLinks.youtube] : []),
     ],
   }),
 ])
