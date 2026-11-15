@@ -44,6 +44,7 @@ useSchemaOrg([
   definePerson({
     name: 'kbmjj123',
     url: 'https://kbmjj123.cc',
+    image: 'https://kbmjj123.cc/images/site/me.webp',
     sameAs: [
       'https://github.com/kbmjj123',
       'https://x.com/solomaker282',

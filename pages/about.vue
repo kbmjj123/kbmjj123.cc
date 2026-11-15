@@ -7,7 +7,7 @@
     </div>
 
     <div class="about-avatar-large" itemprop="mainContentOfPage">
-      <div class="pixel-avatar-big">🧑‍💻</div>
+      <AuthorPhoto alt="kbmjj123, independent developer" size="sm" />
       <div class="about-intro">
         I care about turning real user needs into simple, maintainable products. I choose technologies
         based on the product and business constraints rather than using complexity for its own sake.
@@ -169,19 +169,6 @@ const links = computed(() => [
   align-items: center;
   gap: 20px;
   margin-bottom: 28px;
-}
-.pixel-avatar-big {
-  width: 64px;
-  height: 64px;
-  background: var(--bg-deep);
-  border: 3px solid var(--accent-green);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 32px;
-  font-family: var(--font-pixel);
-  color: var(--accent-green);
-  flex-shrink: 0;
 }
 .about-intro {
   font-size: 15px;
