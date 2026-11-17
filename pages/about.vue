@@ -57,6 +57,27 @@
       </div>
     </div>
 
+    <!-- Selected work / case studies -->
+    <div class="section-block">
+      <h2 class="section-title">Selected work &amp; case studies</h2>
+      <div class="project-cards">
+        <div class="project-card" v-for="study in caseStudies" :key="study.slug">
+          <div class="project-name">
+            <NuxtLink :to="`/projects/${study.slug}`">{{ study.project }}</NuxtLink>
+          </div>
+          <div class="project-desc">{{ study.value }}</div>
+          <div class="project-meta">
+            <span v-for="t in study.tags" :key="t" class="meta-tag">{{ t }}</span>
+          </div>
+          <NuxtLink :to="`/projects/${study.slug}`" style="font-family:var(--font-pixel);font-size:8px;color:var(--accent-gold);text-decoration:none;display:inline-block;margin-top:10px;">Read the case study →</NuxtLink>
+        </div>
+        <NuxtLink to="/projects" class="project-card project-card-more">
+          <div class="project-name" style="color:var(--accent-green)">Browse all projects →</div>
+          <div class="project-desc">9 projects, with case studies published progressively as the real data is gathered from each repository.</div>
+        </NuxtLink>
+      </div>
+    </div>
+
     <!-- What I Write About -->
     <div class="section-block">
       <h2 class="section-title">What I Write About</h2>
@@ -109,6 +130,8 @@
 
 <script setup lang="ts">
 import { socialProfiles, siteSocialLinks } from '~/data/social'
+
+const { caseStudies } = useCaseStudies()
 
 usePageSeo({
   title: 'About',

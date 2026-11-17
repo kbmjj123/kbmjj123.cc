@@ -124,13 +124,19 @@ useHead({
 const mobileMenuOpen = ref(false)
 
 const isHome = computed(() => route.path === '/')
-const isPostPage = computed(() => !!route.params.slug && !['about', 'archive', 'videos', 'blog'].includes(route.params.slug as string))
+// Case-study detail pages live at /projects/<slug> and must not be treated as blog posts
+const isPostPage = computed(() =>
+  !!route.params.slug &&
+  !route.path.startsWith('/projects') &&
+  !['about', 'archive', 'videos', 'blog'].includes(route.params.slug as string)
+)
 
 // Videos entry only appears once there are videos to show
 const { count: videoCount } = useVideos()
 
 const navItems = computed(() => [
   { path: '/', label: 'Home' },
+  { path: '/projects', label: 'Projects' },
   { path: '/blog', label: 'Blog' },
   { path: '/archive', label: 'Archive' },
   { path: '/videos', label: 'Videos' },

@@ -17,6 +17,8 @@
 				</div>
 				<div class="linkrow">
 					<a v-for="link in featured.links" :key="link.label" :href="link.url" itemprop="url" target="_blank" rel="noopener noreferrer">{{ link.label }} ↗</a>
+					<NuxtLink v-if="featured.caseStudy" :to="`/projects/${featured.caseStudy}`" class="cs-link" itemprop="url">Case study →</NuxtLink>
+					<NuxtLink v-else to="/projects" class="cs-link cs-soon" itemprop="url">Case study · soon</NuxtLink>
 				</div>
 			</div>
 			<div class="pf-visual">
@@ -50,6 +52,8 @@
 			</div>
 			<div class="linkrow">
 				<a v-for="link in project.links" :key="link.label" :href="link.url" itemprop="url" target="_blank" rel="noopener noreferrer">{{ link.label }} ↗</a>
+				<NuxtLink v-if="project.caseStudy" :to="`/projects/${project.caseStudy}`" class="cs-link" itemprop="url">Case study →</NuxtLink>
+				<NuxtLink v-else to="/projects" class="cs-link cs-soon" itemprop="url">Case study · soon</NuxtLink>
 			</div>
 		</div>
 	</div>
@@ -154,6 +158,10 @@ function openGallery(payload: { files: PreviewImage[]; startIndex: number }) {
 .linkrow { display: flex; gap: 8px; flex-wrap: wrap; }
 .linkrow a { font-family: var(--font-pixel); font-size: 8px; color: var(--accent-green); border: 1px solid var(--accent-green); padding: 5px 12px; text-decoration: none; transition: all 0.15s; }
 .linkrow a:hover { background: var(--accent-green); color: var(--bg-deep); }
+.linkrow a.cs-link { color: var(--bg-deep); background: var(--accent-green); }
+.linkrow a.cs-link:hover { background: var(--accent-gold); border-color: var(--accent-gold); }
+.linkrow a.cs-soon { color: var(--text-muted); background: transparent; border: 1px dashed var(--border-pixel); }
+.linkrow a.cs-soon:hover { color: var(--accent-gold); background: transparent; border-color: var(--accent-gold); }
 
 @media (max-width: 860px) {
 	.pfeatured { grid-template-columns: 1fr; }

@@ -63,6 +63,25 @@
       <ProjectGrid />
     </section>
 
+    <!-- Latest build logs -->
+    <section id="build-logs" class="section">
+      <div class="section-head">
+        <h2 class="section-title">Latest build logs</h2>
+        <NuxtLink to="/blog" class="section-link">Read all build logs →</NuxtLink>
+      </div>
+      <div class="logs">
+        <NuxtLink v-for="(log, i) in buildLogs" :key="log.slug" :to="`/${log.slug}`" class="log">
+          <span class="log-no">0{{ i + 1 }}</span>
+          <span class="log-main">
+            <span class="log-title">{{ log.title }}</span>
+            <span class="log-sub">{{ log.sub }}</span>
+          </span>
+          <span class="log-arrow">→</span>
+        </NuxtLink>
+      </div>
+      <div class="logs-note">Real posts from this site. Case-study pages link back to their build logs; every claim stays verifiable.</div>
+    </section>
+
     <!-- About me -->
     <section id="about" class="section">
       <div class="section-head">
@@ -123,6 +142,24 @@ const { allPosts } = usePosts()
 const postCount = computed(() => allPosts.value.length)
 const projectCount = computed(() => projects.length)
 const pad = (n: number) => String(n).padStart(2, '0')
+
+// Curated build logs — titles derived from real posts so nothing is fabricated.
+const buildLogSlugs = [
+  'what-a-browser-only-tool-site-actually-costs',
+  'self-hosted-analytics-d1-free-tier',
+  'from-zero-to-2-dollar-6-months-tool-site',
+]
+const buildLogSubs: Record<string, string> = {
+  'what-a-browser-only-tool-site-actually-costs': 'A line-by-line cost breakdown of a browser-only tool site.',
+  'self-hosted-analytics-d1-free-tier': 'Building my own analytics, and hitting the free tier wall two days later.',
+  'from-zero-to-2-dollar-6-months-tool-site': 'Six months of running a tool site as an indie developer.',
+}
+const buildLogs = computed(() =>
+  buildLogSlugs
+    .map(slug => allPosts.value.find(p => p.slug === slug))
+    .filter((p): p is NonNullable<typeof p> => !!p)
+    .map(p => ({ slug: p.slug, title: p.title, sub: buildLogSubs[p.slug] || '' }))
+)
 
 usePageSeo({
   title: 'Indie Developer Log',
@@ -217,6 +254,29 @@ usePageSeo({
 .section-link { font-family: var(--font-pixel); font-size: 9px; color: var(--accent-green); text-decoration: none; transition: color 0.15s; }
 .section-link:hover { color: var(--accent-gold); }
 
+/* Latest build logs */
+.logs {
+  border: 1.5px solid var(--border-pixel);
+  background: rgba(255,255,255,0.02);
+}
+.log {
+  display: flex; align-items: flex-start; gap: 16px;
+  padding: 15px 18px; border-bottom: 1px solid var(--border-pixel);
+  text-decoration: none; transition: background 0.15s;
+}
+.log:last-child { border-bottom: none; }
+.log:hover { background: rgba(74,222,128,0.04); }
+.log-no {
+  font-family: var(--font-pixel); font-size: 9px; color: var(--accent-gold);
+  min-width: 22px; flex-shrink: 0; padding-top: 2px;
+}
+.log-main { display: flex; flex-direction: column; gap: 6px; min-width: 0; flex: 1; }
+.log-title { font-size: 14px; color: var(--text-primary); line-height: 1.6; }
+.log:hover .log-title { color: var(--accent-green); }
+.log-sub { font-size: 13px; color: var(--text-muted); line-height: 1.6; }
+.log-arrow { font-family: var(--font-pixel); font-size: 11px; color: var(--accent-green); flex-shrink: 0; }
+.logs-note { font-size: 12px; color: var(--text-muted); margin-top: 12px; line-height: 1.7; }
+
 /* About me */
 .about-panel {
   border: 1.5px solid var(--border-pixel);
@@ -270,6 +330,9 @@ usePageSeo({
   .about-text { font-size: 14px; }
   .blog-cta-text { font-size: 9px; }
   .term-body { font-size: 8px; }
+  .log { gap: 10px; padding: 13px 14px; }
+  .log-title { font-size: 13px; }
+  .log-sub { font-size: 12px; }
 }
 @media (prefers-reduced-motion: reduce) {
   .hero-badge .dot, .term-body .cursor { animation: none; }

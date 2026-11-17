@@ -7,7 +7,8 @@ export default defineNuxtConfig({
 		'/archive': { prerender: true },
 		'/about': { prerender: true },
 		'/videos': { prerender: true },
-		'/projects': { redirect: { to: '/', statusCode: 301 } },  // 旧项目页 → 首页(项目区)
+		'/projects': { prerender: true },    // 项目与案例索引页
+		'/projects/**': { prerender: true }, // 案例详情页
 
 		'/api/comments/**': { ssr: true },   // 评论接口,读写都要现场处理
 		'/auth/**': { ssr: true },           // GitHub OAuth 回调,必须现场处理 session/cookie

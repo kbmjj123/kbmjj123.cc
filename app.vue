@@ -46,7 +46,7 @@ const { count: videoCount } = useVideos()
 useSchemaOrg([
   definePerson({
     name: 'kbmjj123',
-    url: 'https://kbmjj123.cc',
+    url: 'https://kbmjj123.cc/about',
     image: 'https://kbmjj123.cc/images/site/me.webp',
     sameAs: [
       ...socialProfiles.map(profile => profile.url),

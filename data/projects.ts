@@ -26,6 +26,8 @@ export interface Project {
 	featured?: boolean
 	art?: ProjectArt
 	shots?: ProjectShot[]
+	/** Slug of the case-study page under /projects/. Absent = case study coming soon. */
+	caseStudy?: string
 }
 
 const desktopShot = (slug: string, file: string, alt: string): ProjectShot => ({
@@ -46,6 +48,7 @@ export const projects: Project[] = [
 		],
 		status: 'live',
 		featured: true,
+		caseStudy: 'bulkpictools',
 		art: { glyph: '🖼️', topLeft: 'IMG://LOCAL', bottomRight: '100% CLIENT-SIDE' },
 		shots: [
 			desktopShot('bulkpictools', '01', 'BulkPicTools landing page for local batch image processing'),
@@ -75,6 +78,7 @@ export const projects: Project[] = [
 			{ label: 'GitHub', url: 'https://github.com/kbmjj123/aifindr.org' },
 		],
 		status: 'live',
+		caseStudy: 'aifindr',
 		shots: [
 			desktopShot('aifindr-org', '01', 'aifindr.org AI tool directory categories'),
 		],
@@ -100,6 +104,7 @@ export const projects: Project[] = [
 			{ label: 'GitHub', url: 'https://github.com/kbmjj123/jsontoolbox.cc' },
 		],
 		status: 'live',
+		caseStudy: 'json-toolbox',
 		shots: [
 			desktopShot('json-toolbox', '01', 'JSON Toolbox editor with tree and split view'),
 		],
