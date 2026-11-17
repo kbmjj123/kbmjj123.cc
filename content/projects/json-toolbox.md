@@ -28,45 +28,45 @@ seo:
     - "privacy-first json tools"
 ---
 
-> **数据状态：** 本页结构已定稿，正文中的具体数字等待从项目 GitHub 仓库（README / CHANGELOG / Release / commit）提取真实数据后填写。标注 `[ 待填 ]` 的位置不要臆测；测量型数据须写明测试条件，无法复现则不写成结论。
+> **Data status:** The structure of this page is final. Concrete numbers in the body are waiting to be filled with real data from the project's GitHub repository (README / CHANGELOG / Release / commit). Do not guess values marked `[ To fill ]`; measurement data must state its test conditions, and anything that cannot be reproduced should not be stated as a conclusion.
 
 ## What it does
 
-- 查看并浏览大型 JSON 文件（虚拟化树渲染）
-- 格式化、校验、压缩与对比 JSON
-- 在 CSV / YAML / TypeScript / XML 之间转换
-- 用真实数据测试 JSONPath 表达式
+- View and navigate large JSON files with a virtualized tree
+- Format, validate, minify and compare JSON
+- Convert to/from CSV, YAML, TypeScript and XML
+- Test JSONPath expressions against real data
 
 ## Why I built it
 
-`[ 待填：来自仓库 README / commit 的真实问题与目标用户。例如：开发者需要检查含敏感数据的 JSON，但在线工具要求上传文件。]`
+`[ To fill: the real problem and target user, from the repo README / commits. E.g. developers need to inspect JSON containing sensitive data, but online tools require uploading the file. ]`
 
 ## How it works
 
-客户端核心，解析与转换全部在浏览器内完成；大文件查看器使用虚拟化渲染，DOM 只保留可见行；同一核心可打包为网站、可嵌入组件与可自托管构建。
+A client-side core; parsing and conversion stay in the browser. The large-file viewer uses virtualized rendering so the DOM only holds visible rows. The same core ships as a website, an embeddable component and a self-hostable build.
 
-`[ 待填：具体架构、使用的库、隐私模型与约束，以源码为准。]`
+`[ To fill: concrete architecture, libraries used, privacy model and constraints, based on the source. ]`
 
 ## Results
 
-`[ 待填：以下指标从 GitHub 仓库真实数据填写，测量型须注明设备 / 浏览器 / 样本 / 工具 / 版本。]`
+`[ To fill: the metrics below from real GitHub data; measurement-type values must note device / browser / sample / tool / version. ]`
 
-| 指标 | 数值 | 来源 |
+| Metric | Value | Source |
 | --- | --- | --- |
-| 工具数量 | `[ 待填 ]` | GitHub README |
-| 客户端处理占比 | `[ 待填 ]` | 架构事实 |
-| 大文件首屏 | `[ 待填 ]` | 实测（条件见下） |
-| 包体积 | `[ 待填 ]` | 构建输出 |
+| Tools shipped | `[ To fill ]` | GitHub README |
+| Client-side processing | `[ To fill ]` | Architecture fact |
+| Large-file first paint | `[ To fill ]` | Measured (conditions below) |
+| Bundle size | `[ To fill ]` | Build output |
 
 ## Technical decisions
 
-- `[ 待填：为何采用虚拟化滚动，以及取舍。]`
-- `[ 待填：如何处理格式错误与边界情况。]`
-- `[ 待填：下一步要改进什么。]`
+- `[ To fill: why virtual scrolling was necessary, and the trade-off. ]`
+- `[ To fill: how malformed JSON and edge cases were handled. ]`
+- `[ To fill: what to improve next. ]`
 
 ## Related build logs
 
-`[ 待填：链接到本站对应构建日志文章；发布后再填，不留空链。]`
+`[ To fill: link to the matching build log on this site once published — no empty links. ]`
 
 ## Try it
 

@@ -28,44 +28,44 @@ seo:
     - "privacy first image processing"
 ---
 
-> **数据状态：** 本页结构已定稿，正文中的具体数字等待从项目 GitHub 仓库（README / CHANGELOG / Release / commit）提取真实数据后填写。标注 `[ 待填 ]` 的位置不要臆测；测量型数据须写明测试条件，无法复现则不写成结论。
+> **Data status:** The structure of this page is final. Concrete numbers in the body are waiting to be filled with real data from the project's GitHub repository (README / CHANGELOG / Release / commit). Do not guess values marked `[ To fill ]`; measurement data must state its test conditions, and anything that cannot be reproduced should not be stated as a conclusion.
 
 ## What it does
 
-- 批量压缩、转换、裁剪与缩放图片
-- 所有处理在本地浏览器完成，无需上传
-- 多个操作可串成一次连续处理
+- Batch compress, convert, crop and resize images
+- All processing happens locally in the browser — no upload required
+- Chain multiple operations into a single continuous pass
 
 ## Why I built it
 
-`[ 待填：来自仓库 README / commit 的真实问题与目标用户。例如：在线图片工具要求上传原图，隐私与速度都不理想。]`
+`[ To fill: the real problem and target user, from the repo README / commits. E.g. online image tools require uploading the original file, which is bad for both privacy and speed. ]`
 
 ## How it works
 
-Vue + WebAssembly + Canvas 的客户端管线；文件不离开浏览器；配套 Bridge 扩展可把网页上的图片直接送入处理队列。
+A Vue + WebAssembly + Canvas client-side pipeline; files never leave the browser. The companion Bridge extension can send an image from any web page straight into the processing queue.
 
-`[ 待填：具体架构、WASM 模块与隐私模型，以源码为准。]`
+`[ To fill: concrete architecture, the WASM modules and the privacy model, based on the source. ]`
 
 ## Results
 
-`[ 待填：以下指标从 GitHub 仓库真实数据填写，测量型须注明设备 / 浏览器 / 样本 / 工具 / 版本。]`
+`[ To fill: the metrics below from real GitHub data; measurement-type values must note device / browser / sample / tool / version. ]`
 
-| 指标 | 数值 | 来源 |
+| Metric | Value | Source |
 | --- | --- | --- |
-| 支持的操作 | `[ 待填 ]` | GitHub README |
-| 客户端处理占比 | `[ 待填 ]` | 架构事实 |
-| 压缩率 | `[ 待填 ]` | 实测（条件见下） |
-| 单批图片上限 | `[ 待填 ]` | 源码 / 实测 |
+| Supported operations | `[ To fill ]` | GitHub README |
+| Client-side processing | `[ To fill ]` | Architecture fact |
+| Compression ratio | `[ To fill ]` | Measured (conditions below) |
+| Max images per batch | `[ To fill ]` | Source / measurement |
 
 ## Technical decisions
 
-- `[ 待填：为何坚持全客户端处理，以及放弃了什么。]`
-- `[ 待填：WebAssembly 与 Canvas 的取舍。]`
-- `[ 待填：下一步要改进什么。]`
+- `[ To fill: why processing stays fully client-side, and what was given up. ]`
+- `[ To fill: the trade-off between WebAssembly and Canvas. ]`
+- `[ To fill: what to improve next. ]`
 
 ## Related build logs
 
-`[ 待填：链接到本站对应构建日志文章；发布后再填，不留空链。]`
+`[ To fill: link to the matching build log on this site once published — no empty links. ]`
 
 ## Try it
 

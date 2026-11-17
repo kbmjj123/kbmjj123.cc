@@ -58,7 +58,7 @@
         </div>
       </div>
       <div class="note">
-        <b>WHY</b> 每个项目都有独立案例页，可被引用的同时也能被搜索引擎单独收录。尚未制作的案例页用 “coming soon” 状态占位，后续按各项目 GitHub 实际情况陆续补齐。
+        <b>WHY</b> Every project gets its own case study page — citable for readers and indexable by search engines. Case studies still in progress are marked “coming soon” and will be published as real data is gathered from each repository.
       </div>
     </section>
 

@@ -25,43 +25,43 @@ seo:
     - "nuxt cloudflare"
 ---
 
-> **数据状态：** 本页结构已定稿，正文中的具体数字等待从项目 GitHub 仓库（README / CHANGELOG / Release / commit）提取真实数据后填写。标注 `[ 待填 ]` 的位置不要臆测；测量型数据须写明测试条件，无法复现则不写成结论。
+> **Data status:** The structure of this page is final. Concrete numbers in the body are waiting to be filled with real data from the project's GitHub repository (README / CHANGELOG / Release / commit). Do not guess values marked `[ To fill ]`; measurement data must state its test conditions, and anything that cannot be reproduced should not be stated as a conclusion.
 
 ## What it does
 
-- 按分类发现与对比 AI 工具
-- 开放提交，由维护者筛选上架
-- 开源，可自托管
+- Discover and compare AI tools by category
+- Open submissions, curated by the maintainer before listing
+- Open source and self-hostable
 
 ## Why I built it
 
-`[ 待填：来自仓库 README / commit 的真实问题与目标用户。例如：目录质量参差、重复收录、缺乏筛选。]`
+`[ To fill: the real problem and target user, from the repo README / commits. E.g. directories are inconsistent, duplicated, and lack useful filtering. ]`
 
 ## How it works
 
-Nuxt + Cloudflare D1 的数据驱动目录；分类与提交流程由代码维护。
+A data-driven directory on Nuxt + Cloudflare D1; categories and the submission workflow are maintained in code.
 
-`[ 待填：具体架构、数据结构、审核流程，以源码为准。]`
+`[ To fill: concrete architecture, data structure and review workflow, based on the source. ]`
 
 ## Results
 
-`[ 待填：以下指标从 GitHub 仓库真实数据填写，测量型须注明设备 / 浏览器 / 样本 / 工具 / 版本。]`
+`[ To fill: the metrics below from real GitHub data; measurement-type values must note device / browser / sample / tool / version. ]`
 
-| 指标 | 数值 | 来源 |
+| Metric | Value | Source |
 | --- | --- | --- |
-| 收录工具数 | `[ 待填 ]` | 仓库 / 线上数据 |
-| 分类数 | `[ 待填 ]` | 仓库 / 线上数据 |
-| 提交数 | `[ 待填 ]` | GitHub Issues / PR |
+| Tools listed | `[ To fill ]` | Repo / live data |
+| Categories | `[ To fill ]` | Repo / live data |
+| Submissions | `[ To fill ]` | GitHub Issues / PR |
 
 ## Technical decisions
 
-- `[ 待填：为何开源，以及目录质量如何维护。]`
-- `[ 待填：技术栈取舍。]`
-- `[ 待填：下一步要改进什么。]`
+- `[ To fill: why it is open source, and how directory quality is maintained. ]`
+- `[ To fill: the tech-stack trade-offs. ]`
+- `[ To fill: what to improve next. ]`
 
 ## Related build logs
 
-`[ 待填：链接到本站对应构建日志文章；发布后再填，不留空链。]`
+`[ To fill: link to the matching build log on this site once published — no empty links. ]`
 
 ## Try it
 
